@@ -1,0 +1,344 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Icons</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            overflow-y: auto; /* Allow vertical scrolling */
+            height: 100vh; /* Set the height to 100vh */
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .icon-card {
+            background-color: rgba(26, 26, 26, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .icon-card:hover {
+            border-color: #00ffff;
+            box-shadow: 0 0 20px #00ffff;
+        }
+
+        .icon-card img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .icon-card h3 {
+            font-size: 1.5em;
+            margin: 10px 0;
+            color: #00ffff;
+            text-shadow: 0 0 5px #00ffff;
+        }
+
+        .icon-card p {
+            font-size: 1em;
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+            word-wrap: break-word; /* Ensure text wraps properly */
+        }
+
+        .footer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer .button {
+            background-color: rgba(26, 26, 26, 0.7);
+            border-radius: 15px;
+            padding: 10px 20px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer .button:hover {
+            border-color: #00ff00; /* Change hover color to green */
+            box-shadow: 0 0 20px #00ff00; /* Add green shadow */
+        }
+
+        .footer .button img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .footer .button span {
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+
+        .content-page {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .content-page img {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .content-page a {
+            color: #00ffff;
+            text-decoration: none;
+            font-size: 1em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .content-page p {
+            font-size: 1em;
+            margin-bottom: 20px;
+            word-wrap: break-word; /* Ensure text wraps properly */
+        }
+
+        .back-button {
+            background-color: rgba(26, 26, 26, 0.7);
+            border-radius: 15px;
+            padding: 10px 20px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            border-color: #ff00ff;
+            box-shadow: 0 0 20px #ff00ff;
+        }
+
+        /* Star Animation */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: #FF69B4; /* pink */
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle 0.5s infinite;
+        }
+
+        .star:nth-child(5n) { /* Make every fifth star cyan */
+            background-color: #FF69B4; /* cyan */
+        }
+
+        .star:nth-child(5n+1) { /* Make every sixth star green */
+            background-color: #FF69B4; /* green */
+        }
+
+        @keyframes twinkle {
+            0% {
+                transform: scale(0.5);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.5);
+                opacity: 0.5;
+            }
+        }
+
+@keyframes move {
+    0% { transform: translateY(0); }       /* Start at original position */
+    100% { transform: translateY(100vh); } /* Move downwards by 100% of the viewport height */
+}
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .content-page iframe {
+                width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+    <script>
+        function showContent(title, imgSrc, link1Text, link1Url, link2Text, link2Url, link3Text, link3Url, link4Text, link4Url, link5Text, link5Url, description, youtubeEmbed) {
+            document.querySelector('.container').style.display = 'none';
+            document.querySelector('.footer').style.display = 'none';
+            const contentPage = document.querySelector('.content-page');
+            contentPage.style.display = 'flex';
+            contentPage.querySelector('h1').innerText = title;
+            contentPage.querySelector('img').src = imgSrc;
+            contentPage.querySelector('.link1').href = link1Url;
+            contentPage.querySelector('.link1').innerText = link1Text;
+            contentPage.querySelector('.link2').href = link2Url;
+            contentPage.querySelector('.link2').innerText = link2Text;
+            contentPage.querySelector('.link3').href = link3Url;
+            contentPage.querySelector('.link3').innerText = link3Text;
+            contentPage.querySelector('.link4').href = link4Url;
+            contentPage.querySelector('.link4').innerText = link4Text;
+            contentPage.querySelector('.link5').href = link5Url;
+            contentPage.querySelector('.link5').innerText = link5Text;
+            contentPage.querySelector('p').innerText = description;
+            contentPage.querySelector('iframe').src = youtubeEmbed;
+        }
+
+        function goBack() {
+            document.querySelector('.container').style.display = 'grid';
+            document.querySelector('.footer').style.display = 'flex';
+            document.querySelector('.content-page').style.display = 'none';
+        }
+
+ function createStars() {
+    const starsContainer = document.querySelector('.stars');
+    const starCount = 33; // Number of stars to create
+    const sizes = [3, 23, 17, 33, 43]; // Define specific sizes for stars
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const size = sizes[Math.floor(Math.random() * sizes.length)]; // Randomly select size from the array
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        star.style.left = Math.random() * 100 + 'vw'; // Random horizontal position
+        star.style.top = Math.random() * 100 + 'vh'; // Random vertical position
+        star.style.animationDuration = Math.random() * 6 + 2 + 's'; // Random speed
+        star.style.animationName = 'twinkle, move'; // Twinkle and move animations
+        starsContainer.appendChild(star);
+            }
+        }
+
+        window.onload = createStars;
+    </script>
+</head>
+<body>
+<header>
+    <img src="https://i.imgur.com/UUf0e4p.png" alt="Header Image" style="width: 100%; height: auto; object-fit: cover;">
+</header>
+    <div class="stars"></div>
+    <div class="container">
+      
+
+                          <div class="icon-card" onclick="showContent('CAIMEO Cicada Fashion Leggings', 'https://i.ibb.co/rKPbrDL/il-1140x-N-6141662632-ncgb.jpg', 'Click Here to Enlarge Image', 'https://i.imgur.com/1Ua3Pmz.png', 'Link 2', '#', 'Link 3', '#', 'Link 4', '#', 'Link 5', '#', 'Spread positive energy with this “Cool Vibes Only” t-shirt, perfect for casual outings.', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
+            <img src="https://i.ibb.co/rKPbrDL/il-1140x-N-6141662632-ncgb.jpg" alt="T-shirt">
+            <h3>CAIMEO UFO Designer Backpack</h3>
+            <p>Price: $74.99</p>
+        </div>
+      
+                    <div class="icon-card" onclick="showContent('CAIMEO Cicada Fashion Leggings', 'https://i.ibb.co/K6M9jWC/camos232.png', 'Click Here to Enlarge Image', 'https://i.imgur.com/1Ua3Pmz.png', 'Link 2', '#', 'Link 3', '#', 'Link 4', '#', 'Link 5', '#', 'Spread positive energy with this “Cool Vibes Only” t-shirt, perfect for casual outings.', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
+            <img src="https://i.ibb.co/Rgz4X2X/camos23.png" alt="T-shirt">
+            <h3>CAIMEO Cicada Fashion Leggings - Female Womens</h3>
+            <p>Price: $69.99</p>
+        </div>
+      
+              <div class="icon-card" onclick="showContent('CAIMEO Womens 2 in 1 shorts', 'https://i.imgur.com/mWQ9rnE.png', 'Click Here to Enlarge Image', 'https://i.imgur.com/1Ua3Pmz.png', 'Link 2', '#', 'Link 3', '#', 'Link 4', '#', 'Link 5', '#', 'Spread positive energy with this “Cool Vibes Only” t-shirt, perfect for casual outings.', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
+            <img src="https://i.imgur.com/mWQ9rnE.png" alt="T-shirt">
+            <h3>CAIMEO Cicada 3301 Fashion Athletic Women's 2-in-1 Shorts</h3>
+            <p>Price: $69.99</p>
+        </div>
+        <div class="icon-card" onclick="showContent('CAIMEO Hoodie Project Cappuccino Collection', 'https://i.imgur.com/vW1B0I2.png', 'Buy Small 25$', 'https://i.etsystatic.com/48668797/r/il/a41fb8/3687505805/il_fullxfull.3687505805_om81.jpg', 'Link 2', '#', 'Link 3', '#', 'Link 4', '#', 'Link 5', '#', 'A beautifully designed t-shirt capturing the essence of sunset, ideal for summer days.', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
+            <img src="https://i.ibb.co/Sr9gpPm/caimeo1234444.png" alt="T-shirt">
+            <h3>CAIMEO Hoodie Project Cappuccino Collection</h3>
+            <p>Price: $59.99</p>
+        </div>
+                                            <div class="icon-card" onclick="showContent('Unique Customs', 'https://i.ibb.co/SrmTvWG/b643be65-e253-4b2e-9625-ba7ee55342d6.jpg', 'Click Here to Enlarge Image', 'https://i.imgur.com/1Ua3Pmz.png', 'Link 2', '#', 'Link 3', '#', 'Link 4', '#', 'Link 5', '#', 'Just email with Custom Works at moddarkrevolt@gmail.com  and give me all the details and what you willing to work with and what you need. ', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
+            <img src="https://i.ibb.co/SrmTvWG/b643be65-e253-4b2e-9625-ba7ee55342d6.jpg" alt="T-shirt">
+            <h3>Custom T-Shirts, Hoodies, Pants, hats, shoes, anything I can make custom! </h3>
+            <p>Varies $19.99- $199.99</p>
+        </div>
+      
+                                      <div class="icon-card" onclick="showContent('CAIMEO White 11oz Ceramic Mug', 'https://i.ibb.co/1M1tskw/camos2323.png', 'Click Here to Enlarge Image', 'https://i.imgur.com/1Ua3Pmz.png', 'Link 2', '#', 'Link 3', '#', 'Link 4', '#', 'Link 5', '#', 'Spread positive energy with this “Cool Vibes Only” t-shirt, perfect for casual outings.', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
+            <img src="https://i.ibb.co/1M1tskw/camos2323.png" alt="T-shirt">
+            <h3>CAIMEO White 11oz Ceramic Mug</h3>
+            <p>Price: $16.99</p>
+        </div>
+      
+        <div class="icon-card" onclick="showContent('African Ghana Style Mask Heavyweight Unisex Crewneck T-shirt', 'https://i.imgur.com/FeZ0mzV.png', 'Small 24.99$ Buy Now', 'https://www.paypal.com/ncp/payment/PBNCCUXJKGAUS', 'Med 24.99$ Buy now', 'https://www.paypal.com/ncp/payment/W8WFLXEG7TVY6', 'L 24.99$ Buy now', 'https://www.paypal.com/ncp/payment/MQGEQERRHDE8Q', 'XL 24.99$ Buy now', 'https://www.paypal.com/ncp/payment/9GN24NJWRS4RC', '2X 24.99$ Buy now', 'https://www.paypal.com/ncp/payment/55RG2HW4KKXDY', 'A heavy-weight unisex crewneck t-shirt featuring an African Ghana Style Mask design. Perfect for casual wear or as a statement piece.', 'https://www.youtube.com/embed/MCJVn8W0q9w')">
+            <img src="https://i.etsystatic.com/48668797/r/il/87d913/5776893262/il_fullxfull.5776893262_k4mr.jpg" alt="T-shirt">
+            <h3>African Ghana Style Mask T-shirt</h3>
+            <p>Price: $24.99</p>
+        </div>
+        
+        <div class="icon-card" onclick="showContent('I Love CupCakes', 'https://i.imgur.com/1Ua3Pmz.png', 'Click Here to Enlarge Image', '#', 'Link 2', '#', 'Link 3', '#', 'Link 4', '#', 'Link 5', '#', 'This streetwear t-shirt makes a bold statement with its vibrant graphics and comfortable fit.', 'https://www.youtube.com/embed/dQw4w9WgXcQ')">
+            <img src="https://i.imgur.com/1Ua3Pmz.png" alt="T-shirt">
+            <h3>I Love Cupcakes T-shirt</h3>
+            <p>Price: $19.93</p>
+        </div>
+
+    </div>
+<div class="footer">
+    <a href="https://www.etsy.com/shop/LuxiousLabs/" target="_blank" class="button">
+        <img src="https://i.imgur.com/ALUepqd.png" alt="Etsy">
+        <span>Luxious Labs Etsy Shop</span>
+    </a>
+    <a href="https://x.com/J17dark" target="_blank" class="button">
+        <img src="https://i.imgur.com/cel0KtO.png" alt="Twitter">
+        <span>Professor J 17 Twitter</span>
+    </a>
+    <a href="https://discord.gg/vMzZAZBEQM" target="_blank" class="button">
+        <img src="https://i.imgur.com/lBQ5t7i.png" alt="Discord">
+        <span>Discord 3301 Temple</span>
+    </a>
+</div>
+
+    </div>
+    <div class="content-page">
+        <h1></h1>
+        <img src="" alt="Content Image">
+        <p></p>
+        <a class="link1" href="#" target="_blank"></a>
+        <a class="link2" href="#" target="_blank"></a>
+        <a class="link3" href="#" target="_blank"></a>
+        <a class="link4" href="#" target="_blank"></a>
+        <a class="link5" href="#" target="_blank"></a>
+        <iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+        <div class="back-button" onclick="goBack()">Back to Home</div>
+    </div>
+</body>
+</html>
