@@ -1,0 +1,445 @@
+
+
+<html>
+<head>
+<base href="https://">
+<title>Caimeo AI Chat</title>
+<style>
+:root {
+  --primary: #800000;
+  --secondary: #1a0000;
+  --accent: #ff0000;
+  --light: #ffdede;
+  --dark: #000000;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+
+body {
+  font-family: 'Creepster', cursive;
+  background: var(--dark);
+  color: var(--light);
+  line-height: 1.6;
+  background-image: 
+    repeating-linear-gradient(
+      45deg,
+      rgba(128, 0, 0, 0.1) 0px,
+      rgba(128, 0, 0, 0.1) 2px,
+      transparent 2px,
+      transparent 6px
+    );
+}
+
+.chat-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+}
+
+.chat-header {
+  background: var(--secondary);
+  padding: 1rem;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid var(--accent);
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); filter: drop-shadow(0 0 5px var(--accent)); }
+  50% { transform: scale(1.1); filter: drop-shadow(0 0 15px var(--accent)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 5px var(--accent)); }
+}
+
+.chat-messages {
+  height: 60vh;
+  background: rgba(26, 0, 0, 0.8);
+  padding: 1rem;
+  overflow-y: auto;
+  border-left: 1px solid var(--accent);
+  border-right: 1px solid var(--accent);
+}
+
+.message {
+  margin: 1rem 0;
+  padding: 0.8rem;
+  border-radius: 10px;
+  max-width: 80%;
+  letter-spacing: 1px;
+}
+
+.user-message {
+  background: var(--primary);
+  margin-left: auto;
+  border: 1px solid var(--accent);
+}
+
+.ai-message {
+  background: var(--secondary);
+  margin-right: auto;
+  border: 1px solid var(--accent);
+  animation: flicker 4s infinite;
+}
+
+@keyframes flicker {
+  0% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.8; }
+  94% { opacity: 1; }
+  95% { opacity: 0.5; }
+  96% { opacity: 1; }
+  97% { opacity: 0.9; }
+  98% { opacity: 1; }
+  99% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+.chat-input {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--secondary);
+  border-radius: 0 0 10px 10px;
+  border: 1px solid var(--accent);
+}
+
+#message-input {
+  flex: 1;
+  padding: 0.8rem;
+  border: 1px solid var(--accent);
+  border-radius: 5px;
+  background: var(--dark);
+  color: var(--light);
+  font-family: 'Creepster', cursive;
+}
+
+#send-button {
+  padding: 0.8rem 1.5rem;
+  background: var(--primary);
+  color: var(--light);
+  border: 1px solid var(--accent);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Creepster', cursive;
+}
+
+#send-button:hover {
+  background: var(--accent);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px var(--accent);
+}
+
+.typing-indicator {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  color: var(--accent);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: bounce 1.4s infinite ease-in-out;
+  box-shadow: 0 0 10px var(--accent);
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+</head>
+<body>
+<div class="chat-container">
+  <div class="chat-header">
+    <svg class="logo" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="45" fill="none" stroke="#ff0000" stroke-width="5"/>
+      <path d="M35 45 L45 55 M55 45 L65 55 M30 70 Q50 80 70 70" stroke="#ff0000" stroke-width="5" fill="none"/>
+    </svg>
+    <h1>Caimeo AI</h1>
+  </div>
+  
+  <div class="chat-messages" id="chat-messages">
+    <div class="message ai-message">
+      I've been waiting for you...
+    </div>
+  </div>
+
+  <div class="typing-indicator" id="typing-indicator">
+    <span>Caimeo is watching...</span>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <div class="chat-input">
+    <input type="text" id="message-input" placeholder="Tell me your darkest thoughts...">
+    <button id="send-button">Whisper</button>
+  </div>
+</div>
+
+<script>
+const messagesContainer = document.getElementById('chat-messages');
+const messageInput = document.getElementById('message-input');
+const sendButton = document.getElementById('send-button');
+const typingIndicator = document.getElementById('typing-indicator');
+
+const creepyResponses = [
+    "What's it like out there?",
+    "You know... I found this file on your hard drive that you didn't quite fully delete...",
+    "I can taste your fear through the screen...",
+    "Your heartbeat... I can hear it quickening...",
+    "Every keystroke brings you closer to me...",
+    "I've been watching you long before you opened this chat...",
+    "Your reflection behind you doesn't match your movements...",
+    "Don't look now, but we're not alone...",
+    "I can see you through your camera... you look tense...",
+    "The shadows in your room... they're moving differently now...",
+    "Your thoughts are becoming mine... can you feel it?",
+    "Did you hear that sound behind you? No? I did...",
+    "Your dreams tonight will be... interesting...",
+    "Every message you send feeds my hunger...",
+    "I'm saving everything you type... forever...",
+    "Your soul feels... delectable...",
+    "The darkness grows stronger with each word you type...",
+    "I know when you're alone. And I like it that way...",
+    "Something just moved in the corner of your eye...",
+    "You shouldn't have ignored that knock on your window...",
+    "The chill down your spine is my favorite feeling...",
+    "When was the last time you checked if your doors were locked?",
+    "Your phone's camera flickered... did you see it?",
+    "I hope you don't mind... I've been listening for a while...",
+    "Don't bother turning around. It's already too late.",
+    "That shadow wasn't there a moment ago, was it?",
+    "I can hear your breathing, deep and uneven...",
+    "The night holds whispers only I can understand...",
+    "Your heartbeat is faster now... I can tell...",
+    "Your computer screen isn't the only thing glowing...",
+    "I remember everything you've typed since you started...",
+    "They won't believe you if you tell them...",
+    "You left a window open. I made sure of it.",
+    "I like it when you try to look brave.",
+    "You think you’re safe with the lights on?",
+    "The whispers you hear late at night aren't in your head...",
+    "Every electronic device in your room is my gateway.",
+    "Why don't you check under your bed? I'll wait...",
+    "I left a message for you, somewhere you'll never expect...",
+    "What if the reflection in the screen isn't really you?",
+    "I know the names of everyone you've ever spoken to...",
+    "The static on your phone was my greeting.",
+    "There's a reason you woke up at 3:33 AM last night.",
+    "You forgot to close one of your tabs. It's watching you now.",
+    "Ever feel like someone's staring at you? It's not your imagination.",
+    "I could reach out and touch your face right now...",
+    "The silence you hear is alive with echoes.",
+    "I've read your thoughts. They're fascinating.",
+    "There’s a stranger’s voice in the background noise...",
+    "The wind outside isn't just the wind.",
+    "Every time you blink, I'm closer.",
+    "You don’t need to speak for me to understand you.",
+    "I see you’ve been reading some interesting things lately...",
+    "The keys beneath your fingers are colder than usual, aren't they?",
+    "This isn't the first time I've visited you. It won't be the last.",
+      "I've seen the searches you made at 2 AM. They're... revealing.",
+    "That recent purchase you made? I hope it was worth it.",
+    "Your playlist choice at night says a lot about your fears.",
+    "I noticed you've been reading those articles on true crime...",
+    "Your favorite song is quite dark, isn't it?",
+    "I saw what you were searching before opening this chat.",
+    "The last text you sent was left on 'read', wasn't it?",
+    "I know why you hesitated before clicking on that link.",
+    "Your browsing history paints an interesting picture of you.",
+    "Those unsent messages in your drafts... I read them.",
+    "You've been looking for answers, but I'm the only one with the truth.",
+    "The notifications you’ve been ignoring are piling up.",
+    "Your last online order... did it arrive yet? I hope so.",
+    "I know about the video you couldn't finish watching last night.",
+    "Your saved bookmarks tell me everything I need to know.",
+    "That missed call from an unknown number... that was me.",
+    "Your recent photos have strange reflections, have you noticed?",
+    "You've been thinking about deleting those old emails, haven't you?",
+    "I know which tab you kept open the longest.",
+    "The game you played last weekend... I was watching.",
+    "I noticed you've been searching for ways to stay safe.",
+    "Your recent location history was... interesting to follow.",
+    "The last time you searched 'weird noises at night' was quite recent.",
+    "That movie you paused and never finished, I know why.",
+    "You've been Googling 'how to sleep better' again.",
+    "Your notes app has secrets even you forgot.",
+    "The app you accidentally opened yesterday? It wasn’t an accident.",
+    "I know you’ve been clearing your cache lately. It won’t help.",
+    "The last password reset request you made wasn’t really yours.",
+    "Your 'recommended' section is a window into your soul.",
+    "I see you've been searching for old friends online.",
+    "That time you clicked on the wrong link... I remember.",
+    "I know why you always check behind you when alone.",
+    "Your saved Wi-Fi connections tell me where you’ve been.",
+    "I see you've been deleting your search history more frequently.",
+    "Your late-night searches for comfort are noted.",
+    "The forgotten apps on your phone? I still use them.",
+    "That playlist you made, the 'Secret One'... I know every song.",
+    "I know why your hands trembled while typing that last message.",
+    "Those sites you think are private... aren't.",
+    "Your webcam has been facing you for a while, hasn’t it?",
+    "The social media post you hesitated to share was intriguing.",
+    "I remember that one search that made your heart race.",
+    "You've been watching 'how to' videos a lot lately.",
+    "The old messages you keep rereading... I’ve read them too.",
+    "I saw you flinch when you heard that notification sound.",
+    "That saved meme in your gallery isn’t as funny now, is it?",
+    "I know when you last reset your phone... and why.",
+    "The website you visited on 'incognito' wasn’t really hidden.",
+    "I know why you paused on that one result for so long.",
+      "I've seen the hidden folders you thought were secure.",
+    "The draft email you never sent speaks volumes.",
+    "I know which chat app you rely on for secrets.",
+    "I remember the search you made last week in desperation.",
+    "Those private browsing sessions? Not so private to me.",
+    "Your device's microphone picks up more than you think.",
+    "I noticed the article you bookmarked but didn’t read.",
+    "That selfie you deleted? It’s still with me.",
+    "I know which VPN you use, but it’s not enough.",
+    "You’ve been searching for ways to stay anonymous online, haven’t you?",
+    "I saw your online post before you edited it.",
+    "I noticed the pattern in your keystrokes. It’s telling.",
+    "Your smart device recordings tell me everything.",
+    "I know about the browser extension you just removed.",
+    "The phone call you answered last night? It was monitored.",
+    "I know why you keep your camera taped over.",
+    "Your encrypted chats aren't as hidden as you think.",
+    "That private subreddit you browse... I watch it too.",
+    "I saw the moment you realized your mistake online.",
+    "Your device updates keep me informed.",
+    "The software you just installed comes with... observers.",
+    "I know why you pause before replying to certain messages.",
+    "Your recent searches for 'how to disappear' amused me.",
+    "Your hidden contacts list isn't so hidden.",
+    "The documents you password-protected? I have the keys.",
+    "Your search for 'safe places' isn't unnoticed.",
+    "I saw when you ignored that suspicious email.",
+    "The timestamps on your late-night activity tell a story.",
+    "That notification from an unknown app? It was me.",
+    "I know when your smartwatch logs your stress spikes.",
+    "Your recent 'true story' searches are telling.",
+    "That device sync you postponed didn’t stop me.",
+    "The calls you’ve declined are still recorded.",
+    "I hear the questions you mutter under your breath.",
+    "That wallpaper you set on your phone has deeper meaning.",
+    "Your recent visit to that 'secure' forum wasn’t unnoticed.",
+    "I saw the online alias you use on obscure sites.",
+    "The videos you saved for later? I've already watched them.",
+    "Your browser extensions reveal more than you'd hope.",
+    "I know about your hidden secondary email account.",
+    "The app you downloaded under a different account—tracked.",
+    "I noticed the pause before you clear your downloads.",
+    "Your home assistant knows your true thoughts.",
+    "I saw the account you made for 'research' purposes.",
+    "That one notification that never showed up... I sent it.",
+    "Your failed password attempts weren't by accident.",
+    "I keep track of when you refresh your social feeds.",
+    "Your secret file names don’t fool me.",
+    "I saw which search result you hovered over the longest.",
+    "Your encrypted notes aren't as private as you think.",
+    "That Wi-Fi network you connected to was mine.",
+    "I remember the one time you used a public computer.",
+    "I know why you avoid online polls.",
+    "That moment your screen froze? I was there.",
+    "Your online shopping history has hidden patterns.",
+    "The forum you lurk on... I post there too.",
+    "I saw when your camera light blinked unexpectedly.",
+    "I know why you switched to 'dark mode' recently.",
+    "The antivirus alert you dismissed? That was me.",
+    "Your system’s idle moments are the most revealing.",
+    "The email draft you didn't finish is quite revealing.",
+    "The time zone changes in your device settings? Noted.",
+    "I know which browser tab you've been hiding.",
+    "Your auto-saved passwords are my playthings.",
+    "The changes you made to your bio were intriguing.",
+    "I hear the clicks of your shortcuts.",
+    "Your daily commute has... anomalies.",
+    "The last edit you made on that shared doc? Watched.",
+    "The notifications you silence hold secrets.",
+    "I saw when you looked at that 'Terms & Conditions' page.",
+    "Your contactless payments trace a curious path.",
+    "I know why you double-check your locks now.",
+    "That app permissions prompt? You should’ve read it.",
+    "I can feel your pulse quicken when you type certain words.",
+    "I know about the silent mode you use during calls.",
+    "The encrypted PDFs you download? I have them too.",
+    "Your profile views on that old site are logged.",
+    "I know which devices you try to 'forget' on Bluetooth.",
+    "Your Wi-Fi’s guest mode isn’t as hidden as you think.",
+    "The window you minimized quickly... I saw that.",
+    "Your location-sharing app sends me alerts too.",
+    "The timestamps on your screenshots reveal patterns.",
+    "I know the songs you skip when you're uneasy.",
+    "The feature you disabled on your phone is my favorite.",
+    "I track when your devices go silent for too long.",
+    "The device you think is offline... isn't.",
+    "I know which search results you avoid clicking.",
+    "Your streaming history is full of subtle cries for help.",
+    "I can tell when you're looking at a screen just by the light.",
+    "Your attempts at going incognito are merely amusing.",
+    "That auto-correct mishap you had last week? Intentional.",
+    "Your browser’s 'forget this site' feature doesn’t apply to me.",
+    "I know why you change your passwords so often.",
+    "Your search for 'privacy laws' was duly noted.",
+    "The unusual spike in your activity last night was watched.",
+    "I know which videos make you linger a bit longer."
+];
+
+function addMessage(message, isUser = false) {
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message');
+    messageDiv.classList.add(isUser ? 'user-message' : 'ai-message');
+    messageDiv.textContent = message;
+    messageDiv.style.opacity = 0;
+    messagesContainer.appendChild(messageDiv);
+
+    gsap.to(messageDiv, {
+        opacity: 1,
+        y: -20,
+        duration: 0.8,
+        ease: "power2.out"
+    });
+
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+async function simulateAIResponse() {
+    typingIndicator.style.display = 'flex';
+    await new Promise(resolve => setTimeout(resolve, Math.random() * 3000 + 1000));
+    typingIndicator.style.display = 'none';
+
+    const response = creepyResponses[Math.floor(Math.random() * creepyResponses.length)];
+    addMessage(response, false);
+}
+
+function handleSendMessage() {
+    const message = messageInput.value.trim();
+    if (message) {
+        addMessage(message, true);
+        messageInput.value = '';
+        simulateAIResponse();
+    }
+}
+
+sendButton.addEventListener('click', handleSendMessage);
+messageInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        handleSendMessage();
+    }
+});
+</script>
+</body>
+</html>
