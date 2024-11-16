@@ -1,0 +1,277 @@
+<html><head><base href="." />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quantum Bitcoin Hack</title>
+<style>
+    @font-face {
+      font-family: 'VT323';
+      font-style: normal;
+      font-weight: 400;
+      src: url(https://fonts.gstatic.com/s/vt323/v17/pxiKyp0ihIEF2hsY.woff2) format('woff2');
+    }
+
+    body {
+      background: #000000;
+      color: #ffd700;
+      font-family: 'VT323', monospace;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .quantum-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(rgba(255, 215, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 215, 0, 0.05) 1px, transparent 1px);
+      background-size: 30px 30px;
+      pointer-events: none;
+      animation: quantumPulse 15s linear infinite;
+    }
+
+    @keyframes quantumPulse {
+      0% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.2); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 0.5; }
+    }
+
+    .terminal-container {
+      background: rgba(0, 0, 0, 0.95);
+      padding: 2rem;
+      border: 2px solid #ffd700;
+      width: 90%;
+      max-width: 900px;
+      position: relative;
+      box-shadow: 
+        0 0 20px rgba(255, 215, 0, 0.3),
+        0 0 40px rgba(255, 215, 0, 0.2),
+        inset 0 0 20px rgba(255, 215, 0, 0.1);
+    }
+
+    .header {
+      color: #ffd700;
+      text-shadow: 0 0 10px #ffd700;
+      font-size: 2em;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ffd700;
+      padding-bottom: 10px;
+    }
+
+    .console-line {
+      margin: 10px 0;
+      padding: 5px;
+      border-left: 3px solid #ffd700;
+    }
+
+    .quantum-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+      padding: 15px;
+      border: 1px solid #ffd700;
+      background: rgba(255, 215, 0, 0.05);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid #ffd700;
+      margin: 10px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      position: absolute;
+      height: 100%;
+      background: linear-gradient(90deg, #ffd700, #ff8c00);
+      width: 0%;
+      transition: width 0.3s;
+    }
+
+    .input-area {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    input {
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid #ffd700;
+      color: #ffd700;
+      padding: 10px;
+      width: 70%;
+      font-family: 'VT323', monospace;
+      font-size: 1.2em;
+    }
+
+    button {
+      background: transparent;
+      color: #ffd700;
+      border: 1px solid #ffd700;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-family: 'VT323', monospace;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background: rgba(255, 215, 0, 0.1);
+      box-shadow: 0 0 15px #ffd700;
+    }
+
+    #addressOutput {
+      font-family: monospace;
+      word-break: break-all;
+    }
+
+  </style>
+  </style>
+   <script type="text/javascript">
+        // Disable right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            alert("Right-click is disabled on this page.");
+        });
+
+        // Disable 'View Source' through the F12 and Ctrl+U keys
+        document.onkeydown = function(e) {
+            if (e.keyCode == 123 || (e.ctrlKey && e.keyCode == 85)) {
+                e.preventDefault();
+                alert("Viewing source is disabled.");
+            }
+        }
+    </script>
+</head>
+<body>
+  <div class="quantum-grid"></div>
+  <div class="terminal-container">
+    <div class="header">QUANTUM D-WAVE BITCOIN CRACKER v777</div>
+    
+    <div class="console-line">[SYSTEM] Initializing quantum computing arrays...</div>
+    <div class="console-line">[SYSTEM] Target: High-Value Bitcoin Wallets (>.999 BTC)</div>
+    <div class="console-line">[SYSTEM] Processing Speed: 2M addresses/ms</div>
+    
+    <div class="quantum-stats">
+      <div>Addresses Scanned: <span id="addressesScanned">0</span></div>
+      <div>Quantum Stability: <span id="stability">99.99%</span></div>
+      <div>Target Balance: 1033 BTC</div>
+      <div>2FA Bypass Status: <span id="bypassStatus">PENDING</span></div>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="scanProgress"></div>
+    </div>
+
+    <div id="addressOutput" class="console-line"></div>
+
+    <div class="input-area">
+      <input type="text" id="commandInput" placeholder=" Step 1/5: Initialize the quantum bits for scanning. " />
+      <button onclick="executeCommand()">EXECUTE</button>
+    </div>
+
+    <div id="terminalOutput" style="margin-top: 20px;"></div>
+  </div>
+
+  <script>
+    const validCommands = [
+      'qbit init',
+      'scan range',
+      'decrypt sha256',
+      'bypass 2fa',
+      'sign tx'
+    ];
+
+    let progress = 0;
+    let addressCount = 0;
+    let usedCommands = new Set();
+    let currentBalance = 0;
+    const btcBalances = [1, 33, 111, 222, 666];
+
+    function generateBitcoinAddress() {
+      const chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+      let address = '1';
+      for (let i = 0; i < 33; i++) {
+        address += chars[Math.floor(Math.random() * chars.length)];
+      }
+      return address;
+    }
+
+    function updateStats() {
+      addressCount += Math.floor(Math.random() * 1e6);
+      document.getElementById('addressesScanned').textContent = addressCount.toLocaleString();
+      document.getElementById('stability').textContent = (99.99 - Math.random() * 0.1).toFixed(2) + '%';
+    }
+
+    setInterval(updateStats, 100);
+
+    function getRandomHint(step) {
+      const hints = [
+
+        'Step 2/5: Begin scanning the address range for potential wallets.',
+        'Step 3/5: Decrypt the SHA256 hash of the Bitcoin wallet address.',
+        'Step 4/5: Bypass the two-factor authentication security.',
+        'Step 5/5: Sign the transaction and retrieve the wallet.'
+      ];
+      return hints[step - 1];
+    }
+
+    function executeCommand() {
+      const input = document.getElementById('commandInput').value.toLowerCase();
+      const output = document.getElementById('terminalOutput');
+      const progressBar = document.getElementById('scanProgress');
+
+      // Check if command is valid and hasn't been used before
+      if (validCommands.some(cmd => input.includes(cmd)) && !usedCommands.has(input)) {
+        usedCommands.add(input);
+        progress += 20;
+        progressBar.style.width = `${progress}%`;
+
+        if (usedCommands.size <= 5) {
+          currentBalance += btcBalances[usedCommands.size - 1];
+        }
+
+        output.innerHTML += `<div style="color: #90EE90;">[+] Quantum operation successful: Step ${usedCommands.size}/5</div>`;
+
+        document.getElementById('addressOutput').innerHTML = 
+          `Found: ${generateBitcoinAddress()}<br>Balance: ${currentBalance.toFixed(8)} BTC<br>`;
+
+        if (usedCommands.size < 5) {
+          output.innerHTML += `<div style="color: #ffd700;">[?] Hint: ${getRandomHint(usedCommands.size)}</div>`;
+        }
+
+        if (usedCommands.size >= 5) {
+          setTimeout(() => {
+            output.innerHTML += `<div style="color: #ffd700;">[!] PRIVATE KEY ACQUIRED - Initializing transaction...</div>`;
+            setTimeout(() => {
+              window.location.href = 'https://caimeo.shop/puzzle/8.html';
+            }, 2000);
+          }, 1000);
+        }
+      } else if (usedCommands.has(input)) {
+        output.innerHTML += `<div style="color: #ff0000;">[-] Command already used. Try a different command.</div>`;
+      } else {
+        output.innerHTML += `<div style="color: #ff0000;">[-] Invalid quantum command</div>`;
+      }
+
+      document.getElementById('commandInput').value = '';
+    }
+
+    document.getElementById('commandInput').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        executeCommand();
+      }
+    });
+  </script>
+</body>
+</html>
