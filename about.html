@@ -1,4 +1,4 @@
-​
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Button Grid with Neon Effect</title>
@@ -413,3 +413,324 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About</title>
+  <style>
+    /* General Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+
+    .banner-tree {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .scrolling-text {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      white-space: nowrap;
+      transition: transform 0.1s linear;
+      z-index: 3;
+    }
+
+    .translucent-text-box {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: black;
+      font-weight: bold;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .translucent-text {
+      font-size: 36px;
+      padding: 20px;
+      width: 90%;
+      text-align: center;
+      overflow-y: scroll;
+      max-height: 90%;
+      display: block;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .translucent-text::-webkit-scrollbar {
+      display: none;
+    }
+
+    .banner-tree video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    @media (min-width: 768px) {
+      .translucent-text {
+        font-size: 48px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .translucent-text {
+        font-size: 72px;
+      }
+    }
+
+    /* New Section Below the Banner */
+    .section-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 20px;
+      background-color: #f4f4f4;
+      width: 100%;
+    }
+
+    .left-section,
+    .right-section {
+      flex: 1;
+      padding: 20px;
+      text-align: center;
+      min-width: 280px;
+    }
+
+    .left-section h2 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .left-section p {
+      font-size: 16px;
+      color: #555;
+    }
+
+    .right-section img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .right-section small {
+      display: block;
+      font-size: 14px;
+      color: #777;
+    }
+
+    @media (min-width: 768px) {
+      .left-section h2 {
+        font-size: 36px;
+      }
+
+      .left-section p {
+        font-size: 18px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="banner-tree">
+    <div class="translucent-text-box">
+      <div class="translucent-text" id="scrollableText">
+        <!-- Generating 40 lines with specific text on certain lines -->
+        <script>
+          for (let i = 1; i <= 11; i++) {
+            if (i === 2) {
+              document.write("Professor J<br>");
+            } else if (i === 5) {
+              document.write("CAIMEO<br>");
+            } else if (i === 7) {
+              document.write("2024<br>");
+            } else if (i === 11) {
+              document.write("The End<br>");
+            } else {
+              document.write("<br>");  // Blank lines for all other lines
+            }
+          }
+        </script>
+      </div>
+    </div>
+    
+    <video autoplay muted loop>
+      <source src="https://cdn.zajno.com/dev/codepen/cicada/cicada_tree.mov" type='video/mp4; codecs="hvc1"' />
+      <source src="https://cdn.zajno.com/dev/codepen/cicada/cicada_tree.webm" type="video/mp4" />
+    </video>
+  </div>
+
+  <!-- New section below the banner -->
+  <div class="section-container">
+    <!-- Left Section (Header and Text) -->
+    <div class="left-section">
+      <h2>Header Section</h2>
+      <p>This is some text that goes below the header. You can write anything you like here. The text will be styled according to your preferences and will be placed in the left section.</p>
+    </div>
+
+    <!-- Right Section (Image and Small Text) -->
+    <div class="right-section">
+      <img src="https://via.placeholder.com/600x400" alt="Placeholder Image" />
+      <small>This is some small text below the image.</small>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('scroll', function() {
+      const scrollY = window.scrollY;
+      const scrollingText = document.getElementById('scrollableText');
+      
+      // Apply a smooth scroll effect to the translucent text
+      scrollingText.style.transform = `translateY(-${scrollY * 0.3}px)`;
+    });
+  </script>
+
+</body>
+</html>
+
+
+
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .field {
+      margin-bottom: 10px;
+    }
+
+    label {
+      font-size: 16px;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    /* Apply the width of 300px to all text fields */
+    input[type="text"], input[type="email"] {
+      width: 300px; /* Set width to 300px */
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #button:hover {
+      background-color: #45a049;
+    }
+
+    /* Optional: Adding some margin to the bottom of the form fields */
+    .field {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Contact Form</h1>
+  <form id="form">
+    <div class="field">
+      <label for="to_name">Title</label>
+      <input type="text" name="to_name" id="to_name" required>
+    </div>
+    <div class="field">
+      <label for="from_name">Name</label>
+      <input type="text" name="from_name" id="from_name" required>
+    </div>
+    <div class="field">
+      <label for="message">Message</label>
+      <input type="text" name="message" id="message" required>
+    </div>
+    <div class="field">
+      <label for="reply_to">Email</label>
+      <input type="email" name="reply_to" id="reply_to" required>
+    </div>
+
+    <input type="submit" id="button" value="Send Email">
+  </form>
+
+  <!-- EmailJS script -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <script type="text/javascript">
+    // Initialize EmailJS with your user ID
+    emailjs.init('wHJCFPkteyRydzVJ_');
+
+    const btn = document.getElementById('button');
+
+    // Form submit event
+    document.getElementById('form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent form default submit
+
+      btn.value = 'Sending...'; // Change button text to 'Sending...'
+
+      const serviceID = 'default_service'; // Your EmailJS service ID
+      const templateID = 'template_8zfet67'; // Your EmailJS template ID
+
+      // Send the form data using emailjs.sendForm
+      emailjs.sendForm(serviceID, templateID, this)
+        .then(() => {
+          btn.value = 'Send Email'; // Reset button text after sending
+          alert('Sent!'); // Alert on successful email send
+        }, (err) => {
+          btn.value = 'Send Email'; // Reset button text on error
+          alert(JSON.stringify(err)); // Alert on error
+        });
+    });
+  </script>
+
+</body>
+</html>
