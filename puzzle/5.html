@@ -97,6 +97,21 @@
     }
     @keyframes scanline { 0% { top: 0 } 100% { top: 100% } }
   </style>
+   <script type="text/javascript">
+        // Disable right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            alert("Right-click is disabled on this page.");
+        });
+
+        // Disable 'View Source' through the F12 and Ctrl+U keys
+        document.onkeydown = function(e) {
+            if (e.keyCode == 123 || (e.ctrlKey && e.keyCode == 85)) {
+                e.preventDefault();
+                alert("Viewing source is disabled.");
+            }
+        }
+    </script>
 </head>
 <body>
   <div class="terminal-container">
