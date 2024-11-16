@@ -1,0 +1,165 @@
+<!DOCTYPE html><html><head><base href="."><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin File Map</title><style>
+    @font-face {
+      font-family: 'VT323';
+      font-style: normal;
+      font-weight: 400;
+      src: url(https://fonts.gstatic.com/s/vt323/v17/pxiKyp0ihIEF2hsY.woff2) format('woff2');
+    }
+    
+    body {
+      background: #0a0014;
+      color: #00ffff;
+      font-family: 'VT323', monospace;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .grid-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(rgba(33, 0, 77, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(33, 0, 77, 0.1) 1px, transparent 1px);
+      background-size: 20px 20px;
+      pointer-events: none;
+      animation: gridMove 20s linear infinite;
+    }
+
+    .terminal-container {
+      background: rgba(10, 0, 20, 0.95);
+      padding: 2rem;
+      border: 1px solid #0ff;
+      width: 90%;
+      max-width: 900px;
+      position: relative;
+      box-shadow: 
+        0 0 20px rgba(0, 255, 255, 0.2),
+        0 0 40px rgba(255, 0, 255, 0.2),
+        inset 0 0 20px rgba(0, 255, 255, 0.1);
+    }
+
+    .file-link {
+      display: block;
+      color: #0ff;
+      text-decoration: none;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #0ff;
+      transition: all 0.3s;
+    }
+
+    .file-link:hover {
+      background: rgba(0, 255, 255, 0.1);
+      transform: translateX(10px);
+      box-shadow: 0 0 15px #0ff;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: transparent;
+      color: #ff00ff;
+      border: 1px solid #ff00ff;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-family: 'VT323', monospace;
+      transition: all 0.3s;
+    }
+
+    .back-button:hover {
+      background: rgba(255, 0, 255, 0.1);
+      box-shadow: 0 0 15px #ff00ff;
+    }
+
+    .file-content {
+      display: none;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid #0ff;
+      margin-top: 20px;
+      white-space: pre-wrap;
+    }
+
+  </style></head><body>
+  <div class="grid-overlay"></div>
+  <button class="back-button" onclick="window.location.href='https://caimeo.shop/puzzle/6.html'">← BACK</button>
+  
+  <div class="terminal-container">
+    <h2 style="color: #ff00ff; margin-bottom: 20px;">[SYSTEM FILES]</h2>
+    
+    <div class="file-link" onclick="showFile('stealth')">stealth_scan.log</div>
+    <div id="stealth" class="file-content">
+[NMAP STEALTH SCAN RESULTS]
+Starting Nmap 7.92 at 2023-08-10 15:23 UTC
+Interesting ports on target (10.0.14.55):
+PORT     STATE  SERVICE
+22/tcp   open   ssh
+80/tcp   open   http
+443/tcp  open   https
+3306/tcp open   mysql
+    </div>
+
+    <div class="file-link" onclick="showFile('key')">generate_key.sh</div>
+    <div id="key" class="file-content">
+#!/bin/bash
+# RSA Key Generation Script
+# WARNING: Sensitive Data
+ssh-keygen -t rsa -b 4096 -C "admin@cybercore.net"
+chmod 600 ~/.ssh/id_rsa
+echo "Key generated successfully"
+    </div>
+
+    <div class="file-link" onclick="showFile('sql')">sql_dump.sql</div>
+    <div id="sql" class="file-content">
+-- Database: cybercore_main
+-- Dumping structure and data
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    </div>
+
+    <div class="file-link" onclick="showFile('msf')">msfconsole_session.txt</div>
+    <div id="msf" class="file-content">
+msf6 &gt; use exploit/multi/handler
+msf6 exploit(multi/handler) &gt; set payload windows/meterpreter/reverse_tcp
+msf6 exploit(multi/handler) &gt; set LHOST 192.168.1.100
+msf6 exploit(multi/handler) &gt; set LPORT 4444
+msf6 exploit(multi/handler) &gt; run
+[*] Started reverse TCP handler
+    </div>
+
+    <div class="file-link" onclick="showFile('login')">admin_login_attempts.txt</div>
+    <div id="login" class="file-content">
+[2023-08-10 15:20:33] Login attempt from 192.168.1.105 - Failed
+[2023-08-10 15:20:45] Login attempt from 192.168.1.105 - Failed
+[2023-08-10 15:21:02] Login attempt from 192.168.1.105 - Failed
+[2023-08-10 15:21:15] Login attempt from 192.168.1.105 - SUCCESS
+[2023-08-10 15:21:16] Admin session established
+    </div>
+  </div>
+
+  <script>
+    function showFile(id) {
+      // Hide all file contents first
+      document.querySelectorAll('.file-content').forEach(content => {
+        content.style.display = 'none';
+      });
+      
+      // Show the selected file content
+      const content = document.getElementById(id);
+      content.style.display = content.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+</body></html>
