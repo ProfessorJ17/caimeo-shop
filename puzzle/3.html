@@ -1,0 +1,188 @@
+<!DOCTYPE html><html><head><base href="."></head><body>\
+<style>
+  body {
+    background: #1a1a1a;
+    color: #eee;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .game-container {
+    background: #2a2a2a;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,255,255,0.2);
+    text-align: center;
+    max-width: 800px;
+  }
+  
+  .puzzle-area {
+    display: grid;
+    grid-template-columns: repeat(4, 80px);
+    gap: 10px;
+    margin: 20px auto;
+    justify-content: center;
+  }
+  
+  .shape {
+    width: 80px;
+    height: 80px;
+    border: 2px solid cyan;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  
+  .shape:hover {
+    transform: scale(1.1);
+  }
+  
+  .riddle {
+    font-size: 1.2em;
+    margin: 20px 0;
+    color: #0ff;
+    line-height: 1.5;
+  }
+  
+  .input-area {
+    margin: 20px 0;
+  }
+  
+  input {
+    background: #333;
+    border: 1px solid cyan;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    width: 200px;
+    margin-right: 10px;
+  }
+  
+  button {
+    background: cyan;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  button:hover {
+    background: #0ff;
+    transform: scale(1.05);
+  }
+  
+  .message {
+    min-height: 20px;
+    color: #0ff;
+  }
+
+  .hint {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 20px;
+  }
+
+  .binary-text {
+    font-family: monospace;
+    color: #0f0;
+    margin: 10px 0;
+    font-size: 0.8em;
+  }
+</style>
+
+
+<div class="game-container">
+  <h1>Level 3: Binary Sequence Puzzle</h1>
+  <div class="riddle">
+    Four shapes hold the key to a binary sequence.<br>
+    Each shape's position represents a power of 2.<br>
+    When lit (selected), they contribute their binary value.<br>
+    Convert the correct binary sequence to decimal.<br>
+    Then multiply by the number of sides in a hexagon.<br>
+    What's the final number?
+  </div>
+  <div class="binary-text" id="binaryDisplay">0000</div>
+  <div class="puzzle-area">
+    <svg class="shape" viewBox="0 0 100 100" onclick="selectShape(0)">
+      <circle cx="50" cy="50" r="40" fill="none" stroke="cyan"></circle>
+    </svg>
+    <svg class="shape" viewBox="0 0 100 100" onclick="selectShape(1)">
+      <rect x="10" y="10" width="80" height="80" fill="none" stroke="cyan"></rect>
+    </svg>
+    <svg class="shape" viewBox="0 0 100 100" onclick="selectShape(2)">
+      <polygon points="50,10 90,90 10,90" fill="none" stroke="cyan"></polygon>
+    </svg>
+    <svg class="shape" viewBox="0 0 100 100" onclick="selectShape(3)">
+      <polygon points="50,10 90,40 90,80 50,90 10,80 10,40" fill="none" stroke="cyan"></polygon>
+    </svg>
+  </div>
+  <div class="input-area">
+    <input type="number" id="answer" placeholder="Enter your answer">
+    <button onclick="checkAnswer()">Submit</button>
+  </div>
+  <div class="message" id="message"></div>
+  <div class="hint">Hint: Think binary positions - 8,4,2,1</div>
+</div>
+
+<script>
+let binarySequence = [0, 0, 0, 0];
+const solution = 90; // Binary 1111 (15) * 6 (hexagon sides) = 90
+
+function selectShape(position) {
+  // Toggle binary value
+  binarySequence[position] = binarySequence[position] === 0 ? 1 : 0;
+  
+  // Update shape colors
+  const shapes = document.querySelectorAll('.shape');
+  shapes[position].querySelector('*').style.stroke = binarySequence[position] === 1 ? '#0f0' : 'cyan';
+  
+  // Update binary display
+  updateBinaryDisplay();
+}
+
+function updateBinaryDisplay() {
+  const binaryString = binarySequence.join('');
+  document.getElementById('binaryDisplay').textContent = binaryString;
+}
+
+function checkAnswer() {
+  const userAnswer = parseInt(document.getElementById('answer').value);
+  const message = document.getElementById('message');
+  
+  if (userAnswer === solution) {
+    message.textContent = "Excellent! You've cracked the binary-hexagon puzzle! Redirecting to next challenge...";
+    message.style.color = '#0f0';
+    
+    // Celebration animation
+    document.querySelectorAll('.shape').forEach(shape => {
+      shape.style.animation = 'pulse 1s ease-in-out infinite';
+    });
+    
+    // Redirect after a short delay
+    setTimeout(() => {
+      window.location.href = 'https://caimeo.shop/puzzle/4.html';
+    }, 2000);
+  } else {
+    message.textContent = "Not quite right. Remember: binary to decimal, then multiply by hexagon sides!";
+    message.style.color = '#f00';
+  }
+}
+
+// Add pulse animation
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+`;
+document.head.appendChild(style);
+</script>
+
+</body></html>
