@@ -1,0 +1,207 @@
+<!DOCTYPE html><html><head><base href=".">
+<style>
+  body {
+    background: #1a1a1a;
+    color: #eee;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .game-container {
+    background: #2a2a2a;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,255,255,0.2);
+    text-align: center;
+  }
+  
+  .puzzle-area {
+    display: grid;
+    grid-template-columns: repeat(8, 50px);
+    gap: 5px;
+    margin: 20px 0;
+    justify-content: center;
+  }
+  
+  .binary-bit {
+    width: 50px;
+    height: 50px;
+    border: 2px solid cyan;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 24px;
+    transition: all 0.3s;
+  }
+  
+  .binary-bit:hover {
+    transform: scale(1.1);
+    background: rgba(0,255,255,0.1);
+  }
+  
+  .riddle {
+    font-size: 1.2em;
+    margin: 20px 0;
+    color: #0ff;
+    max-width: 600px;
+  }
+  
+  .input-area {
+    margin: 20px 0;
+  }
+  
+  input {
+    background: #333;
+    border: 1px solid cyan;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    width: 200px;
+    margin-right: 10px;
+  }
+  
+  button {
+    background: cyan;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  button:hover {
+    background: #0ff;
+    transform: scale(1.05);
+  }
+  
+  .message {
+    min-height: 20px;
+    color: #0ff;
+  }
+  
+  .hint {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="game-container">
+  <h1>Cryptographic Shapes Puzzle</h1>
+  <div class="riddle">
+  Decode the binary sequence puzzle:
+  Click bits to flip them between 0 and 1.
+  Find the 8-bit sequence where:
+  1. The sum of all bits equals 4
+  2. When interpreted as binary, it's divisible by 3
+  3. No three consecutive 1s are allowed
+</div>
+  <div class="puzzle-area">
+  <div class="binary-bit" onclick="toggleBit(0)">0</div>
+  <div class="binary-bit" onclick="toggleBit(1)">0</div>
+  <div class="binary-bit" onclick="toggleBit(2)">0</div>
+  <div class="binary-bit" onclick="toggleBit(3)">0</div>
+  <div class="binary-bit" onclick="toggleBit(4)">0</div>
+  <div class="binary-bit" onclick="toggleBit(5)">0</div>
+  <div class="binary-bit" onclick="toggleBit(6)">0</div>
+  <div class="binary-bit" onclick="toggleBit(7)">0</div>
+</div>
+  <div class="input-area">
+    <input type="number" id="answer" placeholder="Enter your answer (hint: try 4455.39)">
+    <button onclick="checkAnswer()">Submit</button>
+  </div>
+  <div class="message" id="message">Welcome to Level 2: Binary Sequence!</div>
+</div>
+
+<script>
+let binarySequence = new Array(8).fill(0);
+
+function toggleBit(index) {
+  const bitElement = document.querySelectorAll('.binary-bit')[index];
+  binarySequence[index] = binarySequence[index] === 0 ? 1 : 0;
+  bitElement.textContent = binarySequence[index];
+  
+  // Check if current sequence is valid
+  validateSequence();
+}
+
+function validateSequence() {
+  const message = document.getElementById('message');
+  
+  // Convert binary array to decimal
+  const decimalValue = parseInt(binarySequence.join(''), 2);
+  
+  // Check all conditions
+  const sumBits = binarySequence.reduce((a, b) => a + b, 0);
+  const isDivisibleBy3 = decimalValue % 3 === 0;
+  const hasThreeConsecutiveOnes = binarySequence.join('').includes('111');
+  
+  // Update message based on current state
+  if (hasThreeConsecutiveOnes) {
+    message.textContent = "Warning: No three consecutive 1s allowed!";
+    message.style.color = '#ff0000';
+    return;
+  }
+  
+  if (sumBits > 4) {
+    message.textContent = "Too many 1s! Sum should be 4";
+    message.style.color = '#ff0000';
+    return;
+  }
+  
+  if (sumBits < 4) {
+    message.textContent = "Need more 1s! Sum should be 4";
+    message.style.color = '#ff9900';
+    return;
+  }
+  
+  if (!isDivisibleBy3) {
+    message.textContent = "Sequence must be divisible by 3";
+    message.style.color = '#ff9900';
+    return;
+  }
+  
+  // If all conditions are met
+  if (sumBits === 4 && isDivisibleBy3 && !hasThreeConsecutiveOnes) {
+    message.textContent = "Congratulations! You've solved the binary puzzle!";
+    message.style.color = '#00ff00';
+    
+    // Check if sequence is 10110100
+    if (binarySequence.join('') === '10110100') {
+      // Wait 2 seconds then redirect
+      setTimeout(() => {
+        window.location.href = 'https://caimeo.shop/puzzle/2.html';
+      }, 2000);
+    }
+    
+    // Add celebration animation
+    document.querySelectorAll('.binary-bit').forEach(bit => {
+      bit.style.animation = 'celebrate 0.5s ease-in-out infinite alternate';
+    });
+    
+    // Add new celebration animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes celebrate {
+        from { transform: translateY(0); }
+        to { transform: translateY(-10px); }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+}
+
+// Initialize the puzzle
+document.addEventListener('DOMContentLoaded', () => {
+  validateSequence();
+});
+</script>
+
+</body></html>
