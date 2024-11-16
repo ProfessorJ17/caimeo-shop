@@ -425,20 +425,16 @@
 
 
 
-
-
-
-
 <html>
 <head>
 <base href="https://">
 <title>Caimeo AI Chat</title>
 <style>
 :root {
-  --primary: #800000;
-  --secondary: #1a0000;
-  --accent: #ff0000;
-  --light: #ffdede;
+  --primary: #9D00FF; /* Neon pink */
+  --secondary: #000000; /* Dark purple for contrast */
+  --accent: #00FFFF; /* Lighter neon pink */
+  --light: #ff1493; /* Soft pink */
   --dark: #000000;
 }
 
@@ -454,8 +450,8 @@ body {
   background-image: 
     repeating-linear-gradient(
       45deg,
-      rgba(128, 0, 0, 0.1) 0px,
-      rgba(128, 0, 0, 0.1) 2px,
+      rgba(255, 20, 147, 0.1) 0px,
+      rgba(255, 20, 147, 0.1) 2px,
       transparent 2px,
       transparent 6px
     );
@@ -465,7 +461,7 @@ body {
   max-width: 800px;
   margin: 2rem auto;
   padding: 1rem;
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
 }
 
 .chat-header {
@@ -492,7 +488,7 @@ body {
 
 .chat-messages {
   height: 60vh;
-  background: rgba(26, 0, 0, 0.8);
+  background: rgba(51, 0, 51, 0.8);
   padding: 1rem;
   overflow-y: auto;
   border-left: 1px solid var(--accent);
@@ -592,8 +588,8 @@ body {
 <div class="chat-container">
   <div class="chat-header">
     <svg class="logo" viewBox="0 0 100 100">
-      <circle cx="50" cy="50" r="45" fill="none" stroke="#ff0000" stroke-width="5"/>
-      <path d="M35 45 L45 55 M55 45 L65 55 M30 70 Q50 80 70 70" stroke="#ff0000" stroke-width="5" fill="none"/>
+      <circle cx="50" cy="50" r="45" fill="none" stroke="#ff69b4" stroke-width="5"/>
+      <path d="M35 45 L45 55 M55 45 L65 55 M30 70 Q50 80 70 70" stroke="#ff69b4" stroke-width="5" fill="none"/>
     </svg>
     <h1>Caimeo AI</h1>
   </div>
@@ -622,6 +618,7 @@ const messagesContainer = document.getElementById('chat-messages');
 const messageInput = document.getElementById('message-input');
 const sendButton = document.getElementById('send-button');
 const typingIndicator = document.getElementById('typing-indicator');
+
 
 const creepyResponses = [
     "What's it like out there?",
@@ -825,6 +822,11 @@ const creepyResponses = [
     "Your search for 'privacy laws' was duly noted.",
     "The unusual spike in your activity last night was watched.",
     "I know which videos make you linger a bit longer."
+
+
+
+
+
 ];
 
 function addMessage(message, isUser = false) {
