@@ -1,14 +1,15 @@
 html
-  font-size: calc(10000vw / 1440)
+  font-size: calc(10000vw / 1920)
   @media (min-aspect-ratio: 1440 / 1080)
     font-size: calc(10000vh / 1080)
 
 :root
-  --main-font: "WorkSans", sans-serif
+  --main-font: "Work Sans", sans-serif
   --color-black: #000000
   --color-black-light: #181b1a
   --color-light-purity: #E0D8EB
   --color-fat-tuesday: #341F37
+  --color-bashful-pancy: #D8CEE6
   --color-sugar-crystal: #F9F5FF
   --color-white: #ffffff
 
@@ -23,6 +24,8 @@ main
     overflow-x: hidden
 
 body
+    width: 100%
+    height: 100%
     background: var(--color-light-purity)
     font-family: var(--main-font)
     -webkit-font-smoothing: antialiased
@@ -30,23 +33,25 @@ body
     text-rendering: optimizeLegibility
     &::before
         content: ''
-        position: absolute
+        position: fixed
         top: 0
         left: 0
         width: 100%
         height: 100%
-        background: url('https://cdn.zajno.com/dev/codepen/cicada/texture.png') repeat
+        background-color: var(--color-light-purity)
+        background-image: url('https://cdn.zajno.com/dev/codepen/cicada/texture.png')
+        background-repeat: repeat
         mix-blend-mode: soft-light
     &::after
         content: ''
-        position: absolute
-        bottom: 0
+        position: fixed
+        bottom: -3.76rem
         left: 50%
-        width: 120vw
-        height: 50vw
+        width: 22.42rem
+        height: 8.86rem
         background: var(--color-sugar-crystal)
-        filter: blur(250px)
-        transform: translateY(40%) translateX(-50%)
+        filter: blur(2.5rem)
+        transform: translateX(-50%)
         z-index: 0
     &.mobile-menu-open
         overflow: hidden
@@ -56,6 +61,7 @@ body
 main
     position: relative
     width: 100%
+    height: 10000px
     flex: 1 0 auto
 
 .header
@@ -239,224 +245,299 @@ button[type='submit']
 
 #main
     padding: .1rem
-
+    
 .banner
-    position: fixed
-    top: 0
-    left: 0
-    width: 100%
-    max-width: 100vw
-    height: 100%
-    display: flex
-    align-items: center
-    justify-content: center
-    padding: 0 .4rem
-    z-index: 1
-    &-slide
-        z-index: 2
-    &-title
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  max-width: 100vw
+  height: 100%
+  max-height: 100vh
+  display: flex
+  align-items: center
+  justify-content: center
+  padding: 0 0.4rem
+  overflow: hidden
+  z-index: 1
+  &-slide
+    z-index: 2
+  &-title
+    position: absolute
+    top: 1.95rem
+    max-width: 9.57rem
+    font-size: 1rem
+    line-height: 1.1
+    letter-spacing: -0.07rem
+    text-align: center
+    z-index: 3
+    span
+      position: relative
+      display: inline-block
+      &::before
+        content: ""
         position: absolute
-        top: 1.95rem
-        max-width: 9.57rem
-        font-size: 1rem
-        line-height: 1.1
-        letter-spacing: -.05rem
-        text-align: center
-        z-index: 3
-        span
-            position: relative
-            display: inline-block
-            &::before
-                content: ''
-                position: absolute
-                bottom: -.04rem
-                left: 0
-                width: 100%
-                border-bottom: .04rem solid currentColor
-                transform: rotate(-3deg)
-    &-subtitle
-        position: absolute
-        top: 1.8rem
-        font-size: 1rem
-        line-height: 1.1
-        letter-spacing: -.05rem
-        text-align: center
-        opacity: 0
-        z-index: 1
-    &-text
-        position: absolute
-        top: 1.2rem
-        max-width: 6.87rem
-        font-size: .42rem
-        line-height: 1.1
-        letter-spacing: -.027rem
-        opacity: 0
-        z-index: 1
-    &-tree
-        position: absolute
-        bottom: 0
-        left: 50%
-        width: max-content
-        height: 81vh
-        transform: translateX(-50%)
-        transform-origin: bottom
-        z-index: 2
-        img, video
-            display: block
-            width: auto
-            height: 100%
-
-
-.wings
-    position: fixed
-    top: 0
-    left: 0
-    width: 100%
-    max-width: 100vw
-    height: 100%
-    max-height: 100vh
-    overflow: hidden
-    &-svg
-        position: absolute
-        left: 50%
-        bottom: .95rem
-        width: 95vw
-        height: auto
-        transform: translateX(-50%)
-        z-index: 3
-        svg
-            width: 100%
-            height: auto
-    &-hidden
-        position: absolute
-        top: 0
+        bottom: -0.04rem
         left: 0
         width: 100%
-        height: auto
+        border-bottom: 4px solid currentColor
+        transform: rotate(-3deg)
+  &-subtitle
+    position: absolute
+    top: 2.8rem
+    font-size: 1rem
+    line-height: 1.1
+    letter-spacing: -0.07rem
+    text-align: center
+    opacity: 0
+    z-index: 1
+  &-text
+    position: absolute
+    top: 1.89rem
+    max-width: 6.87rem
+    font-size: 0.42rem
+    line-height: 1.1
+    letter-spacing: -0.0295rem
+    opacity: 0
+    z-index: 1
+  &-tree
+    position: absolute
+    bottom: 0
+    left: 50%
+    width: 19rem
+    height: auto
+    transform: translateX(-50%)
+    transform-origin: bottom
+    z-index: 2
+    img, video
+      display: block
+      width: 100%
 
-.tree
-    position: fixed
+.wings
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  max-width: 100vw
+  height: 100%
+  max-height: 100vh
+  overflow: hidden
+  &-svg
+    position: absolute
+    left: 50%
+    bottom: 0.95rem
+    width: 95vw
+    height: auto
+    transform: translateX(-50%)
+    z-index: 3
+    svg
+      width: 100%
+      height: auto
+  &-hidden
+    position: absolute
     top: 0
     left: 0
     width: 100%
-    max-width: 100vw
-    height: 100%
-    max-height: 100vh
-    overflow: hidden
+    height: auto
+
+.tree
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  max-width: 100vw
+  height: 100%
+  max-height: 100vh
+  overflow: hidden
+  z-index: 1
+  &-name
+    position: absolute
+    top: .92rem
+    left: 50%
+    font-size: .51rem
+    letter-spacing: -.0357rem
+    opacity: 0
+    transform: translateX(-50%)
+  &-wrapp
+    position: absolute
+    top: 3.32rem
+    left: 50%
+    display: block
+    width: 9.5rem
+    transform: translateX(-50%)
     z-index: 1
-    &-wrapp
-        position: absolute
-        top: 3.32rem
-        left: 50%
-        display: block
-        width: 9.50rem
-        transform: translateX(-50%)
-        z-index: 1
-    &-svg
-        display: none
+  &-svg
+    display: none
+    width: 100%
+    height: auto
+  &-circle
+    position: absolute
+    top: 1rem
+    left: 50%
+    width: 8.62rem
+    height: auto
+    aspect-ratio: 1/1
+    box-shadow: 0 0 0 1px var(--color-fat-tuesday)
+    border-radius: 50%
+    transform: translateX(-50%) scale(0)
+    &__small
+      box-shadow: 0 0 0 3px var(--color-fat-tuesday)
+  &-title
+    position: absolute
+    max-width: 2rem
+    font-size: 0.2rem
+    font-weight: 400
+    letter-spacing: -0.009rem
+    padding: 0.18rem
+    cursor: pointer
+    z-index: 2
+    span
+      opacity: 0
+      transform: translateY(100%)
+    &_top
+      top: -0.25rem
+      left: 50%
+      transform: translate(-50%, -100%)
+      transform-origin: bottom center
+    &_left-top
+      top: 0.57rem
+      right: 6.11rem
+      transform: translate(-100%, -50%)
+      transform-origin: bottom right
+    &_left
+      top: 2.13rem
+      left: -0.1rem
+      transform: translate(-100%, 0%)
+      transform-origin: bottom right
+    &_right-top
+      top: 0.57rem
+      left: 5.69rem
+      transform: translate(100%, -50%)
+      transform-origin: bottom left
+    &_right
+      top: 2.13rem
+      right: -0.1rem
+      transform: translate(100%, 0%)
+      transform-origin: bottom left
+    &__decor
+      position: absolute
+      top: 50%
+      width: 0.08rem
+      height: auto
+      transform: translateY(-50%)
+      opacity: 0
+      &.left
+        left: 0.06rem
+      &.right
+        right: 0.06rem
+  &-ball
+    position: absolute
+    width: 0.14rem
+    height: 0.14rem
+    cursor: pointer
+    aspect-ratio: 1/1
+    opacity: 0
+    z-index: 2
+    &_top
+      top: 0
+      left: 50%
+      transform: translate(-50%, -100%)
+    &_left-top
+      top: 0.6rem
+      right: 7.39rem
+      transform: translate(0%, -50%)
+    &_left
+      top: 2.5rem
+      left: 0
+      transform: translate(-50%, -100%)
+    &_right-top
+      top: 0.6rem
+      left: 7.39rem
+      transform: translate(0%, -50%)
+    &_right
+      top: 2.5rem
+      right: 0
+      transform: translate(50%, -100%)
+    span
+      position: absolute
+      top: 0
+      left: 0
+      display: block
+      width: 100%
+      aspect-ratio: 1/1
+      background: var(--color-fat-tuesday)
+      border-radius: 50%
+      pointer-events: none
+      &:not(:first-child)
+        opacity: 0
+  &-wings
+    position: absolute
+    bottom: -1.22rem
+    left: 50%
+    width: 15.15rem
+    height: 5.04rem
+    max-height: 100vh
+    transform: translateX(-50%)
+    opacity: 0
+    z-index: 1
+    &__item
+      position: absolute
+      img
         width: 100%
         height: auto
-    &-circle
-        position: absolute
-        top: 1.00rem
-        left: 50%
-        width: 8.62rem
-        height: auto
-        aspect-ratio: 1/1
-        box-shadow: 0 0 0 1px var(--color-fat-tuesday)
-        border-radius: 50%
-        transform: translateX(-50%) scale(0)
-        &__small
-            box-shadow: 0 0 0 3px var(--color-fat-tuesday)
-    &-title
-        position: absolute
-        max-width: 1.65rem
-        font-size: .18rem
-        font-weight: 400
-        letter-spacing: -.009rem
-        padding: 0.18rem 0
-        opacity: 0
-        cursor: pointer
-        &_top
-            top: -.07rem
-            left: 50%
-            transform: translate(-50%, -100%)
-            transform-origin: bottom center
-        &_left-top
-            top: .48rem
-            right: 6.75rem
-            transform: translate(-100%, -50%)
-            transform-origin: bottom right
-        &_left
-            top: 2.42rem
-            left: -.35rem
-            transform: translate(-100%, -100%)
-            transform-origin: bottom right
-        &_right-top
-            top: .48rem
-            left: 6.40rem
-            transform: translate(100%, -50%)
-            transform-origin: bottom left
-        &_right
-            top: 2.57rem
-            right: -.35rem
-            transform: translate(100%, -100%)
-            transform-origin: bottom left
-        &__decor
-            position: absolute
-            top: 50%
-            width: .08rem
-            height: auto
-            transform: translateY(-50%)
-            opacity: 0
-            &.left
-                left: -.12rem
-            &.right
-                right: -.12rem
-    &-ball
-        position: absolute
-        width: .14rem
-        height: .14rem
-        aspect-ratio: 1/1
-        opacity: 0
-        z-index: 2
-        &_top
-            top: 0
-            left: 50%
-            transform: translate(-50%, -50%)
-        &_left-top
-            top: .66rem
-            right: 7.37rem
-            transform: translate(0%, -50%)
-        &_left
-            top: 2.50rem
-            left: 0
-            transform: translate(-50%, -100%)
-        &_right-top
-            top: .66rem
-            left: 7.37rem
-            transform: translate(0%, -50%)
-        &_right
-            top: 2.50rem
-            right: 0
-            transform: translate(50%, -100%)
-        span
-            position: absolute
-            top: 0
-            left: 0
-            display: block
-            width: 100%
-            aspect-ratio: 1/1
-            background: var(--color-fat-tuesday)
-            border-radius: 50%
-    &-wings
-        position: absolute
-        bottom: -.77rem
-        left: 50%
-        width: 13.60rem
-        height: auto
-        max-height: 100vh
-        transform: translateX(-50%)
-        opacity: 0
-        overflow: hidden
-        z-index: 1
+    &__center
+      position: absolute
+      top: 1.28rem
+      left: 50%
+      width: 1.34rem
+      transform: translateX(-50%)
+    &__top-left
+      position: absolute
+      top: 0
+      left: 0
+      width: 7.05rem
+      transform-origin: center right
+    &__top-right
+      position: absolute
+      top: 0
+      right: 0
+      width: 7.05rem
+      transform-origin: center left
+    &__bottom-left
+      position: absolute
+      top: 2.586rem
+      left: 3.496rem
+      width: 3.9rem
+      transform-origin: top right
+    &__bottom-right
+      position: absolute
+      top: 2.586rem
+      right: 3.496rem
+      width: 3.9rem
+      transform-origin: top left
+      
+.sound
+  position: fixed
+  bottom: .63rem
+  right: .75rem
+  display: flex
+  align-items: center
+  justify-content: center
+  gap: .045rem
+  width: .78rem
+  aspect-ratio: 1/1
+  background: var(--color-bashful-pancy)
+  border: none
+  border-radius: 50%
+  cursor: pointer
+  overflow: hidden
+  z-index: 100
+  &-item
+    width: 0.05rem
+    height: 0.17rem
+    border-radius: 0.03rem
+    background: var(--color-fat-tuesday)
+    &:nth-child(odd)
+      height: 0.27rem
+    
+  
