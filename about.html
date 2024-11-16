@@ -3,102 +3,200 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Genomics Products</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Responsive Interactive Banner</title>
+  <style>
+    /* General Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+
+    .banner-tree {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .scrolling-text {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      white-space: nowrap;
+      transition: transform 0.1s linear;
+      z-index: 3;
+    }
+
+    .translucent-text-box {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: black;
+      font-weight: bold;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .translucent-text {
+      font-size: 36px;
+      padding: 20px;
+      width: 90%;
+      text-align: center;
+      overflow-y: scroll;
+      max-height: 90%;
+      display: block;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .translucent-text::-webkit-scrollbar {
+      display: none;
+    }
+
+    .banner-tree video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    @media (min-width: 768px) {
+      .translucent-text {
+        font-size: 48px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .translucent-text {
+        font-size: 72px;
+      }
+    }
+
+    /* New Section Below the Banner */
+    .section-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 20px;
+      background-color: #f4f4f4;
+      width: 100%;
+    }
+
+    .left-section,
+    .right-section {
+      flex: 1;
+      padding: 20px;
+      text-align: center;
+      min-width: 280px;
+    }
+
+    .left-section h2 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .left-section p {
+      font-size: 16px;
+      color: #555;
+    }
+
+    .right-section img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .right-section small {
+      display: block;
+      font-size: 14px;
+      color: #777;
+    }
+
+    @media (min-width: 768px) {
+      .left-section h2 {
+        font-size: 36px;
+      }
+
+      .left-section p {
+        font-size: 18px;
+      }
+    }
+
+  </style>
 </head>
 <body>
-  <header id="header" class="header">
-    <div class="header-wrapp">
-      <div class="header-left">
-        <div class="header-main">
-          <div class="header-logo">
-            <img src="https://cdn.zajno.com/dev/codepen/cicada/cicada-logo.svg" alt="Cicada Logo">
-          </div>
-          <div class="header-title">the — genomics products.</div>
-        </div>
-        <div class="header-search">
-          <div class="header-search__btn">
-            <img src="https://cdn.zajno.com/dev/codepen/cicada/search.svg" alt="Search Icon">
-          </div>
-          <input type="text" class="header-search__input" placeholder="Search">
-        </div>
-      </div>
-      <div class="header-right">
-        <button class="header-contact">Get in touch</button>
-        <button class="header-menu">
-          <img src="https://cdn.zajno.com/dev/codepen/cicada/menu-union.svg" alt="Menu Icon">
-        </button>
+
+  <div class="banner-tree">
+    <div class="translucent-text-box">
+      <div class="translucent-text" id="scrollableText">
+        <!-- Generating 40 lines with specific text on certain lines -->
+        <script>
+          for (let i = 1; i <= 40; i++) {
+            if (i === 2) {
+              document.write("Professor J<br>");
+            } else if (i === 10) {
+              document.write("CAIMEO<br>");
+            } else if (i === 30) {
+              document.write("2024<br>");
+            } else if (i === 40) {
+              document.write("The End<br>");
+            } else {
+              document.write("<br>");  // Blank lines for all other lines
+            }
+          }
+        </script>
       </div>
     </div>
-  </header>
+    
+    <video autoplay muted loop>
+      <source src="https://cdn.zajno.com/dev/codepen/cicada/cicada_tree.mov" type='video/mp4; codecs="hvc1"' />
+      <source src="https://cdn.zajno.com/dev/codepen/cicada/cicada_tree.webm" type="video/mp4" />
+    </video>
+  </div>
 
-  <main id="main" data-page-id="home">
-    <section class="banner">
-      <div class="banner-title banner-slide split">Discovering the future of <span>genomics.</span></div>
-      <div class="banner-subtitle banner-slide split">25 years of innovation</div>
-      <div class="banner-text banner-slide split">Our mission is to improve human health by unlocking the power of the genome. We believe that, together, we can use genomics to build a stronger world for the greater good.</div>
-      <div class="banner-tree">
-        <video autoplay muted loop>
-          <source src="https://cdn.zajno.com/dev/codepen/cicada/cicada_tree.mov" type='video/mp4; codecs="hvc1"'>
-          <source src="https://cdn.zajno.com/dev/codepen/cicada/cicada_tree.webm" type="video/mp4">
-        </video>
-      </div>
-    </section>
+  <!-- New section below the banner -->
+  <div class="section-container">
+    <!-- Left Section (Header and Text) -->
+    <div class="left-section">
+      <h2>Header Section</h2>
+      <p>This is some text that goes below the header. You can write anything you like here. The text will be styled according to your preferences and will be placed in the left section.</p>
+    </div>
 
-    <section class="wings">
-      <div class="wings-svg"></div>
-    </section>
+    <!-- Right Section (Image and Small Text) -->
+    <div class="right-section">
+      <img src="https://via.placeholder.com/600x400" alt="Placeholder Image" />
+      <small>This is some small text below the image.</small>
+    </div>
+  </div>
 
-    <section class="tree">
-      <div class="tree-wrapp">
-        <svg class="tree-svg" viewBox="0 0 2556 3440" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- SVG paths -->
-        </svg>
-        <div class="tree-circle tree-circle__big"></div>
-        <div class="tree-circle tree-circle__small"></div>
+  <script>
+    window.addEventListener('scroll', function() {
+      const scrollY = window.scrollY;
+      const scrollingText = document.getElementById('scrollableText');
+      
+      // Apply a smooth scroll effect to the translucent text
+      scrollingText.style.transform = `translateY(-${scrollY * 0.3}px)`;
+    });
+  </script>
 
-        <!-- Tree Titles -->
-        <div class="tree-title tree-title_left" data-position="left">
-          <!-- Title structure -->
-          Cancer
-        </div>
-        <div class="tree-title tree-title_left-top" data-position="left-top">
-          Microbiology
-        </div>
-        <div class="tree-title tree-title_top" data-position="top">
-          Agrigenomics
-        </div>
-        <div class="tree-title tree-title_right-top" data-position="right-top">
-          Complex Disease
-        </div>
-        <div class="tree-title tree-title_right" data-position="right">
-          Cellular and Molecular Biology
-        </div>
-
-        <!-- Tree Balls -->
-        <div class="tree-ball tree-ball_left" data-position="left">
-          <span class="tree-ball__1"></span><span class="tree-ball__2"></span><span class="tree-ball__3"></span>
-        </div>
-        <div class="tree-ball tree-ball_left-top" data-position="left-top">
-          <span class="tree-ball__1"></span><span class="tree-ball__2"></span><span class="tree-ball__3"></span>
-        </div>
-        <div class="tree-ball tree-ball_top" data-position="top">
-          <span class="tree-ball__1"></span><span class="tree-ball__2"></span><span class="tree-ball__3"></span>
-        </div>
-        <div class="tree-ball tree-ball_right-top" data-position="right-top">
-          <span class="tree-ball__1"></span><span class="tree-ball__2"></span><span class="tree-ball__3"></span>
-        </div>
-        <div class="tree-ball tree-ball_right" data-position="right">
-          <span class="tree-ball__1"></span><span class="tree-ball__2"></span><span class="tree-ball__3"></span>
-        </div>
-
-        <div class="tree-wings">
-          <svg></svg>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script src="script.js"></script>
 </body>
 </html>
