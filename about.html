@@ -150,14 +150,14 @@
       <div class="translucent-text" id="scrollableText">
         <!-- Generating 40 lines with specific text on certain lines -->
         <script>
-          for (let i = 1; i <= 40; i++) {
+          for (let i = 1; i <= 11; i++) {
             if (i === 2) {
               document.write("Professor J<br>");
-            } else if (i === 10) {
+            } else if (i === 5) {
               document.write("CAIMEO<br>");
-            } else if (i === 30) {
+            } else if (i === 7) {
               document.write("2024<br>");
-            } else if (i === 40) {
+            } else if (i === 11) {
               document.write("The End<br>");
             } else {
               document.write("<br>");  // Blank lines for all other lines
@@ -195,6 +195,113 @@
       
       // Apply a smooth scroll effect to the translucent text
       scrollingText.style.transform = `translateY(-${scrollY * 0.3}px)`;
+    });
+  </script>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .field {
+      margin-bottom: 10px;
+    }
+
+    label {
+      font-size: 16px;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #button:hover {
+      background-color: #45a049;
+    }
+
+    /* Optional: Adding some margin to the bottom of the form fields */
+    .field {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Contact Form</h1>
+  <form id="form">
+    <div class="field">
+      <label for="to_name">Title</label>
+      <input type="text" name="to_name" id="to_name" required>
+    </div>
+    <div class="field">
+      <label for="from_name">Name</label>
+      <input type="text" name="from_name" id="from_name" required>
+    </div>
+    <div class="field">
+      <label for="message">Message</label>
+      <input type="text" name="message" id="message" required>
+    </div>
+    <div class="field">
+      <label for="reply_to">Email</label>
+      <input type="email" name="reply_to" id="reply_to" required>
+    </div>
+
+    <input type="submit" id="button" value="Send Email">
+  </form>
+
+  <!-- EmailJS script -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <script type="text/javascript">
+    // Initialize EmailJS with your user ID
+    emailjs.init('wHJCFPkteyRydzVJ_');
+
+    const btn = document.getElementById('button');
+
+    // Form submit event
+    document.getElementById('form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent form default submit
+
+      btn.value = 'Sending...'; // Change button text to 'Sending...'
+
+      const serviceID = 'default_service'; // Your EmailJS service ID
+      const templateID = 'template_8zfet67'; // Your EmailJS template ID
+
+      // Send the form data using emailjs.sendForm
+      emailjs.sendForm(serviceID, templateID, this)
+        .then(() => {
+          btn.value = 'Send Email'; // Reset button text after sending
+          alert('Sent!'); // Alert on successful email send
+        }, (err) => {
+          btn.value = 'Send Email'; // Reset button text on error
+          alert(JSON.stringify(err)); // Alert on error
+        });
     });
   </script>
 
