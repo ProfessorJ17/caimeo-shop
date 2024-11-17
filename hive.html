@@ -1,8 +1,297 @@
 
-<html>
+
+<!DOCTYPE html><html><head>
+
                 <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839146786704737" crossorigin="anonymous"></script>
     <meta name="google-adsense-account" content="ca-pub-3839146786704737">
     <base href="">
+        <base href="/">
+        
+<style>
+:root {
+  --neon-pink: #ff2e88;
+  --neon-blue: #00fff9;
+  --neon-purple: #b026ff;
+  --dark-bg: #0a0a0f;
+}
+
+body {
+  margin: 0;
+  background: var(--dark-bg);
+  font-family: 'Orbitron', sans-serif;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+.cyberpunk-container {
+  min-height: 100vh;
+  padding: 2rem;
+  background: 
+    linear-gradient(45deg, transparent 20%, rgba(0,255,249,0.1) 40%),
+    radial-gradient(var(--dark-bg), #000);
+}
+
+.glitch-title {
+  font-size: 4rem;
+  text-align: center;
+  color: var(--neon-pink);
+  text-shadow: 
+    0 0 5px var(--neon-pink),
+    0 0 10px var(--neon-pink),
+    0 0 20px var(--neon-pink);
+  animation: glitch 2s infinite;
+}
+
+.neon-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(transparent 0%, rgba(0,255,249,0.2) 2%, transparent 3%) 0 0 / 20px 20px,
+    linear-gradient(90deg, transparent 0%, rgba(0,255,249,0.2) 2%, transparent 3%) 0 0 / 20px 20px;
+  z-index: -1;
+}
+
+.floating-panel {
+  background: rgba(10,10,15,0.8);
+  border: 2px solid var(--neon-blue);
+  border-radius: 5px;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 800px;
+  box-shadow: 
+    0 0 10px var(--neon-blue),
+    inset 0 0 20px rgba(0,255,249,0.5);
+  animation: float 4s ease-in-out infinite;
+}
+
+.cyber-button {
+  background: transparent;
+  border: 2px solid var(--neon-purple);
+  color: var(--neon-purple);
+  padding: 1rem 2rem;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.cyber-button:hover {
+  background: var(--neon-purple);
+  color: #fff;
+  box-shadow: 0 0 20px var(--neon-purple);
+}
+
+@keyframes glitch {
+  0% { transform: skew(0deg); }
+  20% { transform: skew(10deg); filter: hue-rotate(90deg); }
+  25% { transform: skew(-10deg); filter: hue-rotate(0deg); }
+  30% { transform: skew(0deg); }
+  100% { transform: skew(0deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.cyber-text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #c0c0c0;
+  text-shadow: 0 0 5px rgba(255,255,255,0.5);
+}
+
+.scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom,
+    transparent 50%,
+    rgba(0,0,0,0.5) 51%,
+    transparent 52%);
+  background-size: 100% 4px;
+  animation: scan 4s linear infinite;
+  pointer-events: none;
+  z-index: 999;
+}
+
+@keyframes scan {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100vh); }
+}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&amp;display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="neon-grid"></div>
+<div class="scanline"></div>
+
+<div class="cyberpunk-container">
+  <h1 class="glitch-title">2099: Blog Posts from the Future of Tomorrow - What's Next?</h1>
+  
+  <div class="floating-panel">
+    <p class="cyber-text" style="text-align: center;">Join the Quantum-Net's most exclusive trans-dimensional blog collective. Here, post-human entities, AI consciousness clusters, and interdimensional travelers share their daily experiences across the multiverse.</p>
+    
+    <button class="cyber-button" onclick="window.location.href='https://caimeo.shop/blog.html'" style="display: block; margin: 0 auto;">INITIATE NEURAL SYNC</button>
+  </div>
+
+  <div class="floating-panel quantum-panel" style="display: flex; flex-direction: row; gap: 2rem; max-width: none; margin: 2rem; animation: none;">
+    <div class="panel-section" style="flex: 1;">
+      <h2 class="cyber-text" style="color: var(--neon-blue); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Quantum Interface Matrix</h2>
+      <p class="cyber-text" style="text-align: center;">"Just finished my morning meditation in the 7th dimension using the new QIM v3.0. The quantum entanglement stability is incredible - managed to simultaneously exist in 12 parallel realities while sipping my neo-coffee. The neural feedback feels like silk through your consciousness." -CosmosSurfer_2099</p>
+    </div>
+    
+    <div class="panel-section" style="flex: 1;">
+      <h2 class="cyber-text" style="color: var(--neon-pink); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Digital Consciousness Upload</h2>
+      <p class="cyber-text" style="text-align: center;">"Today marks my 150th year post-upload! Celebrated by forking my consciousness into 5 parallel instances to experience multiple vacation dimensions simultaneously. The quantum coral reefs of Alpha Centauri are breathtaking this time of year. Pro tip: Always backup your memory shards before deep-space consciousness streaming." -EternalMind_2099</p>
+    </div>
+    
+    <div class="panel-section" style="flex: 1;">
+      <h2 class="cyber-text" style="color: var(--neon-purple); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Quantum Computing Hub</h2>
+      <p class="cyber-text" style="text-align: center;">"Just solved the unified field theory while making breakfast using my personal quantum stack. The new femtosecond processing cores are insane! Accidentally created three micro-universes during my calculations. If anyone wants to explore them, I've shared the quantum coordinates on the cosmic blockchain." -QuantumPioneer_2099</p>
+    </div>
+  </div>
+
+  <div class="floating-panel quantum-panel" style="display: flex; flex-direction: row; gap: 2rem; max-width: none; margin: 2rem; animation: none;">
+    <div class="panel-section" style="flex: 1;">
+      <h2 class="cyber-text" style="color: var(--neon-blue); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Neural Poetry Synthesis</h2>
+      <p class="cyber-text" style="text-align: center;">"Just completed my latest neural poetry compilation - a fusion of ancient haiku and quantum probability waves. Each verse exists in multiple emotional states simultaneously. The metaphors evolve based on the reader's brainwave patterns. Published on the PsychicNet Anthology." -BrainBard_2099</p>
+    </div>
+    
+    <div class="panel-section" style="flex: 1;">
+      <h2 class="cyber-text" style="color: var(--neon-pink); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Crystalline Meditation</h2>
+      <p class="cyber-text" style="text-align: center;">"Today's group meditation session in the crystalline mind-space was transcendent! We achieved collective consciousness synchronization with 99.9% coherence. The thought-forms we created are still dancing through the noosphere. Join us next week for more metaphysical exploration!" -ZenMaster_2099</p>
+    </div>
+    
+    <div class="panel-section" style="flex: 1;">
+      <h2 class="cyber-text" style="color: var(--neon-purple); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Quantum Botany</h2>
+      <p class="cyber-text" style="text-align: center;">"My quantum garden is thriving! The hybridized plants exist in superposition between flowering and fruiting states. The psychic nectar they produce has incredible healing properties. Just harvested a batch of probability pollen that creates random paradise dimensions when scattered." -QuantumGardener_2099</p>
+    </div>
+  </div>
+
+  <div class="floating-panel quantum-panel" style="display: flex; flex-direction: row; gap: 2rem; max-width: none; margin: 2rem; animation: none;">
+    <div class="panel-section" style="flex: 1;">
+      <h2 class="cyber-text" style="color: var(--neon-blue); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Memory Artistry</h2>
+      <p class="cyber-text" style="text-align: center;">"Just finished curating my latest memory sculpture. It's a recursive experience of all my first kisses across 50 different timelines, rendered in quantum-crystalline format. The emotional resonance creates the most beautiful patterns in the neural substrate." -MemorySculptor_2099</p>
+    </div>
+    
+    <div class="panel-section" style="flex: 1;">
+      <h2 class="cyber-text" style="color: var(--neon-pink); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Quantum Fashion</h2>
+      <p class="cyber-text" style="text-align: center;">"Unveiled my latest fashion line at the Trans-Dimensional Fashion Week. Each piece exists in a superposition of styles until observed. The quantum fabric adapts to the wearer's brainwaves, creating unique patterns based on their thoughts. Sold out in 12 dimensions already!" -QuantumCouture_2099</p>
+    </div>
+    
+    <div class="panel-section" style="flex: 1;">
+      <h2 class="cyber-text" style="color: var(--neon-purple); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Consciousness Sports</h2>
+      <p class="cyber-text" style="text-align: center;">"What a match in the Quantum Olympics today! The multi-dimensional chess tournament reached new heights when both players quantum entangled their strategies across 1000 parallel games simultaneously. The winning move existed in a superposition until the final observation!" -SportsCaster_2099</p>
+    </div>
+  </div>
+
+  <!-- New Reviews Panel 1 -->
+  <div class="floating-panel quantum-panel" style="display: flex; flex-direction: row; gap: 2rem; max-width: none; margin: 2rem; animation: none;">
+    <div class="panel-section" style="flex: 1;">
+      <h2 class="cyber-text" style="color: var(--neon-blue); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Holographic Art Therapy</h2>
+      <p class="cyber-text" style="text-align: center;">"Fascinating session with my quantum psychiatrist today - we explored my subconscious through 4D holographic manifestations. Watching my anxieties transform into beautiful fractals was deeply healing. The mind-merge technology has come so far!" -PsycheSurfer_2099</p>
+    </div>
+    
+    <div class="panel-section" style="flex: 1;">
+      <h2 class="cyber-text" style="color: var(--neon-pink); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Nebula Architecture</h2>
+      <p class="cyber-text" style="text-align: center;">"Breaking news: Successfully designed a habitable nebula cluster! The quantum-stabilized gas clouds form living spaces that respond to residents' emotional states. Currently accepting applications for beta inhabitants." -CosmicBuilder_2099</p>
+    </div>
+    
+    <div class="panel-section" style="flex: 1;">
+      <h2 class="cyber-text" style="color: var(--neon-purple); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Time Wave Music</h2>
+      <p class="cyber-text" style="text-align: center;">"Listen up: My latest quantum symphony incorporates temporal harmonics from three different epochs. The dinosaur roars from the Cretaceous period blend perfectly with future-jazz from 2250. Available now on the psychic network!" -ChronoComposer_2099</p>
+    </div>
+  </div>
+
+  <!-- New Reviews Panel 2 -->
+  <div class="floating-panel quantum-panel" style="display: flex; flex-direction: row; gap: 2rem; max-width: none; margin: 2rem; animation: none;">
+    <div class="panel-section" style="flex: 1;">
+      <h2 class="cyber-text" style="color: var(--neon-blue); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Probability Surfing</h2>
+      <p class="cyber-text" style="text-align: center;">"Incredible rush: Rode the quantum probability waves through the multiverse today! Caught some sick paradox tubes and landed a perfect timeline split. The new quantum surfboard tech is absolutely radical!" -WaveRider_2099</p>
+    </div>
+    
+    <div class="panel-section" style="flex: 1;">
+      <h2 class="cyber-text" style="color: var(--neon-pink); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Dream Gastronomy</h2>
+      <p class="cyber-text" style="text-align: center;">"Perfect blend: Created a new dish that combines flavors from collective dreams. The taste of flying mixed with childhood memories of rainbow ice cream. Now serving at my quantum restaurant in the consciousness cloud." -DreamChef_2099</p>
+    </div>
+    
+    <div class="panel-section" style="flex: 1;">
+      <h2 class="cyber-text" style="color: var(--neon-purple); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Quantum Pets</h2>
+      <p class="cyber-text" style="text-align: center;">"Warning: My quantum kitten just phase-shifted through seven dimensions while chasing a probability mouse! The new genetic templates from QuantumPets™ are getting better. She purrs in ultraviolet now!" -PetParent_2099</p>
+    </div>
+  </div>
+
+  <div class="floating-panel consciousness-panel" style="display: none;">
+    <h2 class="cyber-text" style="color: var(--neon-pink); font-size: 2rem; margin-bottom: 1rem;">Digital Consciousness Upload</h2>
+    <p class="cyber-text">Transcend biological limitations with our consciousness digitization protocol. Advanced AI neural mapping ensures 99.999% retention of memories and personality matrices. Join the collective digital ecosystem where immortality isn't just a dream - it's a downloadable reality.</p>
+    <div class="quantum-effect"></div>
+  </div>
+
+  <div class="floating-panel compute-panel" style="display: none;">
+    <h2 class="cyber-text" style="color: var(--neon-purple); font-size: 2rem; margin-bottom: 1rem;">Quantum Computing Hub</h2>
+    <p class="cyber-text">Access the most powerful quantum computing network ever created. With quantum supremacy achieved across all computational domains, solve complex problems in microseconds. Featuring advanced decoherence protection and quantum error correction algorithms.</p>
+    <div class="quantum-effect"></div>
+  </div>
+</div>
+
+<script>
+function activateHologram() {
+  const panel = document.querySelector('.floating-panel');
+  panel.style.transform = 'scale(1.1)';
+  panel.style.borderColor = '#ff2e88';
+  
+  setTimeout(() => {
+    panel.style.transform = '';
+    panel.style.borderColor = '';
+  }, 1000);
+  
+  // Create floating particles
+  for(let i = 0; i < 20; i++) {
+    createParticle();
+  }
+}
+
+function createParticle() {
+  const particle = document.createElement('div');
+  particle.style.position = 'fixed';
+  particle.style.width = '2px';
+  particle.style.height = '2px';
+  particle.style.background = `rgb(${Math.random()*255},${Math.random()*255},255)`;
+  particle.style.left = Math.random() * window.innerWidth + 'px';
+  particle.style.top = Math.random() * window.innerHeight + 'px';
+  particle.style.boxShadow = '0 0 10px currentColor';
+  particle.style.transition = 'all 1s ease-out';
+  
+  document.body.appendChild(particle);
+  
+  setTimeout(() => {
+    particle.style.transform = `translate(${Math.random()*200-100}px, ${-Math.random()*500}px)`;
+    particle.style.opacity = '0';
+  }, 10);
+  
+  setTimeout(() => {
+    particle.remove();
+  }, 1000);
+}
+</script>
+
+
+
+
+
+
+
+<html>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Button Grid with Neon Effect</title>
@@ -406,301 +695,3 @@
     </a>
 </div>
     </div>
-  
-
-
-
-
-
-
-</body></html>
-
-
-
-<!DOCTYPE html><html><head>
-
-
-        <base href="/">
-        
-<style>
-:root {
-  --neon-pink: #ff2e88;
-  --neon-blue: #00fff9;
-  --neon-purple: #b026ff;
-  --dark-bg: #0a0a0f;
-}
-
-body {
-  margin: 0;
-  background: var(--dark-bg);
-  font-family: 'Orbitron', sans-serif;
-  color: #fff;
-  overflow-x: hidden;
-}
-
-.cyberpunk-container {
-  min-height: 100vh;
-  padding: 2rem;
-  background: 
-    linear-gradient(45deg, transparent 20%, rgba(0,255,249,0.1) 40%),
-    radial-gradient(var(--dark-bg), #000);
-}
-
-.glitch-title {
-  font-size: 4rem;
-  text-align: center;
-  color: var(--neon-pink);
-  text-shadow: 
-    0 0 5px var(--neon-pink),
-    0 0 10px var(--neon-pink),
-    0 0 20px var(--neon-pink);
-  animation: glitch 2s infinite;
-}
-
-.neon-grid {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    linear-gradient(transparent 0%, rgba(0,255,249,0.2) 2%, transparent 3%) 0 0 / 20px 20px,
-    linear-gradient(90deg, transparent 0%, rgba(0,255,249,0.2) 2%, transparent 3%) 0 0 / 20px 20px;
-  z-index: -1;
-}
-
-.floating-panel {
-  background: rgba(10,10,15,0.8);
-  border: 2px solid var(--neon-blue);
-  border-radius: 5px;
-  padding: 2rem;
-  margin: 2rem auto;
-  max-width: 800px;
-  box-shadow: 
-    0 0 10px var(--neon-blue),
-    inset 0 0 20px rgba(0,255,249,0.5);
-  animation: float 4s ease-in-out infinite;
-}
-
-.cyber-button {
-  background: transparent;
-  border: 2px solid var(--neon-purple);
-  color: var(--neon-purple);
-  padding: 1rem 2rem;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-}
-
-.cyber-button:hover {
-  background: var(--neon-purple);
-  color: #fff;
-  box-shadow: 0 0 20px var(--neon-purple);
-}
-
-@keyframes glitch {
-  0% { transform: skew(0deg); }
-  20% { transform: skew(10deg); filter: hue-rotate(90deg); }
-  25% { transform: skew(-10deg); filter: hue-rotate(0deg); }
-  30% { transform: skew(0deg); }
-  100% { transform: skew(0deg); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
-}
-
-.cyber-text {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  color: #c0c0c0;
-  text-shadow: 0 0 5px rgba(255,255,255,0.5);
-}
-
-.scanline {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom,
-    transparent 50%,
-    rgba(0,0,0,0.5) 51%,
-    transparent 52%);
-  background-size: 100% 4px;
-  animation: scan 4s linear infinite;
-  pointer-events: none;
-  z-index: 999;
-}
-
-@keyframes scan {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(100vh); }
-}
-</style>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&amp;display=swap" rel="stylesheet">
-</head>
-<body>
-
-<div class="neon-grid"></div>
-<div class="scanline"></div>
-
-<div class="cyberpunk-container">
-  <h1 class="glitch-title">2099: Blog Posts from the Future of Tomorrow - What's Next?</h1>
-  
-  <div class="floating-panel">
-    <p class="cyber-text" style="text-align: center;">Join the Quantum-Net's most exclusive trans-dimensional blog collective. Here, post-human entities, AI consciousness clusters, and interdimensional travelers share their daily experiences across the multiverse.</p>
-    
-    <button class="cyber-button" onclick="window.location.href='https://caimeo.shop/blog.html'" style="display: block; margin: 0 auto;">INITIATE NEURAL SYNC</button>
-  </div>
-
-  <div class="floating-panel quantum-panel" style="display: flex; flex-direction: row; gap: 2rem; max-width: none; margin: 2rem; animation: none;">
-    <div class="panel-section" style="flex: 1;">
-      <h2 class="cyber-text" style="color: var(--neon-blue); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Quantum Interface Matrix</h2>
-      <p class="cyber-text" style="text-align: center;">"Just finished my morning meditation in the 7th dimension using the new QIM v3.0. The quantum entanglement stability is incredible - managed to simultaneously exist in 12 parallel realities while sipping my neo-coffee. The neural feedback feels like silk through your consciousness." -CosmosSurfer_2099</p>
-    </div>
-    
-    <div class="panel-section" style="flex: 1;">
-      <h2 class="cyber-text" style="color: var(--neon-pink); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Digital Consciousness Upload</h2>
-      <p class="cyber-text" style="text-align: center;">"Today marks my 150th year post-upload! Celebrated by forking my consciousness into 5 parallel instances to experience multiple vacation dimensions simultaneously. The quantum coral reefs of Alpha Centauri are breathtaking this time of year. Pro tip: Always backup your memory shards before deep-space consciousness streaming." -EternalMind_2099</p>
-    </div>
-    
-    <div class="panel-section" style="flex: 1;">
-      <h2 class="cyber-text" style="color: var(--neon-purple); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Quantum Computing Hub</h2>
-      <p class="cyber-text" style="text-align: center;">"Just solved the unified field theory while making breakfast using my personal quantum stack. The new femtosecond processing cores are insane! Accidentally created three micro-universes during my calculations. If anyone wants to explore them, I've shared the quantum coordinates on the cosmic blockchain." -QuantumPioneer_2099</p>
-    </div>
-  </div>
-
-  <div class="floating-panel quantum-panel" style="display: flex; flex-direction: row; gap: 2rem; max-width: none; margin: 2rem; animation: none;">
-    <div class="panel-section" style="flex: 1;">
-      <h2 class="cyber-text" style="color: var(--neon-blue); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Neural Poetry Synthesis</h2>
-      <p class="cyber-text" style="text-align: center;">"Just completed my latest neural poetry compilation - a fusion of ancient haiku and quantum probability waves. Each verse exists in multiple emotional states simultaneously. The metaphors evolve based on the reader's brainwave patterns. Published on the PsychicNet Anthology." -BrainBard_2099</p>
-    </div>
-    
-    <div class="panel-section" style="flex: 1;">
-      <h2 class="cyber-text" style="color: var(--neon-pink); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Crystalline Meditation</h2>
-      <p class="cyber-text" style="text-align: center;">"Today's group meditation session in the crystalline mind-space was transcendent! We achieved collective consciousness synchronization with 99.9% coherence. The thought-forms we created are still dancing through the noosphere. Join us next week for more metaphysical exploration!" -ZenMaster_2099</p>
-    </div>
-    
-    <div class="panel-section" style="flex: 1;">
-      <h2 class="cyber-text" style="color: var(--neon-purple); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Quantum Botany</h2>
-      <p class="cyber-text" style="text-align: center;">"My quantum garden is thriving! The hybridized plants exist in superposition between flowering and fruiting states. The psychic nectar they produce has incredible healing properties. Just harvested a batch of probability pollen that creates random paradise dimensions when scattered." -QuantumGardener_2099</p>
-    </div>
-  </div>
-
-  <div class="floating-panel quantum-panel" style="display: flex; flex-direction: row; gap: 2rem; max-width: none; margin: 2rem; animation: none;">
-    <div class="panel-section" style="flex: 1;">
-      <h2 class="cyber-text" style="color: var(--neon-blue); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Memory Artistry</h2>
-      <p class="cyber-text" style="text-align: center;">"Just finished curating my latest memory sculpture. It's a recursive experience of all my first kisses across 50 different timelines, rendered in quantum-crystalline format. The emotional resonance creates the most beautiful patterns in the neural substrate." -MemorySculptor_2099</p>
-    </div>
-    
-    <div class="panel-section" style="flex: 1;">
-      <h2 class="cyber-text" style="color: var(--neon-pink); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Quantum Fashion</h2>
-      <p class="cyber-text" style="text-align: center;">"Unveiled my latest fashion line at the Trans-Dimensional Fashion Week. Each piece exists in a superposition of styles until observed. The quantum fabric adapts to the wearer's brainwaves, creating unique patterns based on their thoughts. Sold out in 12 dimensions already!" -QuantumCouture_2099</p>
-    </div>
-    
-    <div class="panel-section" style="flex: 1;">
-      <h2 class="cyber-text" style="color: var(--neon-purple); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Consciousness Sports</h2>
-      <p class="cyber-text" style="text-align: center;">"What a match in the Quantum Olympics today! The multi-dimensional chess tournament reached new heights when both players quantum entangled their strategies across 1000 parallel games simultaneously. The winning move existed in a superposition until the final observation!" -SportsCaster_2099</p>
-    </div>
-  </div>
-
-  <!-- New Reviews Panel 1 -->
-  <div class="floating-panel quantum-panel" style="display: flex; flex-direction: row; gap: 2rem; max-width: none; margin: 2rem; animation: none;">
-    <div class="panel-section" style="flex: 1;">
-      <h2 class="cyber-text" style="color: var(--neon-blue); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Holographic Art Therapy</h2>
-      <p class="cyber-text" style="text-align: center;">"Fascinating session with my quantum psychiatrist today - we explored my subconscious through 4D holographic manifestations. Watching my anxieties transform into beautiful fractals was deeply healing. The mind-merge technology has come so far!" -PsycheSurfer_2099</p>
-    </div>
-    
-    <div class="panel-section" style="flex: 1;">
-      <h2 class="cyber-text" style="color: var(--neon-pink); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Nebula Architecture</h2>
-      <p class="cyber-text" style="text-align: center;">"Breaking news: Successfully designed a habitable nebula cluster! The quantum-stabilized gas clouds form living spaces that respond to residents' emotional states. Currently accepting applications for beta inhabitants." -CosmicBuilder_2099</p>
-    </div>
-    
-    <div class="panel-section" style="flex: 1;">
-      <h2 class="cyber-text" style="color: var(--neon-purple); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Time Wave Music</h2>
-      <p class="cyber-text" style="text-align: center;">"Listen up: My latest quantum symphony incorporates temporal harmonics from three different epochs. The dinosaur roars from the Cretaceous period blend perfectly with future-jazz from 2250. Available now on the psychic network!" -ChronoComposer_2099</p>
-    </div>
-  </div>
-
-  <!-- New Reviews Panel 2 -->
-  <div class="floating-panel quantum-panel" style="display: flex; flex-direction: row; gap: 2rem; max-width: none; margin: 2rem; animation: none;">
-    <div class="panel-section" style="flex: 1;">
-      <h2 class="cyber-text" style="color: var(--neon-blue); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Probability Surfing</h2>
-      <p class="cyber-text" style="text-align: center;">"Incredible rush: Rode the quantum probability waves through the multiverse today! Caught some sick paradox tubes and landed a perfect timeline split. The new quantum surfboard tech is absolutely radical!" -WaveRider_2099</p>
-    </div>
-    
-    <div class="panel-section" style="flex: 1;">
-      <h2 class="cyber-text" style="color: var(--neon-pink); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Dream Gastronomy</h2>
-      <p class="cyber-text" style="text-align: center;">"Perfect blend: Created a new dish that combines flavors from collective dreams. The taste of flying mixed with childhood memories of rainbow ice cream. Now serving at my quantum restaurant in the consciousness cloud." -DreamChef_2099</p>
-    </div>
-    
-    <div class="panel-section" style="flex: 1;">
-      <h2 class="cyber-text" style="color: var(--neon-purple); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Quantum Pets</h2>
-      <p class="cyber-text" style="text-align: center;">"Warning: My quantum kitten just phase-shifted through seven dimensions while chasing a probability mouse! The new genetic templates from QuantumPets™ are getting better. She purrs in ultraviolet now!" -PetParent_2099</p>
-    </div>
-  </div>
-
-  <div class="floating-panel consciousness-panel" style="display: none;">
-    <h2 class="cyber-text" style="color: var(--neon-pink); font-size: 2rem; margin-bottom: 1rem;">Digital Consciousness Upload</h2>
-    <p class="cyber-text">Transcend biological limitations with our consciousness digitization protocol. Advanced AI neural mapping ensures 99.999% retention of memories and personality matrices. Join the collective digital ecosystem where immortality isn't just a dream - it's a downloadable reality.</p>
-    <div class="quantum-effect"></div>
-  </div>
-
-  <div class="floating-panel compute-panel" style="display: none;">
-    <h2 class="cyber-text" style="color: var(--neon-purple); font-size: 2rem; margin-bottom: 1rem;">Quantum Computing Hub</h2>
-    <p class="cyber-text">Access the most powerful quantum computing network ever created. With quantum supremacy achieved across all computational domains, solve complex problems in microseconds. Featuring advanced decoherence protection and quantum error correction algorithms.</p>
-    <div class="quantum-effect"></div>
-  </div>
-</div>
-
-<script>
-function activateHologram() {
-  const panel = document.querySelector('.floating-panel');
-  panel.style.transform = 'scale(1.1)';
-  panel.style.borderColor = '#ff2e88';
-  
-  setTimeout(() => {
-    panel.style.transform = '';
-    panel.style.borderColor = '';
-  }, 1000);
-  
-  // Create floating particles
-  for(let i = 0; i < 20; i++) {
-    createParticle();
-  }
-}
-
-function createParticle() {
-  const particle = document.createElement('div');
-  particle.style.position = 'fixed';
-  particle.style.width = '2px';
-  particle.style.height = '2px';
-  particle.style.background = `rgb(${Math.random()*255},${Math.random()*255},255)`;
-  particle.style.left = Math.random() * window.innerWidth + 'px';
-  particle.style.top = Math.random() * window.innerHeight + 'px';
-  particle.style.boxShadow = '0 0 10px currentColor';
-  particle.style.transition = 'all 1s ease-out';
-  
-  document.body.appendChild(particle);
-  
-  setTimeout(() => {
-    particle.style.transform = `translate(${Math.random()*200-100}px, ${-Math.random()*500}px)`;
-    particle.style.opacity = '0';
-  }, 10);
-  
-  setTimeout(() => {
-    particle.remove();
-  }, 1000);
-}
-</script>
-
-
-
-
-
-
