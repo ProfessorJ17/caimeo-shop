@@ -1,0 +1,176 @@
+
+
+
+<html><head><base href="/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root {
+  --neon-cyan: #0ff;
+  --neon-pink: #ff69b4;
+  --neon-purple: #9d00ff;
+  --dark-bg: #0a0a0a;
+}
+
+body {
+  background-color: var(--dark-bg);
+  color: white;
+  font-family: 'Orbitron', sans-serif;
+  margin: 0;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 50px;
+  border-bottom: 2px solid var(--neon-pink);
+  padding-bottom: 20px;
+  animation: borderGlow 2s infinite alternate;
+}
+
+h1 {
+  font-size: 3em;
+  color: var(--neon-purple);
+  text-shadow: 0 0 10px var(--neon-cyan);
+}
+
+.blog-post {
+  background: rgba(10, 10, 10, 0.8);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 30px;
+  border: 1px solid var(--neon-purple);
+  box-shadow: 0 0 15px var(--neon-purple);
+  transition: transform 0.3s ease;
+}
+
+.blog-post:hover {
+  transform: translateY(-5px);
+}
+
+.blog-post img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: 2px solid var(--neon-pink);
+}
+
+.blog-post h2 {
+  color: var(--neon-cyan);
+  margin-bottom: 15px;
+  text-shadow: 0 0 5px var(--neon-cyan);
+}
+
+.post-meta {
+  color: var(--neon-pink);
+  font-size: 0.9em;
+  margin-bottom: 15px;
+}
+
+.tag {
+  background: var(--neon-purple);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8em;
+  margin-right: 10px;
+  color: white;
+  display: inline-block;
+}
+
+@keyframes borderGlow {
+  from {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 10px var(--neon-pink);
+  }
+  to {
+    border-color: var(--neon-pink);
+    box-shadow: 0 0 20px var(--neon-cyan);
+  }
+}
+
+nav {
+  margin-bottom: 30px;
+}
+
+nav a {
+  color: var(--neon-cyan);
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: var(--neon-pink);
+  text-shadow: 0 0 5px var(--neon-pink);
+}
+
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&amp;display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Blog from the Future</h1>
+      <nav>
+        <a href="https://example.com/home">HOME</a>
+        <a href="https://example.com/hyperlinks">TAGS</a>
+        <a href="https://example.com/submit">SUBMIT BLOG</a>
+      </nav>
+    </header>
+
+    <main>
+      <article class="blog-post" onmouseover="this.style.boxShadow = '0 0 25px var(--neon-cyan)'" onmouseout="this.style.boxShadow = '0 0 15px var(--neon-purple)'" style="cursor: pointer">
+        <img alt="futuristic cityscape with neon lights and flying vehicles, digital art" src="future-city.jpg" width="800" height="400">
+        <div class="post-meta">
+          <span>Posted on 2084.13.45</span>
+          <span class="tag">CYBERNETICS</span>
+          <span class="tag">FUTURE TECH</span>
+        </div>
+        <h2>The Rise of Neural Interfaces</h2>
+        <p>As we venture deeper into the quantum age, the line between human consciousness and artificial intelligence continues to blur...</p>
+      </article>
+
+      <article class="blog-post" onmouseover="this.style.boxShadow = '0 0 25px var(--neon-cyan)'" onmouseout="this.style.boxShadow = '0 0 15px var(--neon-purple)'" style="cursor: pointer">
+        <img alt="holographic interface with floating data points, cyber punk style" src="holo-interface.jpg" width="800" height="400">
+        <div class="post-meta">
+          <span>Posted on 2084.13.42</span>
+          <span class="tag">VIRTUAL REALITY</span>
+          <span class="tag">METAVERSE</span>
+        </div>
+        <h2>Beyond Reality: The New Digital Frontier</h2>
+        <p>The latest developments in quantum computing have revolutionized our understanding of virtual spaces...</p>
+      </article>
+
+      <article class="blog-post">
+        <img alt="abstract digital landscape with neon grid lines and geometric shapes" src="digital-landscape.jpg" width="800" height="400">
+        <div class="post-meta">
+          <span>Posted on 2084.13.40</span>
+          <span class="tag">AI</span>
+          <span class="tag">EVOLUTION</span>
+        </div>
+        <h2>Digital Consciousness: The Next Step</h2>
+        <p>With the advent of quantum neural networks, we're witnessing the dawn of true digital consciousness...</p>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    document.querySelectorAll('.blog-post').forEach(post => {
+      post.addEventListener('mouseover', () => {
+        post.style.boxShadow = `0 0 25px ${getComputedStyle(document.documentElement).getPropertyValue('--neon-cyan')}`;
+      });
+      
+      post.addEventListener('mouseout', () => {
+        post.style.boxShadow = `0 0 15px ${getComputedStyle(document.documentElement).getPropertyValue('--neon-purple')}`;
+      });
+    });
+  </script>
+
+</body></html>
