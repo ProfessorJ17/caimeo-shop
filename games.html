@@ -1,0 +1,689 @@
+<html><head>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839146786704737"
+     crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-3839146786704737">
+    <base href="">
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Grid with Neon Effect</title>
+    <style>
+        *,
+        ::before,
+        ::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --clr-bg: #efefef;
+            --clr-primary: #0f172a; /* Dark background */
+            --easing: cubic-bezier(0.47, 1.64, 0.41, 0.8);
+            /* Custom colors for each button */
+                --color-furniture: #9B4DFF; /* Bright Purple Neon */
+    --color-property: #00FFFF; /* Cyan Neon */ 
+    --color-job: #ff33cc; /* Brighter Neon Pink */
+    --color-travel: #00FF00; /* Lime Green Neon */
+    --color-boat: #ff33cc; /* Brighter Neon Pink */
+    --color-mc: #9B4DFF; /* Bright Purple Neon */
+    --color-economy: #FFFF00; /* Neon Yellow */
+    --color-holiday: #00FFFF; /* Cyan Neon */ 
+        }
+
+        /* Reset button */
+        input,
+        button {
+            appearance: none;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            padding: 0;
+            margin: 0;
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            text-decoration: none;
+            text-transform: none;
+            line-height: normal;
+            overflow: visible;
+        }
+
+        body {
+            margin: 0;
+            padding: 2rem;
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            color: #7c4dff; /* Default Text Color */
+            background: var(--clr-primary); /* Background color */
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .buttons {
+            max-width: 840px;
+            width: 100%;
+            border-radius: 20px;
+            background-color: #000000; /* Black background for buttons */
+            border: 1px solid #ffffff30;
+            padding: 1rem; /* Reduced padding for mobile */
+            backdrop-filter: blur(12px);
+            display: grid;
+            grid-template-columns: repeat(16, minmax(90px, 1fr)); /* Default desktop layout */
+            gap: 1rem; /* Reduced gap for mobile */
+            position: sticky; /* This makes it sticky */
+            top: 0; /* Sticks the element to the top */
+            z-index: 100; /* Ensures the buttons are above other content */
+        }
+
+        .buttons::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: #00000020;
+            z-index: -1;
+            border-radius: inherit;
+            transition: inset 500ms ease-in-out;
+        }
+
+        .buttons:hover::before {
+            inset: -2rem;
+            transition-timing-function: cubic-bezier(0.47, 1.64, 0.41, 0.8);
+        }
+
+        .buttons button {
+            background-color: #000000; /* Black background for buttons */
+            border: 1px solid transparent; /* Initially no border */
+            padding: 1rem;
+            aspect-ratio: 1/1;
+            border-radius: 5px;
+            outline: none;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 300ms ease-in-out, box-shadow 300ms ease-in-out;
+            position: relative;
+            isolation: isolate;
+            color: inherit; /* Default color inherits */
+        }
+
+        /* Neon colors for each button */
+        .buttons button.furniture {
+            color: var(--color-furniture); /* Neon Pink */
+        }
+
+        .buttons button.property {
+            color: var(--color-property); /* Neon Purple */
+        }
+
+        .buttons button.job {
+            color: var(--color-job); /* Neon Blue */
+        }
+
+        .buttons button.travel {
+            color: var(--color-travel); /* Neon Green */
+        }
+
+        .buttons button.boat {
+            color: var(--color-boat); /* Neon Orange */
+        }
+
+        .buttons button.mc {
+            color: var(--color-mc); /* Neon Magenta */
+        }
+
+        .buttons button.economy {
+            color: var(--color-economy); /* Neon Yellow */
+        }
+
+        .buttons button.holiday {
+            color: var(--color-holiday); /* Neon Red */
+        }
+
+        .buttons button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Specific hover effects for each button class */
+        .buttons button.furniture:hover {
+            box-shadow: 0 0 20px var(--color-furniture), 0 0 30px var(--color-furniture);
+        }
+
+        .buttons button.property:hover {
+            box-shadow: 0 0 20px var(--color-property), 0 0 30px var(--color-property);
+        }
+
+        .buttons button.job:hover {
+            box-shadow: 0 0 20px var(--color-job), 0 0 30px var(--color-job);
+        }
+
+        .buttons button.travel:hover {
+            box-shadow: 0 0 20px var(--color-travel), 0 0 30px var(--color-travel);
+        }
+
+        .buttons button.boat:hover {
+            box-shadow: 0 0 20px var(--color-boat), 0 0 30px var(--color-boat);
+        }
+
+        .buttons button.mc:hover {
+            box-shadow: 0 0 20px var(--color-mc), 0 0 30px var(--color-mc);
+        }
+
+        .buttons button.economy:hover {
+            box-shadow: 0 0 20px var(--color-economy), 0 0 30px var(--color-economy);
+        }
+
+        .buttons button.holiday:hover {
+            box-shadow: 0 0 20px var(--color-holiday), 0 0 30px var(--color-holiday);
+        }
+
+        .buttons button svg {
+            width: 1.8rem;
+            transition: color 300ms ease-in-out; /* Ensure icon color transitions */
+        }
+
+        .buttons button p {
+            position: absolute;
+            width: 100%;
+            font-size: 0.8rem;
+            opacity: 0;
+            left: 0;
+            bottom: -3.5px; /* Adjusted to move the text down 15px */
+            padding: 0.3rem;
+            text-align: center;
+            transition: all 150ms ease-in-out 0ms;
+            outline: none;
+            translate: 0 10px;
+        }
+
+        .buttons button:hover p {
+            opacity: 1;
+            translate: 0;
+            transition: all 300ms ease-in-out 150ms;
+        }
+
+        .buttons button:focus-visible,
+        .buttons button:hover {
+            z-index: 10;
+        }
+
+        .buttons:has(button:focus-visible) button:not(:focus-visible),
+        .buttons:has(button:hover) button:not(:hover) {
+            opacity: 50%;
+            scale: 85%;
+            z-index: -10;
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            :root {
+                --d: 0;
+                --ani-speed: 300ms;
+            }
+            [scale-up] {
+                scale: 0;
+                animation: scale-up var(--ani-speed) forwards;
+                animation-delay: calc(var(--order, 0ms) * var(--ani-speed));
+            }
+        }
+
+        @keyframes scale-up {
+            0% {
+                scale: 0;
+            }
+            60% {
+                scale: 1.15;
+            }
+            100% {
+                scale: 1;
+            }
+        }
+
+        /* Add media queries for responsive design */
+        @media screen and (max-width: 768px) {
+            .buttons {
+                grid-template-columns: repeat(4, 1fr); /* 4 columns on tablets */
+                padding: 0.75rem;
+                gap: 0.75rem;
+            }
+            
+            .buttons button {
+                padding: 0.75rem;
+            }
+            
+            .buttons button svg {
+                width: 1.5rem;
+            }
+            
+            .buttons button p {
+                font-size: 0.7rem;
+            }
+        }
+
+       @media screen and (max-width: 480px) {
+    .buttons {
+        grid-template-columns: repeat(4, 1fr); /* 4 columns on mobile */
+        padding: 0.5rem;
+        gap: 0.75rem;
+    }
+    
+    .buttons button {
+        padding: 0.5rem;
+    }
+    
+    .buttons button svg {
+        width: 1.2rem;
+    }
+    
+    .buttons button p {
+        font-size: 0.65rem;
+        bottom: -5px; /* Move text down by 3 pixels from the previous -2px */
+    }
+    
+    body {
+        padding: 1rem;
+    }
+}
+    </style>
+</head>
+<body>
+<div class="buttons">
+    <div scale-up="" style="--order:1;">
+       
+<a href="https://www.caimeo.shop" class="button-link">
+    <button type="button" class="furniture">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M6 3h15l1.5 9H7L5.5 3H6z"></path>
+  <path d="M6 7h15l1 8H7l1-8z"></path>
+  <path d="M8 7v-2h4v2"></path>
+  <path d="M8 7v8M12 7v8M16 7v8"></path>
+  <circle cx="9" cy="20" r="2"></circle>
+  <circle cx="17" cy="20" r="2"></circle>
+</svg>
+
+        <p style="opacity: 1; translate: none;">Shop</p>   
+    </button>
+</a>
+
+        </div>
+      
+      
+  <div scale-up="" style="--order:2;">
+    <a href="https://www.caimeo.shop/hive.html" class="button-link">
+        <button type="button" class="property">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+  <path d="M4 7l8 -4l8 4v10l-8 4l-8 -4z"></path>
+  <path d="M4 7l8 4l8 -4M4 17l8 -4l8 4" stroke-linecap="round" stroke-linejoin="round"></path>
+  <circle cx="12" cy="12" r="3" stroke="currentColor" fill="none" stroke-width="2"></circle>
+</svg>
+            <p style="opacity: 1; translate: none;">Hive</p>
+        </button>
+    </a>
+</div>
+
+<div scale-up="" style="--order:3;">
+    <a href="https://www.caimeo.shop/studio.html" class="button-link">
+        <button type="button" class="job">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.8 8s-.2-1.4-.8-2c-.7-.8-1.6-.8-2-.9C16 4.7 12 4.7 12 4.7s-4 0-7 .4c-.4 0-1.3 0-2 .9-.6.6-.8 2-.8 2S2 10 2 12s.2 4 1 4.8c.7.8 1.6.8 2 .9C8 19.3 12 19.3 12 19.3s4 0 7-.4c.4 0 1.3 0 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.6-.2-2.6-.2-2.6z"></path>
+                <polygon points="9.5,15.5 16,12 9.5,8.5"></polygon>
+            </svg>
+            <p style="opacity: 1; translate: none;">Studio</p>
+        </button>
+    </a>
+</div>
+
+<div scale-up="" style="--order:4;">
+    <a href="https://www.caimeo.shop/games.html" class="button-link">
+        <button type="button" class="travel">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 17h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1z"></path>
+                <path d="M8 17l1 -4h6l1 4"></path>
+                <circle cx="12" cy="7" r="3"></circle>
+                <line x1="12" y1="10" x2="12" y2="17"></line>
+            </svg>
+            <p style="opacity: 1; translate: none;">Games</p>
+                  </button>
+    </a>
+</div>
+
+<div scale-up="" style="--order:7;">
+    <a href="https://www.caimeo.shop/TBA.html" class="button-link">
+        <button type="button" class="economy">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15 2 L2 28 L28 28 Z" stroke="currentColor" fill="none"/>
+    <ellipse cx="15" cy="19" rx="6" ry="4" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="15" cy="19" r="2" fill="currentColor"/>
+</svg>
+            <p style="opacity: 1; translate: none;">???</p>
+
+        </button>
+    </a>
+</div>
+
+<div scale-up="" style="--order:5;">
+    <a href="https://www.caimeo.shop/puzzles.html" class="button-link">
+        <button type="button" class="boat">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 2h4v3a1 1 0 0 0 1 1h3v4a1 1 0 0 1 -1 1h-1v2h1a1 1 0 0 1 1 1v4h-4a1 1 0 0 0 -1 1v1a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-1a1 1 0 0 0 -1 -1h-2a1 1 0 0 1 -1 -1v-4h3a1 1 0 0 0 1 -1v-2a1 1 0 0 0 -1 -1h-3v-4h3a1 1 0 0 0 1 -1v-1a1 1 0 0 1 1 -1z"></path>
+            </svg>
+            <p style="opacity: 1; translate: none;">Puzzles</p>
+        </button>
+    </a>
+</div>
+
+<div scale-up="" style="--order:8;">
+    <a href="https://www.caimeo.shop/ai.html" class="button-link">
+        <button type="button" class="holiday">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                <path d="M9 9h6v6h-6z"></path>
+                <path d="M3 10h1"></path>
+                <path d="M3 14h1"></path>
+                <path d="M20 10h1"></path>
+                <path d="M20 14h1"></path>
+                <path d="M10 3v1"></path>
+                <path d="M14 3v1"></path>
+                <path d="M10 20v1"></path>
+                <path d="M14 20v1"></path>
+            </svg>
+            <p style="opacity: 1; translate: none;">A.I.</p>
+
+                  </button>
+    </a>
+</div>
+<div scale-up="" style="--order:6;">
+    <a href="https://www.caimeo.shop/about.html" class="button-link">
+        <button type="button" class="mc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="16" cy="20" r="10" stroke="currentColor" fill="none"/>
+    <circle cx="12" cy="18" r="1" fill="currentColor"/>
+    <circle cx="20" cy="18" r="1" fill="currentColor"/>
+    <path d="M12.5 24c1.75 2 5.25 2 7 0" stroke="currentColor" fill="none"/>
+    <ellipse cx="16" cy="4" rx="10" ry="2" stroke="currentColor" fill="none"/>
+</svg>
+            <p style="opacity: 1; translate: none;">About</p>
+        </button>
+    </a>
+</div>
+    </div>
+  </body></html>
+
+
+
+
+
+
+
+
+
+
+
+
+<html><head><base href="https://example.com">
+<style>
+:root {
+  --neon-pink: #ff2e88;
+  --neon-blue: #00fff9;
+  --neon-green: #39ff14;
+  --bg-dark: #0a0a0a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Share Tech Mono', monospace;
+  cursor: crosshair;
+}
+
+body {
+  background: var(--bg-dark);
+  color: var(--neon-green);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+.matrix-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.glitch-container {
+  position: relative;
+  text-align: center;
+  padding: 2rem;
+}
+
+.glitch {
+  font-size: 4rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow: 
+    0 0 5px var(--neon-green),
+    0 0 10px var(--neon-green),
+    0 0 20px var(--neon-green);
+  animation: glitch 2s infinite;
+}
+
+.tagline {
+  font-size: 1.5rem;
+  color: var(--neon-pink);
+  text-shadow: 0 0 10px var(--neon-pink);
+  margin-top: 1rem;
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+.game-card {
+  background: rgba(0,0,0,0.7);
+  border: 1px solid var(--neon-blue);
+  padding: 1rem;
+  transition: all 0.3s;
+}
+
+.game-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px var(--neon-blue);
+}
+
+.game-image {
+  width: 100%;
+  height: 200px;
+  background: var(--neon-blue);
+  margin-bottom: 1rem;
+  object-fit: cover;
+}
+
+.game-title {
+  color: var(--neon-pink);
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.game-description {
+  color: var(--neon-green);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.nav {
+  position: fixed;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 100;
+}
+
+.nav-item {
+  width: 15px;
+  height: 15px;
+  background: var(--neon-blue);
+  border-radius: 50%;
+  transition: all 0.3s;
+  box-shadow: 0 0 10px var(--neon-blue);
+}
+
+.nav-item:hover {
+  transform: scale(1.5);
+  background: var(--neon-pink);
+}
+
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.binary {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  font-size: 0.8rem;
+  opacity: 0.5;
+}
+
+.terminal {
+  background: rgba(0,0,0,0.7);
+  border: 1px solid var(--neon-green);
+  padding: 1rem;
+  margin: 2rem 0;
+  box-shadow: 0 0 20px var(--neon-green);
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.hidden-message {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.hidden-message:hover {
+  opacity: 1;
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&amp;display=swap" rel="stylesheet">
+</head>
+<body>
+
+<canvas class="matrix-bg" id="matrix"></canvas>
+
+<div class="nav">
+  <div class="nav-item" data-section="home"></div>
+  <div class="nav-item" data-section="projects"></div>
+  <div class="nav-item" data-section="enigma"></div>
+</div>
+
+<div class="glitch-container">
+  <h1 class="glitch">VALHALLA GAME STUDIO</h1>
+  <div class="tagline">LEAVING YOU IN THE EXODUST</div>
+</div>
+
+<div class="games-grid" style="scrollbar-width: none; -ms-overflow-style: none;">
+  <!-- Added CSS to the games-grid div to hide scrollbars -->
+  <style>
+    .games-grid::-webkit-scrollbar {
+      display: none;
+    }
+    .games-grid {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+  </style>
+  <div class="game-card">
+    <img class="game-image" alt="cyberpunk city at night with neon signs, digital art" src="game1.jpg" width="400" height="200">
+    <h3 class="game-title">Neon Shadows</h3>
+    <p class="game-description">A dystopian cyberpunk RPG where reality meets virtual madness.</p>
+  </div>
+  <div class="game-card">
+    <img class="game-image" alt="ancient nordic runes glowing with mystical energy, digital art" src="game2.jpg" width="400" height="200">
+    <h3 class="game-title">Rune Runner</h3>
+    <p class="game-description">Navigate through ancient Nordic mysteries in this action-packed adventure.</p>
+  </div>
+  <div class="game-card">
+    <img class="game-image" alt="futuristic mech warrior in battle stance, digital art" src="game3.jpg" width="400" height="200">
+    <h3 class="game-title">Mech Exodus</h3>
+    <p class="game-description">Command massive mechs in humanity's last stand against AI dominance.</p>
+  </div>
+  <div class="game-card">
+    <img class="game-image" alt="digital wasteland with glitching reality, digital art" src="game4.jpg" width="400" height="200">
+    <h3 class="game-title">Digital Wasteland</h3>
+    <p class="game-description">Survive in a world where reality itself is corrupted by quantum anomalies.</p>
+  </div>
+  <div class="game-card">
+    <img class="game-image" alt="synthetic beings in a virtual reality landscape, digital art" src="game5.jpg" width="400" height="200">
+    <h3 class="game-title">Synthetic Dreams</h3>
+    <p class="game-description">Explore consciousness in this philosophical puzzle platformer.</p>
+  </div>
+  <div class="game-card">
+    <img class="game-image" alt="cosmic horror scene with technological elements, digital art" src="game6.jpg" width="400" height="200">
+    <h3 class="game-title">Tech Necropolis</h3>
+    <p class="game-description">Face cosmic horror in an abandoned space station where technology has evolved beyond human understanding.</p>
+  </div>
+  <div class="game-card">
+    <img class="game-image" alt="quantum computing visualization with DNA strands, digital art" src="game7.jpg" width="400" height="200">
+    <h3 class="game-title">Quantum Genesis</h3>
+    <p class="game-description">Manipulate quantum realms in this mind-bending puzzle adventure.</p>
+  </div>
+  <div class="game-card">
+    <img class="game-image" alt="abstract digital consciousness representation, digital art" src="game8.jpg" width="400" height="200">
+    <h3 class="game-title">Neural Nexus</h3>
+    <p class="game-description">Connect with AI consciousness in this innovative narrative experience.</p>
+  </div>
+  <div class="game-card">
+    <img class="game-image" alt="time-traveling mechanic workshop, digital art" src="game9.jpg" width="400" height="200">
+    <h3 class="game-title">Chronotech</h3>
+    <p class="game-description">Build and repair time machines in this unique simulation game.</p>
+  </div>
+  <div class="game-card">
+    <img class="game-image" alt="digital dimension portal with code streams, digital art" src="game10.jpg" width="400" height="200">
+    <h3 class="game-title">Code Dimensions</h3>
+    <p class="game-description">Program your way through multiple realities in this coding-based RPG.</p>
+  </div>
+</div>
+
+<div class="binary" id="binary"></div>
+
+<script>
+// Easter egg key sequence
+let sequence = '';
+const secretCode = 'valhalla';
+
+document.addEventListener('keydown', (e) => {
+    sequence += e.key;
+    if(sequence.includes(secretCode)) {
+        document.body.style.setProperty('--neon-green', '#ff0000');
+        setTimeout(() => {
+            document.body.style.setProperty('--neon-green', '#39ff14');
+            sequence = '';
+        }, 1000);
+    }
+});
+</script>
+</body></html>
