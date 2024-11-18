@@ -1,0 +1,35 @@
+name: High Score Update
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # This will run the action every hour
+
+jobs:
+  update-highscores:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Fetch high scores and update
+        run: |
+          node updateHighScores.js
+
+      - name: Commit and push updated highscores.json
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add highscores.json
+          git commit -m "Automated high scores update"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
