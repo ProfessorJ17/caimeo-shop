@@ -412,7 +412,6 @@
 
 
 
-
 <html><head><base href="https://example.com">
 <style>
 :root {
@@ -428,6 +427,7 @@
   box-sizing: border-box;
   font-family: 'Share Tech Mono', monospace;
   cursor: crosshair;
+  text-align: center; /* Added this line */
 }
 
 body {
@@ -487,6 +487,7 @@ body {
   border: 1px solid var(--neon-blue);
   padding: 1rem;
   transition: all 0.3s;
+  text-align: center; /* Added this line */
 }
 
 .game-card:hover {
@@ -579,7 +580,6 @@ body {
   opacity: 1;
 }
 
-/* Adding new styles for the promotional section */
 .promotional-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -603,6 +603,7 @@ body {
 .promo-content {
   padding: 2rem;
   color: var(--neon-green);
+  text-align: center; /* Added this line */
 }
 
 .promo-title {
@@ -650,58 +651,79 @@ body {
   </style>
   <div class="game-card">
     <img class="game-image" alt="cyberpunk city at night with neon signs, digital art" src="game1.jpg" width="400" height="200">
-    <h3 class="game-title">Neon Shadows</h3>
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game1.html" style="text-decoration: none; color: inherit;">Neon Shadows</a>
+</h3>
     <p class="game-description">A dystopian cyberpunk RPG where reality meets virtual madness.</p>
   </div>
   <div class="game-card">
     <img class="game-image" alt="ancient nordic runes glowing with mystical energy, digital art" src="game2.jpg" width="400" height="200">
-    <h3 class="game-title">Rune Runner</h3>
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game2.html" style="text-decoration: none; color: inherit;">Rune Runner</a>
+</h3>
     <p class="game-description">Navigate through ancient Nordic mysteries in this action-packed adventure.</p>
   </div>
   <div class="game-card">
     <img class="game-image" alt="futuristic mech warrior in battle stance, digital art" src="game3.jpg" width="400" height="200">
-    <h3 class="game-title">Mech Exodus</h3>
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game3.html" style="text-decoration: none; color: inherit;">Mech Exodus</a>
+</h3>
     <p class="game-description">Command massive mechs in humanity's last stand against AI dominance.</p>
   </div>
   <div class="game-card">
     <img class="game-image" alt="digital wasteland with glitching reality, digital art" src="game4.jpg" width="400" height="200">
-    <h3 class="game-title">Digital Wasteland</h3>
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game4.html" style="text-decoration: none; color: inherit;">Digital Wasteland</a>
+</h3>
     <p class="game-description">Survive in a world where reality itself is corrupted by quantum anomalies.</p>
   </div>
   <div class="game-card">
     <img class="game-image" alt="synthetic beings in a virtual reality landscape, digital art" src="game5.jpg" width="400" height="200">
-    <h3 class="game-title">Synthetic Dreams</h3>
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game5.html" style="text-decoration: none; color: inherit;">Synthetic Dreams</a>
+</h3>
     <p class="game-description">Explore consciousness in this philosophical puzzle platformer.</p>
   </div>
   <div class="game-card">
     <img class="game-image" alt="cosmic horror scene with technological elements, digital art" src="game6.jpg" width="400" height="200">
-    <h3 class="game-title">Tech Necropolis</h3>
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game6.html" style="text-decoration: none; color: inherit;">Tech Necropolis</a>
+</h3>
     <p class="game-description">Face cosmic horror in an abandoned space station where technology has evolved beyond human understanding.</p>
   </div>
   <div class="game-card">
     <img class="game-image" alt="quantum computing visualization with DNA strands, digital art" src="game7.jpg" width="400" height="200">
-    <h3 class="game-title">Quantum Genesis</h3>
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game7.html" style="text-decoration: none; color: inherit;">Quantum Genesis</a>
+</h3>
     <p class="game-description">Manipulate quantum realms in this mind-bending puzzle adventure.</p>
   </div>
   <div class="game-card">
     <img class="game-image" alt="abstract digital consciousness representation, digital art" src="game8.jpg" width="400" height="200">
-    <h3 class="game-title">Neural Nexus</h3>
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game8.html" style="text-decoration: none; color: inherit;">Neural Nexus</a>
+</h3>
     <p class="game-description">Connect with AI consciousness in this innovative narrative experience.</p>
   </div>
   <div class="game-card">
     <img class="game-image" alt="time-traveling mechanic workshop, digital art" src="game9.jpg" width="400" height="200">
-    <h3 class="game-title">Chronotech</h3>
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game9.html" style="text-decoration: none; color: inherit;">Chronotech</a>
+</h3>
     <p class="game-description">Build and repair time machines in this unique simulation game.</p>
   </div>
   <div class="game-card">
     <img class="game-image" alt="digital dimension portal with code streams, digital art" src="game10.jpg" width="400" height="200">
-    <h3 class="game-title">Code Dimensions</h3>
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game10.html" style="text-decoration: none; color: inherit;">Code Dimensions</a>
+</h3>
     <p class="game-description">Program your way through multiple realities in this coding-based RPG.</p>
   </div>
 </div>
 
 <div class="promotional-section">
   <img class="promo-image" alt="futuristic development studio with holographic displays and neon lighting, digital art" src="studio.jpg" width="600" height="400">
+  <textarea style="display: none;"></textarea>
   <div class="promo-content">
     <h2 class="promo-title">Pioneers of Digital Reality</h2>
     <p class="promo-text">Founded in 2016, Valhalla Game Studio has been pushing the boundaries of digital entertainment under the visionary leadership of <span class="promo-highlight">Professor J</span>, our Head Developer.</p>
