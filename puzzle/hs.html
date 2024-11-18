@@ -6,14 +6,20 @@
   <title>High Scores</title>
 </head>
 <body>
-  <h1>High Scores</h1>
-  <div id="highScoresList"></div>
-  <h2>Submit Your Score</h2>
-  <form id="scoreForm">
+  <h1>Login to View & Play</h1>
+  <form id="loginForm">
     <input type="text" id="username" placeholder="Username" required><br>
-    <input type="number" id="score" placeholder="Score" required><br>
-    <button type="submit">Submit</button>
+    <input type="email" id="email" placeholder="Email" required><br>
+    <button type="submit">Login</button>
   </form>
+
+  <div id="loggedIn" style="display: none;">
+    <h2>Welcome, <span id="loggedInUser"></span></h2>
+    <h3>Start Playing and Earning Points!</h3>
+    <button id="completeLevelButton">Complete Level</button>
+    <h3>Your High Scores:</h3>
+    <div id="highScoresList"></div>
+  </div>
 
   <script>
     const repoOwner = "your-username"; // GitHub username
@@ -21,6 +27,8 @@
     const fileName = "highscores.json"; // Name of the file in your repo
     const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${fileName}`;
     const token = "your-personal-access-token"; // GitHub token for authentication
+
+    let loggedInUser = null;
 
     // Function to get high scores
     async function fetchHighScores() {
@@ -53,15 +61,49 @@
       });
     }
 
-    // Function to submit a new score
-    async function submitScore(event) {
+    // Function to handle login
+    async function handleLogin(event) {
       event.preventDefault();
-      
-      const username = document.getElementById("username").value;
-      const score = document.getElementById("score").value;
 
-      const newScore = { username, score: parseInt(score) };
-      
+      const username = document.getElementById("username").value;
+      const email = document.getElementById("email").value;
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "GET",
+          headers: {
+            "Authorization": `token ${token}`
+          }
+        });
+
+        const data = await response.json();
+        const content = atob(data.content); // Decode base64
+        const scores = JSON.parse(content);
+
+        // Check if the user exists
+        const user = scores.find(score => score.username === username && score.email === email);
+        if (user) {
+          // If user exists, log them in
+          loggedInUser = user;
+          document.getElementById("username").disabled = true;
+          document.getElementById("email").disabled = true;
+          document.getElementById("loginForm").style.display = 'none';
+          document.getElementById("loggedIn").style.display = 'block';
+          document.getElementById("loggedInUser").textContent = username;
+          fetchHighScores();
+        } else {
+          alert("Invalid login details.");
+        }
+      } catch (error) {
+        console.error("Error logging in:", error);
+      }
+    }
+
+    // Function to simulate completing a level and awarding points
+    async function completeLevel() {
+      const pointsEarned = 100; // Points earned upon completing the level
+      const newScore = { username: loggedInUser.username, email: loggedInUser.email, score: pointsEarned };
+
       try {
         const response = await fetch(apiUrl, {
           method: "GET",
@@ -74,7 +116,14 @@
         const content = atob(data.content);
         const highScores = JSON.parse(content);
 
-        highScores.push(newScore); // Add the new score
+        // Update the user's score
+        const userIndex = highScores.findIndex(s => s.username === loggedInUser.username && s.email === loggedInUser.email);
+        if (userIndex !== -1) {
+          highScores[userIndex].score += pointsEarned; // Increment score
+        } else {
+          highScores.push(newScore); // Add the new user if not found
+        }
+
         highScores.sort((a, b) => b.score - a.score); // Sort by score
 
         // Convert high scores array to base64 and update the file
@@ -94,12 +143,12 @@
 
         fetchHighScores(); // Reload the high scores
       } catch (error) {
-        console.error("Error submitting score:", error);
+        console.error("Error completing level and updating score:", error);
       }
     }
 
-    document.getElementById("scoreForm").addEventListener("submit", submitScore);
-    fetchHighScores(); // Fetch and display high scores when the page loads
+    document.getElementById("loginForm").addEventListener("submit", handleLogin);
+    document.getElementById("completeLevelButton").addEventListener("click", completeLevel);
   </script>
 </body>
 </html>
