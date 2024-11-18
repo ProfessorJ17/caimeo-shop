@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>High Scores</title>
+</head>
+<body>
+  <h1>High Scores</h1>
+  <div id="highScoresList"></div>
+  <h2>Submit Your Score</h2>
+  <form id="scoreForm">
+    <input type="text" id="username" placeholder="Username" required><br>
+    <input type="number" id="score" placeholder="Score" required><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const repoOwner = "your-username"; // GitHub username
+    const repoName = "your-repo-name"; // Your repository name
+    const fileName = "highscores.json"; // Name of the file in your repo
+    const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${fileName}`;
+    const token = "your-personal-access-token"; // GitHub token for authentication
+
+    // Function to get high scores
+    async function fetchHighScores() {
+      try {
+        const response = await fetch(apiUrl, {
+          method: "GET",
+          headers: {
+            "Authorization": `token ${token}`
+          }
+        });
+        const data = await response.json();
+        const content = atob(data.content); // Decode base64
+        const scores = JSON.parse(content);
+
+        displayHighScores(scores);
+      } catch (error) {
+        console.error("Error fetching high scores:", error);
+      }
+    }
+
+    // Function to display high scores
+    function displayHighScores(scores) {
+      const list = document.getElementById("highScoresList");
+      list.innerHTML = '';
+      scores.sort((a, b) => b.score - a.score); // Sort scores in descending order
+      scores.forEach(score => {
+        const scoreItem = document.createElement("div");
+        scoreItem.textContent = `${score.username}: ${score.score}`;
+        list.appendChild(scoreItem);
+      });
+    }
+
+    // Function to submit a new score
+    async function submitScore(event) {
+      event.preventDefault();
+      
+      const username = document.getElementById("username").value;
+      const score = document.getElementById("score").value;
+
+      const newScore = { username, score: parseInt(score) };
+      
+      try {
+        const response = await fetch(apiUrl, {
+          method: "GET",
+          headers: {
+            "Authorization": `token ${token}`
+          }
+        });
+
+        const data = await response.json();
+        const content = atob(data.content);
+        const highScores = JSON.parse(content);
+
+        highScores.push(newScore); // Add the new score
+        highScores.sort((a, b) => b.score - a.score); // Sort by score
+
+        // Convert high scores array to base64 and update the file
+        const updatedContent = btoa(JSON.stringify(highScores));
+        await fetch(apiUrl, {
+          method: "PUT",
+          headers: {
+            "Authorization": `token ${token}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: "Update high scores",
+            content: updatedContent,
+            sha: data.sha // Required to update the file
+          })
+        });
+
+        fetchHighScores(); // Reload the high scores
+      } catch (error) {
+        console.error("Error submitting score:", error);
+      }
+    }
+
+    document.getElementById("scoreForm").addEventListener("submit", submitScore);
+    fetchHighScores(); // Fetch and display high scores when the page loads
+  </script>
+</body>
+</html>
