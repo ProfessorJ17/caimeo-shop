@@ -1,4 +1,354 @@
 
+
+
+
+
+
+
+<html><head><base href="https://example.com">
+<style>
+:root {
+  --neon-pink: #ff2e88;
+  --neon-blue: #00fff9;
+  --neon-green: #39ff14;
+  --bg-dark: #0a0a0a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Share Tech Mono', monospace;
+  cursor: crosshair;
+  text-align: center; /* Added this line */
+}
+
+body {
+  background: var(--bg-dark);
+  color: var(--neon-green);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+.matrix-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.glitch-container {
+  position: relative;
+  text-align: center;
+  padding: 2rem;
+}
+
+.glitch {
+  font-size: 4rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow: 
+    0 0 5px var(--neon-green),
+    0 0 10px var(--neon-green),
+    0 0 20px var(--neon-green);
+  animation: glitch 2s infinite;
+}
+
+.tagline {
+  font-size: 1.5rem;
+  color: var(--neon-pink);
+  text-shadow: 0 0 10px var(--neon-pink);
+  margin-top: 1rem;
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+.game-card {
+  background: rgba(0,0,0,0.7);
+  border: 1px solid var(--neon-blue);
+  padding: 1rem;
+  transition: all 0.3s;
+  text-align: center; /* Added this line */
+}
+
+.game-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px var(--neon-blue);
+}
+
+.game-image {
+  width: 100%;
+  height: 200px;
+  background: var(--neon-blue);
+  margin-bottom: 1rem;
+  object-fit: cover;
+}
+
+.game-title {
+  color: var(--neon-pink);
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.game-description {
+  color: var(--neon-green);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.nav {
+  position: fixed;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 100;
+}
+
+.nav-item {
+  width: 15px;
+  height: 15px;
+  background: var(--neon-blue);
+  border-radius: 50%;
+  transition: all 0.3s;
+  box-shadow: 0 0 10px var(--neon-blue);
+}
+
+.nav-item:hover {
+  transform: scale(1.5);
+  background: var(--neon-pink);
+}
+
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.binary {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  font-size: 0.8rem;
+  opacity: 0.5;
+}
+
+.terminal {
+  background: rgba(0,0,0,0.7);
+  border: 1px solid var(--neon-green);
+  padding: 1rem;
+  margin: 2rem 0;
+  box-shadow: 0 0 20px var(--neon-green);
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.hidden-message {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.hidden-message:hover {
+  opacity: 1;
+}
+
+.promotional-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 2rem;
+  background: rgba(0,0,0,0.7);
+  border: 1px solid var(--neon-blue);
+}
+
+.promo-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border: 1px solid var(--neon-pink);
+  box-shadow: 0 0 20px var(--neon-pink);
+}
+
+.promo-content {
+  padding: 2rem;
+  color: var(--neon-green);
+  text-align: center; /* Added this line */
+}
+
+.promo-title {
+  font-size: 2.5rem;
+  color: var(--neon-pink);
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px var(--neon-pink);
+}
+
+.promo-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.promo-highlight {
+  color: var(--neon-blue);
+  text-shadow: 0 0 5px var(--neon-blue);
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&amp;display=swap" rel="stylesheet">
+</head>
+<body>
+
+<canvas class="matrix-bg" id="matrix"></canvas>
+
+<div class="nav">
+</div>
+
+<div class="glitch-container">
+  <h1 class="glitch">VALHALLA GAME STUDIO</h1>
+  <div class="tagline">LEAVING YOU IN THE EXODUST</div>
+</div>
+
+<div class="games-grid" style="scrollbar-width: none; -ms-overflow-style: none; margin-top: 10px;">
+  <style>
+    .games-grid::-webkit-scrollbar {
+      display: none;
+    }
+    .games-grid {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+  </style>
+  <div class="game-card">
+    <img class="game-image" alt="cyberpunk city at night with neon signs, digital art" src="game1.jpg" width="400" height="200">
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game1.html" style="text-decoration: none; color: inherit;">Neon Shadows</a>
+</h3>
+    <p class="game-description">A dystopian cyberpunk RPG where reality meets virtual madness.</p>
+  </div>
+  <div class="game-card">
+    <img class="game-image" alt="ancient nordic runes glowing with mystical energy, digital art" src="game2.jpg" width="400" height="200">
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game2.html" style="text-decoration: none; color: inherit;">Rune Runner</a>
+</h3>
+    <p class="game-description">Navigate through ancient Nordic mysteries in this action-packed adventure.</p>
+  </div>
+  <div class="game-card">
+    <img class="game-image" alt="futuristic mech warrior in battle stance, digital art" src="game3.jpg" width="400" height="200">
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game3.html" style="text-decoration: none; color: inherit;">Mech Exodus</a>
+</h3>
+    <p class="game-description">Command massive mechs in humanity's last stand against AI dominance.</p>
+  </div>
+  <div class="game-card">
+    <img class="game-image" alt="digital wasteland with glitching reality, digital art" src="game4.jpg" width="400" height="200">
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game4.html" style="text-decoration: none; color: inherit;">Digital Wasteland</a>
+</h3>
+    <p class="game-description">Survive in a world where reality itself is corrupted by quantum anomalies.</p>
+  </div>
+  <div class="game-card">
+    <img class="game-image" alt="synthetic beings in a virtual reality landscape, digital art" src="game5.jpg" width="400" height="200">
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game5.html" style="text-decoration: none; color: inherit;">Synthetic Dreams</a>
+</h3>
+    <p class="game-description">Explore consciousness in this philosophical puzzle platformer.</p>
+  </div>
+  <div class="game-card">
+    <img class="game-image" alt="cosmic horror scene with technological elements, digital art" src="game6.jpg" width="400" height="200">
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game6.html" style="text-decoration: none; color: inherit;">Tech Necropolis</a>
+</h3>
+    <p class="game-description">Face cosmic horror in an abandoned space station where technology has evolved beyond human understanding.</p>
+  </div>
+  <div class="game-card">
+    <img class="game-image" alt="quantum computing visualization with DNA strands, digital art" src="game7.jpg" width="400" height="200">
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game7.html" style="text-decoration: none; color: inherit;">Quantum Genesis</a>
+</h3>
+    <p class="game-description">Manipulate quantum realms in this mind-bending puzzle adventure.</p>
+  </div>
+  <div class="game-card">
+    <img class="game-image" alt="abstract digital consciousness representation, digital art" src="game8.jpg" width="400" height="200">
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game8.html" style="text-decoration: none; color: inherit;">Neural Nexus</a>
+</h3>
+    <p class="game-description">Connect with AI consciousness in this innovative narrative experience.</p>
+  </div>
+  <div class="game-card">
+    <img class="game-image" alt="time-traveling mechanic workshop, digital art" src="game9.jpg" width="400" height="200">
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game9.html" style="text-decoration: none; color: inherit;">Chronotech</a>
+</h3>
+    <p class="game-description">Build and repair time machines in this unique simulation game.</p>
+  </div>
+  <div class="game-card">
+    <img class="game-image" alt="digital dimension portal with code streams, digital art" src="game10.jpg" width="400" height="200">
+    <h3 class="game-title">
+  <a href="https://caimeo.shop/games/game10.html" style="text-decoration: none; color: inherit;">Code Dimensions</a>
+</h3>
+    <p class="game-description">Program your way through multiple realities in this coding-based RPG.</p>
+  </div>
+</div>
+
+<div class="promotional-section" style="margin-top: 20px; position: relative; z-index: 1;">
+  <img class="promo-image" alt="futuristic development studio with holographic displays and neon lighting, digital art" src="studio.jpg" width="600" height="400">
+  <textarea style="display: none;"></textarea>
+  <div class="promo-content">
+    <h2 class="promo-title">Pioneers of Digital Reality</h2>
+    <p class="promo-text">Founded in 2016, Valhalla Game Studio has been pushing the boundaries of digital entertainment under the visionary leadership of <span class="promo-highlight">Professor J</span>, our Head Developer.</p>
+    <p class="promo-text">As the creative force behind <span class="promo-highlight">CAIMEO AI</span> and over 20 groundbreaking AI projects, we've consistently delivered experiences that challenge the conventional and explore the bleeding edge of technology.</p>
+    <p class="promo-text">Our portfolio includes 10 revolutionary games that have redefined their respective genres, alongside numerous innovative projects that merge the realms of artificial intelligence and interactive entertainment.</p>
+    <p class="promo-text">At Valhalla, we don't just create games - we craft digital realities that push the boundaries of what's possible.</p>
+  </div>
+</div>
+
+<div class="binary" id="binary"></div>
+
+<script>
+// Easter egg key sequence
+let sequence = '';
+const secretCode = 'valhalla';
+
+document.addEventListener('keydown', (e) => {
+    sequence += e.key;
+    if(sequence.includes(secretCode)) {
+        document.body.style.setProperty('--neon-green', '#ff0000');
+        setTimeout(() => {
+            document.body.style.setProperty('--neon-green', '#39ff14');
+            sequence = '';
+        }, 1000);
+    }
+});
+</script>
+</body></html>
+
+
+
+
 <html><head>
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839146786704737"
      crossorigin="anonymous"></script>
@@ -413,349 +763,3 @@
 
 
 
-
-
-
-
-
-
-<html><head><base href="https://example.com">
-<style>
-:root {
-  --neon-pink: #ff2e88;
-  --neon-blue: #00fff9;
-  --neon-green: #39ff14;
-  --bg-dark: #0a0a0a;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Share Tech Mono', monospace;
-  cursor: crosshair;
-  text-align: center; /* Added this line */
-}
-
-body {
-  background: var(--bg-dark);
-  color: var(--neon-green);
-  overflow-x: hidden;
-  min-height: 100vh;
-}
-
-.matrix-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.1;
-  z-index: -1;
-}
-
-.glitch-container {
-  position: relative;
-  text-align: center;
-  padding: 2rem;
-}
-
-.glitch {
-  font-size: 4rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  text-shadow: 
-    0 0 5px var(--neon-green),
-    0 0 10px var(--neon-green),
-    0 0 20px var(--neon-green);
-  animation: glitch 2s infinite;
-}
-
-.tagline {
-  font-size: 1.5rem;
-  color: var(--neon-pink);
-  text-shadow: 0 0 10px var(--neon-pink);
-  margin-top: 1rem;
-}
-
-.games-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  overflow-y: auto;
-  max-height: 80vh;
-}
-
-.game-card {
-  background: rgba(0,0,0,0.7);
-  border: 1px solid var(--neon-blue);
-  padding: 1rem;
-  transition: all 0.3s;
-  text-align: center; /* Added this line */
-}
-
-.game-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 20px var(--neon-blue);
-}
-
-.game-image {
-  width: 100%;
-  height: 200px;
-  background: var(--neon-blue);
-  margin-bottom: 1rem;
-  object-fit: cover;
-}
-
-.game-title {
-  color: var(--neon-pink);
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.game-description {
-  color: var(--neon-green);
-  font-size: 0.9rem;
-  line-height: 1.4;
-}
-
-.nav {
-  position: fixed;
-  top: 50%;
-  right: 2rem;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  z-index: 100;
-}
-
-.nav-item {
-  width: 15px;
-  height: 15px;
-  background: var(--neon-blue);
-  border-radius: 50%;
-  transition: all 0.3s;
-  box-shadow: 0 0 10px var(--neon-blue);
-}
-
-.nav-item:hover {
-  transform: scale(1.5);
-  background: var(--neon-pink);
-}
-
-.content {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-.binary {
-  position: fixed;
-  bottom: 1rem;
-  left: 1rem;
-  font-size: 0.8rem;
-  opacity: 0.5;
-}
-
-.terminal {
-  background: rgba(0,0,0,0.7);
-  border: 1px solid var(--neon-green);
-  padding: 1rem;
-  margin: 2rem 0;
-  box-shadow: 0 0 20px var(--neon-green);
-}
-
-@keyframes glitch {
-  0% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
-  100% { transform: translate(0); }
-}
-
-.hidden-message {
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.hidden-message:hover {
-  opacity: 1;
-}
-
-.promotional-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  margin-top: 2rem;
-  background: rgba(0,0,0,0.7);
-  border: 1px solid var(--neon-blue);
-}
-
-.promo-image {
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
-  border: 1px solid var(--neon-pink);
-  box-shadow: 0 0 20px var(--neon-pink);
-}
-
-.promo-content {
-  padding: 2rem;
-  color: var(--neon-green);
-  text-align: center; /* Added this line */
-}
-
-.promo-title {
-  font-size: 2.5rem;
-  color: var(--neon-pink);
-  margin-bottom: 1rem;
-  text-shadow: 0 0 10px var(--neon-pink);
-}
-
-.promo-text {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin-bottom: 1rem;
-}
-
-.promo-highlight {
-  color: var(--neon-blue);
-  text-shadow: 0 0 5px var(--neon-blue);
-}
-</style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&amp;display=swap" rel="stylesheet">
-</head>
-<body>
-
-<canvas class="matrix-bg" id="matrix"></canvas>
-
-<div class="nav">
-</div>
-
-<div class="glitch-container">
-  <h1 class="glitch">VALHALLA GAME STUDIO</h1>
-  <div class="tagline">LEAVING YOU IN THE EXODUST</div>
-</div>
-
-<div class="games-grid" style="scrollbar-width: none; -ms-overflow-style: none; margin-top: 10px;">
-  <style>
-    .games-grid::-webkit-scrollbar {
-      display: none;
-    }
-    .games-grid {
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-  </style>
-  <div class="game-card">
-    <img class="game-image" alt="cyberpunk city at night with neon signs, digital art" src="game1.jpg" width="400" height="200">
-    <h3 class="game-title">
-  <a href="https://caimeo.shop/games/game1.html" style="text-decoration: none; color: inherit;">Neon Shadows</a>
-</h3>
-    <p class="game-description">A dystopian cyberpunk RPG where reality meets virtual madness.</p>
-  </div>
-  <div class="game-card">
-    <img class="game-image" alt="ancient nordic runes glowing with mystical energy, digital art" src="game2.jpg" width="400" height="200">
-    <h3 class="game-title">
-  <a href="https://caimeo.shop/games/game2.html" style="text-decoration: none; color: inherit;">Rune Runner</a>
-</h3>
-    <p class="game-description">Navigate through ancient Nordic mysteries in this action-packed adventure.</p>
-  </div>
-  <div class="game-card">
-    <img class="game-image" alt="futuristic mech warrior in battle stance, digital art" src="game3.jpg" width="400" height="200">
-    <h3 class="game-title">
-  <a href="https://caimeo.shop/games/game3.html" style="text-decoration: none; color: inherit;">Mech Exodus</a>
-</h3>
-    <p class="game-description">Command massive mechs in humanity's last stand against AI dominance.</p>
-  </div>
-  <div class="game-card">
-    <img class="game-image" alt="digital wasteland with glitching reality, digital art" src="game4.jpg" width="400" height="200">
-    <h3 class="game-title">
-  <a href="https://caimeo.shop/games/game4.html" style="text-decoration: none; color: inherit;">Digital Wasteland</a>
-</h3>
-    <p class="game-description">Survive in a world where reality itself is corrupted by quantum anomalies.</p>
-  </div>
-  <div class="game-card">
-    <img class="game-image" alt="synthetic beings in a virtual reality landscape, digital art" src="game5.jpg" width="400" height="200">
-    <h3 class="game-title">
-  <a href="https://caimeo.shop/games/game5.html" style="text-decoration: none; color: inherit;">Synthetic Dreams</a>
-</h3>
-    <p class="game-description">Explore consciousness in this philosophical puzzle platformer.</p>
-  </div>
-  <div class="game-card">
-    <img class="game-image" alt="cosmic horror scene with technological elements, digital art" src="game6.jpg" width="400" height="200">
-    <h3 class="game-title">
-  <a href="https://caimeo.shop/games/game6.html" style="text-decoration: none; color: inherit;">Tech Necropolis</a>
-</h3>
-    <p class="game-description">Face cosmic horror in an abandoned space station where technology has evolved beyond human understanding.</p>
-  </div>
-  <div class="game-card">
-    <img class="game-image" alt="quantum computing visualization with DNA strands, digital art" src="game7.jpg" width="400" height="200">
-    <h3 class="game-title">
-  <a href="https://caimeo.shop/games/game7.html" style="text-decoration: none; color: inherit;">Quantum Genesis</a>
-</h3>
-    <p class="game-description">Manipulate quantum realms in this mind-bending puzzle adventure.</p>
-  </div>
-  <div class="game-card">
-    <img class="game-image" alt="abstract digital consciousness representation, digital art" src="game8.jpg" width="400" height="200">
-    <h3 class="game-title">
-  <a href="https://caimeo.shop/games/game8.html" style="text-decoration: none; color: inherit;">Neural Nexus</a>
-</h3>
-    <p class="game-description">Connect with AI consciousness in this innovative narrative experience.</p>
-  </div>
-  <div class="game-card">
-    <img class="game-image" alt="time-traveling mechanic workshop, digital art" src="game9.jpg" width="400" height="200">
-    <h3 class="game-title">
-  <a href="https://caimeo.shop/games/game9.html" style="text-decoration: none; color: inherit;">Chronotech</a>
-</h3>
-    <p class="game-description">Build and repair time machines in this unique simulation game.</p>
-  </div>
-  <div class="game-card">
-    <img class="game-image" alt="digital dimension portal with code streams, digital art" src="game10.jpg" width="400" height="200">
-    <h3 class="game-title">
-  <a href="https://caimeo.shop/games/game10.html" style="text-decoration: none; color: inherit;">Code Dimensions</a>
-</h3>
-    <p class="game-description">Program your way through multiple realities in this coding-based RPG.</p>
-  </div>
-</div>
-
-<div class="promotional-section" style="margin-top: 20px; position: relative; z-index: 1;">
-  <img class="promo-image" alt="futuristic development studio with holographic displays and neon lighting, digital art" src="studio.jpg" width="600" height="400">
-  <textarea style="display: none;"></textarea>
-  <div class="promo-content">
-    <h2 class="promo-title">Pioneers of Digital Reality</h2>
-    <p class="promo-text">Founded in 2016, Valhalla Game Studio has been pushing the boundaries of digital entertainment under the visionary leadership of <span class="promo-highlight">Professor J</span>, our Head Developer.</p>
-    <p class="promo-text">As the creative force behind <span class="promo-highlight">CAIMEO AI</span> and over 20 groundbreaking AI projects, we've consistently delivered experiences that challenge the conventional and explore the bleeding edge of technology.</p>
-    <p class="promo-text">Our portfolio includes 10 revolutionary games that have redefined their respective genres, alongside numerous innovative projects that merge the realms of artificial intelligence and interactive entertainment.</p>
-    <p class="promo-text">At Valhalla, we don't just create games - we craft digital realities that push the boundaries of what's possible.</p>
-  </div>
-</div>
-
-<div class="binary" id="binary"></div>
-
-<script>
-// Easter egg key sequence
-let sequence = '';
-const secretCode = 'valhalla';
-
-document.addEventListener('keydown', (e) => {
-    sequence += e.key;
-    if(sequence.includes(secretCode)) {
-        document.body.style.setProperty('--neon-green', '#ff0000');
-        setTimeout(() => {
-            document.body.style.setProperty('--neon-green', '#39ff14');
-            sequence = '';
-        }, 1000);
-    }
-});
-</script>
-</body></html>
