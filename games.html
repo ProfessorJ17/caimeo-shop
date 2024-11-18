@@ -413,8 +413,6 @@
 
 
 
-
-
 <html><head><base href="https://example.com">
 <style>
 :root {
@@ -580,6 +578,50 @@ body {
 .hidden-message:hover {
   opacity: 1;
 }
+
+/* Adding new styles for the promotional section */
+.promotional-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 2rem;
+  background: rgba(0,0,0,0.7);
+  border: 1px solid var(--neon-blue);
+}
+
+.promo-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border: 1px solid var(--neon-pink);
+  box-shadow: 0 0 20px var(--neon-pink);
+}
+
+.promo-content {
+  padding: 2rem;
+  color: var(--neon-green);
+}
+
+.promo-title {
+  font-size: 2.5rem;
+  color: var(--neon-pink);
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px var(--neon-pink);
+}
+
+.promo-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.promo-highlight {
+  color: var(--neon-blue);
+  text-shadow: 0 0 5px var(--neon-blue);
+}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&amp;display=swap" rel="stylesheet">
@@ -589,9 +631,6 @@ body {
 <canvas class="matrix-bg" id="matrix"></canvas>
 
 <div class="nav">
-  <div class="nav-item" data-section="home"></div>
-  <div class="nav-item" data-section="projects"></div>
-  <div class="nav-item" data-section="enigma"></div>
 </div>
 
 <div class="glitch-container">
@@ -599,8 +638,7 @@ body {
   <div class="tagline">LEAVING YOU IN THE EXODUST</div>
 </div>
 
-<div class="games-grid" style="scrollbar-width: none; -ms-overflow-style: none;">
-  <!-- Added CSS to the games-grid div to hide scrollbars -->
+<div class="games-grid" style="scrollbar-width: none; -ms-overflow-style: none; margin-top: 10px;">
   <style>
     .games-grid::-webkit-scrollbar {
       display: none;
@@ -659,6 +697,17 @@ body {
     <img class="game-image" alt="digital dimension portal with code streams, digital art" src="game10.jpg" width="400" height="200">
     <h3 class="game-title">Code Dimensions</h3>
     <p class="game-description">Program your way through multiple realities in this coding-based RPG.</p>
+  </div>
+</div>
+
+<div class="promotional-section">
+  <img class="promo-image" alt="futuristic development studio with holographic displays and neon lighting, digital art" src="studio.jpg" width="600" height="400">
+  <div class="promo-content">
+    <h2 class="promo-title">Pioneers of Digital Reality</h2>
+    <p class="promo-text">Founded in 2016, Valhalla Game Studio has been pushing the boundaries of digital entertainment under the visionary leadership of <span class="promo-highlight">Professor J</span>, our Head Developer.</p>
+    <p class="promo-text">As the creative force behind <span class="promo-highlight">CAIMEO AI</span> and over 20 groundbreaking AI projects, we've consistently delivered experiences that challenge the conventional and explore the bleeding edge of technology.</p>
+    <p class="promo-text">Our portfolio includes 10 revolutionary games that have redefined their respective genres, alongside numerous innovative projects that merge the realms of artificial intelligence and interactive entertainment.</p>
+    <p class="promo-text">At Valhalla, we don't just create games - we craft digital realities that push the boundaries of what's possible.</p>
   </div>
 </div>
 
