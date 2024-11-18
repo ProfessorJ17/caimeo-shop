@@ -1,0 +1,210 @@
+<html><head><base href=""><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyberpunk Media Hub</title>
+<style>
+:root {
+  --neon-pink: #ff00ff;
+  --neon-blue: #00ffff;
+  --neon-purple: #b700ff;
+  --dark-bg: #0a0a0f;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--dark-bg);
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.title {
+  font-size: 3em;
+  color: var(--neon-blue);
+  text-shadow: 0 0 10px var(--neon-blue);
+  animation: glowText 2s infinite alternate;
+}
+
+@keyframes glowText {
+  from {
+    text-shadow: 0 0 10px var(--neon-blue);
+  }
+  to {
+    text-shadow: 0 0 20px var(--neon-blue), 0 0 30px var(--neon-pink);
+  }
+}
+
+.feed-container {
+  background: rgba(0,0,0,0.7);
+  border: 2px solid var(--neon-purple);
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 0 15px var(--neon-purple);
+}
+
+.rss-item {
+  background: rgba(0,0,0,0.7);
+  border: 1px solid var(--neon-blue);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.rss-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px var(--neon-blue);
+}
+
+.rss-title {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.rss-title a {
+  color: var(--neon-pink);
+  text-decoration: none;
+  text-shadow: 0 0 5px var(--neon-pink);
+  transition: all 0.3s ease;
+}
+
+.rss-title a:hover {
+  color: var(--neon-blue);
+  text-shadow: 0 0 10px var(--neon-blue);
+}
+
+.rss-description {
+  color: #fff;
+  font-size: 0.9em;
+  line-height: 1.5;
+  text-shadow: 0 0 2px var(--neon-purple);
+}
+
+.add-creator {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&amp;display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+  <header class="header">
+    <h1 class="title">CYBER//STREAM</h1>
+    <p>Your Neural Link to Content Creators</p>
+  </header>
+
+  <div class="feed-container" id="rssFeed">
+    <!-- RSS feeds will be loaded here -->
+</div>
+
+  <script>
+    // OPML data directly embedded
+    const opmlData = `<?xml version="1.0" encoding="UTF-8"?>
+    <opml version="2.0">
+        <title>FetchRSS.com OPML</title>
+        <datecreated>Mon, 18 Nov 2024 00:02:16 +0000</datecreated>
+        <outline title="J 17 - YouTube" text="J 17 - YouTube" description="Valhalla Games C.E.O. , Video Producer, Director, Musician, Rapper,  Quantum Healer, Skateboarder, Computer Tech, Stage Laborer, Janitor, and more. 5avt2rbm - YouTube" xmlurl="http://fetchrss.com/rss/673a82bbcea5c5ba9a01c2c2673a829a552a69c0f6054c62.xml" type="rss">
+        </outline>
+        <outline title="Neon Zen - YouTube" text="Neon Zen - YouTube" description="Welcome to Neon Zen! Dive into a world of vibrant neon aesthetics, positive energy, and transformative healing. Here, we blend mesmerizing visuals with relaxing sounds, meditative guidance, and uplifting vibes to help you recharge and elevate your spirit." xmlurl="http://fetchrss.com/rss/673a82bbcea5c5ba9a01c2c2673a830a64e6c611f005b183.xml" type="rss">
+        </outline>
+    </opml>`;
+
+    // Function to parse OPML and extract RSS URLs
+    function parseOPML(opml) {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(opml, 'text/xml');
+        const outlineElements = xmlDoc.getElementsByTagName('outline');
+        const rssUrls = [];
+
+        for (let i = 0; i < outlineElements.length; i++) {
+            const outline = outlineElements[i];
+            const rssUrl = outline.getAttribute('xmlurl');
+            if (rssUrl) {
+                rssUrls.push({
+                    url: rssUrl,
+                    title: outline.getAttribute('title'),
+                    description: outline.getAttribute('description')
+                });
+            }
+        }
+
+        rssUrls.forEach(feed => fetchRSS(feed));
+    }
+
+    // Function to fetch and display RSS feed items
+    async function fetchRSS(feed) {
+        try {
+            const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`);
+            const data = await response.json();
+
+            if (data.status === 'ok') {
+                displayFeed(data.items, feed);
+            }
+        } catch (error) {
+            console.error('Error fetching RSS feed:', error);
+        }
+    }
+
+    // Function to display the RSS feed items
+    function displayFeed(items, feed) {
+        const rssFeedContainer = document.getElementById('rssFeed');
+        
+        const feedHeader = document.createElement('h2');
+        feedHeader.style.color = 'var(--neon-blue)';
+        feedHeader.style.textShadow = '0 0 10px var(--neon-blue)';
+        feedHeader.textContent = feed.title;
+        rssFeedContainer.appendChild(feedHeader);
+
+        items.forEach(item => {
+            const div = document.createElement('div');
+            div.classList.add('rss-item');
+
+            // Add thumbnail if available
+            if (item.thumbnail) {
+                const thumbnail = document.createElement('img');
+                thumbnail.src = item.thumbnail;
+                thumbnail.alt = `Thumbnail for ${item.title}`;
+                thumbnail.style.width = '100%';
+                thumbnail.style.maxWidth = '480px';
+                thumbnail.style.height = 'auto';
+                thumbnail.style.borderRadius = '5px';
+                thumbnail.style.marginBottom = '15px';
+                div.appendChild(thumbnail);
+            }
+
+            const title = document.createElement('div');
+            title.classList.add('rss-title');
+            title.innerHTML = `<a href="${item.link}" target="_blank">${item.title}</a>`;
+
+            const description = document.createElement('div');
+            description.classList.add('rss-description');
+            description.innerHTML = item.description || 'No description available';
+
+            div.appendChild(title);
+            div.appendChild(description);
+            rssFeedContainer.appendChild(div);
+        });
+    }
+
+    // Parse the embedded OPML data
+    parseOPML(opmlData);
+</script>
+</div>
+
+</body></html>
