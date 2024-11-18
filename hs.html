@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>High Scores</title>
+</head>
+<body>
+  <h1>Login to View & Play</h1>
+  <form id="loginForm">
+    <input type="text" id="username" placeholder="Username" required><br>
+    <button type="submit">Login</button>
+  </form>
+
+  <h2>Don't have an account? <a href="#" id="registerLink">Register here</a></h2>
+
+  <div id="loggedIn" style="display: none;">
+    <h2>Welcome, <span id="loggedInUser"></span></h2>
+    <p>Login Success at: <span id="loginTime"></span></p>
+    <h3>Start Playing and Earning Points!</h3>
+    <button id="completeLevelButton">Complete Level</button>
+    <h3>Your High Scores:</h3>
+    <div id="highScoresList"></div>
+    <button id="logoutButton">Logout</button>
+  </div>
+
+  <script>
+    const repoOwner = "ProfessorJ17"; // Your GitHub username
+    const repoName = "caimeo-shop"; // Your repository name
+    const fileName = "highscores.json"; // Name of the file in your repo
+    const apiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${fileName}`;
+    const token = "your-personal-access-token"; // Your GitHub token for authentication
+
+    let loggedInUser = null;
+
+    // Check if the user is already logged in via localStorage
+    function checkLoginStatus() {
+      const savedUser = localStorage.getItem('loggedInUser');
+      if (savedUser) {
+        loggedInUser = JSON.parse(savedUser);
+        document.getElementById("username").disabled = true;
+        document.getElementById("loginForm").style.display = 'none';
+        document.getElementById("loggedIn").style.display = 'block';
+        document.getElementById("loggedInUser").textContent = loggedInUser.username;
+        document.getElementById("loginTime").textContent = loggedInUser.loginTime;
+        fetchHighScores();
+      }
+    }
+
+    // Function to handle login
+    async function handleLogin(event) {
+      event.preventDefault();
+      const username = document.getElementById("username").value;
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "GET",
+          headers: {
+            "Authorization": `token ${token}`
+          }
+        });
+        const data = await response.json();
+        const content = atob(data.content); // Decode base64
+        const scores = JSON.parse(content);
+
+        // Check if the user exists
+        const user = scores.find(score => score.username === username);
+        if (user) {
+          loggedInUser = { ...user, loginTime: new Date().toLocaleString() }; // Add login time
+          localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser)); // Store in localStorage
+
+          document.getElementById("username").disabled = true;
+          document.getElementById("loginForm").style.display = 'none';
+          document.getElementById("loggedIn").style.display = 'block';
+          document.getElementById("loggedInUser").textContent = username;
+          document.getElementById("loginTime").textContent = loggedInUser.loginTime;
+          fetchHighScores();
+          alert("Login successful!");
+        } else {
+          alert("Invalid login details.");
+        }
+      } catch (error) {
+        console.error("Error logging in:", error);
+      }
+    }
+
+    // Function to handle registration
+    async function handleRegister(event) {
+      event.preventDefault();
+
+      const newUsername = document.getElementById("newUsername").value;
+      const registerMessage = document.getElementById("registerMessage");
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "GET",
+          headers: {
+            "Authorization": `token ${token}`
+          }
+        });
+        const data = await response.json();
+        const content = atob(data.content); // Decode base64
+        const scores = JSON.parse(content);
+
+        // Check if the username already exists
+        const userExists = scores.some(score => score.username === newUsername);
+        if (userExists) {
+          registerMessage.textContent = "Username already exists! Try again.";
+          registerMessage.style.color = "red";
+          return;
+        }
+
+        // Add the new user with score 0 and no email (email can be set later)
+        const newUser = { username: newUsername, score: 0 };
+        scores.push(newUser);
+
+        // Convert high scores array to base64 and update the file
+        const updatedContent = btoa(JSON.stringify(scores));
+        await fetch(apiUrl, {
+          method: "PUT",
+          headers: {
+            "Authorization": `token ${token}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: "Register new user",
+            content: updatedContent,
+            sha: data.sha // Required to update the file
+          })
+        });
+
+        alert("Registration successful! You can now log in with your username.");
+        showLoginForm(); // Show login form after successful registration
+      } catch (error) {
+        console.error("Error registering user:", error);
+      }
+    }
+
+    // Show login form (after successful registration)
+    function showLoginForm() {
+      document.getElementById("registerForm").style.display = 'none';
+      document.getElementById("loginForm").style.display = 'block';
+      document.getElementById("registerLink").style.display = 'block'; // Ensure Register link is visible again
+    }
+
+    // Show register form
+    function showRegisterForm() {
+      document.getElementById("loginForm").style.display = 'none';
+
+      // Hide "Register here" link
+      document.getElementById("registerLink").style.display = 'none';
+
+      const registerForm = document.createElement("form");
+      registerForm.id = "registerForm";
+      registerForm.innerHTML = `
+        <input type="text" id="newUsername" placeholder="Username" required><br>
+        <button type="submit">Register</button>
+        <p id="registerMessage" style="color: green;"></p>
+      `;
+      document.body.appendChild(registerForm);
+
+      registerForm.addEventListener("submit", handleRegister);
+    }
+
+    // Event listeners
+    document.getElementById("loginForm").addEventListener("submit", handleLogin);
+    document.getElementById("registerLink").addEventListener("click", function() {
+      showRegisterForm(); // Only show register form once
+    });
+
+    // Check login status on page load
+    checkLoginStatus();
+  </script>
+</body>
+</html>
