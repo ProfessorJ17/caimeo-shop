@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><base href=".">
+<html><head><base href=".">
 <style>
   body {
     background: #1a1a1a;
@@ -91,7 +91,7 @@
     margin-top: 10px;
   }
 </style>
-   <script type="text/javascript">
+     <script type="text/javascript">
         // Disable right-click
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
@@ -106,8 +106,8 @@
             }
         }
     </script>
-</head>
-<body>
+</head><body>
+
 <div class="game-container">
   <h1>Cryptographic Shapes Puzzle</h1>
   <div class="riddle">
@@ -128,10 +128,7 @@
   <div class="binary-bit" onclick="toggleBit(6)">0</div>
   <div class="binary-bit" onclick="toggleBit(7)">0</div>
 </div>
-  <div class="input-area">
-    <input type="number" id="answer" placeholder="Enter your answer (hint: try 4455.39)">
-    <button onclick="checkAnswer()">Submit</button>
-  </div>
+  <div></div>
   <div class="message" id="message">Welcome to Level 2: Binary Sequence!</div>
 </div>
 
@@ -192,7 +189,7 @@ function validateSequence() {
     if (binarySequence.join('') === '10110100') {
       // Wait 2 seconds then redirect
       setTimeout(() => {
-        window.location.href = 'https://caimeo.shop/puzzle/2.html';
+        window.location.href = 'https://caimeo.shop/puzzle/3.html';
       }, 2000);
     }
     
