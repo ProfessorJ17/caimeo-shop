@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head>
+<html><head>
   <base href=".">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -112,6 +112,8 @@
             }
         }
     </script>
+
+  
 </head>
 <body>
   <div class="terminal-container">
@@ -126,7 +128,7 @@
       &gt;_ Analyzing security protocols...
     </div>
     <div class="glitch-text" style="background-color: #000000; color: #39FF14; text-shadow: 0 0 5px #32CD32, 0 0 10px #00FF00; padding: 10px; border-left: 4px solid #32CD32; font-family: 'VT323', monospace; letter-spacing: 1px;">
-  <span style="color: #32CD32;">Hint: What's the next prime higher than 100?</span>
+  <span style="color: #000000; opacity: 1;">Room #101 </span>
   <span id="flickeringNumbers"></span><br><br>
   In the matrix of numbers below<br>
   Hidden primes hold secrets to show<br>
@@ -143,7 +145,7 @@
       <span style="color: #0f0; margin: 0 10px;">X</span>
       <div class="prime-cell" id="prime3" onclick="highlightCell(this)">268</div>
       <span style="color: #0f0; margin: 0 10px;">-</span>
-      <div class="prime-cell" id="prime4" onclick="highlightCell(this)">113</div>
+      <div class="prime-cell" id="prime4" onclick="highlightCell(this)" style="color: #ff0000; text-shadow: 0 0 10px #ff0000; border-color: #ff0000;">113</div>
       <span style="color: #0f0; margin: 0 10px;"></span>
     </div>
 
@@ -204,6 +206,7 @@
     }, 1000); // Shuffles primes every second
 
   </script>
+
 
 
 </body></html>
