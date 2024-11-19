@@ -1,4 +1,19 @@
-<!DOCTYPE html><html><head><base href=".">
+<html><head><base href=".">
+  <script type="text/javascript">
+        // Disable right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            alert("Right-click is disabled on this page.");
+        });
+
+        // Disable 'View Source' through the F12 and Ctrl+U keys
+        document.onkeydown = function(e) {
+            if (e.keyCode == 123 || (e.ctrlKey && e.keyCode == 85)) {
+                e.preventDefault();
+                alert("Viewing source is disabled.");
+            }
+        }
+    </script>
 <style>
   body {
     background: #1a1a1a;
@@ -77,29 +92,35 @@
     min-height: 20px;
     color: #0ff;
   }
-</style>
-   <script type="text/javascript">
-        // Disable right-click
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-            alert("Right-click is disabled on this page.");
-        });
 
-        // Disable 'View Source' through the F12 and Ctrl+U keys
-        document.onkeydown = function(e) {
-            if (e.keyCode == 123 || (e.ctrlKey && e.keyCode == 85)) {
-                e.preventDefault();
-                alert("Viewing source is disabled.");
-            }
-        }
-    </script>
+  @media (max-width: 768px) {
+    .puzzle-area {
+      grid-template-columns: repeat(3, 80px);
+      gap: 5px;
+    }
+    
+    .shape {
+      width: 80px;
+      height: 80px;
+    }
+    
+    .game-container {
+      padding: 1rem;
+      margin: 10px;
+    }
+    
+    input {
+      width: 150px;
+    }
+  }
+</style>
 </head>
 <body>
 <div class="game-container">
   <h1>Cryptographic Shapes Puzzle</h1>
   <div class="riddle">
     Decode the message: Each shape represents a number. 
-    The triangle is the key to all. When multiplied by π,
+    The triang7e is the key to all. When multiplied by π,
     it reveals the circle's true value.
     The square is the sum of both.
     What is the product of all three?
@@ -169,8 +190,7 @@ function checkAnswer() {
     
     // Add delay before moving to next puzzle
     setTimeout(() => {
-      // Here you can add code to transition to the next puzzle
-      message.textContent = "Get ready for the next challenge!";
+      window.location.href = "2.html"; // Redirect to the next puzzle
     }, 2000);
   } else {
     message.textContent = "Not quite right. Try again!";
