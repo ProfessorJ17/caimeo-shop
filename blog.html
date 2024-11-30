@@ -1,15 +1,16 @@
-<!DOCTYPE html><html><head>
+<html><head><base href="/">
   <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839146786704737" crossorigin="anonymous"></script>
-
-  <base href="/">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 :root {
   --neon-cyan: #0ff;
-  --neon-pink: #ff69b4;
+  --neon-pink: #ff69b4; 
   --neon-purple: #9d00ff;
+  --neon-lime: #39ff14;
   --dark-bg: #0a0a0a;
+  --node-color: rgba(0, 255, 255, 0.7);
+  --line-color: rgba(157, 0, 255, 0.3);
 }
 
 body {
@@ -19,6 +20,17 @@ body {
   margin: 0;
   padding: 20px;
   line-height: 1.6;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: var(--dark-bg);
 }
 
 .container {
@@ -41,7 +53,7 @@ h1 {
 }
 
 .blog-post {
-  background: rgba(10, 10, 10, 0.8);
+  background: rgba(10, 10, 10, 0.05);
   border-radius: 15px;
   padding: 25px;
   margin-bottom: 30px;
@@ -61,16 +73,22 @@ h1 {
   border: 2px solid var(--neon-pink);
 }
 
-.blog-post h2 {
-  color: var(--neon-cyan);
-  margin-bottom: 15px;
-  text-shadow: 0 0 5px var(--neon-cyan);
+.article-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px 0;
+}
+
+.article-header h2 {
+  margin: 0;
 }
 
 .post-meta {
-  color: var(--neon-pink);
-  font-size: 0.9em;
-  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 .tag {
@@ -99,7 +117,7 @@ nav {
 }
 
 nav a {
-  color: var(--neon-cyan);
+  color: var(--neon-pink);
   text-decoration: none;
   margin: 0 15px;
   font-weight: bold;
@@ -107,41 +125,245 @@ nav a {
 }
 
 nav a:hover {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 5px var(--neon-cyan);
+}
+
+#background-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.blog-post p, 
+.blog-post li,
+.blog-post ul,
+.blog-post ol {
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+}
+
+.blog-post a {
+  color: var(--neon-cyan);
+}
+
+.blog-post a:hover {
+  color: var(--neon-lime);
+  text-shadow: 0 0 5px var(--neon-lime);
+}
+
+.blog-post li a {
+  color: var(--neon-purple);
+}
+
+.blog-post li a:hover {
   color: var(--neon-pink);
   text-shadow: 0 0 5px var(--neon-pink);
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glitch {
+  0% {
+    text-shadow: 
+      0.05em 0 0 var(--neon-cyan),
+      -0.025em -0.05em 0 var(--neon-pink),
+      0.025em 0.05em 0 var(--neon-purple);
+  }
+  14% {
+    text-shadow: 
+      0.05em 0 0 var(--neon-cyan),
+      -0.05em -0.025em 0 var(--neon-pink),
+      -0.025em 0.05em 0 var(--neon-purple);
+  }
+  15% {
+    text-shadow: 
+      -0.05em -0.025em 0 var(--neon-cyan),
+      0.025em 0.025em 0 var(--neon-pink),
+      -0.05em -0.05em 0 var(--neon-purple);
+  }
+  49% {
+    text-shadow: 
+      -0.025em 0 0 var(--neon-cyan),
+      0.025em 0.025em 0 var(--neon-pink),
+      0.05em 0 0 var(--neon-purple);
+  }
+  50% {
+    text-shadow: 
+      0.025em 0.05em 0 var(--neon-cyan),
+      0.05em 0 0 var(--neon-pink),
+      0 -0.05em 0 var(--neon-purple);
+  }
+  99% {
+    text-shadow: 
+      0.025em 0 0 var(--neon-cyan),
+      0.025em -0.025em 0 var(--neon-pink),
+      -0.025em -0.05em 0 var(--neon-purple);
+  }
+  100% {
+    text-shadow: 
+      -0.025em 0 0 var(--neon-cyan),
+      -0.025em -0.025em 0 var(--neon-pink),
+      -0.025em -0.05em 0 var(--neon-purple);
+  }
+}
+
+@keyframes glow {
+  0% {
+    filter: brightness(100%) blur(0px);
+  }
+  25% {
+    filter: brightness(150%) blur(1px);
+  }
+  50% {
+    filter: brightness(100%) blur(0px);
+  }
+  75% {
+    filter: brightness(200%) blur(2px);
+  }
+  100% {
+    filter: brightness(100%) blur(0px);
+  }
+}
+
+.blog-post h2 {
+  color: var(--neon-cyan);
+  text-shadow: 
+    0 0 5px var(--neon-cyan),
+    0 0 10px var(--neon-cyan),
+    0 0 20px var(--neon-cyan);
+  animation: 
+    glitch 2.5s infinite,
+    glow 3s infinite;
+  position: relative;
+  letter-spacing: 2px;
+}
+
+.blog-post h2:before {
+  content: attr(data-text);
+  position: absolute;
+  left: -2px;
+  text-shadow: 2px 0 var(--neon-pink);
+  top: 0;
+  color: var(--neon-cyan);
+  background: var(--dark-bg);
+  overflow: hidden;
+  clip: rect(0, 900px, 0, 0);
+  animation: glitch-effect 3s infinite linear alternate-reverse;
+}
+
+.blog-post h2:after {
+  content: attr(data-text);
+  position: absolute;
+  left: 2px;
+  text-shadow: -2px 0 var(--neon-purple);
+  top: 0;
+  color: var(--neon-cyan);
+  background: var(--dark-bg);
+  overflow: hidden;
+  clip: rect(0, 900px, 0, 0);
+  animation: glitch-effect 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-effect {
+  0% {
+    clip: rect(31px, 9999px, 94px, 0);
+  }
+  5% {
+    clip: rect(70px, 9999px, 71px, 0);
+  }
+  10% {
+    clip: rect(29px, 9999px, 83px, 0);
+  }
+  15% {
+    clip: rect(4px, 9999px, 100px, 0);
+  }
+  20% {
+    clip: rect(38px, 9999px, 15px, 0);
+  }
+  25% {
+    clip: rect(82px, 9999px, 31px, 0);
+  }
+  30% {
+    clip: rect(35px, 9999px, 56px, 0);
+  }
+  35% {
+    clip: rect(94px, 9999px, 85px, 0);
+  }
+  40% {
+    clip: rect(68px, 9999px, 16px, 0);
+  }
+  45% {
+    clip: rect(63px, 9999px, 84px, 0);
+  }
+  50% {
+    clip: rect(23px, 9999px, 46px, 0);
+  }
+  55% {
+    clip: rect(89px, 9999px, 55px, 0);
+  }
+  60% {
+    clip: rect(84px, 9999px, 34px, 0);
+  }
+  65% {
+    clip: rect(74px, 9999px, 95px, 0);
+  }
+  70% {
+    clip: rect(96px, 9999px, 54px, 0);
+  }
+  75% {
+    clip: rect(67px, 9999px, 79px, 0);
+  }
+  80% {
+    clip: rect(48px, 9999px, 64px, 0);
+  }
+  85% {
+    clip: rect(66px, 9999px, 86px, 0);
+  }
+  90% {
+    clip: rect(40px, 9999px, 73px, 0);
+  }
+  95% {
+    clip: rect(99px, 9999px, 33px, 0);
+  }
+  100% {
+    clip: rect(76px, 9999px, 91px, 0);
+  }
+}
+
 </style>
-
-  
-
-
-  
 </head><body>
+<canvas id="background-canvas"></canvas>
   <div class="container">
-    <header>
-      <h1>Blog from the Future</h1>
+    <header style="background-image: url('https://page-images.websim.ai/holographic%20interface%20with%20floating%20data%20points,%20cyber%20punk%20style_800x400xnor5ofZXZTB5Djb7yx5530457556056.jpg'); background-size: cover; background-position: center; padding: 40px; border-radius: 15px; margin-bottom: 50px; border-bottom: 2px solid var(--neon-pink); text-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0,0,0,0.75); background-blend-mode: multiply;">
+      <h1>2099 Hive Mind</h1>
       <nav>
-        <a href="https://example.com/home">HOME</a>
-        <a href="https://example.com/hyperlinks">TAGS</a>
-        <a href="https://example.com/submit">SUBMIT BLOG</a>
+        <a href="https://caimeo.shop/blog.html">HOME</a>
+        <a href="https://caimeo.shop/submitblog.html">SUBMIT BLOG</a>
       </nav>
-    </header>
+      <div id="tag-filter" style="margin-top: 20px; text-align: center;">
+        <span style="color: var(--neon-cyan); margin-right: 10px;">Filter by tag:</span>
+        <div id="active-tags" style="display: inline-block;"></div>
+      </div>
+</header>
 
     <main>
 
-
-
-
       <article class="blog-post" onmouseover="this.style.boxShadow = '0 0 25px var(--neon-cyan)'" onmouseout="this.style.boxShadow = '0 0 15px var(--neon-purple)'" style="cursor: pointer">
-        <img alt="holographic interface with floating data points, cyber punk style" src="holo-interface.jpg" width="800" height="400">
-        <div class="post-meta">
-          <span>Posted on 2084.13.42</span>
-          <span class="tag">Quantum</span>
-          <span class="tag">Alien</span>
+        <div class="article-header">
+          <h2 data-text="Levitation and Electromagnetism and gravity">Levitation and Electromagnetism and gravity</h2>
+          <div class="post-meta">
+            <span>Posted on 2084.13.42</span>
+            <span class="tag">Quantum</span>
+            <span class="tag">Alien</span>
+          </div>
         </div>
-        <center>
-        <h2>Levitation and Electromagnetism and gravity</h2></center>
+        <img alt="holographic interface with floating data points, cyber punk style" src="https://pixabay.com/photos/abstract-art-digital-painting-4663480/" width="800" height="400">
         <p style="text-align: center">
 Abstract:<br><br>
 The differences in strength between electromagnetism and gravity lead to a deeper understanding of how these forces interact and affect cosmic events.<br><br>Advancements in propulsion systems like ion propulsion and new shielding materials are key to this exploration. Electromagnetism is vastly stronger than gravity, with estimates suggesting it is about 1. 5 × 10^71 times stronger. This strong difference influences how objects behave at both atomic and cosmic levels.<br><br>
@@ -179,94 +401,89 @@ Additionally, Quantum Field Theory provides insights into the interactions of el
         
       </article>
 
-
-
-
-
-
-
-
-      
       <article class="blog-post" onmouseover="this.style.boxShadow = '0 0 25px var(--neon-cyan)'" onmouseout="this.style.boxShadow = '0 0 15px var(--neon-purple)'" style="cursor: pointer; text-align: center">
-  <img alt="futuristic cityscape with neon lights and flying vehicles, digital art" src="future-city.jpg" width="800" height="400">
-  <div class="post-meta">
-    <span>Posted on 2084.13.45</span>
-    <span class="tag">Cybersecurity</span>
-    <span class="tag">Quantum</span>
-    <span class="tag">Hacking</span>
-  </div>
-  <h2>Exploring the Depths of Cybersecurity and Beyond in the Future</h2>
-  
-  <p style="text-align: left; margin: 20px 0">
-    Comprehensive guide discussing various aspects of information systems and security, particularly focusing on protecting digital information.
-  </p>
+        <div class="article-header">
+          <h2 data-text="Exploring the Depths of Cybersecurity and Beyond in the Future">Exploring the Depths of Cybersecurity and Beyond in the Future</h2>
+          <div class="post-meta">
+            <span>Posted on 2084.13.45</span>
+            <span class="tag">Cybersecurity</span>
+            <span class="tag">Quantum</span>
+            <span class="tag">Hacking</span>
+          </div>
+        </div>
+        <img alt="futuristic cityscape with neon lights and flying vehicles, digital art" src="https://pixabay.com/photos/glitch-glitch-effect-pixelated-5961912/" width="800" height="400">
+        <p style="text-align: left; margin: 20px 0">
+          Comprehensive guide discussing various aspects of information systems and security, particularly focusing on protecting digital information.
+        </p>
 
-  <h3 style="text-align: left">Key Areas:</h3>
-  <ul style="text-align: left">
-    <li>Information Systems and Security - Creating systems to safeguard data</li>
-    <li>Cybersecurity Measures - Strategies including firewalls and encryption. Learn more at:
-  <ul>
-    <li><a href="https://arxiv.org/abs/2307.02910" style="color: var(--neon-cyan)">Quantum-Safe Cryptography: Current State and Future Directions</a></li>
-    <li><a href="https://www.nist.gov/cybersecurity" style="color: var(--neon-cyan)">NIST Cybersecurity Framework</a></li>
-    <li><a href="https://csrc.nist.gov/Projects/post-quantum-cryptography" style="color: var(--neon-cyan)">Post-Quantum Cryptography</a></li>
-    <li><a href="https://www.darpa.mil/program/quantum-sensing-and-readout" style="color: var(--neon-cyan)">DARPA Quantum Sensing Research</a></li>
-    <li><a href="https://www.defcon.org/html/links/dc-archives.html" style="color: var(--neon-cyan)">DEF CON Security Conference Archives</a></li>
-    <li><a href="https://blog.chainalysis.com/" style="color: var(--neon-cyan)">Blockchain Intelligence &amp; Investigation</a></li>
-  </ul>
-</li>
-    <li>Data Analysis and Generation</li>
-    <li>Historical Research and Documentation</li>
-  </ul>
+        <h3 style="text-align: left">Key Areas:</h3>
+        <ul style="text-align: left">
+          <li>Information Systems and Security - Creating systems to safeguard data</li>
+          <li>Cybersecurity Measures - Strategies including firewalls and encryption. Learn more at:
+            <ul>
+              <li><a href="https://arxiv.org/abs/2307.02910" style="color: var(--neon-cyan)">Quantum-Safe Cryptography: Current State and Future Directions</a></li>
+              <li><a href="https://www.nist.gov/cybersecurity" style="color: var(--neon-cyan)">NIST Cybersecurity Framework</a></li>
+              <li><a href="https://csrc.nist.gov/Projects/post-quantum-cryptography" style="color: var(--neon-cyan)">Post-Quantum Cryptography</a></li>
+              <li><a href="https://www.darpa.mil/program/quantum-sensing-and-readout" style="color: var(--neon-cyan)">DARPA Quantum Sensing Research</a></li>
+              <li><a href="https://www.defcon.org/html/links/dc-archives.html" style="color: var(--neon-cyan)">DEF CON Security Conference Archives</a></li>
+              <li><a href="https://blog.chainalysis.com/" style="color: var(--neon-cyan)">Blockchain Intelligence &amp; Investigation</a></li>
+            </ul>
+          </li>
+          <li>Data Analysis and Generation</li>
+          <li>Historical Research and Documentation</li>
+        </ul>
 
-  <p style="text-align: left; margin: 20px 0">
-    Cybercrime Tactics and Techniques refer to methods used by criminals to exploit vulnerabilities in computer systems for illegal purposes, such as phishing and identity theft.
-  </p>
+        <p style="text-align: left; margin: 20px 0">
+          Cybercrime Tactics and Techniques refer to methods used by criminals to exploit vulnerabilities in computer systems for illegal purposes, such as phishing and identity theft.
+        </p>
 
-  <h3 style="text-align: left">Advanced Security Measures:</h3>
-  <ul style="text-align: left">
-<li>Digital Forensics - <a href="https://www.forensicfocus.com/articles/" style="color: var(--neon-cyan)">Digital Forensics Research</a></li>
-<li>Dark Web Investigations - <a href="https://www.tor.org/research/" style="color: var(--neon-cyan)">Tor Project Research</a></li>
-<li>Cryptographic Protocols - <a href="https://eprint.iacr.org/" style="color: var(--neon-cyan)">Cryptology ePrint Archive</a></li>
-<li>Network Architecture - <a href="https://www.cisco.com/c/en/us/solutions/enterprise-networks/architecture.html" style="color: var(--neon-cyan)">Cisco Network Architecture</a></li>
-</ul>
+        <h3 style="text-align: left">Advanced Security Measures:</h3>
+        <ul style="text-align: left">
+          <li>Digital Forensics - <a href="https://www.forensicfocus.com/articles/" style="color: var(--neon-cyan)">Digital Forensics Research</a></li>
+          <li>Dark Web Investigations - <a href="https://www.tor.org/research/" style="color: var(--neon-cyan)">Tor Project Research</a></li>
+          <li>Cryptographic Protocols - <a href="https://eprint.iacr.org/" style="color: var(--neon-cyan)">Cryptology ePrint Archive</a></li>
+          <li>Network Architecture - <a href="https://www.cisco.com/c/en/us/solutions/enterprise-networks/architecture.html" style="color: var(--neon-cyan)">Cisco Network Architecture</a></li>
+        </ul>
 
-  <p style="text-align: left; margin: 20px 0">
-    Blockchain Technology offers secure transaction recording through a decentralized ledger, beneficial for cryptocurrencies and identity verification.
-  </p>
+        <p style="text-align: left; margin: 20px 0">
+          Blockchain Technology offers secure transaction recording through a decentralized ledger, beneficial for cryptocurrencies and identity verification.
+        </p>
 
-  <h3 style="text-align: left">Emerging Technologies:</h3>
-  <ul style="text-align: left">
-<li>Quantum Encryption - <a href="https://arxiv.org/abs/2305.13503" style="color: var(--neon-cyan)">Quantum Key Distribution Research</a></li>
-<li>Neural Network Reconnaissance - <a href="https://arxiv.org/abs/2306.09557" style="color: var(--neon-cyan)">AI-Enhanced Network Security</a></li>
-<li>AI-Driven Cyber Attacks - <a href="https://www.darpa.mil/program/ai-cyber-challenge" style="color: var(--neon-cyan)">DARPA AI Cyber Challenge</a></li>
-<li>Deep Learning Malware Detection - <a href="https://www.sciencedirect.com/science/article/pii/S0167404821003400" style="color: var(--neon-cyan)">Deep Learning for Malware Analysis</a></li>
-</ul>
+        <h3 style="text-align: left">Emerging Technologies:</h3>
+        <ul style="text-align: left">
+          <li>Quantum Encryption - <a href="https://arxiv.org/abs/2305.13503" style="color: var(--neon-cyan)">Quantum Key Distribution Research</a></li>
+          <li>Neural Network Reconnaissance - <a href="https://arxiv.org/abs/2306.09557" style="color: var(--neon-cyan)">AI-Enhanced Network Security</a></li>
+          <li>AI-Driven Cyber Attacks - <a href="https://www.darpa.mil/program/ai-cyber-challenge" style="color: var(--neon-cyan)">DARPA AI Cyber Challenge</a></li>
+          <li>Deep Learning Malware Detection - <a href="https://www.sciencedirect.com/science/article/pii/S0167404821003400" style="color: var(--neon-cyan)">Deep Learning for Malware Analysis</a></li>
+        </ul>
 
-  <p style="text-align: left; margin: 20px 0">
-    The future of cybersecurity lies in quantum computing and artificial intelligence, presenting both new threats and defensive capabilities.
-  </p>
+        <p style="text-align: left; margin: 20px 0">
+          The future of cybersecurity lies in quantum computing and artificial intelligence, presenting both new threats and defensive capabilities.
+        </p>
 
-  <h3 style="text-align: left">Future Considerations:</h3>
-  <ul style="text-align: left">
-<li>Orbital Data Storage - <a href="https://www.nasa.gov/directorates/spacetech/tdm/index.html" style="color: var(--neon-cyan)">NASA Space Technology</a></li>
-<li>Quantum Communication Networks - <a href="https://www.nature.com/articles/s41586-020-2401-y" style="color: var(--neon-cyan)">Quantum Internet Research</a></li>
-<li>Deep State Data Vaults - <a href="https://www.nsa.gov/resources/everyone/digital-media-center/" style="color: var(--neon-cyan)">NSA Digital Media Center</a></li>
-<li>Parallel Reality Simulations - <a href="https://www.science.org/doi/10.1126/science.aaw9099" style="color: var(--neon-cyan)">Quantum Simulation Research</a></li>
-</ul>
+        <h3 style="text-align: left">Future Considerations:</h3>
+        <ul style="text-align: left">
+          <li>Orbital Data Storage - <a href="https://www.nasa.gov/directorates/spacetech/tdm/index.html" style="color: var(--neon-cyan)">NASA Space Technology</a></li>
+          <li>Quantum Communication Networks - <a href="https://www.nature.com/articles/s41586-020-2401-y" style="color: var(--neon-cyan)">Quantum Internet Research</a></li>
+          <li>Deep State Data Vaults - <a href="https://www.nsa.gov/resources/everyone/digital-media-center/" style="color: var(--neon-cyan)">NSA Digital Media Center</a></li>
+          <li>Parallel Reality Simulations - <a href="https://www.science.org/doi/10.1126/science.aaw9099" style="color: var(--neon-cyan)">Quantum Simulation Research</a></li>
+        </ul>
 
-  <p style="text-align: left; margin: 20px 0">
-    As we venture into the future, the intersection of quantum mechanics, artificial intelligence, and cybersecurity will define the landscape of digital security and information warfare.
-  </p>
-</article>
+        <p style="text-align: left; margin: 20px 0">
+          As we venture into the future, the intersection of quantum mechanics, artificial intelligence, and cybersecurity will define the landscape of digital security and information warfare.
+        </p>
+      </article>
 
       <article class="blog-post" onmouseover="this.style.boxShadow = '0 0 25px var(--neon-cyan)'" onmouseout="this.style.boxShadow = '0 0 15px var(--neon-purple)'" style="cursor: pointer">
-        <img alt="holographic interface with floating data points, cyber punk style" src="holo-interface.jpg" width="800" height="400">
-        <div class="post-meta">
-          <span>Posted on 2084.13.42</span>
-          <span class="tag">Quantum</span>
-          <span class="tag">Alien</span>
+        <div class="article-header">
+          <h2 data-text="Quantum Ternary Alien Communication Template">Quantum Ternary Alien Communication Template</h2>
+          <div class="post-meta">
+            <span>Posted on 2084.13.42</span>
+            <span class="tag">Quantum</span>
+            <span class="tag">Alien</span>
+          </div>
         </div>
-        <h2>Quantum Ternary Alien Communication Template</h2>
+        <img alt="holographic interface with floating data points, cyber punk style" src="https://pixabay.com/photos/abstract-dark-wall-light-4918696/" width="800" height="400">
         <p style="text-align: center">
 Abstract:<br><br>
 This paper proposes a theoretical framework for extraterrestrial communication based on a quantum ternary system, leveraging principles of quantum entanglement and superposition to encode complex information. The rationale stems from the limitations of binary systems in representing the multifaceted nature of reality and the potential for quantum phenomena to facilitate efficient and secure interstellar communication.<br><br>
@@ -289,67 +506,419 @@ Quantum Superposition:<br>
 • Qubits can exist in a superposition of these ternary states<br>
 • This allows for more complex information encoding<br><br>
 
-[Read the full article on Hive Blog](https://hive.blog/zodiac/@j1337/quantum-ternary-alien-communication-template)
-</p>
-    https://hive.blog/zodiac/@j1337/quantum-ternary-alien-communication-template
+
+In the changing fields of quantum computing and cosmic exploration, significant advancements are occurring that are reshaping science and spirituality. Key innovations include ternary logic gates, base-9 and base-12 registers, quantum entanglement networks, adaptive quantum algorithms, AI integration, quantum-enhanced telescopes, interstellar communication interfaces, and AI-driven signal analysis. These developments enhance computing power and offer new insights into the universe and consciousness. By combining quantum mechanics with ancient wisdom, we seek to uncover the universe's mysteries and their broader implications.
+<br><br>
+          
+Ternary logic gates are essential for quantum computers, allowing operations on ternary digits called trits. The ternary AND gate outputs true only if both inputs are true; the ternary OR gate outputs true if at least one input is true, while the ternary NOT gate complements the input. The base-9 and base-12 registers replace traditional binary systems, offering more efficient ways to represent and process numerical data.
+<br><br>
+          
+Quantum entanglement networks utilize the correlation of quantum states between particles to enable simultaneous computations across multiple dimensions, boosting efficiency. Adaptive quantum algorithms adjust strategies based on data and environment, optimizing performance continuously. AI is integrated into the system, helping the quantum computer analyze data, make decisions, and improve its capabilities.
+<br><br>
+          
+Quantum-enhanced telescopes, aided by advanced sensors, can detect faint signals from space with high sensitivity. These telescopes use various modulation schemes, including ternary and base-9 and base-12 modulations, for effective communication with other civilizations. AI-driven signal analysis algorithms refine this data processing, helping to identify patterns in extraterrestrial communications.
+<br><br>
+          
+Multi-qubit entanglement states are vital for performing complex calculations and communication. The Quantum Fourier Transform allows conversion between different quantum state representations, serving many quantum algorithms. Meanwhile, adiabatic quantum computing enables a gradual transition between quantum states to solve problems effectively.
+<br><br>
+          
+Reinforcement learning and quantum AI work together for decision-making and learning, improving the system over time. Quantum sensing achieves high precision due to principles like the Heisenberg Uncertainty Principle, guiding the creation of sophisticated sensors. Quantum biology looks at how quantum effects can contribute to biological processes, such as energy transfer in photosynthesis.
+<br><br>
+          
+Quantum error correction ensures the reliability of quantum information, while protocols like quantum teleportation allow for the transfer of information without moving the qubits physically. Concepts such as dodecahedron energy field equations and zodiac constellations alignment open the door to understanding cosmic energies and their effects on Earth.
+<br><br>
+          
+The text discusses aspects related to spiritual exploration, including the alignment between cosmic and earthly energies, the potential for astral projection, and how resonances between quantum events and time can reveal reality's fabric. Overall, this convergence brings forth a new era of exploration that encompasses both science and spirituality, aiming to unlock existence's mysteries and the human spirit's potential.
+<br><br>
+          
+</p><ul>
+  <li><a href="https://www.quantumcomputingreport.com/articles/ternary-logic-and-quantum-computing/" target="_blank">Ternary Logic and Quantum Computing</a> - A deep dive into the role of ternary logic in quantum systems.</li>
+  <li><a href="https://www.technologyreview.com/2023/01/quantum-entanglement-explained/" target="_blank">Explaining Quantum Entanglement</a> - Understanding how quantum entanglement could revolutionize communication.</li>
+  <li><a href="https://www.scientificamerican.com/article/quantum-superposition-explained/" target="_blank">Quantum Superposition Explained</a> - Learn how superposition allows for more complex quantum states.</li>
+  <li><a href="https://www.researchgate.net/publication/318024544_Quantum_Computing_and_Ternary_Gates" target="_blank">Quantum Computing and Ternary Gates</a> - Research on the advantages of using ternary gates in quantum computation.</li>
+  <li><a href="https://www.igi-global.com/chapter/quantum-communication-and-entanglement/214930" target="_blank">Quantum Communication and Entanglement</a> - A chapter on quantum communication protocols and entanglement.</li>
+  <li><a href="https://www.sciencedirect.com/science/article/pii/S2352340919303767" target="_blank">Base-9 and Base-12 Quantum Registers</a> - A study of alternative numerical bases in quantum systems.</li>
+  <li><a href="https://www.quantumcomputingreport.com/articles/quantum-enhanced-telescopes/" target="_blank">Quantum-Enhanced Telescopes</a> - How quantum computing is enhancing telescope capabilities for space exploration.</li>
+  <li><a href="https://www.quantumcomputinguk.org/articles/quantum-computing-and-astronomy" target="_blank">Quantum Computing in Astronomy</a> - The intersection of quantum computing and astronomical discoveries.</li>
+  <li><a href="https://www.researchgate.net/publication/319106432_Quantum_Biology_and_Photosynthesis" target="_blank">Quantum Biology and Photosynthesis</a> - Insights into the role of quantum mechanics in biological processes.</li>
+  <li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7151477/" target="_blank">Quantum Entanglement in Communication</a> - Exploring the potential of quantum entanglement for secure communication networks.</li>
+</ul>
+          
+          https://hive.blog/zodiac/@j1337/quantum-ternary-alien-communication-template
+<p></p>
       </article>
 
       <article class="blog-post">
-        <img alt="abstract digital landscape with neon grid lines and geometric shapes" src="digital-landscape.jpg" width="800" height="400">
-        <div class="post-meta">
-          <span>Posted on 2084.13.40</span>
-          <span class="tag">Geometric</span>
-          <span class="tag">Crop Circle</span>
+        <div class="article-header">
+          <h2 data-text="Quantum Entanglement and Geometric Patterns in Crop Formations">Quantum Entanglement and Geometric Patterns in Crop Formations</h2>
+          <div class="post-meta">
+            <span>Posted on 2084.13.40</span>
+            <span class="tag">Geometric</span>
+            <span class="tag">Crop Circle</span>
+          </div>
         </div>
-        <h2>  Quantum Entanglement and Geometric Patterns in Crop Formations </h2>
+        <img alt="abstract digital landscape with neon grid lines and geometric shapes" src="https://unsplash.com/photos/Q_vOZ_C-VJ4" width="800" height="400">
         <p style="text-align: center; padding: 20px; line-height: 1.8">
-  <strong>Quantum Entanglement and Geometric Patterns in Crop Formations: A Theoretical Exploration</strong><br><br>
-  
-  <strong>Abstract:</strong><br>
-  A theoretical investigation into crop formations as potential macroscopic quantum phenomena<br><br>
-  
-  <strong>Key Research Areas:</strong><br>
-  • <a href="https://arxiv.org/abs/2106.15632" style="color: var(--neon-cyan)">Quantum entanglement manifestations in agricultural landscapes</a><br>
-  • <a href="https://www.nature.com/articles/s41598-018-22726-7" style="color: var(--neon-cyan)">Geometric pattern analysis and mathematical relationships</a><br>
-  • <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2020.01831/full" style="color: var(--neon-cyan)">Consciousness-matter interactions</a><br>
-  • <a href="https://www.science.org/doi/10.1126/science.abe9869" style="color: var(--neon-cyan)">Non-local quantum effects at macroscopic scales</a><br><br>
-  
-  <strong>Primary Hypotheses:</strong><br>
-  • <a href="https://arxiv.org/abs/2003.13117" style="color: var(--neon-cyan)">Complex crop formations may represent quantum entanglement at macro scale</a><br>
-  • <a href="https://www.sciencedirect.com/science/article/abs/pii/S0960077921001417" style="color: var(--neon-cyan)">Geometric patterns encode fundamental mathematical principles</a><br>
-  • <a href="https://www.frontiersin.org/articles/10.3389/fnhum.2014.00070/full" style="color: var(--neon-cyan)">Conscious intention could influence formation mechanisms</a><br>
-  • <a href="https://www.nature.com/articles/s41567-020-0931-8" style="color: var(--neon-cyan)">Non-local quantum correlations may enable rapid pattern emergence</a><br><br>
-  
-  <strong>Supporting Evidence:</strong><br>
-  • <a href="https://www.sciencedirect.com/science/article/abs/pii/S0304388618301420" style="color: var(--neon-cyan)">Documented electromagnetic anomalies</a><br>
-  • <a href="https://www.nature.com/articles/s41598-019-39312-0" style="color: var(--neon-cyan)">Precise geometric alignments</a><br>
-  • <a href="https://www.sciencedirect.com/science/article/abs/pii/S0176161704704461" style="color: var(--neon-cyan)">Plant cellular modifications</a><br>
-  • <a href="https://www.tandfonline.com/doi/abs/10.1080/00031305.2018.1518271" style="color: var(--neon-cyan)">Statistical pattern analysis</a><br><br>
-  
-  <strong>Research Implications:</strong><br>
-  • <a href="https://www.nature.com/articles/s41586-020-2243-7" style="color: var(--neon-cyan)">New perspectives on quantum-classical boundaries</a><br>
-  • <a href="https://journals.aps.org/prx/abstract/10.1103/PhysRevX.10.021003" style="color: var(--neon-cyan)">Enhanced understanding of consciousness-matter interactions</a><br>
-  • <a href="https://www.science.org/doi/10.1126/sciadv.aau5999" style="color: var(--neon-cyan)">Novel approaches to information encoding in biological systems</a><br>
-  • <a href="https://www.nature.com/articles/s41534-020-00309-7" style="color: var(--neon-cyan)">Potential applications in quantum information science</a><br><br>
-  
-  <em>Full research paper available at:</em><br>
-  <a href="https://hive.blog/quantum/@j1337/quantum-crop-circles-chronicles-with-professor-j-17" style="color: var(--neon-cyan)">Quantum Crop Circles Chronicles with Professor J</a>
-</p>
+          <strong>Quantum Entanglement and Geometric Patterns in Crop Formations: A Theoretical Exploration</strong><br><br>
+          
+          <strong>Abstract:</strong><br>
+          A theoretical investigation into crop formations as potential macroscopic quantum phenomena
+          
+          <br><br>
+          
+Zero-point energy harvesters convert these fluctuations into usable power. By tapping into this seemingly limitless energy source, the device can sustain its operations without depleting conventional energy resources.
+  <br><br>
+The NexGen Universal Energy Harmonizer integrates a range of scientific principles and devices to create advanced applications in energy and healing. The Wireless Energy Transmission module enables energy transfer without wires, while Scalar Wave Generators facilitate new communication methods. Earthquake Inducers provide control over geological activity, and Free Energy Converters offer the potential for infinite power. The use of Resonant Transformers ensures efficient energy transmission, and the Wireless Communication Interface supports secure communication capabilities.
+  <br><br>
+On the health side, the Electrotherapy and Healing Module utilizes scalar waves for therapeutic effects, showcasing the device's multidimensional capabilities. Remote control functions allow users to operate the Harmonizer from a distance, enhancing its versatility and accessibility, particularly in challenging environments.
+  <br><br>
+The Quantum Information Integration Matrix employs components like antennas, binary coding, holographic data storage, neural networks, and wave interference patterns for advanced data processing and telecommunications. These systems allow for efficient information handling, harnessing the properties of quantum mechanics for improved performance.
+  <br><br>
+The Symmetry Fusion Harmonizer uses the principles of geometry and symmetry to optimize its function, leveraging crystal structures, fractal algorithms, and vortex physics to achieve superior energy management and control.
+  <br><br>
+The Quantum Energy Matrix Integrator showcases an advanced approach to energy manipulation. It features Energy Vortex Generators, Gravitational Lensing Devices, Laser-like Beams, Plasma Fusion Reactors, and more, all designed to harness energy in innovative ways. This matrix illustrates the fusion of multiple technologies to achieve groundbreaking energy generation and manipulation techniques.
+  <br><br>
+Together, these devices and theories illustrate a sophisticated understanding of energy, communication, and healing technologies, interconnected through foundational science, and speculate on how these concepts might align with advanced extraterrestrial intelligence. They suggest a future where clean energy solutions and advanced healing therapies are widely accessible, potentially transforming industries and influencing how humans interact with technology and the environment.
+          <br><br>
+          <strong>Key Research Areas:</strong><br>
+          • <a href="https://arxiv.org/abs/2106.15632" style="color: var(--neon-cyan)">Quantum entanglement manifestations in agricultural landscapes</a><br>
+          • <a href="https://www.nature.com/articles/s41598-018-22726-7" style="color: var(--neon-cyan)">Geometric pattern analysis and mathematical relationships</a><br>
+          • <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2020.01831/full" style="color: var(--neon-cyan)">Consciousness-matter interactions</a><br>
+          • <a href="https://www.science.org/doi/10.1126/science.abe9869" style="color: var(--neon-cyan)">Non-local quantum effects at macroscopic scales</a><br><br>
+          
+          <strong>Primary Hypotheses:</strong><br>
+          • <a href="https://arxiv.org/abs/2003.13117" style="color: var(--neon-cyan)">Complex crop formations may represent quantum entanglement at macro scale</a><br>
+          • <a href="https://www.sciencedirect.com/science/article/abs/pii/S0960077921001417" style="color: var(--neon-cyan)">Geometric patterns encode fundamental mathematical principles</a><br>
+          • <a href="https://www.frontiersin.org/articles/10.3389/fnhum.2014.00070/full" style="color: var(--neon-cyan)">Conscious intention could influence formation mechanisms</a><br>
+          • <a href="https://www.nature.com/articles/s41567-020-0931-8" style="color: var(--neon-cyan)">Non-local quantum correlations may enable rapid pattern emergence</a><br><br>
+          
+          <strong>Supporting Evidence:</strong><br>
+          • <a href="https://www.sciencedirect.com/science/article/abs/pii/S0304388618301420" style="color: var(--neon-cyan)">Documented electromagnetic anomalies</a><br>
+          • <a href="https://www.nature.com/articles/s41598-019-39312-0" style="color: var(--neon-cyan)">Precise geometric alignments</a><br>
+          • <a href="https://www.sciencedirect.com/science/article/abs/pii/S0176161704704461" style="color: var(--neon-cyan)">Plant cellular modifications</a><br>
+          • <a href="https://www.tandfonline.com/doi/abs/10.1080/00031305.2018.1518271" style="color: var(--neon-cyan)">Statistical pattern analysis</a><br><br>
+          
+          <strong>Research Implications:</strong><br>
+          • <a href="https://www.nature.com/articles/s41586-020-2243-7" style="color: var(--neon-cyan)">New perspectives on quantum-classical boundaries</a><br>
+          • <a href="https://journals.aps.org/prx/abstract/10.1103/PhysRevX.10.021003" style="color: var(--neon-cyan)">Enhanced understanding of consciousness-matter interactions</a><br>
+          • <a href="https://www.science.org/doi/10.1126/sciadv.aau5999" style="color: var(--neon-cyan)">Novel approaches to information encoding in biological systems</a><br>
+          • <a href="https://www.nature.com/articles/s41534-020-00309-7" style="color: var(--neon-cyan)">Potential applications in quantum information science</a><br><br>
+          
+          <em>Full research paper available at:</em><br>
+          <a href="https://hive.blog/quantum/@j1337/quantum-crop-circles-chronicles-with-professor-j-17" style="color: var(--neon-cyan)">Quantum Crop Circles Chronicles with Professor J</a>
+        </p>
       </article>
     </main>
   </div>
 
   <script>
-    document.querySelectorAll('.blog-post').forEach(post => {
-      post.addEventListener('mouseover', () => {
-        post.style.boxShadow = `0 0 25px ${getComputedStyle(document.documentElement).getPropertyValue('--neon-cyan')}`;
-      });
-      
-      post.addEventListener('mouseout', () => {
-        post.style.boxShadow = `0 0 15px ${getComputedStyle(document.documentElement).getPropertyValue('--neon-purple')}`;
-      });
-    });
-  </script>
+// Array of approved images
+const approvedImages = [
+  'https://page-images.websim.ai/holographic%20interface%20with%20floating%20data%20points,%20cyber%20punk%20style_800x400xnor5ofZXZTB5Djb7yx5530457556056.jpg',
+  'https://page-images.websim.ai/holographic%20interface%20with%20floating%20data%20points,%20cyber%20punk%20style_800x400xl6MBDgA0PPIt9XFWWx3d6d592e47172.jpg',
+  'https://page-images.websim.ai/abstract%20digital%20landscape%20with%20neon%20grid%20lines%20and%20geometric%20shapes_800x400xl6MBDgA0PPIt9XFWWx8272f3fcb0d31.jpg',
+  'https://page-images.websim.ai/holographic%20interface%20with%20floating%20data%20points,%20cyber%20punk%20style_800x400x8ZcnLDSq4bAXaCwbkxa7a5a0fce2d71.jpg',
+  'https://page-images.websim.ai/abstract%20digital%20landscape%20with%20neon%20grid%20lines%20and%20geometric%20shapes_800x400x8ZcnLDSq4bAXaCwbkx8517445d415af.jpg',
+  'https://page-images.websim.ai/abstract%20digital%20landscape%20with%20neon%20grid%20lines%20and%20geometric%20shapes_800x400xnor5ofZXZTB5Djb7yxa270c455bb404.jpg',
+  'https://page-images.websim.ai/holographic%20interface%20with%20floating%20data%20points,%20cyber%20punk%20style_800x400xCHFzSv2NuUaNu35sUxb79ba8666d40c.jpg',
+  'https://page-images.websim.ai/abstract%20digital%20landscape%20with%20neon%20grid%20lines%20and%20geometric%20shapes_800x400xCHFzSv2NuUaNu35sUxbf5b999d281ce.jpg',
+  'https://page-images.websim.ai/holographic%20interface%20with%20floating%20data%20points,%20cyber%20punk%20style_800x400xHdlD5QZvVo6A5TCoJxd28601c5ad43b.jpg',
+  'https://page-images.websim.ai/abstract%20digital%20landscape%20with%20neon%20grid%20lines%20and%20geometric%20shapes_800x400xHdlD5QZvVo6A5TCoJx8b595d0e85258.jpg',
+  'https://page-images.websim.ai/holographic%20interface%20with%20floating%20data%20points,%20cyber%20punk%20style_800x400xwxG3dpYhED8ndLaqtx8d6a2f8b857bf.jpg',
+  'https://page-images.websim.ai/abstract%20digital%20landscape%20with%20neon%20grid%20lines%20and%20geometric%20shapes_800x400xwxG3dpYhED8ndLaqtx93fdcd5a925c.jpg',
+  'https://page-images.websim.ai/abstract%20digital%20landscape%20with%20neon%20grid%20lines%20and%20geometric%20shapes_800x400x3ofplk4NfDd0BDVx1x08ab5f89a2062.jpg',
+  'https://page-images.websim.ai/holographic%20interface%20with%20floating%20data%20points,%20cyber%20punk%20style_800x400xPFZ6Dk0Mo5pFeDaLux9ae2361d8743b.jpg',
+  'https://page-images.websim.ai/holographic%20interface%20with%20floating%20data%20points,%20cyber%20punk%20style_800x400xPFZ6Dk0Mo5pFeDaLuxf26b1a1fd5cf2.jpg',
+  'https://page-images.websim.ai/abstract%20digital%20landscape%20with%20neon%20grid%20lines%20and%20geometric%20shapes_800x400xPFZ6Dk0Mo5pFeDaLux9bcb44a748921.jpg',
+  'https://page-images.websim.ai/holographic%20interface%20with%20floating%20data%20points,%20cyber%20punk%20style_800x400xSFp9yoxkhNnoQMPDzx6311e08b78d0d.jpg',
+  'https://page-images.websim.ai/abstract%20digital%20landscape%20with%20neon%20grid%20lines%20and%20geometric%20shapes_800x400xSFp9yoxkhNnoQMPDzx642607b421c41.jpg'
+];
 
+// Track used images
+let usedImages = new Set();
+
+function getRandomImage() {
+  // Filter out already used images
+  const availableImages = approvedImages.filter(img => !usedImages.has(img));
+  
+  // If all images have been used, show an error or reset
+  if (availableImages.length === 0) {
+    console.error('Not enough unique images available');
+    return approvedImages[0]; // Fallback to first image
+  }
+  
+  // Get random image from remaining available images
+  const selectedImage = availableImages[Math.floor(Math.random() * availableImages.length)];
+  usedImages.add(selectedImage); // Track that this image has been used
+  return selectedImage;
+}
+
+// Reset used images when page loads
+function resetImageTracking() {
+  usedImages.clear();
+}
+
+// Modify the image application code to reset tracking first
+document.querySelectorAll('.blog-post img').forEach((img, index) => {
+  if (index === 0) {
+    resetImageTracking(); // Reset tracking at start of new page
+  }
+  img.src = getRandomImage();
+});
+
+// Keep the existing hover effects
+document.querySelectorAll('.blog-post').forEach(post => {
+  post.addEventListener('mouseover', () => {
+    post.style.boxShadow = `0 0 25px ${getComputedStyle(document.documentElement).getPropertyValue('--neon-cyan')}`;
+  });
+  
+  post.addEventListener('mouseout', () => {
+    post.style.boxShadow = `0 0 15px ${getComputedStyle(document.documentElement).getPropertyValue('--neon-purple')}`;
+  });
+});
+
+// Tag filtering functionality
+function initializeTagFiltering() {
+  const posts = document.querySelectorAll('.blog-post');
+  const allTags = new Set();
+  
+  // Collect all unique tags
+  posts.forEach(post => {
+    const tags = post.querySelectorAll('.tag');
+    tags.forEach(tag => allTags.add(tag.textContent));
+  });
+
+  // Create tag filter buttons
+  const tagFilterContainer = document.getElementById('active-tags');
+  allTags.forEach(tag => {
+    const tagButton = document.createElement('button');
+    tagButton.textContent = tag;
+    tagButton.style.cssText = `
+      background: transparent;
+      border: 1px solid var(--neon-purple);
+      color: var(--neon-cyan);
+      padding: 5px 15px;
+      margin: 5px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      transition: all 0.3s ease;
+    `;
+    
+    tagButton.addEventListener('mouseover', () => {
+      tagButton.style.backgroundColor = 'rgba(157, 0, 255, 0.2)';
+      tagButton.style.boxShadow = '0 0 10px var(--neon-purple)';
+    });
+    
+    tagButton.addEventListener('mouseout', () => {
+      if (!tagButton.classList.contains('active')) {
+        tagButton.style.backgroundColor = 'transparent';
+        tagButton.style.boxShadow = 'none';
+      }
+    });
+
+    tagButton.addEventListener('click', () => {
+      const isActive = tagButton.classList.toggle('active');
+      
+      if (isActive) {
+        tagButton.style.backgroundColor = 'rgba(157, 0, 255, 0.3)';
+        tagButton.style.boxShadow = '0 0 15px var(--neon-purple)';
+        tagButton.style.color = 'var(--neon-pink)';
+      } else {
+        tagButton.style.backgroundColor = 'transparent';
+        tagButton.style.boxShadow = 'none';
+        tagButton.style.color = 'var(--neon-cyan)';
+      }
+      
+      filterPosts();
+    });
+    
+    tagFilterContainer.appendChild(tagButton);
+  });
+
+  function filterPosts() {
+    const activeTagButtons = document.querySelectorAll('#active-tags button.active');
+    const activeTags = Array.from(activeTagButtons).map(button => button.textContent);
+    
+    posts.forEach(post => {
+      const postTags = Array.from(post.querySelectorAll('.tag')).map(tag => tag.textContent);
+      
+      if (activeTags.length === 0 || activeTags.some(tag => postTags.includes(tag))) {
+        post.style.display = 'block';
+        post.style.animation = 'fadeIn 0.5s ease';
+      } else {
+        post.style.display = 'none';
+      }
+    });
+  }
+}
+
+// Canvas functionality
+const canvas = document.getElementById('background-canvas');
+const ctx = canvas.getContext('2d');
+
+// Set canvas size
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// Node class
+class Node {
+  constructor(groupId) {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.vx = (Math.random() - 0.5) * 1; 
+    this.vy = (Math.random() - 0.5) * 1;
+    this.radius = Math.random() * 3 + 2;
+    this.groupId = groupId;
+    this.baseX = this.x; 
+    this.baseY = this.y;
+    this.color = `hsla(${(groupId * 360 / NUMBER_OF_GROUPS)}, 100%, 50%, 0.7)`;
+  }
+
+  update() {
+    const dx = this.baseX - this.x;
+    const dy = this.baseY - this.y;
+    const distance = Math.hypot(dx, dy);
+    
+    if (distance > 100) {
+      this.vx += (dx / distance) * 0.1;
+      this.vy += (dy / distance) * 0.1;
+    }
+
+    this.vx += (Math.random() - 0.5) * 0.1;
+    this.vy += (Math.random() - 0.5) * 0.1;
+
+    const speed = Math.hypot(this.vx, this.vy);
+    if (speed > 2) {
+      this.vx = (this.vx / speed) * 2;
+      this.vy = (this.vy / speed) * 2;
+    }
+
+    this.x += this.vx;
+    this.y += this.vy;
+
+    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+  }
+
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.fill();
+    ctx.closePath();
+  }
+}
+
+// Constants for groups
+const MAX_GROUPS = 10; 
+const NODES_PER_GROUP = 11; 
+const nodes = [];
+
+// Function to calculate number of groups based on page content
+function calculateNumberOfGroups() {
+  const pageHeight = document.documentElement.scrollHeight;
+  return Math.min(Math.ceil(pageHeight / 500), MAX_GROUPS);
+}
+
+// Create dynamic number of groups
+const NUMBER_OF_GROUPS = calculateNumberOfGroups();
+
+// Modified group creation
+for (let group = 0; group < NUMBER_OF_GROUPS; group++) {
+  const groupCenterX = (canvas.width / (NUMBER_OF_GROUPS + 1)) * (group + 1);
+  const groupCenterY = Math.random() * canvas.height;
+  
+  for (let i = 0; i < NODES_PER_GROUP; i++) {
+    const node = new Node(group);
+    node.x = groupCenterX + (Math.random() - 0.5) * 200;
+    node.y = groupCenterY + (Math.random() - 0.5) * 200;
+    node.baseX = groupCenterX;
+    node.baseY = groupCenterY;
+    nodes.push(node);
+  }
+}
+
+// Modified line drawing function to connect closest nodes within groups
+function drawLines() {
+  nodes.forEach((node1) => {
+    const sameGroupNodes = nodes
+      .filter(n => n !== node1 && n.groupId === node1.groupId)
+      .sort((a, b) => {
+        const distA = Math.hypot(node1.x - a.x, node1.y - a.y);
+        const distB = Math.hypot(node1.x - b.x, node1.y - b.y);
+        return distA - distB;
+      })
+      .slice(0, 3);
+
+    sameGroupNodes.forEach(node2 => {
+      const distance = Math.hypot(node1.x - node2.x, node1.y - node2.y);
+      if (distance < 150) {
+        ctx.beginPath();
+        ctx.moveTo(node1.x, node1.y);
+        ctx.lineTo(node2.x, node2.y);
+        const alpha = 0.3 * (1 - distance / 150);
+        ctx.strokeStyle = `hsla(${(node1.groupId * 360 / NUMBER_OF_GROUPS)}, 100%, 50%, ${alpha})`;
+        ctx.stroke();
+      }
+    });
+  });
+}
+
+// Add window resize handler to recalculate groups
+window.addEventListener('resize', () => {
+  resizeCanvas();
+  const newGroupCount = calculateNumberOfGroups();
+  if (newGroupCount !== NUMBER_OF_GROUPS) {
+    nodes.length = 0;
+    initialize();
+  }
+});
+
+// Add initialization function
+function initialize() {
+  const NUMBER_OF_GROUPS = calculateNumberOfGroups();
+  for (let group = 0; group < NUMBER_OF_GROUPS; group++) {
+    const groupCenterX = (canvas.width / (NUMBER_OF_GROUPS + 1)) * (group + 1);
+    const groupCenterY = Math.random() * canvas.height;
+    
+    for (let i = 0; i < NODES_PER_GROUP; i++) {
+      const node = new Node(group);
+      node.x = groupCenterX + (Math.random() - 0.5) * 200;
+      node.y = groupCenterY + (Math.random() - 0.5) * 200;
+      node.baseX = groupCenterX;
+      node.baseY = groupCenterY;
+      nodes.push(node);
+    }
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  nodes.forEach(node => {
+    node.update();
+    node.draw();
+  });
+  
+  drawLines();
+  
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+// Initialize tag filtering after the DOM is loaded
+document.addEventListener('DOMContentLoaded', initializeTagFiltering);
+
+// Initialize glitch effect on titles
+document.querySelectorAll('.blog-post h2').forEach(title => {
+  title.setAttribute('data-text', title.textContent);
+});
+</script>
 
 </body></html>
