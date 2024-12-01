@@ -1278,10 +1278,6 @@ messageInput.addEventListener('keypress', (e) => {
 
 
 
-
-
-
-
 <html><head><base href="/"><title>Expanding Sidebar Links</title><style>
   body {
     margin: 0;
@@ -1293,10 +1289,10 @@ messageInput.addEventListener('keypress', (e) => {
 
   #sidebar {
     position: fixed;
-    top: 350px; /* Changed from 500px to 350px */
+    top: 0; /* Changed to 0 for top alignment */
     left: -300px;
     width: 300px;
-    height: calc(100vh - 350px); /* Updated to match new top position */
+    height: 300px; /* Changed to fixed 300px height */
     background: #000;
     transition: left 0.3s ease-in-out;
     overflow-y: auto;
@@ -1310,7 +1306,7 @@ messageInput.addEventListener('keypress', (e) => {
 
   #toggle-btn {
     position: fixed;
-    top: 370px; /* Adjusted to match new sidebar position */
+    top: 20px; /* Adjusted to match new sidebar position */
     left: 20px;
     padding: 10px;
     background: #000;
