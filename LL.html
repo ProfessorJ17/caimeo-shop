@@ -1,0 +1,668 @@
+<html><head><base href="">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Luxious Labs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet">
+    <style>
+    body {
+        font-family: 'Roboto', sans-serif;
+    }
+    .horizontal-scroll {
+        margin-top: -400px;
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        perspective: 1000px;
+        transform-style: preserve-3d;
+        border-radius: 100px; /* Add curve to the scroll area */
+        padding: 40px 20px; /* Add padding to prevent clipping */
+    }
+    .horizontal-scroll::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
+    .horizontal-scroll > div {
+        display: inline-block;
+        vertical-align: top;
+        min-width: 225px;
+        margin-right: 20px;
+    }
+    .bg-gray-200 {
+        border: none !important;
+        padding: 0 !important;
+        background: none !important;
+        min-width: 225px !important;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        transform-origin: center center;
+        border-radius: 20px; /* Add rounded corners */
+        box-shadow: 
+            0 10px 20px rgba(0,0,0,0.2),
+            inset 0 -5px 15px rgba(255,255,255,0.2),
+            inset 0 5px 15px rgba(0,0,0,0.1); /* Add bevel effect */
+        background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(0,0,0,0.1)) !important;
+        overflow: hidden;
+    }
+    .bg-gray-200 > div:not(.relative) {
+        padding: 15px;
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(5px);
+        border-radius: 0 0 20px 20px;
+    }
+    .bg-gray-200:hover {
+        transform: scale(1.02) translateY(-5px);
+        box-shadow: 
+            0 15px 30px rgba(0,0,0,0.3),
+            inset 0 -5px 15px rgba(255,255,255,0.2),
+            inset 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .card-image {
+        width: 225px;
+        height: 225px;
+        object-fit: cover;
+        display: block;
+        border-radius: 15px 15px 0 0; /* Curve top corners */
+        transform: perspective(1000px);
+    }
+    .container {
+        padding-top: 400px;
+    }
+    .card-description {
+        font-size: 0.75rem;
+        line-height: 1rem;
+        white-space: normal;
+        text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+    }
+    #modalImage {
+        max-height: 70vh;
+        width: auto;
+    }
+    #modalDetailedDescription {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .qr-placeholder {
+        background: white;
+        padding: 8px;
+        border-radius: 4px;
+    }
+    @keyframes glow {
+      0%, 100% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8),
+                     0 0 10px rgba(255, 255, 255, 0.5),
+                     0 0 15px rgba(255, 215, 0, 0.3);
+      }
+      50% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.9),
+                     0 0 20px rgba(255, 255, 255, 0.6),
+                     0 0 30px rgba(255, 215, 0, 0.4);
+      }
+    }
+    h1, h2 {
+      animation: glow 3s ease-in-out infinite;
+    }
+    #modalTitle {
+      animation: glow 3s ease-in-out infinite;
+    }
+    #modalDescription, #modalDetailedDescription p {
+      text-shadow: 0 0 3px rgba(255, 255, 255, 0.6);
+    }
+    header a {
+      animation: glow 3s ease-in-out infinite;
+      animation-delay: calc(var(--i, 0) * 0.5s);
+    }
+    footer a {
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+      transition: text-shadow 0.3s ease;
+    }
+    footer a:hover {
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.9),
+                   0 0 20px rgba(255, 215, 0, 0.5);
+    }
+    #imageModal button {
+      animation: glow 3s ease-in-out infinite;
+    }
+    </style>
+</head>
+<body class="bg-yellow-400 text-black">
+    <div class="container mx-auto p-4">
+        <header class="flex justify-between items-center mb-4 py-2">
+            <h1 class="text-3xl font-bold">Luxious Labs</h1>
+            <div class="flex space-x-6">
+                <a href="https://caimeo.shop/url" class="text-xl hover:underline">Luxious Labs</a>
+                <a href="https://caimeo.shop/url" class="text-xl hover:underline">Luxious Labs</a>
+                <a href="https://caimeo.shop/url" class="text-xl hover:underline">Luxious Labs</a>
+            </div>
+        </header>
+        <main class="horizontal-scroll mt-24">
+            <div class="bg-gray-200 min-w-[225px] invisible">
+                <div class="relative">
+                    <img alt="Blank space" class="card-image" height="225" width="225">
+                </div>
+                <h2 class="text-xl font-bold mt-4">Blank</h2>
+                <p class="mt-2 card-description">Blank space</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px]">
+                <div class="relative">
+                    <img alt="Mona Lisa painting with a twist" class="card-image" height="225" src="https://storage.googleapis.com/a1aa/image/v77MfqmAOcWlIieb6H0kkhafrk6WOu0vNaFMvpVMlE6o6wsnA.jpg" width="225">
+                    <span class="absolute top-2 left-2 bg-yellow-400 text-xs font-bold px-2 py-1">NEW!</span>
+                </div>
+                <h2 class="text-xl font-bold mt-4">Thatcher Effect</h2>
+                <p class="mt-2 card-description">A mysterious brain twister, the faces are wrong, but they seem so right while upside down.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px]">
+                <div class="relative">
+                    <img alt="Disappearing Bicyclist illustration" class="card-image" height="225" src="https://storage.googleapis.com/a1aa/image/Ye74S0Zh0TXnbKXP1F1knN62rqJyG04h63kWloOm6WWrOM7JA.jpg" width="225">
+                    <span class="absolute top-2 left-2 bg-yellow-400 text-xs font-bold px-2 py-1">POPULAR!</span>
+                </div>
+                <h2 class="text-xl font-bold mt-4">Disappearing Bicyclist</h2>
+                <p class="mt-2 card-description">One of Sam Loyd's vanishing puzzles, and a true brain bender. It's an oldie!</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px]">
+                <div class="relative">
+                    <img alt="Concentric Spirals illusion" class="card-image" height="225" src="https://storage.googleapis.com/a1aa/image/q5HHoezZk8zNJ6bO8KZhDvFwqjNG91HpZuP4fNjrn98TdY2TA.jpg" width="225">
+                    <span class="absolute top-2 left-2 bg-yellow-400 text-xs font-bold px-2 py-1">NEW!</span>
+                </div>
+                <h2 class="text-xl font-bold mt-4">Concentric Spirals</h2>
+                <p class="mt-2 card-description">Are these concentric circles or spirals? Take a closer look.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px]">
+                <div class="relative">
+                    <img alt="Concentric Spirals illusion" class="card-image" height="225" src="https://storage.googleapis.com/a1aa/image/q5HHoezZk8zNJ6bO8KZhDvFwqjNG91HpZuP4fNjrn98TdY2TA.jpg" width="225">
+                    <span class="absolute top-2 left-2 bg-yellow-400 text-xs font-bold px-2 py-1">NEW!</span>
+                </div>
+                <h2 class="text-xl font-bold mt-4">Concentric Spirals</h2>
+                <p class="mt-2 card-description">Are these concentric circles or spirals? Take a closer look.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px]">
+                <div class="relative">
+                    <img alt="Optical illusion with black and white lines" class="card-image" height="225" src="https://storage.googleapis.com/a1aa/image/eiBMCjr3TxUSG6Mzph9pfIS1hs7ViBfsoK2SIfTUoNheyDzeE.jpg" width="225">
+                    <span class="absolute top-2 left-2 bg-yellow-400 text-xs font-bold px-2 py-1">NEW!</span>
+                </div>
+                <h2 class="text-xl font-bold mt-4">Optical Illusion 1</h2>
+                <p class="mt-2 card-description">A mesmerizing optical illusion with black and white lines.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px]">
+                <div class="relative">
+                    <img alt="Optical illusion with colorful circles" class="card-image" height="225" src="https://storage.googleapis.com/a1aa/image/oDuBc0O0lH6sCxeaOentvANlDfb4GZJH4kII7fbIG6WV5hZPB.jpg" width="225">
+                    <span class="absolute top-2 left-2 bg-yellow-400 text-xs font-bold px-2 py-1">NEW!</span>
+                </div>
+                <h2 class="text-xl font-bold mt-4">Optical Illusion 2</h2>
+                <p class="mt-2 card-description">A colorful optical illusion with circles.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px]">
+                <div class="relative">
+                    <img alt="Optical illusion with wavy lines" class="card-image" height="225" src="https://storage.googleapis.com/a1aa/image/1O20WhmDBZa3CBjdBolRHxClFT0uRwNIOMebf69etUMo8wsnA.jpg" width="225">
+                    <span class="absolute top-2 left-2 bg-yellow-400 text-xs font-bold px-2 py-1">NEW!</span>
+                </div>
+                <h2 class="text-xl font-bold mt-4">Optical Illusion 3</h2>
+                <p class="mt-2 card-description">An optical illusion with wavy lines.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px]">
+                <div class="relative">
+                    <img alt="Optical illusion with geometric shapes" class="card-image" height="225" src="https://storage.googleapis.com/a1aa/image/xD8241g2WqomNFccYePHgYeYgILmHJ0BPNMZb8zkuJpYewsnA.jpg" width="225">
+                    <span class="absolute top-2 left-2 bg-yellow-400 text-xs font-bold px-2 py-1">NEW!</span>
+                </div>
+                <h2 class="text-xl font-bold mt-4">Optical Illusion 4</h2>
+                <p class="mt-2 card-description">An optical illusion with geometric shapes.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px]">
+                <div class="relative">
+                    <img alt="Optical illusion with spiral pattern" class="card-image" height="225" src="https://storage.googleapis.com/a1aa/image/2D894zwVAdrOOhMEBeNNBetCJ7B9MeUoSyE0u6IQfmV34hZPB.jpg" width="225">
+                    <span class="absolute top-2 left-2 bg-yellow-400 text-xs font-bold px-2 py-1">NEW!</span>
+                </div>
+                <h2 class="text-xl font-bold mt-4">Optical Illusion 5</h2>
+                <p class="mt-2 card-description">An optical illusion with a spiral pattern.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px]">
+                <div class="relative">
+                    <img alt="Optical illusion with checkerboard pattern" class="card-image" height="225" src="https://storage.googleapis.com/a1aa/image/hBsIQdd7Ne3XCKDolZeHuhBlAL135dsdJNKIs2IfnuP58wsnA.jpg" width="225">
+                    <span class="absolute top-2 left-2 bg-yellow-400 text-xs font-bold px-2 py-1">NEW!</span>
+                </div>
+                <h2 class="text-xl font-bold mt-4">Optical Illusion 6</h2>
+                <p class="mt-2 card-description">An optical illusion with a checkerboard pattern.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px]">
+                <div class="relative">
+                    <img alt="Optical illusion with moving dots" class="card-image" height="225" src="https://storage.googleapis.com/a1aa/image/EDf4LXGRtk2DDadECpqDOx2whPM0c51mG1LhXVfZqrzPewsnA.jpg" width="225">
+                </div>
+                <h2 class="text-xl font-bold mt-4">Optical Illusion 7</h2>
+                <p class="mt-2 card-description">An optical illusion with moving dots.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px]">
+                <div class="relative">
+                    <img alt="Optical illusion with 3D cubes" class="card-image" height="225" src="https://storage.googleapis.com/a1aa/image/Y0uHFJd4KGLCEJnvalzJqfRCmHT2yU133ruVHvoiu4aJPM7JA.jpg" width="225">
+                </div>
+                <h2 class="text-xl font-bold mt-4">Optical Illusion 8</h2>
+                <p class="mt-2 card-description">An optical illusion with 3D cubes.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px]">
+                <div class="relative">
+                    <img alt="Optical illusion with zigzag lines" class="card-image" height="225" src="https://storage.googleapis.com/a1aa/image/fJ63uC31pXQ3bikiZ1HM11pd7I1baVPSj3oKy8xLNguIPM7JA.jpg" width="225">
+                </div>
+                <h2 class="text-xl font-bold mt-4">Optical Illusion 9</h2>
+                <p class="mt-2 card-description">An optical illusion with zigzag lines.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px]">
+                <div class="relative">
+                    <img alt="Optical illusion with overlapping circles" class="card-image" height="225" src="https://storage.googleapis.com/a1aa/image/HixSOhBbp84jBVRa2faUARqK9erqhJAX8IIKkj4SqthaewsnA.jpg" width="225">
+                </div>
+                <h2 class="text-xl font-bold mt-4">Optical Illusion 10</h2>
+                <p class="mt-2 card-description">An optical illusion with overlapping circles.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px] hidden" id="art1-template">
+                <div class="relative">
+                    <img alt="Art Template 1" class="card-image" height="225" src="" width="225">
+                </div>
+                <h2 class="text-xl font-bold mt-4">Art 1</h2>
+                <p class="mt-2 card-description">Template description for Art 1.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px] hidden" id="art2-template">
+                <div class="relative">
+                    <img alt="Art Template 2" class="card-image" height="225" src="" width="225">
+                </div>
+                <h2 class="text-xl font-bold mt-4">Art 2</h2>
+                <p class="mt-2 card-description">Template description for Art 2.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px] hidden" id="art3-template">
+                <div class="relative">
+                    <img alt="Art Template 3" class="card-image" height="225" src="" width="225">
+                </div>
+                <h2 class="text-xl font-bold mt-4">Art 3</h2>
+                <p class="mt-2 card-description">Template description for Art 3.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px] hidden" id="art4-template">
+                <div class="relative">
+                    <img alt="Art Template 4" class="card-image" height="225" src="" width="225">
+                </div>
+                <h2 class="text-xl font-bold mt-4">Art 4</h2>
+                <p class="mt-2 card-description">Template description for Art 4.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px] hidden" id="art5-template">
+                <div class="relative">
+                    <img alt="Art Template 5" class="card-image" height="225" src="" width="225">
+                </div>
+                <h2 class="text-xl font-bold mt-4">Art 5</h2>
+                <p class="mt-2 card-description">Template description for Art 5.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px] hidden" id="art6-template">
+                <div class="relative">
+                    <img alt="Art Template 6" class="card-image" height="225" src="" width="225">
+                </div>
+                <h2 class="text-xl font-bold mt-4">Art 6</h2>
+                <p class="mt-2 card-description">Template description for Art 6.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px] hidden" id="art7-template">
+                <div class="relative">
+                    <img alt="Art Template 7" class="card-image" height="225" src="" width="225">
+                </div>
+                <h2 class="text-xl font-bold mt-4">Art 7</h2>
+                <p class="mt-2 card-description">Template description for Art 7.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px] hidden" id="art8-template">
+                <div class="relative">
+                    <img alt="Art Template 8" class="card-image" height="225" src="" width="225">
+                </div>
+                <h2 class="text-xl font-bold mt-4">Art 8</h2>
+                <p class="mt-2 card-description">Template description for Art 8.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px] hidden" id="art9-template">
+                <div class="relative">
+                    <img alt="Art Template 9" class="card-image" height="225" src="" width="225">
+                </div>
+                <h2 class="text-xl font-bold mt-4">Art 9</h2>
+                <p class="mt-2 card-description">Template description for Art 9.</p>
+            </div>
+            <div class="bg-gray-200 min-w-[225px] hidden" id="art10-template">
+                <div class="relative">
+                    <img alt="Art Template 10" class="card-image" height="225" src="" width="225">
+                </div>
+                <h2 class="text-xl font-bold mt-4">Art 10</h2>
+                <p class="mt-2 card-description">Template description for Art 10.</p>
+            </div>
+        </main>
+        <footer class="mt-8 text-center">
+            <a class="text-black underline" href="#">toms.toys</a>
+            <span class="mx-2">©</span>
+            <a class="text-black underline" href="#">privacy</a>
+            <span class="mx-2">©</span>
+            <a class="text-black underline" href="#">terms</a>
+        </footer>
+    </div>
+    <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 hidden flex flex-col items-center overflow-y-auto">
+        <button onclick="closeModal()" class="absolute top-4 left-4 text-white text-xl font-bold hover:text-yellow-400">
+            ← Back
+        </button>
+        <div class="max-w-4xl w-full mt-8 px-[50px] mb-8">
+            <img id="modalImage" class="w-full object-contain mx-auto" src="" alt="">
+            <h2 id="modalTitle" class="text-2xl font-bold text-white mt-4"></h2>
+            <p id="modalDescription" class="text-white mt-2"></p>
+            <div id="modalDetailedDescription" class="text-white mt-8 space-y-4">
+                <!-- Detailed paragraphs will be inserted here -->
+            </div>
+        </div>
+    </div>
+    <script>
+const randomArtContent = [
+    {
+        title: "Fractals in Motion",
+        image: "https://storage.googleapis.com/a1aa/image/EDf4LXGRtk2DDadECpqDOx2whPM0c51mG1LhXVfZqrzPewsnA.jpg",
+        description: "A mesmerizing digital artwork featuring recursive patterns that seem to move.",
+        alt: "Digital fractal art with swirling patterns"
+    },
+    {
+        title: "Neon Dreams",
+        image: "https://storage.googleapis.com/a1aa/image/2D894zwVAdrOOhMEBeNNBetCJ7B9MeUoSyE0u6IQfmV34hZPB.jpg",
+        description: "Abstract neon lights creating a dreamlike urban landscape.",
+        alt: "Abstract neon art cityscape"
+    },
+    {
+        title: "Sacred Geometry",
+        image: "https://storage.googleapis.com/a1aa/image/hBsIQdd7Ne3XCKDolZeHuhBlAL135dsdJNKIs2IfnuP58wsnA.jpg",
+        description: "Intricate geometric patterns inspired by ancient mathematical principles.",
+        alt: "Complex geometric patterns in gold and black"
+    },
+    {
+        title: "Digital Waves",
+        image: "https://storage.googleapis.com/a1aa/image/Y0uHFJd4KGLCEJnvalzJqfRCmHT2yU133ruVHvoiu4aJPM7JA.jpg",
+        description: "Abstract digital artwork depicting fluid motion and energy flow.",
+        alt: "Digital art with flowing wave patterns"
+    },
+    {
+        title: "Quantum Fields",
+        image: "https://storage.googleapis.com/a1aa/image/fJ63uC31pXQ3bikiZ1HM11pd7I1baVPSj3oKy8xLNguIPM7JA.jpg",
+        description: "A visualization of quantum field interactions in vibrant colors.",
+        alt: "Abstract quantum field visualization"
+    },
+    {
+        title: "Crystal Dreams",
+        image: "https://storage.googleapis.com/a1aa/image/HixSOhBbp84jBVRa2faUARqK9erqhJAX8IIKkj4SqthaewsnA.jpg",
+        description: "Crystalline structures in a kaleidoscope of colors.",
+        alt: "Crystal-inspired digital art"
+    },
+    {
+        title: "Neural Networks",
+        image: "https://storage.googleapis.com/a1aa/image/v77MfqmAOcWlIieb6H0kkhafrk6WOu0vNaFMvpVMlE6o6wsnA.jpg",
+        description: "Abstract representation of artificial neural networks.",
+        alt: "Abstract neural network visualization"
+    },
+    {
+        title: "Time Spirals",
+        image: "https://storage.googleapis.com/a1aa/image/Ye74S0Zh0TXnbKXP1F1knN62rqJyG04h63kWloOm6WWrOM7JA.jpg",
+        description: "Spiraling patterns suggesting the flow of time.",
+        alt: "Spiral-based abstract art"
+    },
+    {
+        title: "Digital Flora",
+        image: "https://storage.googleapis.com/a1aa/image/q5HHoezZk8zNJ6bO8KZhDvFwqjNG91HpZuP4fNjrn98TdY2TA.jpg",
+        description: "Digital interpretation of organic plant forms.",
+        alt: "Digital floral patterns"
+    },
+    {
+        title: "Cosmic Dance",
+        image: "https://storage.googleapis.com/a1aa/image/eiBMCjr3TxUSG6Mzph9pfIS1hs7ViBfsoK2SIfTUoNheyDzeE.jpg",
+        description: "Abstract representation of celestial bodies in motion.",
+        alt: "Abstract cosmic artwork"
+    }
+];
+
+const detailedDescriptions = {
+    'Thatcher Effect': `The Thatcher Effect, also known as the Thatcher illusion, is a phenomenon where it becomes difficult to detect local feature changes in an upside-down face, despite identical changes being obvious in an upright face. This illusion was first discovered by Peter Thompson in 1980 and is named after Margaret Thatcher, whose photograph was first used to demonstrate the effect.
+
+The illusion helps demonstrate the specialized nature of face recognition in the human visual system. When a face is upside down, we tend to process it more as a collection of features rather than as a whole, integrated object. This disrupts our normal ability to detect unusual features or expressions.
+
+This effect has significant implications for understanding how our brains process faces and has been used extensively in research on face perception and recognition.`,
+    
+    'Disappearing Bicyclist': `The Disappearing Bicyclist puzzle, created by Sam Loyd in the late 19th century, is a classic example of a counting paradox. The puzzle shows two seemingly identical pictures with one subtle difference - in one image there are 13 people, while in the other there are only 12.
+
+The illusion works by cleverly rearranging the elements of the image in such a way that the missing person seems to vanish into thin air. This type of puzzle plays with our brain's tendency to make assumptions and fill in gaps in information.
+
+The puzzle has been entertaining and confounding people for over a century, demonstrating the enduring appeal of visual paradoxes.`,
+
+    'Concentric Spirals': `The Concentric Spirals illusion, also known as Fraser's spiral, was first described by James Fraser in 1908. Despite appearing to be a spiral, the image actually consists of a series of concentric circles.
+
+The illusion is created by overlaying the circles with a pattern of black and white segments oriented at specific angles. This creates a strong impression of a spiral pattern, even though no spiral actually exists.
+
+This illusion demonstrates how our visual system can be misled by local orientation cues, even when they conflict with the global structure of an image.`,
+
+    'Optical Illusion 1': `This captivating black and white line illusion demonstrates the principle of lateral inhibition in our visual system. The intricate pattern of parallel lines creates an illusion of movement and undulation, even though the image is completely static.
+
+The effect occurs because of how our visual neurons process contrast boundaries. When looking at the pattern, the interaction between adjacent light and dark lines triggers a neural response that creates the sensation of movement.
+
+This type of illusion has been studied extensively in neuroscience and helps us understand how our brain processes visual information and perceives motion.`,
+
+    'Optical Illusion 2': `This mesmerizing illusion featuring colorful circles showcases the phenomenon known as chromatic aberration and color contrast effects. The arrangement of concentric circles with carefully chosen colors creates a dynamic visual effect that appears to pulse and move.
+
+The illusion takes advantage of how our visual system processes different colors and their relationships to one another. The specific color combinations and patterns can create apparent motion and depth effects.
+
+This type of illusion has applications in both art and psychology, helping us understand color perception and visual processing.`,
+
+    'Optical Illusion 3': `The wavy lines illusion demonstrates the Café Wall effect, where parallel straight lines appear to bend and warp due to the specific arrangement of alternating patterns. This illusion was first noticed in a café wall pattern in Bristol, hence its name.
+
+The effect is created by the interaction between the high-contrast elements and their specific positioning. Our brain's attempt to process these patterns results in the perception of curved or slanted lines where none actually exist.
+
+This illusion has implications for understanding how our visual system processes geometric patterns and spatial relationships.`,
+
+    'Optical Illusion 4': `This geometric illusion plays with our perception of depth and dimensionality. The careful arrangement of shapes creates competing interpretations in our visual system, making it difficult to settle on a single stable perception.
+
+The effect demonstrates the principle of multistable perception, where our brain alternates between different possible interpretations of the same visual stimulus. This switching occurs because our visual system attempts to make sense of ambiguous visual information.
+
+This type of illusion has been valuable in studying how our brain constructs three-dimensional interpretations from two-dimensional images.`,
+
+    'Optical Illusion 5': `This spiral pattern illusion demonstrates the power of radial symmetry and movement perception. The specific arrangement of elements creates a compelling sense of rotation and depth, even in a static image.
+
+The illusion works by exploiting how our visual system processes patterns that suggest movement and depth. The spiral arrangement triggers motion detection mechanisms in our visual cortex, creating a sensation of movement or rotation.
+
+This type of illusion helps us understand how our brain processes complex patterns and interprets suggested motion.`,
+
+    'Optical Illusion 6': `The checkerboard pattern illusion plays with our perception of contrast and brightness. Despite appearing to have varying shades, many of the squares are actually the same color, demonstrating the principle of simultaneous contrast.
+
+This effect occurs because our visual system processes color and brightness relative to surrounding areas rather than in absolute terms. The arrangement of light and dark squares creates the illusion of different shades where none exist.
+
+This illusion has important implications for understanding how our brain processes contrast and color relationships.`,
+
+    'Optical Illusion 7': `This dynamic illusion with moving dots demonstrates the phi phenomenon and beta movement, fundamental principles of motion perception. The careful arrangement of elements creates an impression of continuous motion.
+
+The effect works by taking advantage of how our visual system processes sequential visual information. When properly spaced and timed, separate static elements can create the impression of smooth motion.
+
+This principle is fundamental to animation and film, and helps us understand how we perceive motion in general.`,
+
+    'Optical Illusion 8': `The 3D cubes illusion demonstrates the Necker cube effect, where a wire-frame cube drawing can be perceived as oriented in two different ways. This bistable perception shows how our brain handles ambiguous visual information.
+
+The illusion occurs because the two-dimensional image provides insufficient information for a unique three-dimensional interpretation. Our visual system alternates between the two possible interpretations of the cube's orientation.
+
+This illusion has been invaluable in studying how our brain constructs three-dimensional percepts from two-dimensional images.`,
+
+    'Optical Illusion 9': `The zigzag line illusion showcases the principle of apparent motion and line continuation. The specific arrangement of zigzag patterns creates dynamic effects that seem to shimmer and move.
+
+This effect occurs due to how our visual system processes complex geometric patterns. The alternating elements and high contrast create interference patterns that our brain interprets as movement.
+
+This type of illusion helps us understand how our visual system processes complex patterns and creates coherent percepts from simple geometric elements.`,
+
+    'Optical Illusion 10': `The overlapping circles illusion demonstrates the principle of amodal completion and figure-ground organization. The arrangement creates complex interactions between foreground and background elements.
+
+This effect shows how our visual system automatically fills in and completes partial shapes based on context and surrounding information. The overlapping elements create multiple possible interpretations that our brain must resolve.
+
+This illusion has been important in understanding how our visual system organizes and interprets complex visual scenes.`,
+    
+    'Art 1': `Template detailed description for Art 1.
+
+This is the second paragraph for Art 1.
+
+And this is the third paragraph with more details about Art 1.`,
+
+    'Art 2': `Template detailed description for Art 2.
+
+This is the second paragraph for Art 2.
+
+And this is the third paragraph with more details about Art 2.`,
+
+    'Art 3': `Template detailed description for Art 3.
+
+This is the second paragraph for Art 3.
+
+And this is the third paragraph with more details about Art 3.`,
+
+    'Art 4': `Template detailed description for Art 4.
+
+This is the second paragraph for Art 4.
+
+And this is the third paragraph with more details about Art 4.`,
+
+    'Art 5': `Template detailed description for Art 5.
+
+This is the second paragraph for Art 5.
+
+And this is the third paragraph with more details about Art 5.`,
+
+    'Art 6': `Template detailed description for Art 6.
+
+This is the second paragraph for Art 6.
+
+And this is the third paragraph with more details about Art 6.`,
+
+    'Art 7': `Template detailed description for Art 7.
+
+This is the second paragraph for Art 7.
+
+And this is the third paragraph with more details about Art 7.`,
+
+    'Art 8': `Template detailed description for Art 8.
+
+This is the second paragraph for Art 8.
+
+And this is the third paragraph with more details about Art 8.`,
+
+    'Art 9': `Template detailed description for Art 9.
+
+This is the second paragraph for Art 9.
+
+And this is the third paragraph with more details about Art 9.`,
+
+    'Art 10': `Template detailed description for Art 10.
+
+This is the second paragraph for Art 10.
+
+And this is the third paragraph with more details about Art 10.`
+};
+
+// Modify the art template elements to include the random content
+for(let i = 1; i <= 10; i++) {
+    const artContent = randomArtContent[i-1];
+    const artElement = document.getElementById(`art${i}-template`);
+    
+    // Update the template with random art content
+    artElement.querySelector('img').src = artContent.image;
+    artElement.querySelector('img').alt = artContent.alt;
+    artElement.querySelector('h2').textContent = artContent.title;
+    artElement.querySelector('p').textContent = artContent.description;
+    
+    // Add corresponding detailed description
+    detailedDescriptions[artContent.title] = `${artContent.title} is a stunning piece of digital art that explores the boundaries between technology and creativity.
+
+This artwork incorporates complex mathematical algorithms and artistic vision to create a unique visual experience that challenges our perception of reality.
+
+Through careful manipulation of color, form, and pattern, this piece invites viewers to contemplate the intersection of art, science, and human consciousness.`;
+}
+
+// Add buy links to the modal
+function openModal(image, title, description) {
+    document.getElementById('modalImage').src = image;
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalDescription').textContent = description;
+    
+    // Set detailed description
+    const detailedDesc = detailedDescriptions[title] || 'Detailed description coming soon...';
+    const paragraphs = detailedDesc.split('\n\n');
+    const detailedDescHTML = `
+      ${paragraphs.map(p => `<p>${p}</p>`).join('')}
+      <div class="mt-8">
+        <h3 class="text-xl font-bold text-white mb-4">Buy Links</h3>
+        <div class="flex items-center space-x-6">
+          <a href="https://paypal.com/url" target="_blank" class="text-yellow-400 hover:text-yellow-300 underline">
+            Purchase on PayPal
+          </a>
+          <svg class="w-24 h-24 bg-white p-2 qr-placeholder" viewBox="0 0 100 100">
+            <rect x="10" y="10" width="80" height="80" fill="none" stroke="black" stroke-width="2"/>
+            <text x="50" y="55" text-anchor="middle" font-size="12">QR Code</text>
+          </svg>
+        </div>
+      </div>
+    `;
+    document.getElementById('modalDetailedDescription').innerHTML = detailedDescHTML;
+    
+    document.getElementById('imageModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('imageModal').classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+
+// Add this to the existing wheel event listener code
+document.addEventListener('wheel', function(event) {
+    if (event.deltaY !== 0) {
+        document.querySelector('.horizontal-scroll').scrollLeft += event.deltaY;
+        event.preventDefault();
+    }
+});
+
+// Function to update card positions
+function updateCardPositions() {
+    const container = document.querySelector('.horizontal-scroll');
+    const cards = document.querySelectorAll('.bg-gray-200');
+    const containerWidth = container.offsetWidth;
+    const scrollLeft = container.scrollLeft;
+    const centerPoint = containerWidth / 2 + scrollLeft;
+
+    cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const cardCenterX = rect.left + rect.width / 2;
+        const distanceFromCenter = Math.abs(containerWidth / 2 - cardCenterX);
+        const maxDistance = containerWidth / 2;
+        
+        // Calculate rotation and z-translation based on distance from center
+        const rotationY = (distanceFromCenter / maxDistance) * 45;
+        const zTranslate = (distanceFromCenter / maxDistance) * 100;
+        const yTranslate = (distanceFromCenter / maxDistance) * 30; // Add vertical offset
+        
+        // Determine direction of rotation based on position relative to center
+        const direction = cardCenterX < containerWidth / 2 ? -1 : 1;
+        
+        // Apply the transform with added curve effect
+        card.style.transform = `
+            translateZ(-${zTranslate}px) 
+            translateY(${yTranslate}px)
+            rotateY(${rotationY * direction}deg)
+            rotateX(${yTranslate/10}deg)
+        `;
+    });
+}
+
+// Add scroll event listener to update card positions
+document.querySelector('.horizontal-scroll').addEventListener('scroll', updateCardPositions);
+
+// Initial call to set positions
+updateCardPositions();
+
+// Update on window resize
+window.addEventListener('resize', updateCardPositions);
+
+// Add click handlers to all card images
+document.querySelectorAll('.bg-gray-200').forEach(card => {
+    const img = card.querySelector('img');
+    const title = card.querySelector('h2').textContent;
+    const description = card.querySelector('p').textContent;
+    
+    card.addEventListener('click', () => {
+        openModal(img.src, title, description);
+    });
+});
+    </script>
+</body></html>
