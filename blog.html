@@ -940,13 +940,7 @@ document.querySelectorAll('.blog-post h2').forEach(title => {
 
 
 
-
-
-
-
-
-
-<html><head><base href="." />
+<html><head><base href=".">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
@@ -959,7 +953,7 @@ document.querySelectorAll('.blog-post h2').forEach(title => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end; /* Right align the content */
+    justify-content: flex-end;
   }
 
   .widget-container {
@@ -977,7 +971,7 @@ document.querySelectorAll('.blog-post h2').forEach(title => {
   }
 
   .widget-container.collapsed {
-    transform: translateX(calc(100% - 50px));
+    transform: translateX(calc(100% + 17px)); /* Changed from 50px to 100px to move it further right */
   }
 
   .toggle-button {
