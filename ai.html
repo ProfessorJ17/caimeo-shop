@@ -1261,3 +1261,219 @@ messageInput.addEventListener('keypress', (e) => {
 </div>
 
 </body></html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html><head><base href="/"><title>Expanding Sidebar Links</title><style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: #1a1a1a;
+    color: #00ff00;
+    font-family: monospace;
+  }
+
+  #sidebar {
+    position: fixed;
+    top: 350px; /* Changed from 500px to 350px */
+    left: -300px;
+    width: 300px;
+    height: calc(100vh - 350px); /* Updated to match new top position */
+    background: #000;
+    transition: left 0.3s ease-in-out;
+    overflow-y: auto;
+    border-right: 2px solid #00ff00;
+    padding: 20px;
+  }
+
+  #sidebar.expanded {
+    left: 0;
+  }
+
+  #toggle-btn {
+    position: fixed;
+    top: 370px; /* Adjusted to match new sidebar position */
+    left: 20px;
+    padding: 10px;
+    background: #000;
+    color: #00ff00;
+    border: 2px solid #00ff00;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  #sidebar a {
+    display: block;
+    color: #00ff00;
+    text-decoration: none;
+    padding: 8px 0;
+    border-bottom: 1px solid #00ff00;
+    transition: all 0.2s;
+  }
+
+  #sidebar a:hover {
+    color: #000;
+    background: #00ff00;
+    padding-left: 10px;
+  }
+
+  #sidebar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  #sidebar::-webkit-scrollbar-track {
+    background: #000;
+  }
+
+  #sidebar::-webkit-scrollbar-thumb {
+    background: #00ff00;
+  }
+</style></head><body>
+
+<button id="toggle-btn">☰ Toggle Links</button>
+
+<div id="sidebar">
+  <a href="http://hekatestation.net" target="_blank">Hekate Station</a>
+  <a href="http://www.creepypasta.com" target="_blank">Creepypasta</a>  
+  <a href="http://www.qu13e.com" target="_blank">Qu13e</a>
+  <a href="http://www.takethislollipop.com" target="_blank">Take This Lollipop [Creeper]</a>
+  <a href="http://www.i-m.mx/donttellme/imsorry" target="_blank">I'm Sorry</a>
+  <a href="http://www.theuselessweb.com" target="_blank">The Useless Web</a>
+  <a href="http://tanasinn.org" target="_blank">Tanasinn</a>
+  <a href="http://www.angels-heaven.org/english/default_en.htm" target="_blank">Angels Heaven</a>
+  <a href="http://sentimentalcorp.org" target="_blank">Sentimental Corp</a>
+  <a href="http://www.simulation-argument.com" target="_blank">Simulation Argument</a>
+  <a href="http://oct282011.com" target="_blank">October 28, 2011</a>
+  <a href="http://divine-interventions.com" target="_blank">Divine Interventions</a>
+  <a href="http://www.ghostresearch.org" target="_blank">Ghost Research</a>
+  <a href="http://www.planecrashinfo.com/lastwords.htm" target="_blank">Last Words</a>
+  <a href="http://99rooms.com" target="_blank">99 Rooms</a>
+  <a href="https://www.johnhancockinsurance.com/life/life-expectancy-tool.aspx" target="_blank">Life Expectancy Calculator</a>
+  <a href="http://magnificence.org" target="_blank">Magnificence</a>
+  <a href="http://comic.naver.com/webtoon/detail.nhn?titleId=350217&amp;no=31&amp;weekday=tue" target="_blank">Naver Comic</a>
+  <a href="https://www.possessionbegins.com" target="_blank">Possession Begins</a>
+  <a href="http://nobodyhere.com/justme/me.here" target="_blank">Nobody Here</a>
+  <a href="http://www.brainjar.com/dhtml/ouija" target="_blank">Online Ouija</a>
+  <a href="http://www.letsgetfreestuff.com/death_date.html" target="_blank">Death Date Calculator</a>
+  <a href="http://screenvader.com/root.html" target="_blank">Screen Vader</a>
+  <a href="http://nightmare.mit.edu" target="_blank">MIT Nightmare</a>
+  <a href="http://shaysasintjohn.net" target="_blank">Shaysa St. John</a>
+  <a href="https://www.housecreep.com" target="_blank">House Creep</a>
+  <a href="http://subculture.com" target="_blank">Subculture</a>
+  <a href="http://Cicada3301.org" target="_blank">Cicada 3301</a>
+  <a href="http://superbad.com" target="_blank">Superbad</a>
+  <a href="http://5nletters.blogspot.com" target="_blank">5n Letters</a>
+  <a href="http://magibon.com" target="_blank">Magibon</a>
+  <a href="http://anabootcamp.weebly.com/ana-boot-camp-abc.html" target="_blank">Ana Boot Camp</a>
+  <a href="http://www.skywaybridge.com/home.htm" target="_blank">Skyway Bridge</a>
+  <a href="https://omfgdogs.com" target="_blank">OMFG Dogs</a>
+  <a href="http://www.angelfire.com/empire/serpentis666/HOME.html" target="_blank">Serpentis666</a>
+  <a href="http://www.whiteenamel.com" target="_blank">White Enamel</a>
+  <a href="http://www.opentopia.com" target="_blank">Opentopia</a>
+  <a href="http://web.archive.org/web/20110423163203/http://yvettesbridalformal.com" target="_blank">Yvette's Bridal</a>
+  <a href="http://www.staggeringbeauty.com" target="_blank">Staggering Beauty</a>
+  <a href="http://www.gebrauchte-tampons.de" target="_blank">Gebrauchte</a>
+  <a href="http://rotten.com" target="_blank">Rotten</a>
+  <a href="http://4chan.org" target="_blank">4chan</a>
+  <a href="http://timecube.2enp.com" target="_blank">Time Cube</a>
+  <a href="http://www.museumoftalkingboards.com/WebOuija.html" target="_blank">Web Ouija</a>
+  <a href="https://scratch.mit.edu/projects/121555919" target="_blank">Scratch Project</a>
+  <a href="http://fusionanomaly.net/nodebase.html" target="_blank">Fusion Anomaly</a>
+  <a href="http://sevens.exposed" target="_blank">Sevens Exposed</a>
+  <a href="http://www.theworldsworstwebsiteever.com" target="_blank">World's Worst Website</a>
+  <a href="http://zoomquilt.org" target="_blank">Zoom Quilt</a>
+  <a href="https://www.torproject.org/projects/torbrowser.html.en" target="_blank">Tor Browser</a>
+  <a href="https://thehiddenwiki.org" target="_blank">Hidden Wiki</a>
+  <a href="http://jodi.org" target="_blank">Jodi</a>
+  <a href="http://www.heavensgate.com" target="_blank">Heaven's Gate</a>
+  <a href="http://enricks.angelfire.com" target="_blank">Enricks</a>
+  <a href="http://www.thisman.org/index.htm" target="_blank">This Man</a>
+  <a href="http://wwwwwwww.jodi.org" target="_blank">WWWWWWWW</a>
+  <a href="http://www.111111111111111111111111111111111111111111111111111111111111.com" target="_blank">111111...</a>
+  <a href="http://worldbirthsanddeaths.com" target="_blank">World Births and Deaths</a>
+  <a href="http://humanleather.co.uk" target="_blank">Human Leather</a>
+  <a href="https://www.tdcj.state.tx.us/death_row/dr_executed_offenders.html" target="_blank">Texas Death Row</a>
+  <a href="http://www.survivetheoutbreak.com" target="_blank">Survive the Outbreak</a>
+  <a href="http://www.exitmundi.nl/exitmundi.htm" target="_blank">Exit Mundi</a>
+  <a href="https://tedistheonegod.net" target="_blank">Ted is the One God</a>
+  <a href="http://hashima-island.co.uk" target="_blank">Hashima Island</a>
+  <a href="http://iloveyoulikeafatladylovesapples.com" target="_blank">Fat Lady Loves Apples</a>
+  <a href="http://ilooklikebarackobama.com" target="_blank">I Look Like Obama</a>
+  <a href="http://www.pointerpointer.com" target="_blank">Pointer Pointer</a>
+  <a href="http://thequietplaceproject.com/thequietplace" target="_blank">The Quiet Place</a>
+  <a href="http://thisisnotaniceplace.blogspot.com" target="_blank">Not a Nice Place</a>
+  <a href="http://www.anomalies-unlimited.com" target="_blank">Anomalies Unlimited</a>
+  <a href="http://www.illuminatiorder.info" target="_blank">Illuminati Order</a>
+  <a href="http://www.unfiction.com" target="_blank">Unfiction</a>
+  <a href="http://deathdate.info" target="_blank">Death Date</a>
+  <a href="http://www.newsoffuture.com" target="_blank">News of Future</a>
+  <a href="http://www.celebritymorgue.com" target="_blank">Celebrity Morgue</a>
+  <a href="http://scp-wiki.wikidot.com" target="_blank">SCP Wiki</a>
+  <a href="http://www.lomando.com" target="_blank">Lomando</a>
+  <a href="http://thebeatlesneverbrokeup.com" target="_blank">Beatles Never Broke Up</a>
+  <a href="http://www.mouchette.org" target="_blank">Mouchette</a>
+  <a href="http://zombiepassions.com" target="_blank">Zombie Passions</a>
+  <a href="http://godhatesshrimp.com" target="_blank">God Hates Shrimp</a>
+  <a href="https://isitchristmas.com" target="_blank">Is It Christmas?</a>
+  <a href="http://www.nationsquid.com" target="_blank">Nation Squid</a>
+  <a href="https://procatinator.com" target="_blank">Procatinator</a>
+  <a href="http://fallingfalling.com" target="_blank">Falling Falling</a>
+  <a href="http://www.eiscouncil.com/BlackSky" target="_blank">Black Sky</a>
+  <a href="http://www.acolumbinesite.com" target="_blank">Columbine Site</a>
+  <a href="http://www.bestgore.com" target="_blank">Best Gore</a>
+  <a href="http://www.darwinawards.com" target="_blank">Darwin Awards</a>
+  <a href="http://deadpool.rotten.com" target="_blank">Dead Pool</a>
+  <a href="http://www.churchofeuthanasia.org" target="_blank">Church of Euthanasia</a>
+  <a href="http://www.newgrounds.com/pico/nene" target="_blank">Newgrounds Pico</a>
+  <a href="http://choosedeath.free.fr" target="_blank">Choose Death</a>
+  <a href="http://www.angelfire.com/pop/patdou/suicide.html" target="_blank">Suicide Page</a>
+  <a href="http://www.yyyyyyy.info" target="_blank">YYYYYYY</a>
+  <a href="http://turnyournameintoaface.com" target="_blank">Name to Face</a>
+  <a href="http://973-eht-namuh-973.com/coloured%20site/start/i_thought/1.htm" target="_blank">973 EHT NAMUH 973</a>
+  <a href="https://www.insult-generator.org" target="_blank">Insult Generator</a>
+</div>
+
+<script>
+document.getElementById('toggle-btn').addEventListener('click', function() {
+  const sidebar = document.getElementById('sidebar');
+  sidebar.classList.toggle('expanded');
+  
+  // Move button with sidebar
+  if(sidebar.classList.contains('expanded')) {
+    this.style.left = '320px';
+  } else {
+    this.style.left = '20px';
+  }
+});
+
+// Additional functionality to close sidebar when clicking outside
+document.addEventListener('click', function(event) {
+  const sidebar = document.getElementById('sidebar');
+  const toggleBtn = document.getElementById('toggle-btn');
+  
+  if (!sidebar.contains(event.target) && event.target !== toggleBtn && sidebar.classList.contains('expanded')) {
+    sidebar.classList.remove('expanded');
+    toggleBtn.style.left = '20px';
+  }
+});
+</script>
+
+</body></html>
