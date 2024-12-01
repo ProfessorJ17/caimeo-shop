@@ -1,12 +1,14 @@
 <html><head><base href="">
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
     <title>Luxious Labs</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet">
     <style>
     body {
+        background-color: black !important; /* Override Tailwind's yellow background */
+        color: gold !important;
         font-family: 'Roboto', sans-serif;
     }
     .horizontal-scroll {
@@ -33,18 +35,18 @@
         margin-right: 20px;
     }
     .bg-gray-200 {
+        background: rgba(0, 0, 0, 0.5) !important;
         border: none !important;
         padding: 0 !important;
-        background: none !important;
         min-width: 225px !important;
         cursor: pointer;
         transition: all 0.3s ease;
         transform-origin: center center;
         border-radius: 20px; /* Add rounded corners */
         box-shadow: 
-            0 10px 20px rgba(0,0,0,0.2),
-            inset 0 -5px 15px rgba(255,255,255,0.2),
-            inset 0 5px 15px rgba(0,0,0,0.1); /* Add bevel effect */
+            0 10px 20px rgba(255,215,0,0.1),
+            inset 0 -5px 15px rgba(255,215,0,0.1),
+            inset 0 5px 15px rgba(0,0,0,0.2) !important; /* Update box shadow */
         background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(0,0,0,0.1)) !important;
         overflow: hidden;
     }
@@ -57,9 +59,9 @@
     .bg-gray-200:hover {
         transform: scale(1.02) translateY(-5px);
         box-shadow: 
-            0 15px 30px rgba(0,0,0,0.3),
-            inset 0 -5px 15px rgba(255,255,255,0.2),
-            inset 0 5px 15px rgba(0,0,0,0.1);
+            0 15px 30px rgba(255,215,0,0.2),
+            inset 0 -5px 15px rgba(255,215,0,0.15),
+            inset 0 5px 15px rgba(0,0,0,0.3) !important; /* Update hover effect */
     }
     .card-image {
         width: 225px;
@@ -93,13 +95,13 @@
     }
     @keyframes glow {
       0%, 100% {
-        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8),
-                     0 0 10px rgba(255, 255, 255, 0.5),
+        text-shadow: 0 0 5px rgba(255, 215, 0, 0.8),
+                     0 0 10px rgba(255, 215, 0, 0.5),
                      0 0 15px rgba(255, 215, 0, 0.3);
       }
       50% {
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.9),
-                     0 0 20px rgba(255, 255, 255, 0.6),
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.9),
+                     0 0 20px rgba(255, 215, 0, 0.6),
                      0 0 30px rgba(255, 215, 0, 0.4);
       }
     }
@@ -110,13 +112,16 @@
       animation: glow 3s ease-in-out infinite;
     }
     #modalDescription, #modalDetailedDescription p {
-      text-shadow: 0 0 3px rgba(255, 255, 255, 0.6);
+      color: gold !important; /* Update modal text color */
+      text-shadow: 0 0 3px rgba(255, 215, 0, 0.6);
     }
     header a {
+      color: gold !important; /* Update header link color */
       animation: glow 3s ease-in-out infinite;
       animation-delay: calc(var(--i, 0) * 0.5s);
     }
     footer a {
+      color: gold !important; /* Update footer link color */
       text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
       transition: text-shadow 0.3s ease;
     }
@@ -124,12 +129,88 @@
       text-shadow: 0 0 10px rgba(255, 255, 255, 0.9),
                    0 0 20px rgba(255, 215, 0, 0.5);
     }
+    #imageModal {
+        background-color: rgba(0, 0, 0, 0.9) !important; /* Update modal background */
+    }
     #imageModal button {
-      animation: glow 3s ease-in-out infinite;
+        color: gold !important; /* Update back button color */
+    }
+    @media (max-width: 768px) {
+      .container {
+        padding-top: 200px;  /* Reduce top padding on mobile */
+      }
+      
+      .horizontal-scroll {
+        margin-top: -200px;  /* Adjust margin for mobile */
+        padding: 20px 10px;  /* Reduce padding on mobile */
+      }
+
+      header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+
+      header .flex {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      #modalImage {
+        max-width: 95vw;  /* Allow image to be wider on mobile */
+        height: auto;
+      }
+
+      #imageModal .max-w-4xl {
+        padding: 0 20px;  /* Reduce padding on mobile */
+      }
+
+      .card-image {
+        width: 180px;  /* Slightly smaller cards on mobile */
+        height: 180px;
+      }
+
+      .bg-gray-200 {
+        min-width: 180px !important;  /* Match card image size */
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .container {
+        padding-top: 300px;  /* Medium size adjustment */
+      }
+      
+      .horizontal-scroll {
+        margin-top: -300px;
+      }
+    }
+
+    @media (min-width: 1025px) {
+      .container {
+        max-width: 1400px;  /* Limit maximum width on large screens */
+        margin: 0 auto;
+      }
+    }
+
+    @media (hover: hover) {
+      .bg-gray-200:hover {
+        transform: scale(1.02) translateY(-5px);
+      }
+    }
+
+    #imageModal {
+      padding: 1rem;
+    }
+
+    #modalDetailedDescription {
+      width: 100%;
+      max-width: min(800px, 90vw);
+      margin: 0 auto;
+      padding: 0 1rem;
     }
     </style>
 </head>
-<body class="bg-yellow-400 text-black">
+<body class="text-yellow-400"> <!-- Replace bg-yellow-400 with text-yellow-400 -->
     <div class="container mx-auto p-4">
         <header class="flex justify-between items-center mb-4 py-2">
             <h1 class="text-3xl font-bold">Luxious Labs</h1>
@@ -140,13 +221,6 @@
             </div>
         </header>
         <main class="horizontal-scroll mt-24">
-            <div class="bg-gray-200 min-w-[225px] invisible">
-                <div class="relative">
-                    <img alt="Blank space" class="card-image" height="225" width="225">
-                </div>
-                <h2 class="text-xl font-bold mt-4">Blank</h2>
-                <p class="mt-2 card-description">Blank space</p>
-            </div>
             <div class="bg-gray-200 min-w-[225px]">
                 <div class="relative">
                     <img alt="Mona Lisa painting with a twist" class="card-image" height="225" src="https://storage.googleapis.com/a1aa/image/v77MfqmAOcWlIieb6H0kkhafrk6WOu0vNaFMvpVMlE6o6wsnA.jpg" width="225">
@@ -348,69 +422,6 @@
         </div>
     </div>
     <script>
-const randomArtContent = [
-    {
-        title: "Fractals in Motion",
-        image: "https://storage.googleapis.com/a1aa/image/EDf4LXGRtk2DDadECpqDOx2whPM0c51mG1LhXVfZqrzPewsnA.jpg",
-        description: "A mesmerizing digital artwork featuring recursive patterns that seem to move.",
-        alt: "Digital fractal art with swirling patterns"
-    },
-    {
-        title: "Neon Dreams",
-        image: "https://storage.googleapis.com/a1aa/image/2D894zwVAdrOOhMEBeNNBetCJ7B9MeUoSyE0u6IQfmV34hZPB.jpg",
-        description: "Abstract neon lights creating a dreamlike urban landscape.",
-        alt: "Abstract neon art cityscape"
-    },
-    {
-        title: "Sacred Geometry",
-        image: "https://storage.googleapis.com/a1aa/image/hBsIQdd7Ne3XCKDolZeHuhBlAL135dsdJNKIs2IfnuP58wsnA.jpg",
-        description: "Intricate geometric patterns inspired by ancient mathematical principles.",
-        alt: "Complex geometric patterns in gold and black"
-    },
-    {
-        title: "Digital Waves",
-        image: "https://storage.googleapis.com/a1aa/image/Y0uHFJd4KGLCEJnvalzJqfRCmHT2yU133ruVHvoiu4aJPM7JA.jpg",
-        description: "Abstract digital artwork depicting fluid motion and energy flow.",
-        alt: "Digital art with flowing wave patterns"
-    },
-    {
-        title: "Quantum Fields",
-        image: "https://storage.googleapis.com/a1aa/image/fJ63uC31pXQ3bikiZ1HM11pd7I1baVPSj3oKy8xLNguIPM7JA.jpg",
-        description: "A visualization of quantum field interactions in vibrant colors.",
-        alt: "Abstract quantum field visualization"
-    },
-    {
-        title: "Crystal Dreams",
-        image: "https://storage.googleapis.com/a1aa/image/HixSOhBbp84jBVRa2faUARqK9erqhJAX8IIKkj4SqthaewsnA.jpg",
-        description: "Crystalline structures in a kaleidoscope of colors.",
-        alt: "Crystal-inspired digital art"
-    },
-    {
-        title: "Neural Networks",
-        image: "https://storage.googleapis.com/a1aa/image/v77MfqmAOcWlIieb6H0kkhafrk6WOu0vNaFMvpVMlE6o6wsnA.jpg",
-        description: "Abstract representation of artificial neural networks.",
-        alt: "Abstract neural network visualization"
-    },
-    {
-        title: "Time Spirals",
-        image: "https://storage.googleapis.com/a1aa/image/Ye74S0Zh0TXnbKXP1F1knN62rqJyG04h63kWloOm6WWrOM7JA.jpg",
-        description: "Spiraling patterns suggesting the flow of time.",
-        alt: "Spiral-based abstract art"
-    },
-    {
-        title: "Digital Flora",
-        image: "https://storage.googleapis.com/a1aa/image/q5HHoezZk8zNJ6bO8KZhDvFwqjNG91HpZuP4fNjrn98TdY2TA.jpg",
-        description: "Digital interpretation of organic plant forms.",
-        alt: "Digital floral patterns"
-    },
-    {
-        title: "Cosmic Dance",
-        image: "https://storage.googleapis.com/a1aa/image/eiBMCjr3TxUSG6Mzph9pfIS1hs7ViBfsoK2SIfTUoNheyDzeE.jpg",
-        description: "Abstract representation of celestial bodies in motion.",
-        alt: "Abstract cosmic artwork"
-    }
-];
-
 const detailedDescriptions = {
     'Thatcher Effect': `The Thatcher Effect, also known as the Thatcher illusion, is a phenomenon where it becomes difficult to detect local feature changes in an upside-down face, despite identical changes being obvious in an upright face. This illusion was first discovered by Peter Thompson in 1980 and is named after Margaret Thatcher, whose photograph was first used to demonstrate the effect.
 
@@ -551,25 +562,6 @@ This is the second paragraph for Art 10.
 And this is the third paragraph with more details about Art 10.`
 };
 
-// Modify the art template elements to include the random content
-for(let i = 1; i <= 10; i++) {
-    const artContent = randomArtContent[i-1];
-    const artElement = document.getElementById(`art${i}-template`);
-    
-    // Update the template with random art content
-    artElement.querySelector('img').src = artContent.image;
-    artElement.querySelector('img').alt = artContent.alt;
-    artElement.querySelector('h2').textContent = artContent.title;
-    artElement.querySelector('p').textContent = artContent.description;
-    
-    // Add corresponding detailed description
-    detailedDescriptions[artContent.title] = `${artContent.title} is a stunning piece of digital art that explores the boundaries between technology and creativity.
-
-This artwork incorporates complex mathematical algorithms and artistic vision to create a unique visual experience that challenges our perception of reality.
-
-Through careful manipulation of color, form, and pattern, this piece invites viewers to contemplate the intersection of art, science, and human consciousness.`;
-}
-
 // Add buy links to the modal
 function openModal(image, title, description) {
     document.getElementById('modalImage').src = image;
@@ -620,6 +612,12 @@ function updateCardPositions() {
     const containerWidth = container.offsetWidth;
     const scrollLeft = container.scrollLeft;
     const centerPoint = containerWidth / 2 + scrollLeft;
+    
+    // Adjust rotation and transform values based on screen size
+    const isMobile = window.innerWidth <= 768;
+    const maxRotation = isMobile ? 25 : 45;
+    const maxZTranslate = isMobile ? 50 : 100;
+    const maxYTranslate = isMobile ? 15 : 30;
 
     cards.forEach(card => {
         const rect = card.getBoundingClientRect();
@@ -627,15 +625,12 @@ function updateCardPositions() {
         const distanceFromCenter = Math.abs(containerWidth / 2 - cardCenterX);
         const maxDistance = containerWidth / 2;
         
-        // Calculate rotation and z-translation based on distance from center
-        const rotationY = (distanceFromCenter / maxDistance) * 45;
-        const zTranslate = (distanceFromCenter / maxDistance) * 100;
-        const yTranslate = (distanceFromCenter / maxDistance) * 30; // Add vertical offset
+        const rotationY = (distanceFromCenter / maxDistance) * maxRotation;
+        const zTranslate = (distanceFromCenter / maxDistance) * maxZTranslate;
+        const yTranslate = (distanceFromCenter / maxDistance) * maxYTranslate;
         
-        // Determine direction of rotation based on position relative to center
         const direction = cardCenterX < containerWidth / 2 ? -1 : 1;
         
-        // Apply the transform with added curve effect
         card.style.transform = `
             translateZ(-${zTranslate}px) 
             translateY(${yTranslate}px)
@@ -644,6 +639,19 @@ function updateCardPositions() {
         `;
     });
 }
+
+// Add touch event handling for mobile
+document.querySelector('.horizontal-scroll').addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    updateCardPositions();
+}, { passive: false });
+
+// Add resize observer for more reliable responsive updates
+const resizeObserver = new ResizeObserver(() => {
+    updateCardPositions();
+});
+
+resizeObserver.observe(document.querySelector('.horizontal-scroll'));
 
 // Add scroll event listener to update card positions
 document.querySelector('.horizontal-scroll').addEventListener('scroll', updateCardPositions);
