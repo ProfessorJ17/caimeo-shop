@@ -1,0 +1,346 @@
+<html><head><base href="/">
+<meta charset="UTF-8">
+<title>Luminous Heart Pendant Necklace - Glowing Jewelry</title>
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Zinc Alloy Luminous Heart Pendant Necklace - Beautiful Glowing Heart Jewelry that Glows in the Dark">
+<meta name="keywords" content="luminous necklace, heart pendant, glowing jewelry, romantic necklace, zinc alloy jewelry">
+
+<!-- Social Meta Tags -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Luminous Heart Pendant Necklace - Glowing Jewelry">
+<meta property="og:description" content="Beautiful Zinc Alloy Luminous Heart Pendant Necklace that Glows in the Dark">
+
+<style>
+:root {
+  --primary: #000000;
+  --secondary: #0ff;
+  --text: #fff;
+  --neon-green: #0f0;
+  --neon-pink: #ff69b4;
+  --neon-purple: #9370db;
+  --neon-cyan: #0ff;
+}
+
+@keyframes neonPulse {
+  0% { filter: brightness(1) drop-shadow(0 0 5px var(--neon-cyan)); }
+  50% { filter: brightness(1.2) drop-shadow(0 0 10px var(--neon-cyan)); }
+  100% { filter: brightness(1) drop-shadow(0 0 5px var(--neon-cyan)); }
+}
+
+@keyframes borderGlow {
+  0% { border-color: var(--neon-pink); }
+  33% { border-color: var(--neon-cyan); }
+  66% { border-color: var(--neon-green); }
+  100% { border-color: var(--neon-pink); }
+}
+
+body {
+  font-family: 'Orbitron', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: var(--text);
+  background: #000000;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(255, 105, 180, 0.1) 0%, transparent 60%),
+    radial-gradient(circle at 80% 20%, rgba(147, 112, 219, 0.1) 0%, transparent 40%);
+}
+
+.product-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.product-details {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 0 20px var(--neon-pink),
+              inset 0 0 20px var(--neon-purple);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  border: 2px solid var(--neon-pink);
+  animation: borderGlow 4s infinite;
+}
+
+.product-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.gallery-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid var(--neon-pink);
+}
+
+.gallery-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--neon-pink);
+}
+
+.product-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 0 20px var(--neon-pink);
+  animation: neonPulse 2s infinite;
+  border: 3px solid var(--neon-pink);
+}
+
+.product-info {
+  padding: 1rem;
+}
+
+.product-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--neon-pink);
+  text-shadow: 0 0 10px var(--neon-pink);
+}
+
+.product-description {
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  text-shadow: 0 0 5px var(--neon-pink);
+}
+
+.product-features {
+  margin: 2rem 0;
+  padding: 1rem;
+  background: rgba(255, 105, 180, 0.1);
+  border-radius: 8px;
+  border: 1px solid var(--neon-pink);
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+}
+
+.feature-list li {
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 5px var(--neon-cyan);
+}
+
+.feature-list li:before {
+  content: "♥";
+  color: var(--neon-pink);
+  position: absolute;
+  left: 0;
+}
+
+.product-price {
+  font-size: 2.5rem;
+  color: var(--neon-pink);
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 10px var(--neon-pink);
+}
+
+.buy-button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: transparent;
+  color: var(--neon-pink);
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 2px solid var(--neon-pink);
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px var(--neon-pink);
+  box-shadow: 0 0 10px var(--neon-pink);
+}
+
+.buy-button:hover {
+  background: var(--neon-pink);
+  color: #000;
+  box-shadow: 0 0 20px var(--neon-pink);
+}
+
+.variant-options {
+  margin-bottom: 2rem;
+}
+
+.variant-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--neon-purple);
+  text-shadow: 0 0 5px var(--neon-purple);
+}
+
+.variant-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.variant-option {
+  padding: 0.5rem;
+  border: 2px solid var(--neon-pink);
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--neon-pink);
+  text-shadow: 0 0 5px var(--neon-pink);
+}
+
+.variant-option:hover {
+  background: rgba(255, 105, 180, 0.2);
+  box-shadow: 0 0 10px var(--neon-pink);
+}
+
+.variant-option.selected {
+  background: var(--neon-pink);
+  color: #000;
+  box-shadow: 0 0 15px var(--neon-pink);
+}
+
+.delivery-info {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: rgba(147, 112, 219, 0.1);
+  border-radius: 8px;
+  border: 1px solid var(--neon-purple);
+}
+
+.delivery-info p {
+  margin: 0.5rem 0;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 5px var(--neon-cyan);
+}
+
+.packing-list {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: rgba(255, 105, 180, 0.1);
+  border-radius: 8px;
+  border: 1px solid var(--neon-pink);
+}
+
+.product-specs {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: rgba(0, 255, 255, 0.1);
+  border-radius: 8px;
+  border: 1px solid var(--neon-cyan);
+}
+
+.info-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="product-container">
+  <div class="product-details">
+    <div class="product-image-container">
+      <img src="https://cf.cjdropshipping.com/quick/product/c6d4a74c-d4c2-4ddf-92ec-c91eefa2e033.jpg" alt="Luminous Heart Pendant" class="product-image">
+      <div class="product-gallery">
+        <img src="https://cf.cjdropshipping.com/quick/product/c6d4a74c-d4c2-4ddf-92ec-c91eefa2e033.jpg" alt="Style 1" class="gallery-image" onclick="updateMainImage(this.src)">
+        <img src="https://cf.cjdropshipping.com/quick/product/4e34f6e5-5e4c-44a6-8ccf-471072402e70.jpg" alt="Style 2" class="gallery-image" onclick="updateMainImage(this.src)">
+        <img src="https://cf.cjdropshipping.com/quick/product/7277b2bf-9352-4480-b1c4-f5f4c1887879.jpg" alt="Style 3" class="gallery-image" onclick="updateMainImage(this.src)">
+        <img src="https://cf.cjdropshipping.com/quick/product/1dc5c176-9496-4da1-b892-d100baa4cfcf.jpg" alt="Style 4" class="gallery-image" onclick="updateMainImage(this.src)">
+        <img src="https://cf.cjdropshipping.com/quick/product/c30fcca8-8cfc-4a3f-9171-94c0c96cac3c.jpg" alt="Style 5" class="gallery-image" onclick="updateMainImage(this.src)">
+        <img src="https://cf.cjdropshipping.com/quick/product/5cfe59a3-cbf6-4a9c-8f24-76cfaede878d.jpg" alt="Style 6" class="gallery-image" onclick="updateMainImage(this.src)">
+        <img src="https://cf.cjdropshipping.com/quick/product/054872eb-7adf-43ea-9740-ee2a8294714f.jpg" alt="Style 7" class="gallery-image" onclick="updateMainImage(this.src)">
+        <img src="https://cf.cjdropshipping.com/quick/product/bdc5228a-1607-481f-9994-7c7783322017.jpg" alt="Style 8" class="gallery-image" onclick="updateMainImage(this.src)">
+        <img src="https://cf.cjdropshipping.com/quick/product/c30fcca8-8cfc-4a3f-9171-94c0c96cac3c.jpg" alt="Style 9" class="gallery-image" onclick="updateMainImage(this.src)">
+      </div>
+      <div class="product-specs">
+        <h3>Product Specifications:</h3>
+        <ul class="feature-list">
+          <li>Material: Metal (Zinc Alloy)</li>
+          <li>Product Attributes: Ordinary, Thin</li>
+          <li>Package Size: 100×100×20(1mm)</li>
+          <li>Treatment Process: Electroplating</li>
+          <li>Colors Available: 1# blue light, 2# green light, 3# blue-green light, 4# orange light</li>
+        </ul>
+      </div>
+    </div>
+    <div class="product-info">
+      <h1 class="product-title">Luminous Heart Pendant Necklace</h1>
+      <p class="product-description">
+        Beautiful zinc alloy heart pendant necklace that glows in the dark. Perfect for romantic occasions and everyday wear.
+      </p>
+
+      <div class="product-features">
+        <h3>Key Features:</h3>
+        <ul class="feature-list">
+          <li>Glows beautifully in the dark</li>
+          <li>Made of high-quality zinc alloy</li>
+          <li>Elegant heart design</li>
+          <li>Comfortable to wear</li>
+          <li>Perfect gift choice</li>
+        </ul>
+      </div>
+
+      <div class="product-price">$4.99</div>
+      
+      <div class="variant-options">
+        <div class="variant-title">Select Color</div>
+        <div class="variant-grid">
+          <div class="variant-option" onclick="selectVariant(this)">Blue Light</div>
+          <div class="variant-option" onclick="selectVariant(this)">Green Light</div>
+          <div class="variant-option" onclick="selectVariant(this)">Blue-Green Light</div>
+          <div class="variant-option" onclick="selectVariant(this)">Orange Light</div>
+        </div>
+      </div>
+
+      <div class="info-column">
+        <div class="packing-list">
+          <h3>Packing List:</h3>
+          <p>1× Necklace</p>
+        </div>
+        <div class="delivery-info">
+          <h3>Shipping Information:</h3>
+          <p>Estimated Processing Time: 1-3 days for 80% orders</p>
+          <p>Estimated Delivery Time: 15-20 days</p>
+        </div>
+      </div>
+
+      <a href="https://www.paypal.com/ncp/payment/3QYM2DFBHDHFL" class="buy-button" target="_blank" rel="noopener noreferrer">Buy Now</a>
+    </div>
+  </div>
+</div>
+
+<script>
+function selectVariant(element) {
+  const parent = element.parentElement;
+  parent.querySelectorAll('.variant-option').forEach(option => {
+    option.classList.remove('selected');
+  });
+  element.classList.add('selected');
+}
+
+function updateMainImage(src) {
+  const mainImage = document.querySelector('.product-image');
+  mainImage.src = src;
+}
+</script>
+
+</body>
+</html>
