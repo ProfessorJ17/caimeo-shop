@@ -1,0 +1,359 @@
+<html><head><base href="/">
+<meta charset="UTF-8">
+<title>Halloween Luminous Spider Necklace - Glowing Jewelry</title>
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Halloween Creative Stereo Luminous Spider Necklace - Glowing Spider Jewelry Perfect for Halloween and Parties">
+<meta name="keywords" content="luminous necklace, spider pendant, halloween jewelry, glow in dark necklace, vintage jewelry">
+
+<!-- Social Meta Tags -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Halloween Luminous Spider Necklace - Glowing Jewelry">
+<meta property="og:description" content="Creative Stereo Luminous Spider Necklace that Glows in the Dark - Perfect for Halloween">
+
+<!-- Updated Font Links -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;family=Rajdhani:wght@300;400;500;600;700&amp;family=Syncopate:wght@400;700&amp;display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #000000;
+  --secondary: #0ff;
+  --text: #fff;
+  --neon-green: #39FF14;
+  --neon-cyan: #00FFFF;
+  --neon-pink: #FF1493;
+  --neon-purple: #FF00FF;
+  --neon-orange: #FF4500;
+}
+
+@keyframes spiderGlow {
+  0% { filter: brightness(1) drop-shadow(0 0 5px var(--neon-cyan)); }
+  33% { filter: brightness(1.3) drop-shadow(0 0 15px var(--neon-pink)); }
+  66% { filter: brightness(1.3) drop-shadow(0 0 15px var(--neon-purple)); }
+  100% { filter: brightness(1) drop-shadow(0 0 5px var(--neon-cyan)); }
+}
+
+@keyframes halloweenBorder {
+  0% { border-color: var(--neon-cyan); }
+  33% { border-color: var(--neon-pink); }
+  66% { border-color: var(--neon-purple); }
+  100% { border-color: var(--neon-cyan); }
+}
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: var(--text);
+  background: #000000;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 60%),
+    radial-gradient(circle at 80% 20%, rgba(255, 20, 147, 0.1) 0%, transparent 40%);
+}
+
+.product-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.product-details {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 0 20px var(--neon-cyan),
+              inset 0 0 20px var(--neon-pink);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  border: 2px solid var(--neon-cyan);
+  animation: halloweenBorder 4s infinite;
+}
+
+.product-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.gallery-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid var(--neon-cyan);
+}
+
+.gallery-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--neon-pink);
+}
+
+.product-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 0 20px var(--neon-cyan);
+  animation: spiderGlow 6s infinite;
+  border: 3px solid var(--neon-cyan);
+}
+
+.product-info {
+  padding: 1rem;
+}
+
+.product-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 10px var(--neon-cyan);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.product-description {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  text-shadow: 0 0 5px var(--neon-pink);
+  letter-spacing: 0.5px;
+}
+
+.product-features {
+  margin: 2rem 0;
+  padding: 1rem;
+  background: rgba(255, 20, 147, 0.1);
+  border-radius: 8px;
+  border: 1px solid var(--neon-pink);
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 500;
+}
+
+.feature-list li {
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 5px var(--neon-cyan);
+}
+
+.feature-list li:before {
+  content: "🕷️";
+  position: absolute;
+  left: 0;
+}
+
+.product-price {
+  font-size: 2.5rem;
+  color: var(--neon-purple);
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 10px var(--neon-purple);
+}
+
+.buy-button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: transparent;
+  color: var(--neon-cyan);
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 2px solid var(--neon-cyan);
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px var(--neon-cyan);
+  box-shadow: 0 0 10px var(--neon-cyan);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.buy-button:hover {
+  background: var(--neon-cyan);
+  color: #000;
+  box-shadow: 0 0 20px var(--neon-cyan);
+}
+
+.variant-options {
+  margin-bottom: 2rem;
+}
+
+.variant-title {
+  font-family: 'Syncopate', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.variant-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.variant-option {
+  padding: 0.5rem;
+  border: 2px solid var(--neon-pink);
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--neon-pink);
+  text-shadow: 0 0 5px var(--neon-pink);
+  font-size: 0.9rem;
+}
+
+.variant-option:hover {
+  background: rgba(255, 20, 147, 0.2);
+  box-shadow: 0 0 10px var(--neon-pink);
+}
+
+.variant-option.selected {
+  background: var(--neon-pink);
+  color: #000;
+  box-shadow: 0 0 15px var(--neon-pink);
+}
+
+.info-sections {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.info-section {
+  padding: 1rem;
+  background: rgba(0, 255, 255, 0.1);
+  border-radius: 8px;
+  border: 1px solid var(--neon-cyan);
+}
+
+.info-section h3 {
+  color: var(--neon-purple);
+  margin-top: 0;
+  text-shadow: 0 0 5px var(--neon-purple);
+  font-family: 'Syncopate', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 1.1rem;
+}
+
+.info-section p, .info-section li {
+  margin: 0.5rem 0;
+  color: #fff;
+  text-shadow: 0 0 3px var(--neon-cyan);
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.5px;
+}
+</style>
+</head>
+<body>
+
+<div class="product-container">
+  <div class="product-details">
+    <div class="product-image-container">
+      <img src="https://cf.cjdropshipping.com/quick/product/a6847d9e-0883-4bbf-bea4-769c00859012.jpg" alt="Luminous Spider Necklace" class="product-image">
+      <div class="product-gallery">
+        <img src="https://cf.cjdropshipping.com/quick/product/a6847d9e-0883-4bbf-bea4-769c00859012.jpg" alt="Spider Necklace 1" class="gallery-image" onclick="updateMainImage(this.src)">
+        <img src="https://cf.cjdropshipping.com/quick/product/7f3fc5f8-7f3f-48fa-aefb-762b463d117c.jpg" alt="Spider Necklace 2" class="gallery-image" onclick="updateMainImage(this.src)">
+        <img src="https://cf.cjdropshipping.com/quick/product/aad7f669-30d5-4e3c-900f-ca5d5e672bf1.jpg" alt="Spider Necklace 3" class="gallery-image" onclick="updateMainImage(this.src)">
+        <img src="https://cf.cjdropshipping.com/quick/product/c788799c-dc5e-4da9-baee-4095e3542b72.jpg" alt="Spider Necklace 4" class="gallery-image" onclick="updateMainImage(this.src)">
+        <img src="https://cf.cjdropshipping.com/quick/product/788de10b-8320-41a2-abd6-3d83033bbf0b.jpg" alt="Spider Necklace 5" class="gallery-image" onclick="updateMainImage(this.src)">
+        <img src="https://cf.cjdropshipping.com/quick/product/552e1ca9-b303-489b-b47c-f5a441ee23cc.jpg" alt="Spider Necklace 6" class="gallery-image" onclick="updateMainImage(this.src)">
+        <img src="https://cf.cjdropshipping.com/quick/product/e252148c-301a-481d-96ff-bbacfa7c78b0.jpg" alt="Spider Necklace 7" class="gallery-image" onclick="updateMainImage(this.src)">
+        <img src="https://cf.cjdropshipping.com/quick/product/466581e7-4eae-4662-8a2f-0229ac734dd1.jpg" alt="Spider Necklace 8" class="gallery-image" onclick="updateMainImage(this.src)">
+        <img src="https://cf.cjdropshipping.com/quick/product/2118b134-d0f3-48c4-bf7c-d5013207dbe5.jpg" alt="Spider Necklace 9" class="gallery-image" onclick="updateMainImage(this.src)">
+        <img src="https://cf.cjdropshipping.com/quick/product/879157c9-d6be-4a86-99d9-134543cd9fe4.jpg" alt="Spider Necklace 10" class="gallery-image" onclick="updateMainImage(this.src)">
+      </div>
+      
+      <div class="info-sections">
+        <div class="info-section">
+          <h3>Product Specifications:</h3>
+          <ul class="feature-list">
+            <li>Material: Zinc Alloy</li>
+            <li>Size: 3.5 x 2.8 cm</li>
+            <li>Chain Length: 45 + 5 cm</li>
+            <li>Style: Gothic/Halloween</li>
+            <li>Glow Duration: 4-6 hours after light exposure</li>
+          </ul>
+        </div>
+
+        <div class="info-section">
+          <h3>Shipping Information:</h3>
+          <p>Processing Time: 1-3 business days</p>
+          <p>Delivery Time: 12-18 days</p>
+        </div>
+
+        <div class="info-section">
+          <h3>Packing List:</h3>
+          <p>1&#xd7; Spider Necklace</p>
+          <p>1&#xd7; Gift Box</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="product-info">
+      <h1 class="product-title">Halloween Luminous Spider Necklace</h1>
+      <p class="product-description">
+        Enchant the night with this haunting Halloween spider necklace that glows in the dark. Perfect for parties, Halloween celebrations, and making a spooky statement any time of year.
+      </p>
+
+      <div class="product-features">
+        <h3>Key Features:</h3>
+        <ul class="feature-list">
+          <li>Stunning glow-in-the-dark effect</li>
+          <li>Premium zinc alloy construction</li>
+          <li>Detailed spider design</li>
+          <li>Adjustable chain length</li>
+          <li>Perfect for Halloween parties</li>
+          <li>Long-lasting luminescence</li>
+        </ul>
+      </div>
+
+      <div class="product-price">&#x24;6.99</div>
+      
+      <div class="variant-options">
+        <div class="variant-title">Select Style</div>
+        <div class="variant-grid">
+          <div class="variant-option" onclick="selectVariant(this)">Green Glow</div>
+          <div class="variant-option" onclick="selectVariant(this)">Blue Glow</div>
+          <div class="variant-option" onclick="selectVariant(this)">Blue-Green Glow</div>
+          <div class="variant-option" onclick="selectVariant(this)">Orange Glow</div>
+        </div>
+      </div>
+
+      <a href="https://www.paypal.com/checkout" class="buy-button" target="_blank" rel="noopener noreferrer">Buy Now</a>
+    </div>
+  </div>
+</div>
+
+<script>function selectVariant(element) {
+  const parent = element.parentElement;
+  parent.querySelectorAll('.variant-option').forEach(option => {
+    option.classList.remove('selected');
+  });
+  element.classList.add('selected');
+}
+function updateMainImage(src) {
+  const mainImage = document.querySelector('.product-image');
+  mainImage.src = src;
+}</script>
+
+</body></html>
