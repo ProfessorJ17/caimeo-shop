@@ -1,0 +1,451 @@
+<html><head><base href="/">
+  <meta charset="UTF-8">
+  <title>3D Water Ripple Night Light - Cube & Crown Designs</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Dynamic USB-powered night light with 16 colors and remote control. Features unique water ripple effects and 3D technology for beautiful ambient lighting.">
+  <meta name="keywords" content="3D water ripple night light, cube and crown designs, USB-powered, remote control, 16 colors">
+
+  <!-- Social Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="3D Water Ripple Night Light - Cube & Crown Designs">
+  <meta property="og:description" content="Dynamic USB-powered night light with 16 colors and remote control. Features unique water ripple effects and 3D technology for beautiful ambient lighting.">
+  <meta property="og:image" content>
+
+  <style>
+    :root {
+      --primary: #000000;
+      --secondary: #0ff;
+      --text: #fff;
+      --neon-green: #0f0;
+      --neon-pink: #ff69b4;
+      --neon-purple: #9370db;
+      --neon-cyan: #0ff;
+    }
+
+    @keyframes neonPulse {
+      0% { filter: brightness(1) drop-shadow(0 0 5px var(--neon-cyan)); }
+      50% { filter: brightness(1.2) drop-shadow(0 0 10px var(--neon-cyan)); }
+      100% { filter: brightness(1) drop-shadow(0 0 5px var(--neon-cyan)); }
+    }
+
+    @keyframes borderGlow {
+      0% { border-color: var(--neon-pink); }
+      33% { border-color: var(--neon-cyan); }
+      66% { border-color: var(--neon-green); }
+      100% { border-color: var(--neon-pink); }
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: var(--text);
+      background: #000000;
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(255, 105, 180, 0.1) 0%, transparent 40%);
+    }
+
+    .product-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .product-details {
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 0 20px var(--neon-cyan),
+                  inset 0 0 20px var(--neon-purple);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      border: 2px solid var(--neon-cyan);
+      animation: borderGlow 4s infinite;
+    }
+
+    .product-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .gallery-image {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid var(--neon-cyan);
+    }
+
+    .gallery-image:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px var(--neon-cyan);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 0 20px var(--neon-cyan);
+      animation: neonPulse 2s infinite;
+      border: 3px solid var(--neon-cyan);
+    }
+
+    .product-info {
+      padding: 1rem;
+    }
+
+    .product-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    .product-description {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+      text-shadow: 0 0 5px var(--neon-cyan);
+    }
+
+    .product-features {
+      margin: 2rem 0;
+      padding: 1rem;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 8px;
+      border: 1px solid var(--neon-cyan);
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-list li {
+      margin-bottom: 0.5rem;
+      padding-left: 1.5rem;
+      position: relative;
+      color: var(--neon-green);
+      text-shadow: 0 0 5px var(--neon-green);
+    }
+
+    .feature-list li:before {
+      content: "►";
+      color: var(--neon-pink);
+      position: absolute;
+      left: 0;
+    }
+
+    .product-price {
+      font-size: 2.5rem;
+      color: var(--neon-pink);
+      font-weight: bold;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 10px var(--neon-pink);
+    }
+
+    .buy-button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: transparent;
+      color: var(--neon-cyan);
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      border: 2px solid var(--neon-cyan);
+      transition: all 0.3s ease;
+      text-shadow: 0 0 5px var(--neon-cyan);
+      box-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    .buy-button:hover {
+      background: var(--neon-cyan);
+      color: #000;
+      box-shadow: 0 0 20px var(--neon-cyan);
+    }
+
+    .variant-options {
+      margin-bottom: 2rem;
+    }
+
+    .variant-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--neon-purple);
+      text-shadow: 0 0 5px var(--neon-purple);
+    }
+
+    .variant-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .variant-option {
+      padding: 0.5rem;
+      border: 2px solid var(--neon-cyan);
+      border-radius: 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 5px var(--neon-cyan);
+    }
+
+    .variant-option:hover {
+      background: rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    .variant-option.selected {
+      background: var(--neon-cyan);
+      color: #000;
+      box-shadow: 0 0 15px var(--neon-cyan);
+    }
+
+    .important-note {
+      padding: 1rem;
+      border: 1px solid var(--neon-pink);
+      border-radius: 8px;
+      margin: 1rem 0;
+      text-shadow: 0 0 5px var(--neon-pink);
+      background: rgba(255, 105, 180, 0.1);
+    }
+
+    .product-features h3 {
+      color: var(--neon-purple);
+      text-shadow: 0 0 5px var(--neon-purple);
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .product-specs {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 8px;
+      border: 1px solid var(--neon-cyan);
+    }
+
+    .spec-title {
+      color: var(--neon-purple);
+      text-shadow: 0 0 5px var(--neon-purple);
+      margin-bottom: 1rem;
+    }
+
+    .spec-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .spec-list dt {
+      color: var(--neon-pink);
+      text-shadow: 0 0 5px var(--neon-pink);
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    .spec-list dd {
+      color: var(--text);
+      margin-left: 1rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 3px var(--neon-cyan);
+    }
+
+    .overview-section {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: rgba(147, 112, 219, 0.1);
+      border-radius: 8px;
+      border: 1px solid var(--neon-purple);
+    }
+
+    .overview-title {
+      color: var(--neon-green);
+      text-shadow: 0 0 5px var(--neon-green);
+      margin-bottom: 1rem;
+    }
+
+    .overview-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .overview-list li {
+      color: var(--text);
+      margin-bottom: 1rem;
+      text-shadow: 0 0 3px var(--neon-cyan);
+      line-height: 1.6;
+    }
+
+    .gallery-image-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .gallery-image-label {
+      color: var(--neon-cyan);
+      text-shadow: 0 0 5px var(--neon-cyan);
+      font-size: 0.9rem;
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      background: #000;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--neon-cyan);
+      border-radius: 4px;
+      box-shadow: 0 0 5px var(--neon-cyan);
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="product-container" id="productContainer">
+  <div class="product-details">
+    <div class="product-image-container">
+      <img src="https://cf.cjdropshipping.com/17132256/2404160511340327200.jpg" alt="3D Water Ripple Night Light - Cube & Crown Designs" class="product-image">
+      <div class="product-gallery">
+        <div class="gallery-image-wrapper">
+          <img src="https://cf.cjdropshipping.com/3da12055-a929-461b-9626-0792e0069c3f_trans.jpeg" alt="Cube" class="gallery-image" onclick="updateMainImage(this.src)">
+          <span class="gallery-image-label">Cube</span>
+        </div>
+        <div class="gallery-image-wrapper">
+          <img src="https://cf.cjdropshipping.com/17132256/2404160511340327200.jpg" alt="Crown" class="gallery-image" onclick="updateMainImage(this.src)">
+          <span class="gallery-image-label">Crown</span>
+        </div>
+        <div class="gallery-image-wrapper">
+          <img src="https://cf.cjdropshipping.com/17132256/2404160511330324200.jpg" alt="Additional View 1" class="gallery-image" onclick="updateMainImage(this.src)">
+        </div>
+        <div class="gallery-image-wrapper">
+          <img src="https://cf.cjdropshipping.com/17132256/2404160511330327000.jpg" alt="Additional View 2" class="gallery-image" onclick="updateMainImage(this.src)">
+        </div>
+        <div class="gallery-image-wrapper">
+          <img src="https://cf.cjdropshipping.com/6a74321a-b49c-4289-9f57-3fbd4df161aa_trans.jpeg" alt="Additional View 3" class="gallery-image" onclick="updateMainImage(this.src)">
+        </div>
+        <div class="gallery-image-wrapper">
+          <img src="https://cf.cjdropshipping.com/c7d6b951-9fad-4ccc-aa8d-43dc9c160f39.jpg" alt="Additional View 4" class="gallery-image" onclick="updateMainImage(this.src)">
+        </div>
+        <div class="gallery-image-wrapper">
+          <img src="https://cc-west-usa.oss-us-west-1.aliyuncs.com/comment/additional/0001/image/2023-11-20/7354038d-877b-4a50-beec-96cf7d58504d.jpg?t=1735318116756" alt="Additional View 5" class="gallery-image" onclick="updateMainImage(this.src)">
+        </div>
+        <div class="gallery-image-wrapper">
+          <img src="https://cc-west-usa.oss-us-west-1.aliyuncs.com/comment/additional/0001/image/2023-11-20/89fe6d1e-2601-40ea-81f4-5e77d892e42f.jpg?t=1735318116756" alt="Additional View 6" class="gallery-image" onclick="updateMainImage(this.src)">
+        </div>
+      </div>
+      
+      <div class="product-specs">
+        <h3 class="spec-title">Product Information</h3>
+        <dl class="spec-list">
+          <dt>Material:</dt>
+          <dd>ABS acrylic</dd>
+          
+          <dt>Product Attributes:</dt>
+          <dd>Battery Contains</dd>
+          
+          <dt>Package Size:</dt>
+          <dd>116*116*122(1mm); 180*180*200(1mm); 126*126*300(1mm); 116*116*212(1mm); 220*220*280(1mm)</dd>
+          
+          <dt>Light Color:</dt>
+          <dd>16 colors rechargeable [Square]-remote control, 16 colors plug-in type [Crown]-remote control</dd>
+          
+          <dt>Power:</dt>
+          <dd>3W</dd>
+          
+          <dt>Control:</dt>
+          <dd>APP control</dd>
+          
+          <dt>Size:</dt>
+          <dd>110x110mm</dd>
+        </dl>
+      </div>
+      
+      <div class="overview-section">
+        <h3 class="overview-title">Product Features</h3>
+        <ul class="overview-list">
+          <li>【Dynamic Water Ripple Lamp】Unique water ripple structure plus rotatable mode, so the light reflected on the wall can be like a soft water flow, adding a warm feeling to your bedroom and living room to help you sleep.</li>
+          <li>【USB Charging with Remote Control】Equipped with USB charging cable, no need to fix the power supply, where to go to use. The remote allows you to adjust the color and brightness remotely.</li>
+          <li>【16 Kinds of Light Colors】This table lamp also has 16 light colors temperature, intimate and convenient, delicate and comfortable, natural and soft.</li>
+          <li>【Using Special 3D Technology】Water ripple driven by internal rotating light plate. The refraction of the light through the crystal lamp is bright and colorful, very stylish.</li>
+          <li>【Perfect Gift】This is the perfect gift for anyone who loves lighting up their space! Also a novel and lovely gift for family friends and lovers. I'm sure they will be very happy to receive this on Valentine's Day, Mother's Day, Father's Day or their birthday.</li>
+        </ul>
+      </div>
+      
+      <div class="overview-section">
+        <h3 class="overview-title">Packing List</h3>
+        <ul class="overview-list">
+          <li>Night light x 1</li>
+          <li>Remote control x 1</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="product-info">
+      <h1 class="product-title">3D Water Ripple Night Light - Cube & Crown Designs</h1>
+      <p class="product-description">
+        Dynamic USB-powered night light with 16 colors and remote control. Features unique water ripple effects and 3D technology for beautiful ambient lighting.
+      </p>
+
+      <div class="important-note">
+        Estimated Processing Time: 1-3 days for 80% orders<br>
+        Estimated Delivery Time: 15-20 days<br>
+        Shipping Fee: Free Shipping
+      </div>
+      
+      <div class="variant-options">
+        <div class="variant-title">Select Style</div>
+        <div class="variant-grid">
+          <div class="variant-option" data-price="25.00" onclick="selectVariant(this)">1 Cube - $25.00</div>
+          <div class="variant-option" data-price="45.00" onclick="selectVariant(this)">2 Cubes - $45.00</div>
+          <div class="variant-option" data-price="60.00" onclick="selectVariant(this)">3 Cubes - $60.00</div>
+          <div class="variant-option" data-price="25.00" onclick="selectVariant(this)">1 Crown - $25.00</div>
+          <div class="variant-option" data-price="45.00" onclick="selectVariant(this)">2 Crowns - $45.00</div>
+          <div class="variant-option" data-price="60.00" onclick="selectVariant(this)">3 Crowns - $60.00</div>
+        </div>
+      </div>
+
+      <div class="product-price">$25.00</div>
+      
+      <a href="https://www.paypal.com/ncp/payment/PNVQLEWDALTPL" class="buy-button" target="_blank" rel="noopener noreferrer">Buy Now</a>
+    </div>
+  </div>
+</div>
+
+<script>function selectVariant(element) {
+  const parent = element.parentElement;
+  parent.querySelectorAll('.variant-option').forEach(option => {
+    option.classList.remove('selected');
+  });
+  element.classList.add('selected');
+  const price = element.getAttribute('data-price');
+  const priceDisplay = document.querySelector('.product-price');
+  priceDisplay.innerHTML = `$${price}`;
+}
+function updateMainImage(src) {
+  const mainImage = document.querySelector('.product-image');
+  mainImage.src = src;
+}</script>
+
+</body>
+</html>
