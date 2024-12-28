@@ -1,5 +1,6 @@
-<html><head><div id="header-container"></div><base href="/">
+<html><head><base href="/">
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>3D Water Ripple Night Light - Cube & Crown Designs</title>
 
   <!-- SEO Meta Tags -->
@@ -10,8 +11,15 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="3D Water Ripple Night Light - Cube & Crown Designs">
   <meta property="og:description" content="Dynamic USB-powered night light with 16 colors and remote control. Features unique water ripple effects and 3D technology for beautiful ambient lighting.">
-  <meta property="og:image" content>
+  <meta property="og:image" content="URL_to_image.jpg">
 
+  <!-- Google Adsense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839146786704737" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-3839146786704737">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
   <style>
     :root {
       --primary: #000000;
@@ -318,7 +326,6 @@
       box-shadow: 0 0 5px var(--neon-cyan);
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -432,7 +439,10 @@
   </div>
 </div>
 
-<script>function selectVariant(element) {
+<div id="header-container"></div>
+
+<script>
+function selectVariant(element) {
   const parent = element.parentElement;
   parent.querySelectorAll('.variant-option').forEach(option => {
     option.classList.remove('selected');
@@ -442,19 +452,20 @@
   const priceDisplay = document.querySelector('.product-price');
   priceDisplay.innerHTML = `$${price}`;
 }
+
 function updateMainImage(src) {
   const mainImage = document.querySelector('.product-image');
   mainImage.src = src;
 }
 
- fetch('caimeo.shop/header.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('header-container').innerHTML = data;
-        })
-        .catch(error => {
-            console.error('Error loading header:', error);
-        });
+fetch('https://caimeo.shop/header.html')
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById('header-container').innerHTML = data;
+  })
+  .catch(error => {
+    console.error('Error loading header:', error);
+  });
 </script>
 
 </body>
