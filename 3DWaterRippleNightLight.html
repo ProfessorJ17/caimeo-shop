@@ -1,4 +1,4 @@
-<html><head><base href="/">
+<html><head><div id="header-container"></div><base href="/">
   <meta charset="UTF-8">
   <title>3D Water Ripple Night Light - Cube & Crown Designs</title>
 
@@ -445,7 +445,17 @@
 function updateMainImage(src) {
   const mainImage = document.querySelector('.product-image');
   mainImage.src = src;
-}</script>
+}
+
+ fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-container').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('Error loading header:', error);
+        });
+</script>
 
 </body>
 </html>
