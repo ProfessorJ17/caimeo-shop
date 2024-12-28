@@ -1,4 +1,4 @@
-<html><head><base href="/">
+<html><head><div id="header-container"></div><base href="/">
   <meta charset="UTF-8">
   <title>Crystal Coffee Mugs - Elegant Mineral Design</title>
 
@@ -361,7 +361,17 @@
   <script>function updateMainImage(src) {
   const mainImage = document.querySelector('.product-image');
   mainImage.src = src;
-}</script>
+}
+   // Fetch and load the header.html content into the header-container
+  fetch('https://www.caimeo.shop/header.html')
+    .then(response => response.text())  // Get the text content of the header.html file
+    .then(data => {
+      document.getElementById('header-container').innerHTML = data;  // Insert the content into the container
+    })
+    .catch(error => {
+      console.error('Error loading the header:', error);  // Handle any errors
+    });
+  </script>
 
 </body>
 </html>
