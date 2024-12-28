@@ -441,32 +441,47 @@
 
 <div id="header-container"></div>
 
-<script>
-function selectVariant(element) {
-  const parent = element.parentElement;
-  parent.querySelectorAll('.variant-option').forEach(option => {
-    option.classList.remove('selected');
-  });
-  element.classList.add('selected');
-  const price = element.getAttribute('data-price');
-  const priceDisplay = document.querySelector('.product-price');
-  priceDisplay.innerHTML = `$${price}`;
-}
+ <script>
+    // Fetch and load the header content from header.html into the header-container
+    document.addEventListener('DOMContentLoaded', function () {
+      fetch('https://caimeo.shop/header.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('header-container').innerHTML = data;
+        })
+        .catch(error => {
+          console.error('Error loading header:', error);
+        });
 
-function updateMainImage(src) {
-  const mainImage = document.querySelector('.product-image');
-  mainImage.src = src;
-}
+      // Fetch and load the footer content from footer.html into the footer-container
+      fetch('https://caimeo.shop/footer.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('footer-container').innerHTML = data;
+        })
+        .catch(error => {
+          console.error('Error loading footer:', error);
+        });
+    });
 
-fetch('https://caimeo.shop/header.html')
-  .then(response => response.text())
-  .then(data => {
-    document.getElementById('header-container').innerHTML = data;
-  })
-  .catch(error => {
-    console.error('Error loading header:', error);
-  });
-</script>
+    // Function to select a product variant and update the price
+    function selectVariant(element) {
+      const parent = element.parentElement;
+      parent.querySelectorAll('.variant-option').forEach(option => {
+        option.classList.remove('selected');
+      });
+      element.classList.add('selected');
+      const price = element.getAttribute('data-price');
+      const priceDisplay = document.querySelector('.product-price');
+      priceDisplay.innerHTML = `$${price}`;
+    }
+
+    // Function to update the main product image when clicked in the gallery
+    function updateMainImage(src) {
+      const mainImage = document.querySelector('.product-image');
+      mainImage.src = src;
+    }
+  </script>
 
 </body>
 </html>
