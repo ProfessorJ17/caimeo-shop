@@ -321,6 +321,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 </head>
 <body>
+   <div id="header-container"></div>  <!-- Header content will be injected here -->
 
 <div class="product-container" id="productContainer">
   <div class="product-details">
@@ -437,9 +438,9 @@
       <div class="variant-options">
         <div class="variant-title">Select Model</div>
         <div class="variant-grid">
-          <div class="variant-option" data-price="44.99" onclick="selectVariant(this)">Basic - $44.99</div>
-          <div class="variant-option" data-price="47.99" onclick="selectVariant(this)">Clock - $47.99</div>
-          <div class="variant-option" data-price="49.99" onclick="selectVariant(this)">Wireless Charger - $49.99</div>
+          <div class="variant-option" data-price="44.99" onclick="selectVariant(this)">Basic - &#x24;44.99</div>
+          <div class="variant-option" data-price="47.99" onclick="selectVariant(this)">Clock - &#x24;47.99</div>
+          <div class="variant-option" data-price="49.99" onclick="selectVariant(this)">Wireless Charger - &#x24;49.99</div>
         </div>
       </div>
 
@@ -449,26 +450,37 @@
     </div>
   </div>
 </div>
+  <div id="footer-container"></div>  <!-- Footer content will be injected here -->
 
-<script>
+
+<script>document.addEventListener('DOMContentLoaded', function () {
+  fetch('https://caimeo.shop/header.html').then(response => response.text()).then(data => {
+    document.getElementById('header-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading header:', error);
+  });
+  fetch('https://caimeo.shop/footer.html').then(response => response.text()).then(data => {
+    document.getElementById('footer-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading footer:', error);
+  });
+});
 function selectVariant(element) {
   const parent = element.parentElement;
   parent.querySelectorAll('.variant-option').forEach(option => {
     option.classList.remove('selected');
   });
   element.classList.add('selected');
-  
-  // Update price display
   const price = element.getAttribute('data-price');
   const priceDisplay = document.querySelector('.product-price');
-  priceDisplay.innerHTML = `&#x24;${price}`;
+  priceDisplay.innerHTML = `$${price}`;
 }
-
 function updateMainImage(src) {
   const mainImage = document.querySelector('.product-image');
   mainImage.src = src;
-}
-</script>
+}</script>
+
+
 
 </body>
 </html>
