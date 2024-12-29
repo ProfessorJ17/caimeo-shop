@@ -238,7 +238,7 @@ body {
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 </head>
 <body>
-
+ <div id="header-container"></div>  <!-- Header content will be injected here -->
 <div class="product-container" id="productContainer">
   <div class="product-details">
     <div class="product-image-container">
@@ -283,28 +283,28 @@ body {
       <div class="variant-options">
         <div class="variant-title">Select Size</div>
         <div class="variant-grid">
-          <div class="variant-option" onclick="selectVariant(this, &apos;size&apos;)">S</div>
-          <div class="variant-option" onclick="selectVariant(this, &apos;size&apos;)">M</div>
-          <div class="variant-option" onclick="selectVariant(this, &apos;size&apos;)">L</div>
-          <div class="variant-option" onclick="selectVariant(this, &apos;size&apos;)">XL</div>
-          <div class="variant-option" onclick="selectVariant(this, &apos;size&apos;)">2XL</div>
-          <div class="variant-option" onclick="selectVariant(this, &apos;size&apos;)">3XL</div>
+          <div class="variant-option" onclick="selectVariant(this, 'size')">S</div>
+          <div class="variant-option" onclick="selectVariant(this, 'size')">M</div>
+          <div class="variant-option" onclick="selectVariant(this, 'size')">L</div>
+          <div class="variant-option" onclick="selectVariant(this, 'size')">XL</div>
+          <div class="variant-option" onclick="selectVariant(this, 'size')">2XL</div>
+          <div class="variant-option" onclick="selectVariant(this, 'size')">3XL</div>
         </div>
 
         <div class="variant-title" style="margin-top: 1rem;">Select Color</div>
         <div class="variant-grid">
-          <div class="variant-option" onclick="selectVariant(this, &apos;color&apos;)">White</div>
-          <div class="variant-option" onclick="selectVariant(this, &apos;color&apos;)">Beanpaste</div>
-          <div class="variant-option" onclick="selectVariant(this, &apos;color&apos;)">Black</div>
-          <div class="variant-option" onclick="selectVariant(this, &apos;color&apos;)">Blue</div>
-          <div class="variant-option" onclick="selectVariant(this, &apos;color&apos;)">Dark Green</div>
-          <div class="variant-option" onclick="selectVariant(this, &apos;color&apos;)">Neon Green</div>
-          <div class="variant-option" onclick="selectVariant(this, &apos;color&apos;)">Gray</div>
-          <div class="variant-option" onclick="selectVariant(this, &apos;color&apos;)">Cyan</div>
-          <div class="variant-option" onclick="selectVariant(this, &apos;color&apos;)">Orange</div>
-          <div class="variant-option" onclick="selectVariant(this, &apos;color&apos;)">Pink</div>
-          <div class="variant-option" onclick="selectVariant(this, &apos;color&apos;)">Purple</div>
-          <div class="variant-option" onclick="selectVariant(this, &apos;color&apos;)">Red</div>
+          <div class="variant-option" onclick="selectVariant(this, 'color')">White</div>
+          <div class="variant-option" onclick="selectVariant(this, 'color')">Beanpaste</div>
+          <div class="variant-option" onclick="selectVariant(this, 'color')">Black</div>
+          <div class="variant-option" onclick="selectVariant(this, 'color')">Blue</div>
+          <div class="variant-option" onclick="selectVariant(this, 'color')">Dark Green</div>
+          <div class="variant-option" onclick="selectVariant(this, 'color')">Neon Green</div>
+          <div class="variant-option" onclick="selectVariant(this, 'color')">Gray</div>
+          <div class="variant-option" onclick="selectVariant(this, 'color')">Cyan</div>
+          <div class="variant-option" onclick="selectVariant(this, 'color')">Orange</div>
+          <div class="variant-option" onclick="selectVariant(this, 'color')">Pink</div>
+          <div class="variant-option" onclick="selectVariant(this, 'color')">Purple</div>
+          <div class="variant-option" onclick="selectVariant(this, 'color')">Red</div>
         </div>
       </div>
 
@@ -312,18 +312,41 @@ body {
     </div>
   </div>
 </div>
+<div id="footer-container"></div>  <!-- Footer content will be injected here -->
+  
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Fetch header
+  fetch('https://caimeo.shop/header.html').then(response => response.text()).then(data => {
+    document.getElementById('header-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading header:', error);
+  });
 
-<script>function selectVariant(element, type) {
+  // Fetch footer
+  fetch('https://caimeo.shop/footer.html').then(response => response.text()).then(data => {
+    document.getElementById('footer-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading footer:', error);
+  });
+});
+
+function selectVariant(element, type) {
   const parent = element.parentElement;
   parent.querySelectorAll('.variant-option').forEach(option => {
     option.classList.remove('selected');
   });
   element.classList.add('selected');
+  const price = element.getAttribute('data-price');
+  const priceDisplay = document.querySelector('.product-price');
+  priceDisplay.innerHTML = `$${price}`;
 }
+
 function updateMainImage(src) {
   const mainImage = document.querySelector('.product-image');
   mainImage.src = src;
-}</script>
+}
+</script>
 
 </body>
 </html>
