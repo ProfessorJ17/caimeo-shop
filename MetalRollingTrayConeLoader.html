@@ -182,11 +182,67 @@ body {
   background: rgba(255, 105, 180, 0.1);
 }
 
+.footer {
+  background: rgba(0, 0, 0, 0.9);
+  padding: 2rem 0;
+  margin-top: 4rem;
+  border-top: 2px solid var(--neon-cyan);
+  box-shadow: 0 -5px 15px var(--neon-cyan);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding: 0 2rem;
+}
+
+.footer-section {
+  padding: 1rem;
+}
+
+.footer-section h3 {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 5px var(--neon-cyan);
+  margin-bottom: 1rem;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+  color: var(--text);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.footer-section a:hover {
+  color: var(--neon-pink);
+  text-shadow: 0 0 5px var(--neon-pink);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  margin-top: 2rem;
+  border-top: 1px solid rgba(0, 255, 255, 0.2);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
+ <div id="header-container"></div>  <!-- Header content will be injected here -->
 <div class="product-container">
   <div class="product-details">
     <div class="product-image-container">
@@ -245,12 +301,57 @@ body {
   </div>
 </div>
 
-<script>
-function updateMainImage(src) {
-  const mainImage = document.getElementById('mainImage');
-  mainImage.src = src;
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3>Contact Us</h3>
+      <ul>
+        <li><a href="mailto:support@caimeo.shop">support@caimeo.shop</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="https://caimeo.shop/about">About Us</a></li>
+        <li><a href="https://caimeo.shop/shipping">Shipping Info</a></li>
+        <li><a href="https://caimeo.shop/returns">Returns Policy</a></li>
+        <li><a href="https://caimeo.shop/privacy">Privacy Policy</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h3>Follow Us</h3>
+      <ul>
+        <li><a href="https://instagram.com/caimeo.shop">Instagram</a></li>
+        <li><a href="https://facebook.com/caimeo.shop">Facebook</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 Caimeo. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>document.addEventListener('DOMContentLoaded', function () {
+  fetch('https://caimeo.shop/header.html').then(response => response.text()).then(data => {
+    document.getElementById('header-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading header:', error);
+  });
+});
+function selectVariant(element) {
+  const parent = element.parentElement;
+  parent.querySelectorAll('.variant-option').forEach(option => {
+    option.classList.remove('selected');
+  });
+  element.classList.add('selected');
+  const price = element.getAttribute('data-price');
+  const priceDisplay = document.querySelector('.product-price');
+  priceDisplay.innerHTML = `$${price}`;
 }
-</script>
+function updateMainImage(src) {
+  const mainImage = document.querySelector('.product-image');
+  mainImage.src = src;
+}</script>
 
 </body>
 </html>
