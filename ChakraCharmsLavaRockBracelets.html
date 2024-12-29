@@ -51,6 +51,7 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 2rem;
+      margin-bottom: 2rem;
     }
 
     .product-details {
@@ -317,11 +318,19 @@
       border-radius: 4px;
       box-shadow: 0 0 5px var(--neon-cyan);
     }
+    
+    #footer-container {
+      width: 100%;
+      min-height: 50px; 
+      margin-top: 2rem;
+      position: relative;
+      z-index: 1;
+    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 </head>
 <body>
-
+ <div id="header-container"></div>  
 <div class="product-container" id="productContainer">
   <div class="product-details">
     <div class="product-image-container">
@@ -414,7 +423,26 @@
   </div>
 </div>
 
-<script>function selectVariant(element) {
+  <div id="footer-container"></div>  
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Load header
+  fetch('https://caimeo.shop/header.html').then(response => response.text()).then(data => {
+    document.getElementById('header-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading header:', error);
+  });
+
+  // Load footer
+  fetch('https://caimeo.shop/footer.html').then(response => response.text()).then(data => {
+    document.getElementById('footer-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading footer:', error);
+  });
+});
+
+function selectVariant(element) {
   const parent = element.parentElement;
   parent.querySelectorAll('.variant-option').forEach(option => {
     option.classList.remove('selected');
@@ -422,12 +450,14 @@
   element.classList.add('selected');
   const price = element.getAttribute('data-price');
   const priceDisplay = document.querySelector('.product-price');
-  priceDisplay.innerHTML = `&#x24;${price}`;
+  priceDisplay.innerHTML = `$${price}`;
 }
+
 function updateMainImage(src) {
   const mainImage = document.querySelector('.product-image');
   mainImage.src = src;
-}</script>
+}
+</script>
 
 </body>
 </html>
