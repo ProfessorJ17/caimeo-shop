@@ -49,7 +49,7 @@
 
     .product-container {
       max-width: 1200px;
-      margin: 0 auto;
+      margin: 2rem auto 2rem;
       padding: 2rem;
     }
 
@@ -382,11 +382,24 @@
       color: var(--neon-green);
       text-shadow: 0 0 5px var(--neon-green);
     }
+
+    #header-container {
+      width: 100%;
+      position: relative;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #header-container > * {
+      margin: 0 auto;
+    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 </head>
 <body>
-
+<div id="header-container"></div>  <!-- Header content will be injected here -->
 <div class="product-container" id="productContainer">
   <div class="product-details">
     <div class="product-image-container">
@@ -478,8 +491,22 @@
     </div>
   </div>
 </div>
+<div id="footer-container"></div>  <!-- Footer content will be injected here -->
 
-<script>function selectVariant(element) {
+<script>document.addEventListener('DOMContentLoaded', function () {
+  fetch('https://caimeo.shop/header.html').then(response => response.text()).then(data => {
+    document.getElementById('header-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading header:', error);
+  });
+  
+  fetch('https://caimeo.shop/footer.html').then(response => response.text()).then(data => {
+    document.getElementById('footer-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading footer:', error);
+  });
+});
+function selectVariant(element) {
   const parent = element.parentElement;
   parent.querySelectorAll('.variant-option').forEach(option => {
     option.classList.remove('selected');
