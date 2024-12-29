@@ -251,10 +251,10 @@ body {
   gap: 1rem;
 }
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 </head>
 <body>
-
+ <div id="header-container"></div>  <!-- Header content will be injected here -->
 <div class="product-container">
   <div class="product-details">
     <div class="product-image-container">
@@ -275,7 +275,7 @@ body {
         <ul class="feature-list">
           <li>Material: Metal (Zinc Alloy)</li>
           <li>Product Attributes: Ordinary, Thin</li>
-          <li>Package Size: 100×100×20(1mm)</li>
+          <li>Package Size: 100&#xd7;100&#xd7;20(1mm)</li>
           <li>Treatment Process: Electroplating</li>
           <li>Colors Available: 1# blue light, 2# green light, 3# blue-green light, 4# orange light</li>
         </ul>
@@ -298,7 +298,7 @@ body {
         </ul>
       </div>
 
-      <div class="product-price">$4.99</div>
+      <div class="product-price">&#x24;4.99</div>
       
       <div class="variant-options">
         <div class="variant-title">Select Color</div>
@@ -313,7 +313,7 @@ body {
       <div class="info-column">
         <div class="packing-list">
           <h3>Packing List:</h3>
-          <p>1× Necklace</p>
+          <p>1&#xd7; Necklace</p>
         </div>
         <div class="delivery-info">
           <h3>Shipping Information:</h3>
@@ -327,20 +327,35 @@ body {
   </div>
 </div>
 
-<script>
+  <div id="footer-container"></div>  <!-- Footer content will be injected here -->
+
+<script>document.addEventListener('DOMContentLoaded', function () {
+  fetch('https://caimeo.shop/header.html').then(response => response.text()).then(data => {
+    document.getElementById('header-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading header:', error);
+  });
+  fetch('https://caimeo.shop/footer.html').then(response => response.text()).then(data => {
+    document.getElementById('footer-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading footer:', error);
+  });
+});
 function selectVariant(element) {
   const parent = element.parentElement;
   parent.querySelectorAll('.variant-option').forEach(option => {
     option.classList.remove('selected');
   });
   element.classList.add('selected');
+  const price = element.getAttribute('data-price');
+  const priceDisplay = document.querySelector('.product-price');
+  priceDisplay.innerHTML = `$${price}`;
 }
-
 function updateMainImage(src) {
   const mainImage = document.querySelector('.product-image');
   mainImage.src = src;
-}
-</script>
+}</script>
+
 
 </body>
 </html>
