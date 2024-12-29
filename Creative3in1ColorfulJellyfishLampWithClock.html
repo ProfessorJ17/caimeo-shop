@@ -45,12 +45,16 @@
       background-image: 
         radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 60%),
         radial-gradient(circle at 80% 20%, rgba(255, 105, 180, 0.1) 0%, transparent 40%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     .product-container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 2rem;
+      flex: 1;
     }
 
     .product-details {
@@ -351,11 +355,15 @@
       border-radius: 4px;
       box-shadow: 0 0 5px var(--neon-cyan);
     }
+    
+    #footer-container {
+      margin-top: auto;
+    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 </head>
 <body>
-
+ <div id="header-container"></div>  <!-- Header content will be injected here -->
 <div class="product-container" id="productContainer">
   <div class="product-details">
     <div class="product-image-container">
@@ -460,17 +468,39 @@
   </div>
 </div>
 
-<script>function selectVariant(element) {
+  <div id="footer-container"></div>  <!-- Footer content will be injected here -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('https://caimeo.shop/header.html').then(response => response.text()).then(data => {
+    document.getElementById('header-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading header:', error);
+  });
+
+  fetch('https://caimeo.shop/footer.html').then(response => response.text()).then(data => {
+    document.getElementById('footer-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading footer:', error);
+  });
+});
+
+function selectVariant(element) {
   const parent = element.parentElement;
   parent.querySelectorAll('.variant-option').forEach(option => {
     option.classList.remove('selected');
   });
   element.classList.add('selected');
+  const price = element.getAttribute('data-price');
+  const priceDisplay = document.querySelector('.product-price');
+  priceDisplay.innerHTML = `$${price}`;
 }
+
 function updateMainImage(src) {
   const mainImage = document.querySelector('.product-image');
   mainImage.src = src;
-}</script>
+}
+</script>
 
 </body>
 </html>
