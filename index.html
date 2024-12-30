@@ -424,8 +424,8 @@
             align-items: center;
             margin: 0;
             padding: 20px;
-            overflow-y: auto; /* Allow vertical scrolling */
-            height: 100vh; /* Set the height to 100vh */
+            overflow-x: hidden; 
+            height: 100vh; 
         }
 
         .container {
@@ -435,6 +435,7 @@
             margin-bottom: 20px;
             width: 100%;
             max-width: 1200px;
+            flex: 1;
         }
 
         .icon-card {
@@ -472,7 +473,7 @@
             font-size: 1em;
             color: #ff00ff;
             text-shadow: 0 0 5px #ff00ff;
-            word-wrap: break-word; /* Ensure text wraps properly */
+            word-wrap: break-word; 
         }
 
         .footer {
@@ -496,8 +497,8 @@
         }
 
         .footer .button:hover {
-            border-color: #00ff00; /* Change hover color to green */
-            box-shadow: 0 0 20px #00ff00; /* Add green shadow */
+            border-color: #00ff00; 
+            box-shadow: 0 0 20px #00ff00; 
         }
 
         .footer .button img {
@@ -538,7 +539,7 @@
         .content-page p {
             font-size: 1em;
             margin-bottom: 20px;
-            word-wrap: break-word; /* Ensure text wraps properly */
+            word-wrap: break-word; 
         }
 
         .back-button {
@@ -574,18 +575,18 @@
 
         .star {
             position: absolute;
-            background-color: #FF69B4; /* pink */
+            background-color: #FF69B4; 
             border-radius: 50%;
             opacity: 0.8;
             animation: twinkle 0.5s infinite;
         }
 
-        .star:nth-child(5n) { /* Make every fifth star cyan */
-            background-color: #FF69B4; /* cyan */
+        .star:nth-child(5n) { 
+            background-color: #FF69B4; 
         }
 
-        .star:nth-child(5n+1) { /* Make every sixth star green */
-            background-color: #FF69B4; /* green */
+        .star:nth-child(5n+1) { 
+            background-color: #FF69B4; 
         }
 
         @keyframes twinkle {
@@ -604,8 +605,8 @@
         }
 
 @keyframes move {
-    0% { transform: translateY(0); }       /* Start at original position */
-    100% { transform: translateY(100vh); } /* Move downwards by 100% of the viewport height */
+    0% { transform: translateY(0); }       
+    100% { transform: translateY(100vh); } 
 }
 
         /* Responsive adjustments */
@@ -619,7 +620,7 @@
         .submenu {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            flex-wrap: wrap; 
             gap: 1.5rem;
             padding: 1rem;
             background: rgba(0,0,0,0.8);
@@ -675,28 +676,18 @@
             border: none;
             display: block;
             min-height: 200px;
-            overflow: hidden;
-        }
-        
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        
-        .container {
-            flex: 1;
+            overflow: hidden; 
         }
         
         @media screen and (max-width: 768px) {
             iframe {
-                min-height: 250px; /* Slightly taller on mobile */
+                min-height: 300px; 
             }
         }
         
         @media screen and (max-width: 480px) {
             iframe {
-                min-height: 300px; /* Even taller on smaller screens */
+                min-height: 400px; 
             }
         }
     </style>
@@ -818,14 +809,7 @@ window.onload = createStars;</script>
             <h3>CAIMEO White 11oz Ceramic Mug</h3>
             <p>Price: $16.99</p>
         </div>
-
-        <div class="icon-card" onclick="window.location.href='https://caimeo.shop/CAIMEOProjectCappuccinoHoodie.html'">
-            <img src="https://i.etsystatic.com/48668797/r/il/774593/5571666702/il_fullxfull.5571666702_2lbh.jpg" alt="Project Cappuccino Hoodie">
-            <h3>CAIMEO Project Cappuccino Hoodie</h3>
-            <p>Price: $39.99</p>
-        </div>
-
-    </div> <!-- End container -->
+    </div>
 <div class="footer">
     <a href="https://www.etsy.com/shop/LuxiousLabs/" target="_blank" class="button">
         <img src="https://i.imgur.com/ALUepqd.png" alt="Etsy">
@@ -863,16 +847,18 @@ window.onload = createStars;</script>
             padding: 0;
             display: block;
             min-height: 200px;
-        ">
+            overflow: hidden;
+        "
+        scrolling="no">
     </iframe>
     <script>
         window.addEventListener('message', function(e) {
-            // Listen for height messages from the iframe
             if (e.data && typeof e.data === 'object' && 'frameHeight' in e.data) {
-                document.querySelector('iframe').style.height = e.data.frameHeight + 'px';
+                const iframe = document.querySelector('iframe');
+                iframe.style.height = (e.data.frameHeight + 20) + 'px'; 
+                iframe.style.overflow = 'hidden';
             }
         });
     </script>
 </body>
 </html>
-</current-page>
