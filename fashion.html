@@ -1,1 +1,864 @@
-<html></html>
+<html><head><base href="https://www.caimeo.shop">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839146786704737" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-3839146786704737">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Grid with Neon Effect</title>
+    <style>
+        *,
+        ::before,
+        ::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --clr-bg: #efefef;
+            --clr-primary: #0f172a; /* Dark background */
+            --easing: cubic-bezier(0.47, 1.64, 0.41, 0.8);
+            /* Custom colors for each button */
+                --color-furniture: #9B4DFF; /* Bright Purple Neon */
+    --color-property: #00FFFF; /* Cyan Neon */ 
+    --color-job: #ff33cc; /* Brighter Neon Pink */
+    --color-travel: #00FF00; /* Lime Green Neon */
+    --color-boat: #ff33cc; /* Brighter Neon Pink */
+    --color-mc: #9B4DFF; /* Bright Purple Neon */
+    --color-economy: #FFFF00; /* Neon Yellow */
+    --color-holiday: #00FFFF; /* Cyan Neon */ 
+        }
+
+        /* Reset button */
+        input,
+        button {
+            appearance: none;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            padding: 0;
+            margin: 0;
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            text-decoration: none;
+            text-transform: none;
+            line-height: normal;
+            overflow: visible;
+        }
+
+        body {
+            margin: 0;
+            padding: 2rem;
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            color: #7c4dff; /* Default Text Color */
+            background: var(--clr-primary); /* Background color */
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .buttons {
+            max-width: 840px;
+            width: 100%;
+            border-radius: 20px;
+            background-color: #000000; /* Black background for buttons */
+            border: 1px solid #ffffff30;
+            padding: 1rem; /* Reduced padding for mobile */
+            backdrop-filter: blur(12px);
+            display: grid;
+            grid-template-columns: repeat(16, minmax(90px, 1fr)); /* Default desktop layout */
+            gap: 1rem; /* Reduced gap for mobile */
+            position: sticky; /* This makes it sticky */
+            top: 0; /* Sticks the element to the top */
+            z-index: 100; /* Ensures the buttons are above other content */
+        }
+
+        .buttons::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: #00000020;
+            z-index: -1;
+            border-radius: inherit;
+            transition: inset 500ms ease-in-out;
+        }
+
+        .buttons:hover::before {
+            inset: -2rem;
+            transition-timing-function: cubic-bezier(0.47, 1.64, 0.41, 0.8);
+        }
+
+        .buttons button {
+            background-color: #000000; /* Black background for buttons */
+            border: 1px solid transparent; /* Initially no border */
+            padding: 1rem;
+            aspect-ratio: 1/1;
+            border-radius: 5px;
+            outline: none;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 300ms ease-in-out, box-shadow 300ms ease-in-out;
+            position: relative;
+            isolation: isolate;
+            color: inherit; /* Default color inherits */
+        }
+
+        /* Neon colors for each button */
+        .buttons button.furniture {
+            color: var(--color-furniture); /* Neon Pink */
+        }
+
+        .buttons button.property {
+            color: var(--color-property); /* Neon Purple */
+        }
+
+        .buttons button.job {
+            color: var(--color-job); /* Neon Blue */
+        }
+
+        .buttons button.travel {
+            color: var(--color-travel); /* Neon Green */
+        }
+
+        .buttons button.boat {
+            color: var(--color-boat); /* Neon Orange */
+        }
+
+        .buttons button.mc {
+            color: var(--color-mc); /* Neon Magenta */
+        }
+
+        .buttons button.economy {
+            color: var(--color-economy); /* Neon Yellow */
+        }
+
+        .buttons button.holiday {
+            color: var(--color-holiday); /* Neon Red */
+        }
+
+        .buttons button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Specific hover effects for each button class */
+        .buttons button.furniture:hover {
+            box-shadow: 0 0 20px var(--color-furniture), 0 0 30px var(--color-furniture);
+        }
+
+        .buttons button.property:hover {
+            box-shadow: 0 0 20px var(--color-property), 0 0 30px var(--color-property);
+        }
+
+        .buttons button.job:hover {
+            box-shadow: 0 0 20px var(--color-job), 0 0 30px var(--color-job);
+        }
+
+        .buttons button.travel:hover {
+            box-shadow: 0 0 20px var(--color-travel), 0 0 30px var(--color-travel);
+        }
+
+        .buttons button.boat:hover {
+            box-shadow: 0 0 20px var(--color-boat), 0 0 30px var(--color-boat);
+        }
+
+        .buttons button.mc:hover {
+            box-shadow: 0 0 20px var(--color-mc), 0 0 30px var(--color-mc);
+        }
+
+        .buttons button.economy:hover {
+            box-shadow: 0 0 20px var(--color-economy), 0 0 30px var(--color-economy);
+        }
+
+        .buttons button.holiday:hover {
+            box-shadow: 0 0 20px var(--color-holiday), 0 0 30px var(--color-holiday);
+        }
+
+        .buttons button svg {
+            width: 1.8rem;
+            transition: color 300ms ease-in-out; /* Ensure icon color transitions */
+        }
+
+        .buttons button p {
+            position: absolute;
+            width: 100%;
+            font-size: 0.8rem;
+            opacity: 0;
+            left: 0;
+            bottom: -3.5px; /* Adjusted to move the text down 15px */
+            padding: 0.3rem;
+            text-align: center;
+            transition: all 150ms ease-in-out 0ms;
+            outline: none;
+            translate: 0 10px;
+        }
+
+        .buttons button:hover p {
+            opacity: 1;
+            translate: 0;
+            transition: all 300ms ease-in-out 150ms;
+        }
+
+        .buttons button:focus-visible,
+        .buttons button:hover {
+            z-index: 10;
+        }
+
+        .buttons:has(button:focus-visible) button:not(:focus-visible),
+        .buttons:has(button:hover) button:not(:hover) {
+            opacity: 50%;
+            scale: 85%;
+            z-index: -10;
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            :root {
+                --d: 0;
+                --ani-speed: 300ms;
+            }
+            [scale-up] {
+                scale: 0;
+                animation: scale-up var(--ani-speed) forwards;
+                animation-delay: calc(var(--order, 0ms) * var(--ani-speed));
+            }
+        }
+
+        @keyframes scale-up {
+            0% {
+                scale: 0;
+            }
+            60% {
+                scale: 1.15;
+            }
+            100% {
+                scale: 1;
+            }
+        }
+
+        /* Add media queries for responsive design */
+        @media screen and (max-width: 768px) {
+            .buttons {
+                grid-template-columns: repeat(4, 1fr); /* 4 columns on tablets */
+                padding: 0.75rem;
+                gap: 0.75rem;
+            }
+            
+            .buttons button {
+                padding: 0.75rem;
+            }
+            
+            .buttons button svg {
+                width: 1.5rem;
+            }
+            
+            .buttons button p {
+                font-size: 0.7rem;
+            }
+        }
+
+       @media screen and (max-width: 480px) {
+    .buttons {
+        grid-template-columns: repeat(4, 1fr); /* 4 columns on mobile */
+        padding: 0.5rem;
+        gap: 0.75rem;
+    }
+    
+    .buttons button {
+        padding: 0.5rem;
+    }
+    
+    .buttons button svg {
+        width: 1.2rem;
+    }
+    
+    .buttons button p {
+        font-size: 0.65rem;
+        bottom: -5px; /* Move text down by 3 pixels from the previous -2px */
+    }
+    
+    body {
+        padding: 1rem;
+    }
+}
+    </style>
+</head>
+<body>
+<div class="buttons">
+    <div scale-up style="--order:1;">
+       
+<a href="https://www.caimeo.shop" class="button-link">
+    <button type="button" class="furniture">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M6 3h15l1.5 9H7L5.5 3H6z"/>
+  <path d="M6 7h15l1 8H7l1-8z"/>
+  <path d="M8 7v-2h4v2"/>
+  <path d="M8 7v8M12 7v8M16 7v8"/>
+  <circle cx="9" cy="20" r="2"/>
+  <circle cx="17" cy="20" r="2"/>
+</svg>
+
+        <p style="opacity: 1; translate: none;">Shop</p>   
+    </button>
+</a>
+
+        </div>
+      
+      
+  <div scale-up style="--order:2;">
+    <a href="https://www.caimeo.shop/hive.html" class="button-link">
+        <button type="button" class="property">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+  <path d="M4 7l8 -4l8 4v10l-8 4l-8 -4z"/>
+  <path d="M4 7l8 4l8 -4M4 17l8 -4l8 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="12" cy="12" r="3" stroke="currentColor" fill="none" stroke-width="2"/>
+</svg>
+            <p style="opacity: 1; translate: none;">Hive</p>
+        </button>
+    </a>
+</div>
+
+<div scale-up style="--order:3;">
+    <a href="https://www.caimeo.shop/studio.html" class="button-link">
+        <button type="button" class="job">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.8 8s-.2-1.4-.8-2c-.7-.8-1.6-.8-2-.9C16 4.7 12 4.7 12 4.7s-4 0-7 .4c-.4 0-1.3 0-2 .9-.6.6-.8 2-.8 2S2 10 2 12s.2 4 1 4.8c.7.8 1.6.8 2 .9C8 19.3 12 19.3 12 19.3s4 0 7-.4c.4 0 1.3 0 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.6-.2-2.6-.2-2.6z"/>
+                <polygon points="9.5,15.5 16,12 9.5,8.5"/>
+            </svg>
+            <p style="opacity: 1; translate: none;">Studio</p>
+        </button>
+    </a>
+</div>
+
+<div scale-up style="--order:4;">
+    <a href="https://www.caimeo.shop/games.html" class="button-link">
+        <button type="button" class="travel">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 17h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1z"/>
+                <path d="M8 17l1 -4h6l1 4"/>
+                <circle cx="12" cy="7" r="3"/>
+                <line x1="12" y1="10" x2="12" y2="17"/>
+            </svg>
+            <p style="opacity: 1; translate: none;">Games</p>
+                  </button>
+    </a>
+</div>
+
+<div scale-up style="--order:7;">
+    <a href="https://www.caimeo.shop/TBA" class="button-link">
+        <button type="button" class="economy">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15 2 L2 28 L28 28 Z" stroke="currentColor" fill="none"/>
+    <ellipse cx="15" cy="19" rx="6" ry="4" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="15" cy="19" r="2" fill="currentColor"/>
+</svg>
+            <p style="opacity: 1; translate: none;">???</p>
+
+        </button>
+    </a>
+</div>
+
+<div scale-up style="--order:5;">
+    <a href="https://www.caimeo.shop/puzzles/" class="button-link">
+        <button type="button" class="boat">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 2h4v3a1 1 0 0 0 1 1h3v4a1 1 0 0 1 -1 1h-1v2h1a1 1 0 0 1 1 1v4h-4a1 1 0 0 0 -1 1v1a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-1a1 1 0 0 0 -1 -1h-2a1 1 0 0 1 -1 -1v-4h3a1 1 0 0 0 1 -1v-2a1 1 0 0 0 -1 -1h-3v-4h3a1 1 0 0 0 1 -1v-1a1 1 0 0 1 1 -1z"/>
+            </svg>
+            <p style="opacity: 1; translate: none;">Puzzles</p>
+        </button>
+    </a>
+</div>
+
+<div scale-up style="--order:8;">
+    <a href="https://www.caimeo.shop/ai.html" class="button-link">
+        <button type="button" class="holiday">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="4" width="16" height="16" rx="2"/>
+                <path d="M9 9h6v6h-6z"/>
+                <path d="M3 10h1"/>
+                <path d="M3 14h1"/>
+                <path d="M20 10h1"/>
+                <path d="M20 14h1"/>
+                <path d="M10 3v1"/>
+                <path d="M14 3v1"/>
+                <path d="M10 20v1"/>
+                <path d="M14 20v1"/>
+            </svg>
+            <p style="opacity: 1; translate: none;">A.I.</p>
+
+                  </button>
+    </a>
+</div>
+<div scale-up style="--order:6;">
+    <a href="https://www.caimeo.shop/about.html" class="button-link">
+        <button type="button" class="mc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="16" cy="20" r="10" stroke="currentColor" fill="none"/>
+    <circle cx="12" cy="18" r="1" fill="currentColor"/>
+    <circle cx="20" cy="18" r="1" fill="currentColor"/>
+    <path d="M12.5 24c1.75 2 5.25 2 7 0" stroke="currentColor" fill="none"/>
+    <ellipse cx="16" cy="4" rx="10" ry="2" stroke="currentColor" fill="none"/>
+</svg>
+            <p style="opacity: 1; translate: none;">About</p>
+        </button>
+    </a>
+</div>
+    </div>
+  </body>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Icons</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden; 
+            height: 100vh; 
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 1200px;
+            flex: 1;
+        }
+
+        .icon-card {
+            background-color: rgba(26, 26, 26, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .icon-card:hover {
+            border-color: #00ffff;
+            box-shadow: 0 0 20px #00ffff;
+        }
+
+        .icon-card img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .icon-card h3 {
+            font-size: 1.5em;
+            margin: 10px 0;
+            color: #00ffff;
+            text-shadow: 0 0 5px #00ffff;
+        }
+
+        .icon-card p {
+            font-size: 1em;
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+            word-wrap: break-word; 
+        }
+
+        .footer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer .button {
+            background-color: rgba(26, 26, 26, 0.7);
+            border-radius: 15px;
+            padding: 10px 20px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer .button:hover {
+            border-color: #00ff00; 
+            box-shadow: 0 0 20px #00ff00; 
+        }
+
+        .footer .button img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .footer .button span {
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+
+        .content-page {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .content-page img {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .content-page a {
+            color: #00ffff;
+            text-decoration: none;
+            font-size: 1em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .content-page p {
+            font-size: 1em;
+            margin-bottom: 20px;
+            word-wrap: break-word; 
+        }
+
+        .back-button {
+            background-color: rgba(26, 26, 26, 0.7);
+            border-radius: 15px;
+            padding: 10px 20px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            border-color: #ff00ff;
+            box-shadow: 0 0 20px #ff00ff;
+        }
+
+        /* Star Animation */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: #FF69B4; 
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle 0.5s infinite;
+        }
+
+        .star:nth-child(5n) { 
+            background-color: #FF69B4; 
+        }
+
+        .star:nth-child(5n+1) { 
+            background-color: #FF69B4; 
+        }
+
+        @keyframes twinkle {
+            0% {
+                transform: scale(0.5);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.5);
+                opacity: 0.5;
+            }
+        }
+
+@keyframes move {
+    0% { transform: translateY(0); }       
+    100% { transform: translateY(100vh); } 
+}
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .content-page iframe {
+                width: 100%;
+                height: auto;
+            }
+        }
+        
+        .submenu {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; 
+            gap: 1.5rem;
+            padding: 1rem;
+            background: rgba(0,0,0,0.8);
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .submenu-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            text-shadow: 
+                0 0 5px #ff00ff,
+                0 0 10px #00ffff,
+                0 0 15px #00ff00,
+                0 0 20px #9B4DFF;
+            white-space: nowrap;
+        }
+
+        /* Enhanced mobile responsiveness */
+        @media screen and (max-width: 768px) {
+            .submenu {
+                gap: 0.75rem;
+                padding: 0.5rem;
+            }
+            
+            .submenu-link {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .submenu {
+                gap: 0.5rem;
+                padding: 0.3rem;
+            }
+            
+            .submenu-link {
+                font-size: 0.8rem;
+                padding: 0.3rem 0.6rem;
+            }
+        }
+        iframe {
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            border: none;
+            display: block;
+            min-height: 200px;
+            overflow: hidden; 
+        }
+        
+        @media screen and (max-width: 768px) {
+            iframe {
+                min-height: 300px; 
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            iframe {
+                min-height: 400px; 
+            }
+        }
+    </style>
+    <script>function showContent(title, imgSrc, link1Text, link1Url, link2Text, link2Url, link3Text, link3Url, link4Text, link4Url, link5Text, link5Url, description, youtubeEmbed) {
+  document.querySelector('.container').style.display = 'none';
+  document.querySelector('.footer').style.display = 'none';
+  const contentPage = document.querySelector('.content-page');
+  contentPage.style.display = 'flex';
+  contentPage.querySelector('h1').innerText = title;
+  contentPage.querySelector('img').src = imgSrc;
+  contentPage.querySelector('.link1').href = link1Url;
+  contentPage.querySelector('.link1').innerText = link1Text;
+  contentPage.querySelector('.link2').href = link2Url;
+  contentPage.querySelector('.link2').innerText = link2Text;
+  contentPage.querySelector('.link3').href = link3Url;
+  contentPage.querySelector('.link3').innerText = link3Text;
+  contentPage.querySelector('.link4').href = link4Url;
+  contentPage.querySelector('.link4').innerText = link4Text;
+  contentPage.querySelector('.link5').href = link5Url;
+  contentPage.querySelector('.link5').innerText = link5Text;
+  contentPage.querySelector('p').innerText = description;
+  contentPage.querySelector('iframe').src = youtubeEmbed;
+}
+function goBack() {
+  document.querySelector('.container').style.display = 'grid';
+  document.querySelector('.footer').style.display = 'flex';
+  document.querySelector('.content-page').style.display = 'none';
+}
+function createStars() {
+  const starsContainer = document.querySelector('.stars');
+  const starCount = 33;
+  const sizes = [3, 23, 17, 33, 43];
+  for (let i = 0; i < starCount; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    const size = sizes[Math.floor(Math.random() * sizes.length)];
+    star.style.width = size + 'px';
+    star.style.height = size + 'px';
+    star.style.left = Math.random() * 100 + 'vw';
+    star.style.top = Math.random() * 100 + 'vh';
+    star.style.animationDuration = Math.random() * 6 + 2 + 's';
+    star.style.animationName = 'twinkle, move';
+    starsContainer.appendChild(star);
+  }
+}
+window.onload = createStars;</script>
+</head>
+<body>
+<header>
+    <img src="https://i.imgur.com/UUf0e4p.png" alt="Header Image" style="width: 100%; height: auto; object-fit: cover;">
+    <div class="submenu">
+        <a href="https://www.caimeo.shop" class="submenu-link">Caimeo</a>
+        <a href="https://www.caimeo.shop/fashion" class="submenu-link">Fashion</a>
+        <a href="https://www.caimeo.shop/electronics" class="submenu-link">Electronics</a>
+        <a href="https://www.caimeo.shop/consumables" class="submenu-link">Consumables</a>
+        <a href="https://www.caimeo.shop/services" class="submenu-link">Services</a>
+        <a href="https://www.caimeo.shop/3301" class="submenu-link">3301</a>
+        <a href="https://www.sirisys.com" class="submenu-link">Sirisys</a>
+    </div>
+</header>
+    <div class="stars"></div>
+    <div class="container">
+        <div class="icon-card" onclick="window.location.href='https://www.caimeo.shop/1.html'">
+            <img src="https://caimeo.shop/images/1/hoody_flat-front.png" alt="Hoodie">
+            <h3>CAIMEO UFO Futuristic Hoodie Project Cappuccino Collection</h3>
+            <p>Starting at $69.99</p>
+        </div>
+
+        <div class="icon-card" onclick="window.location.href='https://www.caimeo.shop/2.html'">
+            <img src="https://caimeo.shop/images/2/il_fullxfull.6141662632_ncgb.png" alt="Backpack">
+            <h3>CAIMEO UFO Designer Backpack</h3>
+            <p>Price: $74.99</p>
+        </div>
+
+        <div class="icon-card" onclick="window.location.href='https://www.caimeo.shop/3.html'">
+            <img src="https://caimeo.shop/images/3/il_fullxfull.5794979987_tv82.webp" alt="Leggings">
+            <h3>CAIMEO Cicada Fashion Leggings</h3>
+            <p>Price: $69.99</p>
+        </div>
+        
+        <div class="icon-card" onclick="window.location.href='https://www.caimeo.shop/4.html'">
+            <img src="https://caimeo.shop/images/4/2in1WomenShorts_flat-front.png" alt="Shorts">
+            <h3>CAIMEO Cicada 3301 Fashion Women's 2-in-1 Shorts</h3>
+            <p>Price: $69.99</p>
+        </div>
+        
+        <div class="icon-card" onclick="window.location.href='https://www.caimeo.shop/5.html'">
+            <img src="https://caimeo.shop/images/5/il_fullxfull.5571607978_fzks.jpg" alt="T-shirt">
+            <h3>CAIMEO Performance Unisex Crewneck T-shirt</h3>
+            <p>Price: $29.99</p>
+        </div>
+
+        <div class="icon-card" onclick="window.location.href='https://www.caimeo.shop/6.html'">
+            <img src="https://caimeo.shop/images/7/il_fullxfull.6133730536_jshy.webp" alt="Hoodie">
+            <h3>CAIMEO Crop Circle Classic Unisex Pullover Hoodie</h3>
+            <p>Price: $49.99</p>
+        </div>
+
+        <div class="icon-card" onclick="window.location.href='https://www.caimeo.shop/7.html'">
+            <img src="https://caimeo.shop/images/6/il_fullxfull.6124033304_ma02.webp" alt="Cap">
+            <h3>CAIMEO AI Fitted Baseball Cap</h3>
+            <p>Price: $34.99</p>
+        </div>
+
+        <div class="icon-card" onclick="window.location.href='https://www.caimeo.shop/8.html'">
+            <img src="https://caimeo.shop/images/8/il_fullxfull.6189835247_2lel.jpg" alt="Beanie">
+            <h3>CAIMEO Cuffed Beanie</h3>
+            <p>Price: $24.99</p>
+        </div>
+
+        <div class="icon-card" onclick="window.location.href='https://www.caimeo.shop/9.html'">
+            <img src="https://caimeo.shop/images/9/il_794xN.6367983807_46fg.webp" alt="Dress">
+            <h3>CAIMEO Mushroom and Skulls Cicada 3301 Fashion Women's Skaters Dress</h3>
+            <p>Price: $69.99</p>
+        </div>
+
+        <div class="icon-card" onclick="window.location.href='https://www.caimeo.shop/10.html'">
+            <img src="https://caimeo.shop/images/10/caimeocups.png" alt="Mug">
+            <h3>CAIMEO White 11oz Ceramic Mug</h3>
+            <p>Price: $16.99</p>
+        </div>
+    </div>
+<div class="footer">
+    <a href="https://www.etsy.com/shop/LuxiousLabs/" target="_blank" class="button">
+        <img src="https://i.imgur.com/ALUepqd.png" alt="Etsy">
+        <span>Luxious Labs Etsy Shop</span>
+    </a>
+    <a href="https://x.com/J17dark" target="_blank" class="button">
+        <img src="https://i.imgur.com/cel0KtO.png" alt="Twitter">
+        <span>Professor J 17 Twitter</span>
+    </a>
+    <a href="https://discord.gg/vMzZAZBEQM" target="_blank" class="button">
+        <img src="https://i.imgur.com/lBQ5t7i.png" alt="Discord">
+        <span>Discord 3301 Temple</span>
+    </a>
+</div>
+
+    
+    <div class="content-page">
+        <h1></h1>
+        <img src alt="Content Image">
+        <p></p>
+        <a class="link1" href="#" target="_blank"></a>
+        <a class="link2" href="#" target="_blank"></a>
+        <a class="link3" href="#" target="_blank"></a>
+        <a class="link4" href="#" target="_blank"></a>
+        <a class="link5" href="#" target="_blank"></a>
+        <iframe width="560" height="315" src frameborder="0" allowfullscreen></iframe>
+        <div class="back-button" onclick="goBack()">Back to Home</div>
+    </div>
+    <iframe 
+        src="https://www.caimeo.shop/footer.html" 
+        style="
+            width: 100%;
+            border: none;
+            margin: 0;
+            padding: 0;
+            display: block;
+            min-height: 200px;
+            overflow: hidden;
+        "
+        scrolling="no">
+    </iframe>
+    <script>
+        window.addEventListener('message', function(e) {
+            if (e.data && typeof e.data === 'object' && 'frameHeight' in e.data) {
+                const iframe = document.querySelector('iframe');
+                iframe.style.height = (e.data.frameHeight + 20) + 'px'; 
+                iframe.style.overflow = 'hidden';
+            }
+        });
+    </script>
+</body>
+</html>
