@@ -1,15 +1,17 @@
-<html><head><base href="/">
+<html>
+<head>
+  <base href="/">
   <meta charset="UTF-8">
-  <title>SIRISYS - J Coffee Cup</title>
+  <title>SIRISYS J AI T-Shirt Black</title>
 
   <!-- SEO Meta Tags -->
-  <meta name="description" content="A perfect cup for coffee or tea">
-  <meta name="keywords" content="Coffee Cup, SIRISYS, J, Mug">
+  <meta name="description" content="This t-shirt is renowned for its soft feel and sturdy construction, ideal for DTG printing. Crafted from 100% preshrunk ringspun cotton.">
+  <meta name="keywords" content="SIRISYS J, AI, T-Shirt, Black">
 
   <!-- Social Meta Tags -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="SIRISYS - J Coffee Cup">
-  <meta property="og:description" content="A perfect cup for coffee or tea">
+  <meta property="og:title" content="SIRISYS J AI T-Shirt Black">
+  <meta property="og:description" content="This t-shirt is renowned for its soft feel and sturdy construction, ideal for DTG printing. Crafted from 100% preshrunk ringspun cotton.">
   <meta property="og:image" content>
 
   <style>
@@ -203,11 +205,6 @@
       transition: all 0.3s ease;
       color: var(--neon-cyan);
       text-shadow: 0 0 5px var(--neon-cyan);
-    }
-
-    .variant-option {
-      cursor: pointer;
-      transition: all 0.3s ease;
     }
 
     .variant-option:hover {
@@ -409,6 +406,26 @@
       margin: 0.5rem 0;
       text-shadow: 0 0 5px var(--neon-cyan);
     }
+
+    .color-selector {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .color-option {
+      padding: 0.5rem 1rem;
+      border: 2px solid var(--neon-cyan);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .color-option.selected {
+      background: var(--neon-cyan);
+      color: #000;
+      box-shadow: 0 0 15px var(--neon-cyan);
+    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 </head>
@@ -417,52 +434,67 @@
 <div class="product-container" id="productContainer">
   <div class="product-details">
     <div class="product-image-container">
-      <img src="https://caimeo.shop/images/30/il_fullxfull.6189860511_fgtw.webp" alt="SIRISYS - J Coffee Cup" class="product-image">
+      <img src="https://caimeo.shop/images/31/il_fullxfull.6141780004_ezb9%20(1).png" alt="SIRISYS J AI T-Shirt Black" class="product-image" id="mainImage">
       
       <div class="product-gallery">
         <div class="gallery-image-wrapper">
-          <img src="https://caimeo.shop/images/30/il_fullxfull.6189860511_fgtw.webp" alt="View 1" class="gallery-image" onclick="updateMainImage(this.src)">
+          <img src="https://caimeo.shop/images/31/il_fullxfull.6141780004_ezb9%20(1).png" alt="View 1" class="gallery-image" onclick="updateMainImage(this.src)">
         </div>
         <div class="gallery-image-wrapper">
-          <img src="https://caimeo.shop/images/30/il_fullxfull.6189859233_amdx.webp" alt="View 2" class="gallery-image" onclick="updateMainImage(this.src)">
-        </div>
-        <div class="gallery-image-wrapper">  
-          <img src="https://caimeo.shop/images/30/il_fullxfull.6189859243_kgbx.webp" alt="View 3" class="gallery-image" onclick="updateMainImage(this.src)">
-        </div>
-        <div class="gallery-image-wrapper">
-          <img src="https://caimeo.shop/images/30/il_fullxfull.6141760058_rafp.webp" alt="View 4" class="gallery-image" onclick="updateMainImage(this.src)">
-        </div>
-        <div class="gallery-image-wrapper">
-          <img src="https://caimeo.shop/images/30/il_fullxfull.6189859125_hkk6.webp" alt="View 5" class="gallery-image" onclick="updateMainImage(this.src)">
+          <img src="https://caimeo.shop/images/31/il_fullxfull.6189878613_2cka.jpg" alt="View 2" class="gallery-image" onclick="updateMainImage(this.src)">
         </div>
       </div>
     </div>
     
     <div class="product-info">
-      <h1 class="product-title">SIRISYS - J Coffee Cup</h1>
+      <h1 class="product-title">SIRISYS J AI T-Shirt Black</h1>
       <p class="product-description">
-        A perfect cup for coffee or tea
+        This t-shirt is renowned for its soft feel and sturdy construction, ideal for DTG printing. Crafted from 100% preshrunk ringspun cotton. Offers a seamless double-needle collar with high stitch density for a smoother printing surface. Includes a tear-away label for easy rebranding. Tubular fit to minimize torque. Available in a wide range of colors to suit various design needs.
       </p>
+      
       <div class="product-price" id="product-price">
-        &#x24;16.99
+        <!-- price information is not provided in the plan, so it is left empty -->
       </div>
       
-      <div class="product-features">
-        <ul class="feature-list">
-          <li>Perfect for hot beverages</li>
-          <li>Durable construction</li>
-          <li>Comfortable handle</li>
-          <li>This product is made on demand. No minimums.</li>
-        </ul>
-      </div>
       <a href="https://www.paypal.com/paypalme/username" class="buy-button">Buy Now with PayPal</a>
     </div>
   </div>
 </div>
 <div id="footer-container"></div>  
 
-<script>function updateMainImage(src) {
-  document.querySelector('.product-image').src = src;
+<script>document.addEventListener('DOMContentLoaded', function () {
+  const colorOptions = document.querySelectorAll('.color-option');
+  colorOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      updateColor(option);
+    });
+  });
+  fetch('https://caimeo.shop/header.html').then(response => response.text()).then(data => {
+    document.getElementById('header-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading header:', error);
+  });
+  fetch('https://caimeo.shop/footer.html').then(response => response.text()).then(data => {
+    document.getElementById('footer-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading footer:', error);
+  });
+  setLocationBasedPrice();
+});
+function updateColor(colorOption) {
+  const options = document.querySelectorAll('.color-option');
+  options.forEach(opt => opt.classList.remove('selected'));
+  colorOption.classList.add('selected');
+}
+function updateMainImage(src) {
+  const mainImage = document.querySelector('.product-image');
+  mainImage.src = src;
+}
+async function setLocationBasedPrice() {
+  const priceElement = document.getElementById('product-price');
+  if (priceElement) {
+    priceElement.textContent = '24.99 S-2XL';
+  }
 }</script>
 
 </body>
