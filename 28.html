@@ -2,15 +2,15 @@
 <head>
   <base href="/">
   <meta charset="UTF-8">
-  <title>Homeland Security Fighting Terrorism since 1492 DIGITALY REMASTERED Enhanced Color! Native American White T-shirt HD</title>
+  <title>Homeland Security Fighting Terrorism since 1492 DIGITALY REMASTERED Enhanced Color! Native American T-shirt HD</title>
 
   <!-- SEO Meta Tags -->
   <meta name="description" content="This heavyweight cotton t-shirt is a durable staple product with a classic fit. One of the most popular items, it has a relaxed style made for everyday and casual wear">
-  <meta name="keywords" content="Homeland Security, Native American, T-shirt, Fighting Terrorism">
+  <meta name="keywords" content="Native American, American Indian, Homeland Security, T-shirt, Unisex">
 
   <!-- Social Meta Tags -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Homeland Security Fighting Terrorism since 1492 DIGITALY REMASTERED Enhanced Color! Native American White T-shirt HD">
+  <meta property="og:title" content="Homeland Security Fighting Terrorism since 1492 DIGITALY REMASTERED Enhanced Color! Native American T-shirt HD">
   <meta property="og:description" content="This heavyweight cotton t-shirt is a durable staple product with a classic fit. One of the most popular items, it has a relaxed style made for everyday and casual wear">
   <meta property="og:image" content>
 
@@ -205,11 +205,6 @@
       transition: all 0.3s ease;
       color: var(--neon-cyan);
       text-shadow: 0 0 5px var(--neon-cyan);
-    }
-
-    .variant-option {
-      cursor: pointer;
-      transition: all 0.3s ease;
     }
 
     .variant-option:hover {
@@ -411,6 +406,26 @@
       margin: 0.5rem 0;
       text-shadow: 0 0 5px var(--neon-cyan);
     }
+
+    .color-selector {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .color-option {
+      padding: 0.5rem 1rem;
+      border: 2px solid var(--neon-cyan);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .color-option.selected {
+      background: var(--neon-cyan);
+      color: #000;
+      box-shadow: 0 0 15px var(--neon-cyan);
+    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 </head>
@@ -419,7 +434,7 @@
 <div class="product-container" id="productContainer">
   <div class="product-details">
     <div class="product-image-container">
-      <img src="https://caimeo.shop/images/28/il_fullxfull.5637864667_ohi6.webp" alt="Homeland Security Fighting Terrorism since 1492 T-shirt" class="product-image">
+      <img src="https://caimeo.shop/images/28/il_fullxfull.5637864667_ohi6.webp" alt="Homeland Security Fighting Terrorism since 1492 T-shirt" class="product-image" id="mainImage">
       
       <div class="product-gallery">
         <div class="gallery-image-wrapper">
@@ -435,19 +450,15 @@
     </div>
     
     <div class="product-info">
-      <h1 class="product-title">Homeland Security Fighting Terrorism since 1492 DIGITALY REMASTERED Enhanced Color! Native American White T-shirt HD</h1>
+      <h1 class="product-title">Homeland Security Fighting Terrorism since 1492 DIGITALY REMASTERED Enhanced Color! Native American T-shirt HD</h1>
       <p class="product-description">
         This heavyweight cotton t-shirt is a durable staple product with a classic fit. One of the most popular items, it has a relaxed style made for everyday and casual wear
       </p>
-      <div class="product-price" id="product-price">S-XL &#x24;13.37 / 2XL &#x24;19.99 / 3XL &#x24;22.99</div>
-      
-      <div class="variant-options">
-        <h3 class="variant-title">Color</h3>
-        <div class="variant-grid">
-          <div class="variant-option selected" onclick="toggleColor(&apos;White&apos;)">White</div>
-          <div class="variant-option" onclick="toggleColor(&apos;Black&apos;)">Black</div>
-        </div>
+      <div class="color-selector">
+        <div class="color-option selected" data-color="white">White</div>
+        <div class="color-option" data-color="black">Black</div>
       </div>
+      <div class="product-price" id="product-price">S-XL &#x24;13.37 / 2XL &#x24;19.99 / 3XL &#x24;22.99</div>
       
       <div class="product-features">
         <ul class="feature-list">
@@ -464,17 +475,40 @@
 </div>
 <div id="footer-container"></div>  
 
-<script>
-  function toggleColor(color) {
-    var variantOptions = document.querySelectorAll('.variant-option');
-    variantOptions.forEach(function(option) {
-      option.classList.remove('selected');
-      if (option.textContent === color) {
-        option.classList.add('selected');
-      }
+<script>document.addEventListener('DOMContentLoaded', function () {
+  const colorOptions = document.querySelectorAll('.color-option');
+  colorOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      updateColor(option);
     });
+  });
+  fetch('https://caimeo.shop/header.html').then(response => response.text()).then(data => {
+    document.getElementById('header-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading header:', error);
+  });
+  fetch('https://caimeo.shop/footer.html').then(response => response.text()).then(data => {
+    document.getElementById('footer-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading footer:', error);
+  });
+  setLocationBasedPrice();
+});
+function updateColor(colorOption) {
+  const options = document.querySelectorAll('.color-option');
+  options.forEach(opt => opt.classList.remove('selected'));
+  colorOption.classList.add('selected');
+}
+function updateMainImage(src) {
+  const mainImage = document.querySelector('.product-image');
+  mainImage.src = src;
+}
+async function setLocationBasedPrice() {
+  const priceElement = document.getElementById('product-price');
+  if (priceElement) {
+    priceElement.textContent = 'S-XL $13.37 / 2XL $19.99 / 3XL $22.99';
   }
-</script>
+}</script>
 
 </body>
 </html>
