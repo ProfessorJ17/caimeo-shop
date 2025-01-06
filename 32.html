@@ -1,15 +1,17 @@
-<html><head><base href="/">
+<html>
+<head>
+  <base href="/">
   <meta charset="UTF-8">
-  <title>SIRISYS A.I. Classic Premium Snapback Cap</title>
+  <title>Do you Believe UFO ALIEN Heavyweight Unisex Crewneck T-shirt</title>
 
   <!-- SEO Meta Tags -->
-  <meta name="description" content="SIRISYS A.I. Classic Premium Snapback Cap - High quality structured snapback cap">
-  <meta name="keywords" content="Cap, SIRISYS, A.I., Snapback">
+  <meta name="description" content="This heavyweight cotton t-shirt is a durable staple product with a classic fit. One of the most popular items, it has a relaxed style made for everyday and casual wear">
+  <meta name="keywords" content="UFO, ALIEN, Unisex, Crewneck, T-shirt">
 
   <!-- Social Meta Tags -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="SIRISYS A.I. Classic Premium Snapback Cap">
-  <meta property="og:description" content="High quality structured snapback cap">
+  <meta property="og:title" content="Do you Believe UFO ALIEN Heavyweight Unisex Crewneck T-shirt">
+  <meta property="og:description" content="This heavyweight cotton t-shirt is a durable staple product with a classic fit. One of the most popular items, it has a relaxed style made for everyday and casual wear">
   <meta property="og:image" content>
 
   <style>
@@ -203,11 +205,6 @@
       transition: all 0.3s ease;
       color: var(--neon-cyan);
       text-shadow: 0 0 5px var(--neon-cyan);
-    }
-
-    .variant-option {
-      cursor: pointer;
-      transition: all 0.3s ease;
     }
 
     .variant-option:hover {
@@ -409,6 +406,26 @@
       margin: 0.5rem 0;
       text-shadow: 0 0 5px var(--neon-cyan);
     }
+
+    .color-selector {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .color-option {
+      padding: 0.5rem 1rem;
+      border: 2px solid var(--neon-cyan);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .color-option.selected {
+      background: var(--neon-cyan);
+      color: #000;
+      box-shadow: 0 0 15px var(--neon-cyan);
+    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 </head>
@@ -417,35 +434,21 @@
 <div class="product-container" id="productContainer">
   <div class="product-details">
     <div class="product-image-container">
-      <img src="https://caimeo.shop/images/32/il_fullxfull.6022143018_p3wz.jpg" alt="SIRISYS A.I. Classic Premium Snapback Cap" class="product-image">
+      <img src="https://caimeo.shop/images/33/il_fullxfull.6065523653_mdr8.jpg" alt="Do you Believe UFO ALIEN T-shirt" class="product-image" id="mainImage">
       
       <div class="product-gallery">
         <div class="gallery-image-wrapper">
-          <img src="https://caimeo.shop/images/32/il_fullxfull.6022143018_p3wz.jpg" alt="View 1" class="gallery-image" onclick="updateMainImage(this.src)">
-        </div>
-        <div class="gallery-image-wrapper">
-          <img src="https://caimeo.shop/images/32/il_fullxfull.6018005838_6nzc.webp" alt="View 2" class="gallery-image" onclick="updateMainImage(this.src)">
+          <img src="https://caimeo.shop/images/33/il_fullxfull.6065523653_mdr8.jpg" alt="View 1" class="gallery-image" onclick="updateMainImage(this.src)">
         </div>
       </div>
     </div>
     
     <div class="product-info">
-      <h1 class="product-title">SIRISYS A.I. Classic Premium Snapback Cap</h1>
+      <h1 class="product-title">Do you Believe UFO ALIEN Heavyweight Unisex Crewneck T-shirt</h1>
       <p class="product-description">
-        The Yupoong 5789M Classic Premium Snapback Cap is a stylish and durable accessory suitable for various occasions.
+        This heavyweight cotton t-shirt is a durable staple product with a classic fit. One of the most popular items, it has a relaxed style made for everyday and casual wear
       </p>
-      <div class="product-features">
-        <ul class="feature-list">
-          <li>Composed of an acrylic and wool blend, providing both warmth and durability.</li>
-          <li>The cap features a 5-panel, structured, mid-profile design for a classic snapback look.</li>
-          <li>Equipped with a matching plastic snapback closure for adjustable fit.</li>
-          <li>The Permacurv visor maintains its shape and curve with time, complete with matching under-visor and 8-row stitching for added durability.</li>
-          <li>One size fits all</li>
-        </ul>
-      </div>
-      <div class="product-price" id="product-price">
-        &#x24;29.99
-      </div>
+      <div class="product-price" id="product-price">S-XL &#x24;16.99</div>
       
       <a href="https://www.paypal.com/paypalme/username" class="buy-button">Buy Now with PayPal</a>
     </div>
@@ -453,8 +456,39 @@
 </div>
 <div id="footer-container"></div>  
 
-<script>function updateMainImage(src) {
-  document.querySelector('.product-image').src = src;
+<script>document.addEventListener('DOMContentLoaded', function () {
+  const colorOptions = document.querySelectorAll('.color-option');
+  colorOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      updateColor(option);
+    });
+  });
+  fetch('https://caimeo.shop/header.html').then(response => response.text()).then(data => {
+    document.getElementById('header-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading header:', error);
+  });
+  fetch('https://caimeo.shop/footer.html').then(response => response.text()).then(data => {
+    document.getElementById('footer-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading footer:', error);
+  });
+  setLocationBasedPrice();
+});
+function updateColor(colorOption) {
+  const options = document.querySelectorAll('.color-option');
+  options.forEach(opt => opt.classList.remove('selected'));
+  colorOption.classList.add('selected');
+}
+function updateMainImage(src) {
+  const mainImage = document.querySelector('.product-image');
+  mainImage.src = src;
+}
+async function setLocationBasedPrice() {
+  const priceElement = document.getElementById('product-price');
+  if (priceElement) {
+    priceElement.textContent = 'S-XL $16.99';
+  }
 }</script>
 
 </body>
