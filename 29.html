@@ -1,10 +1,12 @@
-<html><head><base href="/">
+<html>
+<head>
+  <base href="/">
   <meta charset="UTF-8">
   <title>Cicada 3301 Heavyweight Unisex Crewneck T-shirt</title>
 
   <!-- SEO Meta Tags -->
   <meta name="description" content="This heavyweight cotton t-shirt is a durable staple product with a classic fit. One of the most popular items, it has a relaxed style made for everyday and casual wear">
-  <meta name="keywords" content="Cicada 3301, T-shirt, Heavyweight, Unisex, Crewneck">
+  <meta name="keywords" content="Cicada 3301, Unisex, Crewneck, T-shirt">
 
   <!-- Social Meta Tags -->
   <meta property="og:type" content="website">
@@ -203,11 +205,6 @@
       transition: all 0.3s ease;
       color: var(--neon-cyan);
       text-shadow: 0 0 5px var(--neon-cyan);
-    }
-
-    .variant-option {
-      cursor: pointer;
-      transition: all 0.3s ease;
     }
 
     .variant-option:hover {
@@ -409,6 +406,26 @@
       margin: 0.5rem 0;
       text-shadow: 0 0 5px var(--neon-cyan);
     }
+
+    .color-selector {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .color-option {
+      padding: 0.5rem 1rem;
+      border: 2px solid var(--neon-cyan);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .color-option.selected {
+      background: var(--neon-cyan);
+      color: #000;
+      box-shadow: 0 0 15px var(--neon-cyan);
+    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 </head>
@@ -417,7 +434,7 @@
 <div class="product-container" id="productContainer">
   <div class="product-details">
     <div class="product-image-container">
-      <img src="https://caimeo.shop/images/29/il_fullxfull.6017499654_e4gk.webp" alt="Cicada 3301 Heavyweight Unisex Crewneck T-shirt" class="product-image">
+      <img src="https://caimeo.shop/images/29/il_fullxfull.6017499654_e4gk.webp" alt="Cicada 3301 Heavyweight T-shirt" class="product-image" id="mainImage">
       
       <div class="product-gallery">
         <div class="gallery-image-wrapper">
@@ -432,29 +449,49 @@
         This heavyweight cotton t-shirt is a durable staple product with a classic fit. One of the most popular items, it has a relaxed style made for everyday and casual wear
       </p>
       <div class="product-price" id="product-price">
-        S-XL $16.76 / 2XL $20.64 / 3XL $24.23 / 4XL $31.89 / 5XL $35.99
+        S &#x24;16.76 M &#x24;16.76 L &#x24;16.76 XL &#x24;16.76 2XL &#x24;20.64 3XL &#x24;24.23 4XL &#x24;31.89 5XL &#x24;35.99
       </div>
       
-      <div class="product-features">
-        <ul class="feature-list">
-          <li>Seamless double-needle collar</li>
-          <li>Double-needle sleeve and bottom hems</li> 
-          <li>100% cotton</li>
-          <li>Taped neck and shoulders for durability</li>
-          <li>This product is made on demand. No minimums.</li>
-        </ul>
-      </div>
       <a href="https://www.paypal.com/paypalme/username" class="buy-button">Buy Now with PayPal</a>
     </div>
   </div>
 </div>
 <div id="footer-container"></div>  
 
-<script>
-  function updateMainImage(src) {
-    document.querySelector('.product-image').src = src;
+<script>document.addEventListener('DOMContentLoaded', function () {
+  const colorOptions = document.querySelectorAll('.color-option');
+  colorOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      updateColor(option);
+    });
+  });
+  fetch('https://caimeo.shop/header.html').then(response => response.text()).then(data => {
+    document.getElementById('header-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading header:', error);
+  });
+  fetch('https://caimeo.shop/footer.html').then(response => response.text()).then(data => {
+    document.getElementById('footer-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading footer:', error);
+  });
+  setLocationBasedPrice();
+});
+function updateColor(colorOption) {
+  const options = document.querySelectorAll('.color-option');
+  options.forEach(opt => opt.classList.remove('selected'));
+  colorOption.classList.add('selected');
+}
+function updateMainImage(src) {
+  const mainImage = document.querySelector('.product-image');
+  mainImage.src = src;
+}
+async function setLocationBasedPrice() {
+  const priceElement = document.getElementById('product-price');
+  if (priceElement) {
+    priceElement.textContent = 'S $16.76 M $16.76 L $16.76 XL $16.76 2XL $20.64 3XL $24.23 4XL $31.89 5XL $35.99';
   }
-</script>
+}</script>
 
 </body>
 </html>
