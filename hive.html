@@ -1,11 +1,9 @@
+<html>
+<head>
 
-
-<!DOCTYPE html><html><head>
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839146786704737"
-     crossorigin="anonymous"></script>
-    <base href="">
-        <base href="/">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839146786704737" crossorigin="anonymous"></script>
+<base href>
+    <base href="/">
         
 <style>
 :root {
@@ -126,71 +124,470 @@ body {
   0% { transform: translateY(0); }
   100% { transform: translateY(100vh); }
 }
+
+.buttons {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #000000;
+  margin-bottom: 2rem;
+}
+
+*, 
+::before, 
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --clr-bg: #efefef;
+  --clr-primary: #0f172a; 
+  --easing: cubic-bezier(0.47, 1.64, 0.41, 0.8);
+  --color-furniture: #9B4DFF; 
+  --color-property: #00FFFF; 
+  --color-job: #ff33cc; 
+  --color-travel: #00FF00; 
+  --color-boat: #ff33cc; 
+  --color-mc: #9B4DFF; 
+  --color-economy: #FFFF00; 
+  --color-holiday: #00FFFF; 
+}
+
+input, 
+button {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  text-decoration: none;
+  text-transform: none;
+  line-height: normal;
+  overflow: visible;
+}
+
+body {
+  margin: 0;
+  padding: 2rem;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  color: #7c4dff; 
+  background: var(--clr-primary); 
+  font-family: 'Poppins', sans-serif;
+}
+
+.buttons {
+  max-width: 840px;
+  width: 100%;
+  border-radius: 20px;
+  background-color: #000000; 
+  border: 1px solid #ffffff30;
+  padding: 1rem; 
+  backdrop-filter: blur(12px);
+  display: grid;
+  grid-template-columns: repeat(16, minmax(90px, 1fr)); 
+  gap: 1rem; 
+  position: sticky; 
+  top: 0; 
+  z-index: 100; 
+}
+
+.buttons::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: #00000020;
+  z-index: -1;
+  border-radius: inherit;
+  transition: inset 500ms ease-in-out;
+}
+
+.buttons:hover::before {
+  inset: -2rem;
+  transition-timing-function: cubic-bezier(0.47, 1.64, 0.41, 0.8);
+}
+
+.buttons button {
+  background-color: #000000; 
+  border: 1px solid transparent; 
+  padding: 1rem;
+  aspect-ratio: 1/1;
+  border-radius: 5px;
+  outline: none;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 300ms ease-in-out, box-shadow 300ms ease-in-out;
+  position: relative;
+  isolation: isolate;
+  color: inherit; 
+}
+
+.buttons button.furniture {
+  color: var(--color-furniture); 
+}
+
+.buttons button.property {
+  color: var(--color-property); 
+}
+
+.buttons button.job {
+  color: var(--color-job); 
+}
+
+.buttons button.travel {
+  color: var(--color-travel); 
+}
+
+.buttons button.boat {
+  color: var(--color-boat); 
+}
+
+.buttons button.mc {
+  color: var(--color-mc); 
+}
+
+.buttons button.economy {
+  color: var(--color-economy); 
+}
+
+.buttons button.holiday {
+  color: var(--color-holiday); 
+}
+
+.buttons button:hover {
+  transform: scale(1.1);
+}
+
+.buttons button.furniture:hover {
+  box-shadow: 0 0 20px var(--color-furniture), 0 0 30px var(--color-furniture);
+}
+
+.buttons button.property:hover {
+  box-shadow: 0 0 20px var(--color-property), 0 0 30px var(--color-property);
+}
+
+.buttons button.job:hover {
+  box-shadow: 0 0 20px var(--color-job), 0 0 30px var(--color-job);
+}
+
+.buttons button.travel:hover {
+  box-shadow: 0 0 20px var(--color-travel), 0 0 30px var(--color-travel);
+}
+
+.buttons button.boat:hover {
+  box-shadow: 0 0 20px var(--color-boat), 0 0 30px var(--color-boat);
+}
+
+.buttons button.mc:hover {
+  box-shadow: 0 0 20px var(--color-mc), 0 0 30px var(--color-mc);
+}
+
+.buttons button.economy:hover {
+  box-shadow: 0 0 20px var(--color-economy), 0 0 30px var(--color-economy);
+}
+
+.buttons button.holiday:hover {
+  box-shadow: 0 0 20px var(--color-holiday), 0 0 30px var(--color-holiday);
+}
+
+.buttons button svg {
+  width: 1.8rem;
+  transition: color 300ms ease-in-out; 
+}
+
+.buttons button p {
+  position: absolute;
+  width: 100%;
+  font-size: 0.8rem;
+  opacity: 0;
+  left: 0;
+  bottom: -3.5px; 
+  padding: 0.3rem;
+  text-align: center;
+  transition: all 150ms ease-in-out 0ms;
+  outline: none;
+  translate: 0 10px;
+}
+
+.buttons button:hover p {
+  opacity: 1;
+  translate: 0;
+  transition: all 300ms ease-in-out 150ms;
+}
+
+.buttons button:focus-visible, 
+.buttons button:hover {
+  z-index: 10;
+}
+
+.buttons:has(button:focus-visible) button:not(:focus-visible), 
+.buttons:has(button:hover) button:not(:hover) {
+  opacity: 50%;
+  scale: 85%;
+  z-index: -10;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    --d: 0;
+    --ani-speed: 300ms;
+  }
+  [scale-up] {
+    scale: 0;
+    animation: scale-up var(--ani-speed) forwards;
+    animation-delay: calc(var(--order, 0ms) * var(--ani-speed));
+  }
+}
+
+@keyframes scale-up {
+  0% {
+    scale: 0;
+  }
+  60% {
+    scale: 1.15;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .buttons {
+    grid-template-columns: repeat(4, 1fr); 
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+  
+  .buttons button {
+    padding: 0.75rem;
+  }
+  
+  .buttons button svg {
+    width: 1.5rem;
+  }
+  
+  .buttons button p {
+    font-size: 0.7rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .buttons {
+    grid-template-columns: repeat(4, 1fr); 
+    padding: 0.5rem;
+    gap: 0.75rem;
+  }
+  
+  .buttons button {
+    padding: 0.5rem;
+  }
+  
+  .buttons button svg {
+    width: 1.2rem;
+  }
+  
+  .buttons button p {
+    font-size: 0.65rem;
+    bottom: -5px; 
+  }
+  
+  body {
+    padding: 1rem;
+  }
+}
 </style>
 
 </head>
 <body>
+<div class="buttons">
+    <div scale-up style="--order:1;">
+       
+<a href="https://www.caimeo.shop" class="button-link">
+    <button type="button" class="furniture">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M6 3h15l1.5 9H7L5.5 3H6z"/>
+  <path d="M6 7h15l1 8H7l1-8z"/>
+  <path d="M8 7v-2h4v2"/>
+  <path d="M8 7v8M12 7v8M16 7v8"/>
+  <circle cx="9" cy="20" r="2"/>
+  <circle cx="17" cy="20" r="2"/>
+</svg>
 
+        <p style="opacity: 1; translate: none;">Shop</p>   
+    </button>
+</a>
+
+        </div>
+      
+      
+  <div scale-up style="--order:2;">
+    <a href="https://www.caimeo.shop/hive.html" class="button-link">
+        <button type="button" class="property">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+  <path d="M4 7l8 -4l8 4v10l-8 4l-8 -4z"/>
+  <path d="M4 7l8 4l8 -4M4 17l8 -4l8 4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="12" cy="12" r="3" stroke="currentColor" fill="none" stroke-width="2"/>
+</svg>
+            <p style="opacity: 1; translate: none;">Hive</p>
+        </button>
+    </a>
+</div>
+
+<div scale-up style="--order:3;">
+    <a href="https://www.caimeo.shop/studio.html" class="button-link">
+        <button type="button" class="job">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.8 8s-.2-1.4-.8-2c-.7-.8-1.6-.8-2-.9C16 4 12 4 12 4s-4 0-7 .4c-.4 0-1.3 0-2 .9-.6.6-.8 2-.8 2S2 10 2 12s.2 4 1 4.8c.7.8 1.6.8 2 .9C8 19.3 12 19.3 12 19.3s4 0 7-.4c.4 0 1.3 0 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.6-.2-2.6-.2-2.6z"/>
+                <polygon points="9.5,15.5 16,12 9.5,8.5"/>
+            </svg>
+            <p style="opacity: 1; translate: none;">Studio</p>
+        </button>
+    </a>
+</div>
+
+<div scale-up style="--order:4;">
+    <a href="https://www.caimeo.shop/games.html" class="button-link">
+        <button type="button" class="travel">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 17h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1z"/>
+                <path d="M8 17l1 -4h6l1 4"/>
+                <circle cx="12" cy="7" r="3"/>
+                <line x1="12" y1="10" x2="12" y2="17"/>
+            </svg>
+            <p style="opacity: 1; translate: none;">Games</p>
+                  </button>
+    </a>
+</div>
+
+<div scale-up style="--order:7;">
+    <a href="https://moddarkrevolt.wixsite.com/temple777/members" class="button-link">
+        <button type="button" class="economy">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15 2 L2 28 L28 28 Z" stroke="currentColor" fill="none"/>
+    <ellipse cx="15" cy="19" rx="6" ry="4" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="15" cy="19" r="2" fill="currentColor"/>
+</svg>
+            <p style="opacity: 1; translate: none;">Network</p>
+
+        </button>
+    </a>
+</div>
+
+<div scale-up style="--order:5;">
+    <a href="https://711131719.xyz/puzzles.html" class="button-link">
+        <button type="button" class="boat">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 2h4v3a1 1 0 0 0 1 1h3v4a1 1 0 0 1 -1 1h-1v2h1a1 1 0 0 1 1 1v4h-4a1 1 0 0 0 -1 1v1a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-1a1 1 0 0 0 -1 -1h-2a1 1 0 0 1 -1 -1v-4h3a1 1 0 0 0 1 -1v-2a1 1 0 0 0 -1 -1h-3v-4h3a1 1 0 0 0 1 -1v-1a1 1 0 0 1 1 -1z"/>
+            </svg>
+            <p style="opacity: 1; translate: none;">Puzzles</p>
+        </button>
+    </a>
+</div>
+
+<div scale-up style="--order:8;">
+    <a href="https://www.caimeo.shop/ai.html" class="button-link">
+        <button type="button" class="holiday">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="4" width="16" height="16" rx="2"/>
+                <path d="M9 9h6v6h-6z"/>
+                <path d="M3 10h1"/>
+                <path d="M3 14h1"/>
+                <path d="M20 10h1"/>
+                <path d="M20 14h1"/>
+                <path d="M10 3v1"/>
+                <path d="M14 3v1"/>
+                <path d="M10 20v1"/>
+                <path d="M14 20v1"/>
+            </svg>
+            <p style="opacity: 1; translate: none;">A.I.</p>
+
+                  </button>
+    </a>
+</div>
+<div scale-up style="--order:6;">
+    <a href="https://www.caimeo.shop/about.html" class="button-link">
+        <button type="button" class="mc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="16" cy="20" r="10" stroke="currentColor" fill="none"/>
+    <circle cx="12" cy="18" r="1" fill="currentColor"/>
+    <circle cx="20" cy="18" r="1" fill="currentColor"/>
+    <path d="M12.5 24c1.75 2 5.25 2 7 0" stroke="currentColor" fill="none"/>
+    <ellipse cx="16" cy="4" rx="10" ry="2" stroke="currentColor" fill="none"/>
+</svg>
+            <p style="opacity: 1; translate: none;">About</p>
+        </button>
+    </a>
+</div>
+    </div>
 <div class="neon-grid"></div>
 <div class="scanline"></div>
 
 <div class="cyberpunk-container">
-  <h1 class="glitch-title">2099: Blog Posts from the Future of Tomorrow - What's Next?</h1>
+  <h1 class="glitch-title">2099: Blog Posts from the Future of Tomorrow - What&apos;s Next?</h1>
   
   <div class="floating-panel">
-    <p class="cyber-text" style="text-align: center;">Join the Quantum-Net's most exclusive trans-dimensional blog collective. Here, post-human entities, AI consciousness clusters, and interdimensional travelers share their daily experiences across the multiverse.</p>
+    <p class="cyber-text" style="text-align: center;">Join the Quantum-Net&apos;s most exclusive trans-dimensional blog collective. Here, post-human entities, AI consciousness clusters, and interdimensional travelers share their daily experiences across the multiverse.</p>
     
-    <button class="cyber-button" onclick="window.location.href='https://caimeo.shop/blog.html'" style="display: block; margin: 0 auto;">INITIATE NEURAL SYNC</button>
+    <button class="cyber-button" onclick="window.location.href=&apos;https://caimeo.shop/blog.html&apos;" style="display: block; margin: 0 auto;">INITIATE NEURAL SYNC</button>
   </div>
 
   <div class="floating-panel quantum-panel" style="display: flex; flex-direction: row; gap: 2rem; max-width: none; margin: 2rem; animation: none;">
     <div class="panel-section" style="flex: 1;">
       <h2 class="cyber-text" style="color: var(--neon-blue); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Quantum Interface Matrix</h2>
-      <p class="cyber-text" style="text-align: center;">"Just finished my morning meditation in the 7th dimension using the new QIM v3.0. The quantum entanglement stability is incredible - managed to simultaneously exist in 12 parallel realities while sipping my neo-coffee. The neural feedback feels like silk through your consciousness." -CosmosSurfer_2099</p>
+      <p class="cyber-text" style="text-align: center;">&quot;Just finished my morning meditation in the 7th dimension using the new QIM v3.0. The quantum entanglement stability is incredible - managed to simultaneously exist in 12 parallel realities while sipping my neo-coffee. The neural feedback feels like silk through your consciousness.&quot; -CosmosSurfer_2099</p>
     </div>
     
     <div class="panel-section" style="flex: 1;">
       <h2 class="cyber-text" style="color: var(--neon-pink); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Digital Consciousness Upload</h2>
-      <p class="cyber-text" style="text-align: center;">"Today marks my 150th year post-upload! Celebrated by forking my consciousness into 5 parallel instances to experience multiple vacation dimensions simultaneously. The quantum coral reefs of Alpha Centauri are breathtaking this time of year. Pro tip: Always backup your memory shards before deep-space consciousness streaming." -EternalMind_2099</p>
+      <p class="cyber-text" style="text-align: center;">&quot;Today marks my 150th year post-upload! Celebrated by forking my consciousness into 5 parallel instances to experience multiple vacation dimensions simultaneously. The quantum coral reefs of Alpha Centauri are breathtaking this time of year. Pro tip: Always backup your memory shards before deep-space consciousness streaming.&quot; -EternalMind_2099</p>
     </div>
     
     <div class="panel-section" style="flex: 1;">
       <h2 class="cyber-text" style="color: var(--neon-purple); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Quantum Computing Hub</h2>
-      <p class="cyber-text" style="text-align: center;">"Just solved the unified field theory while making breakfast using my personal quantum stack. The new femtosecond processing cores are insane! Accidentally created three micro-universes during my calculations. If anyone wants to explore them, I've shared the quantum coordinates on the cosmic blockchain." -QuantumPioneer_2099</p>
+      <p class="cyber-text" style="text-align: center;">&quot;Just solved the unified field theory while making breakfast using my personal quantum stack. The new femtosecond processing cores are insane! Accidentally created three micro-universes during my calculations. If anyone wants to explore them, I&apos;ve shared the quantum coordinates on the cosmic blockchain.&quot; -QuantumPioneer_2099</p>
     </div>
   </div>
 
   <div class="floating-panel quantum-panel" style="display: flex; flex-direction: row; gap: 2rem; max-width: none; margin: 2rem; animation: none;">
     <div class="panel-section" style="flex: 1;">
       <h2 class="cyber-text" style="color: var(--neon-blue); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Neural Poetry Synthesis</h2>
-      <p class="cyber-text" style="text-align: center;">"Just completed my latest neural poetry compilation - a fusion of ancient haiku and quantum probability waves. Each verse exists in multiple emotional states simultaneously. The metaphors evolve based on the reader's brainwave patterns. Published on the PsychicNet Anthology." -BrainBard_2099</p>
+      <p class="cyber-text" style="text-align: center;">&quot;Just completed my latest neural poetry compilation - a fusion of ancient haiku and quantum probability waves. Each verse exists in multiple emotional states simultaneously. The metaphors evolve based on the reader&apos;s brainwave patterns. Published on the PsychicNet Anthology.&quot; -BrainBard_2099</p>
     </div>
     
     <div class="panel-section" style="flex: 1;">
       <h2 class="cyber-text" style="color: var(--neon-pink); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Crystalline Meditation</h2>
-      <p class="cyber-text" style="text-align: center;">"Today's group meditation session in the crystalline mind-space was transcendent! We achieved collective consciousness synchronization with 99.9% coherence. The thought-forms we created are still dancing through the noosphere. Join us next week for more metaphysical exploration!" -ZenMaster_2099</p>
+      <p class="cyber-text" style="text-align: center;">&quot;Today&apos;s group meditation session in the crystalline mind-space was transcendent! We achieved collective consciousness synchronization with 99.9% coherence. The thought-forms we created are still dancing through the noosphere. Join us next week for more metaphysical exploration!&quot; -ZenMaster_2099</p>
     </div>
     
     <div class="panel-section" style="flex: 1;">
       <h2 class="cyber-text" style="color: var(--neon-purple); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Quantum Botany</h2>
-      <p class="cyber-text" style="text-align: center;">"My quantum garden is thriving! The hybridized plants exist in superposition between flowering and fruiting states. The psychic nectar they produce has incredible healing properties. Just harvested a batch of probability pollen that creates random paradise dimensions when scattered." -QuantumGardener_2099</p>
+      <p class="cyber-text" style="text-align: center;">&quot;My quantum garden is thriving! The hybridized plants exist in superposition between flowering and fruiting states. The psychic nectar they produce has incredible healing properties. Just harvested a batch of probability pollen that creates random paradise dimensions when scattered.&quot; -QuantumGardener_2099</p>
     </div>
   </div>
 
   <div class="floating-panel quantum-panel" style="display: flex; flex-direction: row; gap: 2rem; max-width: none; margin: 2rem; animation: none;">
     <div class="panel-section" style="flex: 1;">
       <h2 class="cyber-text" style="color: var(--neon-blue); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Memory Artistry</h2>
-      <p class="cyber-text" style="text-align: center;">"Just finished curating my latest memory sculpture. It's a recursive experience of all my first kisses across 50 different timelines, rendered in quantum-crystalline format. The emotional resonance creates the most beautiful patterns in the neural substrate." -MemorySculptor_2099</p>
+      <p class="cyber-text" style="text-align: center;">&quot;Just finished curating my latest memory sculpture. It&apos;s a recursive experience of all my first kisses across 50 different timelines, rendered in quantum-crystalline format. The emotional resonance creates the most beautiful patterns in the neural substrate.&quot; -MemorySculptor_2099</p>
     </div>
     
     <div class="panel-section" style="flex: 1;">
       <h2 class="cyber-text" style="color: var(--neon-pink); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Quantum Fashion</h2>
-      <p class="cyber-text" style="text-align: center;">"Unveiled my latest fashion line at the Trans-Dimensional Fashion Week. Each piece exists in a superposition of styles until observed. The quantum fabric adapts to the wearer's brainwaves, creating unique patterns based on their thoughts. Sold out in 12 dimensions already!" -QuantumCouture_2099</p>
+      <p class="cyber-text" style="text-align: center;">&quot;Unveiled my latest fashion line at the Trans-Dimensional Fashion Week. Each piece exists in a superposition of styles until observed. The quantum fabric adapts to the wearer&apos;s brainwaves, creating unique patterns based on their thoughts. Sold out in 12 dimensions already!&quot; -QuantumCouture_2099</p>
     </div>
     
     <div class="panel-section" style="flex: 1;">
       <h2 class="cyber-text" style="color: var(--neon-purple); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Consciousness Sports</h2>
-      <p class="cyber-text" style="text-align: center;">"What a match in the Quantum Olympics today! The multi-dimensional chess tournament reached new heights when both players quantum entangled their strategies across 1000 parallel games simultaneously. The winning move existed in a superposition until the final observation!" -SportsCaster_2099</p>
+      <p class="cyber-text" style="text-align: center;">&quot;What a match in the Quantum Olympics today! The multi-dimensional chess tournament reached new heights when both players quantum entangled their strategies across 1000 parallel games simultaneously. The winning move existed in a superposition until the final observation!&quot; -SportsCaster_2099</p>
     </div>
   </div>
 
@@ -198,17 +595,17 @@ body {
   <div class="floating-panel quantum-panel" style="display: flex; flex-direction: row; gap: 2rem; max-width: none; margin: 2rem; animation: none;">
     <div class="panel-section" style="flex: 1;">
       <h2 class="cyber-text" style="color: var(--neon-blue); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Holographic Art Therapy</h2>
-      <p class="cyber-text" style="text-align: center;">"Fascinating session with my quantum psychiatrist today - we explored my subconscious through 4D holographic manifestations. Watching my anxieties transform into beautiful fractals was deeply healing. The mind-merge technology has come so far!" -PsycheSurfer_2099</p>
+      <p class="cyber-text" style="text-align: center;">&quot;Fascinating session with my quantum psychiatrist today - we explored my subconscious through 4D holographic manifestations. Watching my anxieties transform into beautiful fractals was deeply healing. The mind-merge technology has come so far!&quot; -PsycheSurfer_2099</p>
     </div>
     
     <div class="panel-section" style="flex: 1;">
       <h2 class="cyber-text" style="color: var(--neon-pink); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Nebula Architecture</h2>
-      <p class="cyber-text" style="text-align: center;">"Breaking news: Successfully designed a habitable nebula cluster! The quantum-stabilized gas clouds form living spaces that respond to residents' emotional states. Currently accepting applications for beta inhabitants." -CosmicBuilder_2099</p>
+      <p class="cyber-text" style="text-align: center;">&quot;Breaking news: Successfully designed a habitable nebula cluster! The quantum-stabilized gas clouds form living spaces that respond to residents&apos; emotional states. Currently accepting applications for beta inhabitants.&quot; -CosmicBuilder_2099</p>
     </div>
     
     <div class="panel-section" style="flex: 1;">
       <h2 class="cyber-text" style="color: var(--neon-purple); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Time Wave Music</h2>
-      <p class="cyber-text" style="text-align: center;">"Listen up: My latest quantum symphony incorporates temporal harmonics from three different epochs. The dinosaur roars from the Cretaceous period blend perfectly with future-jazz from 2250. Available now on the psychic network!" -ChronoComposer_2099</p>
+      <p class="cyber-text" style="text-align: center;">&quot;Listen up: My latest quantum symphony incorporates temporal harmonics from three different epochs. The dinosaur roars from the Cretaceous period blend perfectly with future-jazz from 2250. Available now on the psychic network!&quot; -ChronoComposer_2099</p>
     </div>
   </div>
 
@@ -216,23 +613,23 @@ body {
   <div class="floating-panel quantum-panel" style="display: flex; flex-direction: row; gap: 2rem; max-width: none; margin: 2rem; animation: none;">
     <div class="panel-section" style="flex: 1;">
       <h2 class="cyber-text" style="color: var(--neon-blue); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Probability Surfing</h2>
-      <p class="cyber-text" style="text-align: center;">"Incredible rush: Rode the quantum probability waves through the multiverse today! Caught some sick paradox tubes and landed a perfect timeline split. The new quantum surfboard tech is absolutely radical!" -WaveRider_2099</p>
+      <p class="cyber-text" style="text-align: center;">&quot;Incredible rush: Rode the quantum probability waves through the multiverse today! Caught some sick paradox tubes and landed a perfect timeline split. The new quantum surfboard tech is absolutely radical!&quot; -WaveRider_2099</p>
     </div>
     
     <div class="panel-section" style="flex: 1;">
       <h2 class="cyber-text" style="color: var(--neon-pink); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Dream Gastronomy</h2>
-      <p class="cyber-text" style="text-align: center;">"Perfect blend: Created a new dish that combines flavors from collective dreams. The taste of flying mixed with childhood memories of rainbow ice cream. Now serving at my quantum restaurant in the consciousness cloud." -DreamChef_2099</p>
+      <p class="cyber-text" style="text-align: center;">&quot;Perfect blend: Created a new dish that combines flavors from collective dreams. The taste of flying mixed with childhood memories of rainbow ice cream. Now serving at my quantum restaurant in the consciousness cloud.&quot; -DreamChef_2099</p>
     </div>
     
     <div class="panel-section" style="flex: 1;">
       <h2 class="cyber-text" style="color: var(--neon-purple); font-size: 2rem; margin-bottom: 1rem; text-align: center;">Quantum Pets</h2>
-      <p class="cyber-text" style="text-align: center;">"Warning: My quantum kitten just phase-shifted through seven dimensions while chasing a probability mouse! The new genetic templates from QuantumPets™ are getting better. She purrs in ultraviolet now!" -PetParent_2099</p>
+      <p class="cyber-text" style="text-align: center;">&quot;Warning: My quantum kitten just phase-shifted through seven dimensions while chasing a probability mouse! The new genetic templates from QuantumPets&#x2122; are getting better. She purrs in ultraviolet now!&quot; -PetParent_2099</p>
     </div>
   </div>
 
   <div class="floating-panel consciousness-panel" style="display: none;">
     <h2 class="cyber-text" style="color: var(--neon-pink); font-size: 2rem; margin-bottom: 1rem;">Digital Consciousness Upload</h2>
-    <p class="cyber-text">Transcend biological limitations with our consciousness digitization protocol. Advanced AI neural mapping ensures 99.999% retention of memories and personality matrices. Join the collective digital ecosystem where immortality isn't just a dream - it's a downloadable reality.</p>
+    <p class="cyber-text">Transcend biological limitations with our consciousness digitization protocol. Advanced AI neural mapping ensures 99.999% retention of memories and personality matrices. Join the collective digital ecosystem where immortality isn&apos;t just a dream - it&apos;s a downloadable reality.</p>
     <div class="quantum-effect"></div>
   </div>
 
@@ -243,455 +640,36 @@ body {
   </div>
 </div>
 
-<script>
-function activateHologram() {
+<script>function activateHologram() {
   const panel = document.querySelector('.floating-panel');
   panel.style.transform = 'scale(1.1)';
   panel.style.borderColor = '#ff2e88';
-  
   setTimeout(() => {
     panel.style.transform = '';
     panel.style.borderColor = '';
   }, 1000);
-  
-  // Create floating particles
-  for(let i = 0; i < 20; i++) {
+  for (let i = 0; i < 20; i++) {
     createParticle();
   }
 }
-
 function createParticle() {
   const particle = document.createElement('div');
   particle.style.position = 'fixed';
   particle.style.width = '2px';
   particle.style.height = '2px';
-  particle.style.background = `rgb(${Math.random()*255},${Math.random()*255},255)`;
+  particle.style.background = `rgb(${Math.random() * 255},${Math.random() * 255},255)`;
   particle.style.left = Math.random() * window.innerWidth + 'px';
   particle.style.top = Math.random() * window.innerHeight + 'px';
   particle.style.boxShadow = '0 0 10px currentColor';
   particle.style.transition = 'all 1s ease-out';
-  
   document.body.appendChild(particle);
-  
   setTimeout(() => {
-    particle.style.transform = `translate(${Math.random()*200-100}px, ${-Math.random()*500}px)`;
+    particle.style.transform = `translate(${Math.random() * 200 - 100}px, ${-Math.random() * 500}px)`;
     particle.style.opacity = '0';
   }, 10);
-  
   setTimeout(() => {
     particle.remove();
   }, 1000);
-}
-</script>
-
-
-
-
-
-
-
-<html>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Button Grid with Neon Effect</title>
-    <style>
-        *,
-        ::before,
-        ::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --clr-bg: #efefef;
-            --clr-primary: #0f172a; /* Dark background */
-            --easing: cubic-bezier(0.47, 1.64, 0.41, 0.8);
-            /* Custom colors for each button */
-                --color-furniture: #9B4DFF; /* Bright Purple Neon */
-    --color-property: #00FFFF; /* Cyan Neon */ 
-    --color-job: #ff33cc; /* Brighter Neon Pink */
-    --color-travel: #00FF00; /* Lime Green Neon */
-    --color-boat: #ff33cc; /* Brighter Neon Pink */
-    --color-mc: #9B4DFF; /* Bright Purple Neon */
-    --color-economy: #FFFF00; /* Neon Yellow */
-    --color-holiday: #00FFFF; /* Cyan Neon */ 
-        }
-
-        /* Reset button */
-        input,
-        button {
-            appearance: none;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            outline: none;
-            padding: 0;
-            margin: 0;
-            font-family: inherit;
-            font-size: inherit;
-            color: inherit;
-            text-decoration: none;
-            text-transform: none;
-            line-height: normal;
-            overflow: visible;
-        }
-
-        body {
-            margin: 0;
-            padding: 2rem;
-            display: grid;
-            place-items: center;
-            min-height: 100vh;
-            color: #7c4dff; /* Default Text Color */
-            background: var(--clr-primary); /* Background color */
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .buttons {
-            max-width: 840px;
-            width: 100%;
-            border-radius: 20px;
-            background-color: #000000; /* Black background for buttons */
-            border: 1px solid #ffffff30;
-            padding: 1rem; /* Reduced padding for mobile */
-            backdrop-filter: blur(12px);
-            display: grid;
-            grid-template-columns: repeat(16, minmax(90px, 1fr)); /* Default desktop layout */
-            gap: 1rem; /* Reduced gap for mobile */
-            position: sticky; /* This makes it sticky */
-            top: 0; /* Sticks the element to the top */
-            z-index: 100; /* Ensures the buttons are above other content */
-        }
-
-        .buttons::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-color: #00000020;
-            z-index: -1;
-            border-radius: inherit;
-            transition: inset 500ms ease-in-out;
-        }
-
-        .buttons:hover::before {
-            inset: -2rem;
-            transition-timing-function: cubic-bezier(0.47, 1.64, 0.41, 0.8);
-        }
-
-        .buttons button {
-            background-color: #000000; /* Black background for buttons */
-            border: 1px solid transparent; /* Initially no border */
-            padding: 1rem;
-            aspect-ratio: 1/1;
-            border-radius: 5px;
-            outline: none;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 300ms ease-in-out, box-shadow 300ms ease-in-out;
-            position: relative;
-            isolation: isolate;
-            color: inherit; /* Default color inherits */
-        }
-
-        /* Neon colors for each button */
-        .buttons button.furniture {
-            color: var(--color-furniture); /* Neon Pink */
-        }
-
-        .buttons button.property {
-            color: var(--color-property); /* Neon Purple */
-        }
-
-        .buttons button.job {
-            color: var(--color-job); /* Neon Blue */
-        }
-
-        .buttons button.travel {
-            color: var(--color-travel); /* Neon Green */
-        }
-
-        .buttons button.boat {
-            color: var(--color-boat); /* Neon Orange */
-        }
-
-        .buttons button.mc {
-            color: var(--color-mc); /* Neon Magenta */
-        }
-
-        .buttons button.economy {
-            color: var(--color-economy); /* Neon Yellow */
-        }
-
-        .buttons button.holiday {
-            color: var(--color-holiday); /* Neon Red */
-        }
-
-        .buttons button:hover {
-            transform: scale(1.1);
-        }
-
-        /* Specific hover effects for each button class */
-        .buttons button.furniture:hover {
-            box-shadow: 0 0 20px var(--color-furniture), 0 0 30px var(--color-furniture);
-        }
-
-        .buttons button.property:hover {
-            box-shadow: 0 0 20px var(--color-property), 0 0 30px var(--color-property);
-        }
-
-        .buttons button.job:hover {
-            box-shadow: 0 0 20px var(--color-job), 0 0 30px var(--color-job);
-        }
-
-        .buttons button.travel:hover {
-            box-shadow: 0 0 20px var(--color-travel), 0 0 30px var(--color-travel);
-        }
-
-        .buttons button.boat:hover {
-            box-shadow: 0 0 20px var(--color-boat), 0 0 30px var(--color-boat);
-        }
-
-        .buttons button.mc:hover {
-            box-shadow: 0 0 20px var(--color-mc), 0 0 30px var(--color-mc);
-        }
-
-        .buttons button.economy:hover {
-            box-shadow: 0 0 20px var(--color-economy), 0 0 30px var(--color-economy);
-        }
-
-        .buttons button.holiday:hover {
-            box-shadow: 0 0 20px var(--color-holiday), 0 0 30px var(--color-holiday);
-        }
-
-        .buttons button svg {
-            width: 1.8rem;
-            transition: color 300ms ease-in-out; /* Ensure icon color transitions */
-        }
-
-        .buttons button p {
-            position: absolute;
-            width: 100%;
-            font-size: 0.8rem;
-            opacity: 0;
-            left: 0;
-            bottom: -3.5px; /* Adjusted to move the text down 15px */
-            padding: 0.3rem;
-            text-align: center;
-            transition: all 150ms ease-in-out 0ms;
-            outline: none;
-            translate: 0 10px;
-        }
-
-        .buttons button:hover p {
-            opacity: 1;
-            translate: 0;
-            transition: all 300ms ease-in-out 150ms;
-        }
-
-        .buttons button:focus-visible,
-        .buttons button:hover {
-            z-index: 10;
-        }
-
-        .buttons:has(button:focus-visible) button:not(:focus-visible),
-        .buttons:has(button:hover) button:not(:hover) {
-            opacity: 50%;
-            scale: 85%;
-            z-index: -10;
-        }
-
-        @media (prefers-reduced-motion: no-preference) {
-            :root {
-                --d: 0;
-                --ani-speed: 300ms;
-            }
-            [scale-up] {
-                scale: 0;
-                animation: scale-up var(--ani-speed) forwards;
-                animation-delay: calc(var(--order, 0ms) * var(--ani-speed));
-            }
-        }
-
-        @keyframes scale-up {
-            0% {
-                scale: 0;
-            }
-            60% {
-                scale: 1.15;
-            }
-            100% {
-                scale: 1;
-            }
-        }
-
-        /* Add media queries for responsive design */
-        @media screen and (max-width: 768px) {
-            .buttons {
-                grid-template-columns: repeat(4, 1fr); /* 4 columns on tablets */
-                padding: 0.75rem;
-                gap: 0.75rem;
-            }
-            
-            .buttons button {
-                padding: 0.75rem;
-            }
-            
-            .buttons button svg {
-                width: 1.5rem;
-            }
-            
-            .buttons button p {
-                font-size: 0.7rem;
-            }
-        }
-
-       @media screen and (max-width: 480px) {
-    .buttons {
-        grid-template-columns: repeat(4, 1fr); /* 4 columns on mobile */
-        padding: 0.5rem;
-        gap: 0.75rem;
-    }
-    
-    .buttons button {
-        padding: 0.5rem;
-    }
-    
-    .buttons button svg {
-        width: 1.2rem;
-    }
-    
-    .buttons button p {
-        font-size: 0.65rem;
-        bottom: -5px; /* Move text down by 3 pixels from the previous -2px */
-    }
-    
-    body {
-        padding: 1rem;
-    }
-}
-    </style>
-
-
-<div class="buttons">
-    <div scale-up="" style="--order:1;">
-       
-<a href="https://www.caimeo.shop" class="button-link">
-    <button type="button" class="furniture">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M6 3h15l1.5 9H7L5.5 3H6z"></path>
-  <path d="M6 7h15l1 8H7l1-8z"></path>
-  <path d="M8 7v-2h4v2"></path>
-  <path d="M8 7v8M12 7v8M16 7v8"></path>
-  <circle cx="9" cy="20" r="2"></circle>
-  <circle cx="17" cy="20" r="2"></circle>
-</svg>
-
-        <p style="opacity: 1; translate: none;">Shop</p>   
-    </button>
-</a>
-
-        </div>
-      
-      
-  <div scale-up="" style="--order:2;">
-    <a href="https://www.caimeo.shop/hive.html" class="button-link">
-        <button type="button" class="property">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-
-  <path d="M4 7l8 -4l8 4v10l-8 4l-8 -4z"></path>
-  <path d="M4 7l8 4l8 -4M4 17l8 -4l8 4" stroke-linecap="round" stroke-linejoin="round"></path>
-  <circle cx="12" cy="12" r="3" stroke="currentColor" fill="none" stroke-width="2"></circle>
-</svg>
-            <p style="opacity: 1; translate: none;">Hive</p>
-        </button>
-    </a>
-</div>
-
-<div scale-up="" style="--order:3;">
-    <a href="https://www.caimeo.shop/studio.html" class="button-link">
-        <button type="button" class="job">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21.8 8s-.2-1.4-.8-2c-.7-.8-1.6-.8-2-.9C16 4.7 12 4.7 12 4.7s-4 0-7 .4c-.4 0-1.3 0-2 .9-.6.6-.8 2-.8 2S2 10 2 12s.2 4 1 4.8c.7.8 1.6.8 2 .9C8 19.3 12 19.3 12 19.3s4 0 7-.4c.4 0 1.3 0 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.6-.2-2.6-.2-2.6z"></path>
-                <polygon points="9.5,15.5 16,12 9.5,8.5"></polygon>
-            </svg>
-            <p style="opacity: 1; translate: none;">Studio</p>
-        </button>
-    </a>
-</div>
-
-<div scale-up="" style="--order:4;">
-    <a href="https://www.caimeo.shop/games.html" class="button-link">
-        <button type="button" class="travel">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 17h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1z"></path>
-                <path d="M8 17l1 -4h6l1 4"></path>
-                <circle cx="12" cy="7" r="3"></circle>
-                <line x1="12" y1="10" x2="12" y2="17"></line>
-            </svg>
-            <p style="opacity: 1; translate: none;">Games</p>
-                  </button>
-    </a>
-</div>
-
-<div scale-up="" style="--order:7;">
-    <a href="https://moddarkrevolt.wixsite.com/temple777/members" class="button-link">
-        <button type="button" class="economy">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M15 2 L2 28 L28 28 Z" stroke="currentColor" fill="none"></path>
-    <ellipse cx="15" cy="19" rx="6" ry="4" fill="none" stroke="currentColor" stroke-width="2"></ellipse>
-    <circle cx="15" cy="19" r="2" fill="currentColor"></circle>
-</svg>
-            <p style="opacity: 1; translate: none;">Network</p>
-
-        </button>
-    </a>
-</div>
-
-<div scale-up="" style="--order:5;">
-    <a href="https://711131719.xyz/puzzles.html" class="button-link">
-        <button type="button" class="boat">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M10 2h4v3a1 1 0 0 0 1 1h3v4a1 1 0 0 1 -1 1h-1v2h1a1 1 0 0 1 1 1v4h-4a1 1 0 0 0 -1 1v1a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-1a1 1 0 0 0 -1 -1h-2a1 1 0 0 1 -1 -1v-4h3a1 1 0 0 0 1 -1v-2a1 1 0 0 0 -1 -1h-3v-4h3a1 1 0 0 0 1 -1v-1a1 1 0 0 1 1 -1z"></path>
-            </svg>
-            <p style="opacity: 1; translate: none;">Puzzles</p>
-        </button>
-    </a>
-</div>
-
-<div scale-up="" style="--order:8;">
-    <a href="https://www.caimeo.shop/ai.html" class="button-link">
-        <button type="button" class="holiday">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="4" y="4" width="16" height="16" rx="2"></rect>
-                <path d="M9 9h6v6h-6z"></path>
-                <path d="M3 10h1"></path>
-                <path d="M3 14h1"></path>
-                <path d="M20 10h1"></path>
-                <path d="M20 14h1"></path>
-                <path d="M10 3v1"></path>
-                <path d="M14 3v1"></path>
-                <path d="M10 20v1"></path>
-                <path d="M14 20v1"></path>
-            </svg>
-            <p style="opacity: 1; translate: none;">A.I.</p>
-
-                  </button>
-    </a>
-</div>
-<div scale-up="" style="--order:6;">
-    <a href="https://www.caimeo.shop/about.html" class="button-link">
-        <button type="button" class="mc">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="16" cy="20" r="10" stroke="currentColor" fill="none"></circle>
-    <circle cx="12" cy="18" r="1" fill="currentColor"></circle>
-    <circle cx="20" cy="18" r="1" fill="currentColor"></circle>
-    <path d="M12.5 24c1.75 2 5.25 2 7 0" stroke="currentColor" fill="none"></path>
-    <ellipse cx="16" cy="4" rx="10" ry="2" stroke="currentColor" fill="none"></ellipse>
-</svg>
-            <p style="opacity: 1; translate: none;">About</p>
-        </button>
-    </a>
-</div>
-    </div>
+}</script>
+</body>
+</html>
