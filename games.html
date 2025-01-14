@@ -13,7 +13,6 @@
   box-sizing: border-box;
   font-family: 'Share Tech Mono', monospace;
   cursor: crosshair;
-  text-align: center; /* Added this line */
 }
 
 body {
@@ -21,6 +20,28 @@ body {
   color: var(--neon-green);
   overflow-x: hidden;
   min-height: 100vh;
+}
+
+.header-container {
+  width: 100%;
+  min-height: 50px;
+  background: var(--bg-dark);
+  color: var(--neon-green);
+  padding: 1rem;
+  border-bottom: 1px solid var(--neon-blue);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-container {
+  width: 100%;
+  min-height: 50px;
+  background: var(--bg-dark);
+  color: var(--neon-green);
+  padding: 1rem;
+  border-top: 1px solid var(--neon-blue);
 }
 
 .matrix-bg {
@@ -73,7 +94,7 @@ body {
   border: 1px solid var(--neon-blue);
   padding: 1rem;
   transition: all 0.3s;
-  text-align: center; /* Added this line */
+  text-align: center;
 }
 
 .game-card:hover {
@@ -189,7 +210,7 @@ body {
 .promo-content {
   padding: 2rem;
   color: var(--neon-green);
-  text-align: center; /* Added this line */
+  text-align: center;
 }
 
 .promo-title {
@@ -211,9 +232,30 @@ body {
 }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<script>
+// Function to load and inject header/footer
+async function loadComponent(url, targetId) {
+  try {
+    const response = await fetch(url);
+    const html = await response.text();
+    document.getElementById(targetId).innerHTML = html;
+  } catch (error) {
+    console.error(`Error loading ${url}:`, error);
+  }
+}
+
+// Load components when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  loadComponent('https://caimeo.shop/header.html', 'header-container');
+  loadComponent('https://caimeo.shop/footer.html', 'footer-container');
+});
+</script>
 </head>
 <body>
+
+<!-- Header container -->
+<div id="header-container" class="header-container"></div>
 
 <canvas class="matrix-bg" id="matrix"></canvas>
 
@@ -337,4 +379,8 @@ document.addEventListener('keydown', (e) => {
     }
 });
 </script>
+
+<!-- Footer container -->
+<div id="footer-container" class="footer-container"></div>
+
 </body></html>
