@@ -1,17 +1,15 @@
-<html>
-<head>
-  <base href="/">
+<html><head><base href="/">
   <meta charset="UTF-8">
-  <title>Custom Apparel &amp; Personalized Design Services</title>
+  <title>Custom Apparel &amp; Design Services</title>
 
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="Custom apparel, personalized designs and clothing. T-shirts, hoodies, joggers, jerseys and more. Also offering Native American inspired designs. Starting at &#x24;20.">
-  <meta name="keywords" content="custom apparel, custom t-shirts, custom hoodies, personalized clothing, custom jerseys, Native American designs">
+  <!-- SEO Meta Tags -->  
+  <meta name="description" content="Custom apparel, accessories and Native American inspired pieces. Quality craftsmanship bringing your ideas to life.">
+  <meta name="keywords" content="custom apparel, custom t-shirts, custom hoodies, dreamcatchers, Native American beadwork">
 
   <!-- Social Meta Tags -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Custom Apparel &amp; Personalized Design Services">
-  <meta property="og:description" content="Custom apparel, personalized designs and clothing. T-shirts, hoodies, joggers, jerseys and more. Also offering Native American inspired designs. Starting at &#x24;20.">
+  <meta property="og:type" content="website">  
+  <meta property="og:title" content="Custom Apparel &amp; Design Services">
+  <meta property="og:description" content="Custom apparel, accessories and Native American inspired pieces. Quality craftsmanship bringing your ideas to life.">
   <meta property="og:image" content>
 
   <style>
@@ -157,92 +155,14 @@
       left: 0;
     }
 
-    .product-price {
-      font-size: 2.5rem;
-      color: var(--neon-pink);
-      font-weight: bold;
-      margin-bottom: 2rem;
-      text-shadow: 0 0 10px var(--neon-pink);
-    }
-
-    .product-price span {
-      display: block;
-      margin: 5px 0;
-    }
-
-    #usa-price {
-      color: var(--neon-green);
-      text-shadow: 0 0 10px var(--neon-green);
-    }
-
-    #worldwide-price {
-      color: var(--neon-pink);
-      text-shadow: 0 0 10px var(--neon-pink);
-    }
-
-    .buy-button {
-      display: inline-block;
-      padding: 1rem 2rem;
-      background: transparent;
-      color: var(--neon-cyan);
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: 600;
-      border: 2px solid var(--neon-cyan);
-      transition: all 0.3s ease;
-      text-shadow: 0 0 5px var(--neon-cyan);
-      box-shadow: 0 0 10px var(--neon-cyan);
-      margin-right: 1rem;
-    }
-
-    .buy-button:hover {
-      background: var(--neon-cyan);
-      color: #000;
-      box-shadow: 0 0 20px var(--neon-cyan);
-    }
-
-    .variant-options {
-      margin-bottom: 2rem;
+    .variant-options,
+    .variant-title,
+    .variant-grid,
+    .variant-option,
+    .product-price,
+    .buy-button,
+    .demo-button {
       display: none;
-    }
-
-    .variant-title {
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--neon-purple);
-      text-shadow: 0 0 5px var(--neon-purple);
-      display: none;
-    }
-
-    .variant-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-      display: none;
-    }
-
-    .variant-option {
-      padding: 0.5rem;
-      border: 2px solid var(--neon-cyan);
-      border-radius: 6px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      color: var(--neon-cyan);
-      text-shadow: 0 0 5px var(--neon-cyan);
-      display: none;
-    }
-
-    .variant-option:hover {
-      background: rgba(0, 255, 255, 0.2);
-      box-shadow: 0 0 10px var(--neon-cyan);
-    }
-
-    .variant-option.selected {
-      background: var(--neon-cyan);
-      color: #000;
-      box-shadow: 0 0 15px var(--neon-cyan);
     }
 
     .product-features h3 {
@@ -319,25 +239,6 @@
       text-shadow: 0 0 5px var(--neon-green);
     }
 
-    .gallery-image-wrapper {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-    }
-
-    ::-webkit-scrollbar {
-      width: 8px;
-      background: #000;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--neon-cyan);
-      border-radius: 4px;
-      box-shadow: 0 0 5px var(--neon-cyan);
-    }
-
     .shipping-info {
       margin: 1rem 0;
       padding: 1rem;
@@ -357,140 +258,40 @@
       text-shadow: 0 0 5px var(--neon-pink);
     }
 
-    .product-care {
-      margin: 2rem 0;
-      padding: 1rem;
-      background: rgba(0, 255, 255, 0.1);
-      border-radius: 8px;
-      border: 1px solid var(--neon-cyan);
+    ::-webkit-scrollbar {
+      width: 8px;
+      background: #000;
     }
 
-    .product-care h3 {
-      color: var(--neon-purple);
-      text-shadow: 0 0 5px var(--neon-purple);
-      margin-bottom: 1rem;
-    }
-
-    .care-instructions {
-      list-style: none;
-      padding: 0;
-      margin: 1rem 0;
-    }
-
-    .care-instructions li {
-      color: var(--neon-cyan);
-      margin: 0.5rem 0;
-      text-shadow: 0 0 5px var(--neon-cyan);
-    }
-
-    #header-container {
-      width: 100%;
-      position: relative;
-      z-index: 100;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #header-container > * {
-      margin: 0 auto;
-    }
-
-    .demo-button {
-      margin-left: 0;
-      border-color: var(--neon-pink);
-      color: var(--neon-pink);
-      margin-right: 1rem;
-    }
-
-    .demo-button:hover {
-      background: var(--neon-pink);
-      color: #000;
-      box-shadow: 0 0 20px var(--neon-pink);
-    }
-
-    #session-price {
-      font-size: 2.5rem;
-      color: var(--neon-green);
-      text-shadow: 0 0 10px var(--neon-green);
-      margin-bottom: 1rem;
-    }
-
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin: 2rem 0;
-    }
-
-    .category-item {
-      background: rgba(0, 255, 255, 0.1);
-      border: 1px solid var(--neon-cyan);
-      border-radius: 8px;
-      padding: 1rem;
-      text-align: center;
-    }
-
-    .category-item h4 {
-      color: var(--neon-pink);
-      text-shadow: 0 0 5px var(--neon-pink);
-      margin-bottom: 0.5rem;
-    }
-
-    .category-item p {
-      color: var(--text);
-      font-size: 0.9rem;
-    }
-
-    .price-range {
-      color: var(--neon-green);
-      text-shadow: 0 0 5px var(--neon-green);
-      font-weight: bold;
-      margin-top: 0.5rem;
-    }
-
-    .contact-info {
-      margin: 2rem 0;
-      padding: 1rem;
-      background: rgba(0, 255, 255, 0.1);
-      border-radius: 8px;
-      border: 1px solid var(--neon-cyan);
-    }
-
-    .contact-info p {
-      color: var(--neon-cyan);
-      margin: 0.5rem 0;
-      text-shadow: 0 0 5px var(--neon-cyan);
-    }
-
-    .response-note {
-      color: var(--neon-pink) !important;
-      font-weight: bold;
-    }
-
-    .edit-note {
-      font-size: 0.9rem;
-      color: var(--neon-green) !important;
-      font-style: italic;
-    }
-
-    .contact-info .buy-button {
-      display: inline-block;
-      margin: 1rem 0;
-      word-break: break-all;
+    ::-webkit-scrollbar-thumb {
+      background: var(--neon-cyan);
+      border-radius: 4px;
+      box-shadow: 0 0 5px var(--neon-cyan);
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+
+  <!-- Add jQuery for header loading -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<div id="header-container"></div>  
+
+<div id="header-container">
+  <script>
+    $(document).ready(function() {
+      $("#header-container").load("https://caimeo.shop/header.html");
+    });
+  </script>
+</div>
+
 <div class="product-container" id="productContainer">
   <div class="product-details">
     <div class="product-image-container">
-      <img src="https://www.scalliwagcustoms.com/cdn/shop/products/customize.png?v=1671413696" alt="Customization Options" class="product-image">
+      <img src="https://www.scalliwagcustoms.com/cdn/shop/products/customize.png?v=1671413696" alt="Custom Design Process" class="product-image">
       
       <div class="product-specs">
-        <h3 class="spec-title">Custom Design Process</h3>
+        <h3 class="spec-title">Customization Options</h3>
+        <h4>Custom Design Process:</h4>
         <dl class="spec-list">
           <dt>Initial Consultation</dt>
           <dd>We&apos;ll discuss your design ideas, sizing, material preferences, and any special requirements to ensure your custom piece matches your vision perfectly.</dd>
@@ -510,7 +311,7 @@
     <div class="product-info">
       <h1 class="product-title">Custom Apparel &amp; Design Services</h1>
       <p class="product-description">
-        From custom t-shirts and hoodies to personalized jerseys and accessories, we bring your unique vision to life through quality craftsmanship. Each piece is carefully customized to your specifications, whether you&apos;re looking for modern designs, sports wear, or traditional Native American inspired artistry.
+        We specialize in creating custom apparel and accessories tailored to your unique vision. From personalized t-shirts and hoodies to custom jerseys and headwear, our quality craftsmanship brings your ideas to life. Whether you need custom sportswear, casual clothing, or traditional Native American inspired pieces, we&apos;ve got you covered.
       </p>
 
       <div class="product-features">
@@ -519,13 +320,12 @@
           <li>Custom T-shirts</li>
           <li>Custom Hoodies</li>
           <li>Custom Joggers</li>
-          <li>Sports Jerseys</li>
+          <li>Sports Jerseys</li> 
           <li>Custom Hats &amp; Beanies</li>
           <li>Custom Mugs &amp; Drinkware</li>
           <li>Traditional Dreamcatchers</li>
           <li>Native American Beadwork</li>
           <li>Custom Leatherwork</li>
-          <li>And More!</li>
         </ul>
       </div>
 
@@ -538,54 +338,39 @@
           <li><strong>Sports Jerseys:</strong> &#x24;89.99</li>
           <li><strong>Hats &amp; Beanies:</strong> Starting at &#x24;39.99</li>
           <li><strong>Custom Mugs:</strong> Starting at &#x24;25</li>
-          <li><strong>Dreamcatchers:</strong> &#x24;20-150 depending on size &amp; complexity</li>
+          <li><strong>Dreamcatchers:</strong> &#x24;10-150 depending on size &amp; complexity</li>
           <li><strong>Beadwork:</strong> &#x24;30-200 based on design</li>
           <li><strong>Leatherwork:</strong> &#x24;50-200</li>
         </ul>
       </div>
 
       <div class="shipping-info">
-        <p><strong>Turnaround Time:</strong> 1-3 weeks depending on complexity</p>
-        <p><strong>Shipping:</strong> Available worldwide (rates vary by location)</p>
-        <p><strong>Custom Orders:</strong> Contact us for special requests</p>
-      </div>
-
-      <div class="product-price">
-        <span>Starting at &#x24;20</span>
-        <span style="font-size: 1.2rem">Prices vary based on customization</span>
-      </div>
-
-      <div class="contact-info">
-        <p>Email detailed description of item to:</p>
-        <a href="mailto:moddarkrevolt@gmail.com" class="buy-button">moddarkrevolt@gmail.com</a>
-        <p class="response-note">Quote will be provided within 48 hours</p>
-        <p class="edit-note">* Project includes 2 main edit revisions before final completion</p>
+        <p><strong>Contact:</strong> Email me at moddarkrevolt@gmail.com</p>
       </div>
     </div>
   </div>
 </div>
-<div id="footer-container"></div>  
 
-<script>document.addEventListener('DOMContentLoaded', function () {
-  const categoryButtons = document.querySelectorAll('.category-filter');
-  categoryButtons.forEach(button => {
-    button.addEventListener('click', () => filterProducts(button.dataset.category));
+<div id="footer-container">
+  <script>
+    $(document).ready(function() {
+      $("#footer-container").load("https://caimeo.shop/footer.html");
+    });
+  </script>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.buy-button').forEach(btn => {
+    btn.replaceWith(btn.cloneNode(true));
   });
 });
-function filterProducts(category) {
-  const items = document.querySelectorAll('.category-item');
-  items.forEach(item => {
-    if (category === 'all' || item.dataset.category === category) {
-      item.style.display = 'block';
-    } else {
-      item.style.display = 'none';
-    }
-  });
-}
+
 function updateMainImage(src) {
   const mainImage = document.querySelector('.product-image');
   mainImage.src = src;
-}</script>
+}
+</script>
 
 </body>
 </html>
