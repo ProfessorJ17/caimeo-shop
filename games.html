@@ -22,26 +22,52 @@ body {
   min-height: 100vh;
 }
 
-.header-container {
-  width: 100%;
-  min-height: 50px;
-  background: var(--bg-dark);
-  color: var(--neon-green);
-  padding: 1rem;
-  border-bottom: 1px solid var(--neon-blue);
-  text-align: center;
+.main-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+}
+
+.header-container {
+  flex: 0 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.banner-section {
+  flex: 0 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  padding: 2rem 0;
+}
+
+.games-section {
+  flex: 1 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  padding: 2rem 0;
+  overflow: hidden;
 }
 
 .footer-container {
+  flex: 0 0 auto;
   width: 100%;
-  min-height: 50px;
-  background: var(--bg-dark);
-  color: var(--neon-green);
-  padding: 1rem;
-  border-top: 1px solid var(--neon-blue);
+  position: relative;
+  z-index: 2;
+}
+
+.games-grid {
+  height: auto;
+  overflow-y: visible;
+  padding: 0 2rem;
+}
+
+.promotional-section {
+  margin: 2rem auto;
 }
 
 .matrix-bg {
@@ -81,17 +107,6 @@ body {
   padding: 0 1rem;
 }
 
-.games-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  padding: 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  overflow-y: auto;
-  max-height: none;
-}
-
 .game-card {
   background: rgba(0,0,0,0.7);
   border: 1px solid var(--neon-blue);
@@ -109,7 +124,7 @@ body {
 
 .game-image {
   width: 100%;
-  height: 200px;
+  height: 800px;  
   background: var(--neon-blue);
   margin-bottom: 1rem;
   object-fit: cover;
@@ -277,114 +292,118 @@ document.addEventListener('DOMContentLoaded', () => {
 </head>
 <body>
 
-<!-- Header container -->
-<div id="header-container" class="header-container"></div>
+<div class="main-container">
+  <div id="header-container" class="header-container"></div>
+  
+  <canvas class="matrix-bg" id="matrix"></canvas>
 
-<canvas class="matrix-bg" id="matrix"></canvas>
+  <section class="banner-section">
+    <div class="glitch-container">
+      <h1 class="glitch">VALHALLA GAMES STUDIO</h1>
+      <div class="tagline">LEAVING YOU IN THE EXODUST</div>
+    </div>
+  </section>
 
-<div class="nav">
-</div>
+  <section class="games-section">
+    <div class="games-grid" style="scrollbar-width: none; -ms-overflow-style: none; margin-top: 10px;">
+      <div class="game-card">
+        <img src="https://caimeo.shop/games/poly.png" class="game-image" alt="Polybius">
+        <h3 class="game-title">
+          <a href="https://711131719.xyz/poly1.html">Polybius</a>
+        </h3>
+        <p class="game-description">A mind-bending arcade experience inspired by urban legends, designed to push the boundaries of perception and control.</p>
+      </div>
 
-<div class="glitch-container">
-  <h1 class="glitch">VALHALLA GAMES STUDIO</h1>
-  <div class="tagline">LEAVING YOU IN THE EXODUST</div>
-</div>
+      <div class="game-card">
+        <img src="https://caimeo.shop/games/monop.png" class="game-image" alt="Monopoly">
+        <h3 class="game-title">
+          <a href="https://711131719.xyz/landlordsgame.html">Monopoly (1904 Stolen Version)</a>
+        </h3>
+        <p class="game-description">Play the controversial original version of Monopoly, "The Landlord's Game," which critiques capitalism while fueling ruthless land-grabbing competition.</p>
+      </div>
 
-<div class="games-grid" style="scrollbar-width: none; -ms-overflow-style: none; margin-top: 10px;">
-  <div class="game-card">
-    <img src="https://caimeo.shop/games/poly.png" class="game-image" alt="Polybius">
-    <h3 class="game-title">
-      <a href="https://711131719.xyz/poly1.html">Polybius</a>
-    </h3>
-    <p class="game-description">A mind-bending arcade experience inspired by urban legends, designed to push the boundaries of perception and control.</p>
-  </div>
+      <div class="game-card">
+        <img src="https://caimeo.shop/games/tbj.png" class="game-image" alt="Tarot Blackjack">
+        <h3 class="game-title">
+          <a href="https://711131719.xyz/tarotbj.html">Tarot Blackjack</a>
+        </h3>
+        <p class="game-description">A mystical twist on Blackjack where Tarot cards determine your fate and strategy blends with divination.</p>
+      </div>
 
-  <div class="game-card">
-    <img src="https://caimeo.shop/games/monop.png" class="game-image" alt="Monopoly">
-    <h3 class="game-title">
-      <a href="https://711131719.xyz/landlordsgame.html">Monopoly (1904 Stolen Version)</a>
-    </h3>
-    <p class="game-description">Play the controversial original version of Monopoly, "The Landlord's Game," which critiques capitalism while fueling ruthless land-grabbing competition.</p>
-  </div>
+      <div class="game-card">
+        <img src="https://caimeo.shop/games/tth.png" class="game-image" alt="Tarot Poker">
+        <h3 class="game-title">
+          <a href="https://711131719.xyz/tarotpoker.html">Tarot Poker</a>
+        </h3>
+        <p class="game-description">Combine poker's classic strategy with Tarot's arcane mysteries for a game where intuition is as important as your hand.</p>
+      </div>
 
-  <div class="game-card">
-    <img src="https://caimeo.shop/games/tbj.png" class="game-image" alt="Tarot Blackjack">
-    <h3 class="game-title">
-      <a href="https://711131719.xyz/tarotbj.html">Tarot Blackjack</a>
-    </h3>
-    <p class="game-description">A mystical twist on Blackjack where Tarot cards determine your fate and strategy blends with divination.</p>
-  </div>
+      <div class="game-card">
+        <img src="https://caimeo.shop/games/pd1.png" class="game-image" alt="Peg Drop">
+        <h3 class="game-title">
+          <a href="https://711131719.xyz/PegDrop.html">Peg Drop</a>
+        </h3>
+        <p class="game-description">Test your skill and timing in this addictive peg-dropping puzzle game that challenges gravity and precision.</p>
+      </div>
 
-  <div class="game-card">
-    <img src="https://caimeo.shop/games/tth.png" class="game-image" alt="Tarot Poker">
-    <h3 class="game-title">
-      <a href="https://711131719.xyz/tarotpoker.html">Tarot Poker</a>
-    </h3>
-    <p class="game-description">Combine poker's classic strategy with Tarot's arcane mysteries for a game where intuition is as important as your hand.</p>
-  </div>
+      <div class="game-card">
+        <img src="https://caimeo.shop/games/qg.png" class="game-image" alt="Quantum Game">
+        <h3 class="game-title">
+          <a href="https://711131719.xyz/quantum.html">Quantum Game</a>
+        </h3>
+        <p class="game-description">Navigate quantum probabilities in this mind-twisting strategy game where every choice collapses infinite possibilities.</p>
+      </div>
 
-  <div class="game-card">
-    <img src="https://caimeo.shop/games/pd1.png" class="game-image" alt="Peg Drop">
-    <h3 class="game-title">
-      <a href="https://711131719.xyz/PegDrop.html">Peg Drop</a>
-    </h3>
-    <p class="game-description">Test your skill and timing in this addictive peg-dropping puzzle game that challenges gravity and precision.</p>
-  </div>
+      <div class="game-card">
+        <img src="https://caimeo.shop/games/telepathic.png" class="game-image" alt="Telepathic Puzzle">
+        <h3 class="game-title">
+          <a href="https://711131719.xyz/TelepathicPuzzle.html">Telepathic Puzzle</a>
+        </h3>
+        <p class="game-description">Solve cryptic puzzles using intuition and telepathic hints, challenging the limits of human connection and logic.</p>
+      </div>
 
-  <div class="game-card">
-    <img src="https://caimeo.shop/games/qg.png" class="game-image" alt="Quantum Game">
-    <h3 class="game-title">
-      <a href="https://711131719.xyz/quantum.html">Quantum Game</a>
-    </h3>
-    <p class="game-description">Navigate quantum probabilities in this mind-twisting strategy game where every choice collapses infinite possibilities.</p>
-  </div>
+      <div class="game-card">
+        <img src="https://caimeo.shop/games/frog1.png" class="game-image" alt="Cyber Frogger">
+        <h3 class="game-title">
+          <a href="https://711131719.xyz/CyberFrogger.html">Cyber Frogger</a>
+        </h3>
+        <p class="game-description">Leap through a neon dystopia in this high-tech evolution of the classic Frogger game with cybernetic obstacles.</p>
+      </div>
 
-  <div class="game-card">
-    <img src="https://caimeo.shop/games/telepathic.png" class="game-image" alt="Telepathic Puzzle">
-    <h3 class="game-title">
-      <a href="https://711131719.xyz/TelepathicPuzzle.html">Telepathic Puzzle</a>
-    </h3>
-    <p class="game-description">Solve cryptic puzzles using intuition and telepathic hints, challenging the limits of human connection and logic.</p>
-  </div>
+      <div class="game-card">
+        <img src="https://caimeo.shop/games/elevator.png" class="game-image" alt="Hellavader Escape">
+        <h3 class="game-title">
+          <a href="https://711131719.xyz/HellavaderEscape.html">Hellavader Escape</a>
+        </h3>
+        <p class="game-description">Survive a terrifying descent as you try to escape an elevator trapped in the infernal depths of Hell.</p>
+      </div>
 
-  <div class="game-card">
-    <img src="https://caimeo.shop/games/frog1.png" class="game-image" alt="Cyber Frogger">
-    <h3 class="game-title">
-      <a href="https://711131719.xyz/CyberFrogger.html">Cyber Frogger</a>
-    </h3>
-    <p class="game-description">Leap through a neon dystopia in this high-tech evolution of the classic Frogger game with cybernetic obstacles.</p>
-  </div>
+      <div class="game-card">
+        <img src="https://caimeo.shop/games/hi1.png" class="game-image" alt="Hell-Invaders">
+        <h3 class="game-title">
+          <a href="https://711131719.xyz/Hell-Invaders.html">Hell-Invaders</a>
+        </h3>
+        <p class="game-description">Defend yourself against an onslaught of demonic forces in this hellish reimagining of the classic Space Invaders.</p>
+      </div>
+    </div>
+    
+    <div class="promotional-section">
+      <div class="promo-content">
+        <img src="https://play.gx.games/game/ebea1f48-a9e2-4d7d-8b38-f6c5bcd511a2/graphic/8aae01be-c366-4035-ab4c-67974f04bdbc/webp-1280?8337d6fe25c500216e0044c04ec511af" class="promo-image" alt="Game artwork">
+        <p class="promo-text" style="margin-top: 1rem;">Hell-o amici. Welcome to the Void in Time and space.</p>
+        <p class="promo-text"><a href="https://gx.games/games/n2qh4f/holy-order-early-access/" style="color: var(--neon-blue); text-decoration: none;">Play the game</a></p>
+      </div>
+      <div class="promo-content">
+        <h2 class="promo-title">Pioneers of Digital Reality</h2>
+        <p class="promo-text">Founded in 2016, Valhalla Games Studio has been pushing the boundaries of digital entertainment under the visionary leadership of <span class="promo-highlight">Professor J</span>, our Head Developer.</p>
+        <p class="promo-text">As the creative force behind <span class="promo-highlight">CAIMEO AI</span> and over 20 groundbreaking AI projects, we've consistently delivered experiences that challenge the conventional and explore the bleeding edge of technology.</p>
+        <p class="promo-text">Our portfolio includes 10 revolutionary games that have redefined their respective genres, alongside numerous innovative projects that merge the realms of artificial intelligence and interactive entertainment.</p>
+        <p class="promo-text">At Valhalla, we don't just create games - we craft digital realities that push the boundaries of what's possible.</p>
+      </div>
+    </div>
+  </section>
 
-  <div class="game-card">
-    <img src="https://caimeo.shop/games/elevator.png" class="game-image" alt="Hellavader Escape">
-    <h3 class="game-title">
-      <a href="https://711131719.xyz/HellavaderEscape.html">Hellavader Escape</a>
-    </h3>
-    <p class="game-description">Survive a terrifying descent as you try to escape an elevator trapped in the infernal depths of Hell.</p>
-  </div>
-
-  <div class="game-card">
-    <img src="https://caimeo.shop/games/hi1.png" class="game-image" alt="Hell-Invaders">
-    <h3 class="game-title">
-      <a href="https://711131719.xyz/Hell-Invaders.html">Hell-Invaders</a>
-    </h3>
-    <p class="game-description">Defend yourself against an onslaught of demonic forces in this hellish reimagining of the classic Space Invaders.</p>
-  </div>
-</div>
-
-<div class="promotional-section" style="margin-top: 20px; position: relative; z-index: 1;">
-  <div class="promo-content">
-    <img src="https://play.gx.games/game/ebea1f48-a9e2-4d7d-8b38-f6c5bcd511a2/graphic/8aae01be-c366-4035-ab4c-67974f04bdbc/webp-1280?8337d6fe25c500216e0044c04ec511af" class="promo-image" alt="Game artwork">
-    <p class="promo-text" style="margin-top: 1rem;">Hell-o amici. Welcome to the Void in Time and space.</p>
-    <p class="promo-text"><a href="https://gx.games/games/n2qh4f/holy-order-early-access/" style="color: var(--neon-blue); text-decoration: none;">Play the game</a></p>
-  </div>
-  <div class="promo-content">
-    <h2 class="promo-title">Pioneers of Digital Reality</h2>
-    <p class="promo-text">Founded in 2016, Valhalla Games Studio has been pushing the boundaries of digital entertainment under the visionary leadership of <span class="promo-highlight">Professor J</span>, our Head Developer.</p>
-    <p class="promo-text">As the creative force behind <span class="promo-highlight">CAIMEO AI</span> and over 20 groundbreaking AI projects, we've consistently delivered experiences that challenge the conventional and explore the bleeding edge of technology.</p>
-    <p class="promo-text">Our portfolio includes 10 revolutionary games that have redefined their respective genres, alongside numerous innovative projects that merge the realms of artificial intelligence and interactive entertainment.</p>
-    <p class="promo-text">At Valhalla, we don't just create games - we craft digital realities that push the boundaries of what's possible.</p>
-  </div>
+  <div id="footer-container" class="footer-container"></div>
 </div>
 
 <div class="binary" id="binary"></div>
@@ -405,8 +424,5 @@ document.addEventListener('keydown', (e) => {
     }
 });
 </script>
-
-<!-- Footer container -->
-<div id="footer-container" class="footer-container"></div>
 
 </body></html>
