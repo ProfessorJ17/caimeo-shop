@@ -20,6 +20,8 @@ body {
   color: var(--neon-green);
   overflow-x: hidden;
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 .main-container {
@@ -27,6 +29,8 @@ body {
   flex-direction: column;
   min-height: 100vh;
   position: relative;
+  margin-top: 0;
+  padding-top: 0;
 }
 
 .header-container {
@@ -37,6 +41,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 0;
+  padding-top: 0;
 }
 
 .banner-section {
@@ -290,6 +296,29 @@ async function loadComponent(url, targetId) {
 document.addEventListener('DOMContentLoaded', () => {
   loadComponent('https://caimeo.shop/header.html', 'header-container');
   loadComponent('https://caimeo.shop/footer.html', 'footer-container');
+  
+  // Reset scroll position to top
+  window.scrollTo(0, 0);
+});
+
+// Add scroll reset on page load
+window.onload = function() {
+  window.scrollTo(0, 0);
+};
+
+// Easter egg key sequence
+let sequence = '';
+const secretCode = 'valhalla';
+
+document.addEventListener('keydown', (e) => {
+    sequence += e.key;
+    if(sequence.includes(secretCode)) {
+        document.body.style.setProperty('--neon-green', '#ff0000');
+        setTimeout(() => {
+            document.body.style.setProperty('--neon-green', '#39ff14');
+            sequence = '';
+        }, 1000);
+    }
 });
 </script>
 </head>
@@ -410,22 +439,5 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <div class="binary" id="binary"></div>
-
-<script>
-// Easter egg key sequence
-let sequence = '';
-const secretCode = 'valhalla';
-
-document.addEventListener('keydown', (e) => {
-    sequence += e.key;
-    if(sequence.includes(secretCode)) {
-        document.body.style.setProperty('--neon-green', '#ff0000');
-        setTimeout(() => {
-            document.body.style.setProperty('--neon-green', '#39ff14');
-            sequence = '';
-        }, 1000);
-    }
-});
-</script>
 
 </body></html>
