@@ -13,6 +13,7 @@
   box-sizing: border-box;
   font-family: 'Share Tech Mono', monospace;
   cursor: crosshair;
+  text-align: center; 
 }
 
 body {
@@ -20,28 +21,6 @@ body {
   color: var(--neon-green);
   overflow-x: hidden;
   min-height: 100vh;
-}
-
-.header-container {
-  width: 100%;
-  min-height: 50px;
-  background: var(--bg-dark);
-  color: var(--neon-green);
-  padding: 1rem;
-  border-bottom: 1px solid var(--neon-blue);
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.footer-container {
-  width: 100%;
-  min-height: 50px;
-  background: var(--bg-dark);
-  color: var(--neon-green);
-  padding: 1rem;
-  border-top: 1px solid var(--neon-blue);
 }
 
 .matrix-bg {
@@ -94,7 +73,7 @@ body {
   border: 1px solid var(--neon-blue);
   padding: 1rem;
   transition: all 0.3s;
-  text-align: center;
+  text-align: center; 
 }
 
 .game-card:hover {
@@ -210,7 +189,7 @@ body {
 .promo-content {
   padding: 2rem;
   color: var(--neon-green);
-  text-align: center;
+  text-align: center; 
 }
 
 .promo-title {
@@ -230,9 +209,23 @@ body {
   color: var(--neon-blue);
   text-shadow: 0 0 5px var(--neon-blue);
 }
+
+.header-container, .footer-container {
+  width: 100%;
+  min-height: 50px;
+  background: var(--bg-dark);
+  color: var(--neon-green);
+  padding: 1rem;
+  border-bottom: 1px solid var(--neon-blue);
+}
+
+.footer-container {
+  border-top: 1px solid var(--neon-blue);
+  border-bottom: none;
+}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&amp;display=swap" rel="stylesheet">
 <script>
 // Function to load and inject header/footer
 async function loadComponent(url, targetId) {
