@@ -43,12 +43,12 @@ body {
 
 .footer-container {
   border-top: 1px solid var(--neon-blue);
-  margin-top: auto; 
+  margin-top: auto;
 }
 
 .glitch-container {
   text-align: center;
-  margin: 2rem 0;
+  margin: 2.125rem 0;
 }
 
 .glitch {
@@ -85,24 +85,23 @@ body {
   box-shadow: 0 0 15px var(--neon-blue);
 }
 
+.game-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
 .game-image {
   height: 200px;
-  background: rgba(0, 255, 249, 0.1);
+  background-size: cover;
+  background-position: center;
   border-radius: 5px;
   margin-bottom: 1rem;
 }
 
 .game-title {
   margin-bottom: 1rem;
-}
-
-.game-title a {
   color: var(--neon-pink);
-  text-decoration: none;
-}
-
-.game-title a:hover {
-  text-shadow: 0 0 5px var(--neon-pink);
 }
 
 .game-description {
@@ -193,83 +192,91 @@ document.addEventListener('DOMContentLoaded', () => {
 
   <div class="games-grid" style="scrollbar-width: none; -ms-overflow-style: none; margin-top: 10px;">
     <div class="game-card">
-      <div class="game-image"></div>
-      <h3 class="game-title">
-        <a href="https://711131719.xyz/poly1.html">Polybius</a>
-      </h3>
-      <p class="game-description">A mind-bending arcade experience inspired by urban legends, designed to push the boundaries of perception and control.</p>
+      <a href="https://711131719.xyz/poly1.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/poly.png')"></div>
+        <h3 class="game-title">Polybius</h3>
+        <p class="game-description">A mind-bending arcade experience inspired by urban legends, designed to push the boundaries of perception and control.</p>
+      </a>
     </div>
 
     <div class="game-card">
-      <div class="game-image"></div>
-      <h3 class="game-title">
-        <a href="https://711131719.xyz/landlordsgame.html">Monopoly (1904 Stolen Version)</a>
-      </h3>
-      <p class="game-description">Play the controversial original version of Monopoly, "The Landlord's Game," which critiques capitalism while fueling ruthless land-grabbing competition.</p>
+      <a href="https://711131719.xyz/landlordsgame.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/monop.png')"></div>
+        <h3 class="game-title">Monopoly (1904 Stolen Version)</h3>
+        <p class="game-description">Play the controversial original version of Monopoly, "The Landlord's Game," which critiques capitalism while fueling ruthless land-grabbing competition.</p>
+      </a>
     </div>
 
     <div class="game-card">
-      <div class="game-image"></div>
-      <h3 class="game-title">
-        <a href="https://711131719.xyz/tarotbj.html">Tarot Blackjack</a>
-      </h3>
-      <p class="game-description">A mystical twist on Blackjack where Tarot cards determine your fate and strategy blends with divination.</p>
+      <a href="https://711131719.xyz/tarotbj.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/tbj.png')"></div>
+        <h3 class="game-title">Tarot Blackjack</h3>
+        <p class="game-description">A mystical twist on Blackjack where Tarot cards determine your fate and strategy blends with divination.</p>
+      </a>
     </div>
 
     <div class="game-card">
-      <div class="game-image"></div>
-      <h3 class="game-title">
-        <a href="https://711131719.xyz/tarotpoker.html">Tarot Poker</a>
-      </h3>
-      <p class="game-description">Combine poker's classic strategy with Tarot's arcane mysteries for a game where intuition is as important as your hand.</p>
+      <a href="https://711131719.xyz/tarotpoker.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/tth.png')"></div>
+        <h3 class="game-title">Tarot Poker</h3>
+        <p class="game-description">Combine poker's classic strategy with Tarot's arcane mysteries for a game where intuition is as important as your hand.</p>
+      </a>
     </div>
 
     <div class="game-card">
-      <div class="game-image"></div>
-      <h3 class="game-title">
-        <a href="https://711131719.xyz/PegDrop.html">Peg Drop</a>
-      </h3>
-      <p class="game-description">Test your skill and timing in this addictive peg-dropping puzzle game that challenges gravity and precision.</p>
+      <a href="https://711131719.xyz/PegDrop.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/pd1.png')"></div>
+        <h3 class="game-title">Peg Drop</h3>
+        <p class="game-description">Test your skill and timing in this addictive peg-dropping puzzle game that challenges gravity and precision.</p>
+      </a>
     </div>
 
     <div class="game-card">
-      <div class="game-image"></div>
-      <h3 class="game-title">
-        <a href="https://711131719.xyz/quantum.html">Quantum Game</a>
-      </h3>
-      <p class="game-description">Navigate quantum probabilities in this mind-twisting strategy game where every choice collapses infinite possibilities.</p>
+      <a href="https://711131719.xyz/quantum.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/qg.png')"></div>
+        <h3 class="game-title">Quantum Game</h3>
+        <p class="game-description">Navigate quantum probabilities in this mind-twisting strategy game where every choice collapses infinite possibilities.</p>
+      </a>
     </div>
 
     <div class="game-card">
-      <div class="game-image"></div>
-      <h3 class="game-title">
-        <a href="https://711131719.xyz/TelepathicPuzzle.html">Telepathic Puzzle</a>
-      </h3>
-      <p class="game-description">Solve cryptic puzzles using intuition and telepathic hints, challenging the limits of human connection and logic.</p>
+      <a href="https://711131719.xyz/TelepathicPuzzle.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/telepathic.png')"></div>
+        <h3 class="game-title">Telepathic Puzzle</h3>
+        <p class="game-description">Solve cryptic puzzles using intuition and telepathic hints, challenging the limits of human connection and logic.</p>
+      </a>
     </div>
 
     <div class="game-card">
-      <div class="game-image"></div>
-      <h3 class="game-title">
-        <a href="https://711131719.xyz/CyberFrogger.html">Cyber Frogger</a>
-      </h3>
-      <p class="game-description">Leap through a neon dystopia in this high-tech evolution of the classic Frogger game with cybernetic obstacles.</p>
+      <a href="https://711131719.xyz/CyberFrogger.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/frog1.png')"></div>
+        <h3 class="game-title">Cyber Frogger</h3>
+        <p class="game-description">Leap through a neon dystopia in this high-tech evolution of the classic Frogger game with cybernetic obstacles.</p>
+      </a>
     </div>
 
     <div class="game-card">
-      <div class="game-image"></div>
-      <h3 class="game-title">
-        <a href="https://711131719.xyz/HellavaderEscape.html">Hellavader Escape</a>
-      </h3>
-      <p class="game-description">Survive a terrifying descent as you try to escape an elevator trapped in the infernal depths of Hell.</p>
+      <a href="https://711131719.xyz/HellavaderEscape.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/elevator.png')"></div>
+        <h3 class="game-title">Hellavader Escape</h3>
+        <p class="game-description">Survive a terrifying descent as you try to escape an elevator trapped in the infernal depths of Hell.</p>
+      </a>
     </div>
 
     <div class="game-card">
-      <div class="game-image"></div>
-      <h3 class="game-title">
-        <a href="https://711131719.xyz/Hell-Invaders.html">Hell-Invaders</a>
-      </h3>
-      <p class="game-description">Defend yourself against an onslaught of demonic forces in this hellish reimagining of the classic Space Invaders.</p>
+      <a href="https://711131719.xyz/Hell-Invaders.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/hi1.png')"></div>
+        <h3 class="game-title">Hell-Invaders</h3>
+        <p class="game-description">Defend yourself against an onslaught of demonic forces in this hellish reimagining of the classic Space Invaders.</p>
+      </a>
+    </div>
+
+    <div class="game-card">
+      <a href="https://gx.games/games/n2qh4f/holy-order-early-access/" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/ho1.png')"></div>
+        <h3 class="game-title">Holy Order</h3>
+        <p class="game-description">Hell-o amici. Welcome to the Void in Time and space. Holy Order is a Multi Platform fantasy adventure RPG!</p>
+      </a>
     </div>
   </div>
 
