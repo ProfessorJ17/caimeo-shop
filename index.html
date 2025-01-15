@@ -1,9 +1,8 @@
-<html><head><base href="https://www.caimeo.shop">
-    
-    <script async="async" src="https://mm-uxrv.com/js/mm_f0ca7944-4a5e-4911-8390-35bb18f5483d-85999814.js"></script>
-    
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839146786704737" crossorigin="anonymous"></script>
+<html><head><base href=""><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839146786704737"
+     crossorigin="anonymous"></script>
     <meta name="google-adsense-account" content="ca-pub-3839146786704737">
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Button Grid with Neon Effect</title>
@@ -17,8 +16,8 @@
         }
 
         :root {
-            --clr-bg: #efefef;
-            --clr-primary: #0f172a; /* Dark background */
+            --clr-bg: #000000;
+            --clr-primary: #000000; /* Dark background */
             --easing: cubic-bezier(0.47, 1.64, 0.41, 0.8);
             /* Custom colors for each button */
                 --color-furniture: #9B4DFF; /* Bright Purple Neon */
@@ -52,7 +51,7 @@
 
         body {
             margin: 0;
-            padding: 2rem;
+            padding-top: calc(2rem + 90px);
             display: grid;
             place-items: center;
             min-height: 100vh;
@@ -62,6 +61,12 @@
         }
 
         .buttons {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            margin: 0 auto;
             max-width: 840px;
             width: 100%;
             border-radius: 20px;
@@ -72,9 +77,6 @@
             display: grid;
             grid-template-columns: repeat(16, minmax(90px, 1fr)); /* Default desktop layout */
             gap: 1rem; /* Reduced gap for mobile */
-            position: sticky; /* This makes it sticky */
-            top: 0; /* Sticks the element to the top */
-            z-index: 100; /* Ensures the buttons are above other content */
         }
 
         .buttons::before {
@@ -113,7 +115,7 @@
         }
 
         .buttons button.property {
-            color: var(--color-property); /* Neon Purple */
+            color: var(--color-travel); /* Neon Purple */
         }
 
         .buttons button.job {
@@ -150,7 +152,7 @@
         }
 
         .buttons button.property:hover {
-            box-shadow: 0 0 20px var(--color-property), 0 0 30px var(--color-property);
+            box-shadow: 0 0 20px var(--color-travel), 0 0 30px var(--color-travel);
         }
 
         .buttons button.job:hover {
@@ -280,24 +282,23 @@
     }
     
     body {
-        padding: 1rem;
+        padding-top: calc(1rem + 70px);
     }
 }
     </style>
 </head>
 <body>
 <div class="buttons">
-    <div scale-up style="--order:1;">
-       
-<a href="https://www.caimeo.shop" class="button-link">
-    <button type="button" class="furniture">
+    <div scale-up="" style="--order:1;">
+        <a href="https://www.caimeo.shop" class="button-link" target="_blank">
+            <button type="button" class="furniture">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M6 3h15l1.5 9H7L5.5 3H6z"/>
-  <path d="M6 7h15l1 8H7l1-8z"/>
-  <path d="M8 7v-2h4v2"/>
-  <path d="M8 7v8M12 7v8M16 7v8"/>
-  <circle cx="9" cy="20" r="2"/>
-  <circle cx="17" cy="20" r="2"/>
+  <path d="M6 3h15l1.5 9H7L5.5 3H6z"></path>
+  <path d="M6 7h15l1 8H7l1-8z"></path>
+  <path d="M8 7v-2h4v2"></path>
+  <path d="M8 7v8M12 7v8M16 7v8"></path>
+  <circle cx="9" cy="20" r="2"></circle>
+  <circle cx="17" cy="20" r="2"></circle>
 </svg>
 
         <p style="opacity: 1; translate: none;">Shop</p>   
@@ -307,48 +308,33 @@
         </div>
       
       
-  <div scale-up style="--order:2;">
-    <a href="https://www.caimeo.shop/hive.html" class="button-link">
-        <button type="button" class="property">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-
-  <path d="M4 7l8 -4l8 4v10l-8 4l-8 -4z"/>
-  <path d="M4 7l8 4l8 -4M4 17l8 -4l8 4" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="12" cy="12" r="3" stroke="currentColor" fill="none" stroke-width="2"/>
-</svg>
-            <p style="opacity: 1; translate: none;">Hive</p>
-        </button>
-    </a>
-</div>
-
-<div scale-up style="--order:3;">
-    <a href="https://www.caimeo.shop/studio.html" class="button-link">
-        <button type="button" class="job">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21.8 8s-.2-1.4-.8-2c-.7-.8-1.6-.8-2-.9C16 4.7 12 4.7 12 4.7s-4 0-7 .4c-.4 0-1.3 0-2 .9-.6.6-.8 2-.8 2S2 10 2 12s.2 4 1 4.8c.7.8 1.6.8 2 .9C8 19.3 12 19.3 12 19.3s4 0 7-.4c.4 0 1.3 0 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.6-.2-2.6-.2-2.6z"/>
-                <polygon points="9.5,15.5 16,12 9.5,8.5"/>
-            </svg>
-            <p style="opacity: 1; translate: none;">Studio</p>
-        </button>
-    </a>
-</div>
-
-<div scale-up style="--order:4;">
-    <a href="https://www.caimeo.shop/games.html" class="button-link">
+  <div scale-up="" style="--order:2;">
+    <a href="https://www.caimeo.shop/games.html" class="button-link" target="_blank">
         <button type="button" class="travel">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 17h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1z"/>
-                <path d="M8 17l1 -4h6l1 4"/>
-                <circle cx="12" cy="7" r="3"/>
-                <line x1="12" y1="10" x2="12" y2="17"/>
+                <path d="M4 17h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1z"></path>
+                <path d="M8 17l1 -4h6l1 4"></path>
+                <circle cx="12" cy="7" r="3"></circle>
+                <line x1="12" y1="10" x2="12" y2="17"></line>
             </svg>
             <p style="opacity: 1; translate: none;">Games</p>
-                  </button>
+        </button>
     </a>
 </div>
 
-<div scale-up style="--order:7;">
-    <a href="https://moddarkrevolt.wixsite.com/temple777/members" class="button-link">
+<div scale-up="" style="--order:3;">
+    <a href="https://www.711131719.xyz/puzzles.html" class="button-link" target="_blank">
+        <button type="button" class="boat">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 2h4v3a1 1 0 0 0 1 1h3v4a1 1 0 0 1 -1 1h-1v2h1a1 1 0 0 1 1 1v4h-4a1 1 0 0 0 -1 1v1a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-1a1 1 0 0 0 -1 -1h-2a1 1 0 0 1 -1 -1v-4h3a1 1 0 0 0 1 -1v-2a1 1 0 0 0 -1 -1h-3v-4h3a1 1 0 0 0 1 -1v-1a1 1 0 0 1 1 -1z"></path>
+            </svg>
+            <p style="opacity: 1; translate: none;">Puzzles</p>
+        </button>
+    </a>
+</div>
+
+<div scale-up="" style="--order:4;">
+    <a href="https://moddarkrevolt.wixsite.com/temple777/members" class="button-link" target="_blank">
         <button type="button" class="economy">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M15 2 L2 28 L28 28 Z" stroke="currentColor" fill="none"/>
@@ -361,39 +347,54 @@
     </a>
 </div>
 
-<div scale-up style="--order:5;">
-    <a href="https://711131719.xyz/puzzles.html" class="button-link">
-        <button type="button" class="boat">
+<div scale-up="" style="--order:5;">
+    <a href="https://www.caimeo.shop/studio.html" class="button-link" target="_blank">
+        <button type="button" class="job">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M10 2h4v3a1 1 0 0 0 1 1h3v4a1 1 0 0 1 -1 1h-1v2h1a1 1 0 0 1 1 1v4h-4a1 1 0 0 0 -1 1v1a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-1a1 1 0 0 0 -1 -1h-2a1 1 0 0 1 -1 -1v-4h3a1 1 0 0 0 1 -1v-2a1 1 0 0 0 -1 -1h-3v-4h3a1 1 0 0 0 1 -1v-1a1 1 0 0 1 1 -1z"/>
+                <path d="M21.8 8s-.2-1.4-.8-2c-.7-.8-1.6-.8-2-.9C16 4.7 12 4.7 12 4.7s-4 0-7 .4c-.4 0-1.3 0-2 .9-.6.6-.8 2-.8 2S2 10 2 12s.2 4 1 4.8c.7.8 1.6.8 2 .9C8 19.3 12 19.3 12 19.3s4 0 7-.4c.4 0 1.3 0 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.6-.2-2.6-.2-2.6z"></path>
+                <polygon points="9.5,15.5 16,12 9.5,8.5"></polygon>
             </svg>
-            <p style="opacity: 1; translate: none;">Puzzles</p>
+            <p style="opacity: 1; translate: none;">Studio</p>
         </button>
     </a>
 </div>
 
-<div scale-up style="--order:8;">
-    <a href="https://www.caimeo.shop/ai.html" class="button-link">
+<div scale-up="" style="--order:6;">
+    <a href="https://www.caimeo.shop/ai.html" class="button-link" target="_blank">
         <button type="button" class="holiday">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="4" y="4" width="16" height="16" rx="2"/>
-                <path d="M9 9h6v6h-6z"/>
-                <path d="M3 10h1"/>
-                <path d="M3 14h1"/>
-                <path d="M20 10h1"/>
-                <path d="M20 14h1"/>
-                <path d="M10 3v1"/>
-                <path d="M14 3v1"/>
-                <path d="M10 20v1"/>
-                <path d="M14 20v1"/>
+                <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                <path d="M9 9h6v6h-6z"></path>
+                <path d="M3 10h1"></path>
+                <path d="M3 14h1"></path>
+                <path d="M20 10h1"></path>
+                <path d="M20 14h1"></path>
+                <path d="M10 3v1"></path>
+                <path d="M14 3v1"></path>
+                <path d="M10 20v1"></path>
+                <path d="M14 20v1"></path>
             </svg>
             <p style="opacity: 1; translate: none;">A.I.</p>
 
                   </button>
     </a>
 </div>
-<div scale-up style="--order:6;">
-    <a href="https://www.caimeo.shop/about.html" class="button-link">
+<div scale-up="" style="--order:7;">
+    <a href="https://www.caimeo.shop/hive.html" class="button-link" target="_blank">
+        <button type="button" class="travel">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+  <path d="M4 7l8 -4l8 4v10l-8 4l-8 -4z"></path>
+  <path d="M4 7l8 4l8 -4M4 17l8 -4l8 4" stroke-linecap="round" stroke-linejoin="round"></path>
+  <circle cx="12" cy="12" r="3" stroke="currentColor" fill="none" stroke-width="2"></circle>
+</svg>
+            <p style="opacity: 1; translate: none;">Hive</p>
+        </button>
+    </a>
+</div>
+
+<div scale-up="" style="--order:8;">
+    <a href="https://www.caimeo.shop/about.html" class="button-link" target="_blank">
         <button type="button" class="mc">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="16" cy="20" r="10" stroke="currentColor" fill="none"/>
@@ -407,8 +408,26 @@
     </a>
 </div>
     </div>
-  </body>
+  </body></html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
