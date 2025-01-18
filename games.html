@@ -23,6 +23,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .header-container,
@@ -48,27 +49,32 @@ body {
 
 .glitch-container {
   text-align: center;
-  margin: 2.125rem 0;
+  margin: 2.125rem 1rem;
+  width: 100%;
 }
 
 .glitch {
-  font-size: 3rem;
+  font-size: clamp(1.5rem, 5vw, 3rem);
   color: var(--neon-pink);
   text-shadow: 0 0 5px var(--neon-pink);
   animation: glitch 1s infinite;
+  padding: 0 1rem;
+  word-wrap: break-word;
 }
 
 .tagline {
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 3vw, 1.5rem);
   color: var(--neon-blue);
   margin-top: 1rem;
+  padding: 0 1rem;
 }
 
 .games-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  padding: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+  width: 100%;
   max-width: 1200px;
 }
 
@@ -78,6 +84,7 @@ body {
   padding: 1.5rem;
   border-radius: 10px;
   transition: all 0.3s ease;
+  width: 100%;
 }
 
 .game-card:hover {
@@ -89,6 +96,7 @@ body {
   text-decoration: none;
   color: inherit;
   display: block;
+  width: 100%;
 }
 
 .game-image {
@@ -97,31 +105,34 @@ body {
   background-position: center;
   border-radius: 5px;
   margin-bottom: 1rem;
+  width: 100%;
 }
 
 .game-title {
   margin-bottom: 1rem;
   color: var(--neon-pink);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
 }
 
 .game-description {
   color: var(--neon-green);
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 1.5vw, 0.9rem);
   line-height: 1.4;
 }
 
 .promotional-section {
   max-width: 1200px;
-  padding: 2rem;
+  padding: 1.5rem;
   background: rgba(0, 0, 0, 0.7);
   border: 1px solid var(--neon-blue);
   border-radius: 10px;
-  margin: 2rem auto;
+  margin: 1.5rem;
+  width: calc(100% - 3rem);
 }
 
 .promo-title {
   color: var(--neon-pink);
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
   margin-bottom: 1rem;
 }
 
@@ -129,11 +140,25 @@ body {
   color: var(--neon-green);
   margin-bottom: 1rem;
   line-height: 1.6;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
 }
 
 .promo-highlight {
   color: var(--neon-blue);
   font-weight: bold;
+}
+
+@media screen and (max-width: 600px) {
+  .games-grid {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+  
+  .promotional-section {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+    padding: 1rem;
+  }
 }
 
 @keyframes glitch {
@@ -160,6 +185,7 @@ body {
   }
 }
 </style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <script>
@@ -190,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="tagline">LEAVING YOU IN THE EXODUST</div>
   </div>
 
-  <div class="games-grid" style="scrollbar-width: none; -ms-overflow-style: none; margin-top: 10px;">
+  <div class="games-grid">
     <div class="game-card">
       <a href="https://711131719.xyz/games/poly.html" class="game-link">
         <div class="game-image" style="background-image: url('https://caimeo.shop/games/poly.png')"></div>
@@ -280,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
   </div>
 
-  <div class="promotional-section" style="margin-top: 20px; position: relative; z-index: 1;">
+  <div class="promotional-section">
     <div class="promo-content">
       <h2 class="promo-title">Pioneers of Digital Reality</h2>
       <p class="promo-text">Founded in 2016, Valhalla Games Studio has been pushing the boundaries of digital entertainment under the visionary leadership of <span class="promo-highlight">Professor J</span>, our Head Developer.</p>
