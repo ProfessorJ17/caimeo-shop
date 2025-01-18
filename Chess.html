@@ -1,0 +1,284 @@
+<html><head><base href="https://example.com">
+<style>
+  :root {
+    --neon-pink: #ff2e88;
+    --neon-blue: #00fff9;
+    --neon-green: #39ff14;
+    --bg-dark: #0a0a0a;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Share Tech Mono', monospace;
+    cursor: crosshair;
+  }
+
+  body {
+    background: var(--bg-dark);
+    color: var(--neon-green);
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    width: 100%;
+  }
+
+  .header-container,
+  .footer-container {
+    width: 100%;
+    max-width: 1200px;
+    min-height: 50px;
+    color: var(--neon-green);
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .header-container {
+    border-bottom: 1px solid var(--neon-blue);
+  }
+
+  .footer-container {
+    border-top: 1px solid var(--neon-blue);
+    margin-top: auto;
+  }
+
+  .glitch-container {
+    text-align: center;
+    margin: 2.125rem 0;
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  .glitch {
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--neon-pink);
+    text-shadow: 0 0 5px var(--neon-pink);
+    animation: glitch 1s infinite;
+    word-wrap: break-word;
+  }
+
+  .tagline {
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    color: var(--neon-blue);
+    margin-top: 1rem;
+  }
+
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(1rem, 2vw, 2rem);
+    padding: clamp(1rem, 2vw, 2rem);
+    max-width: 1200px;
+    width: 100%;
+  }
+
+  .game-card {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid var(--neon-blue);
+    padding: clamp(1rem, 2vw, 1.5rem);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+
+  .game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px var(--neon-blue);
+  }
+
+  .game-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 100%;
+  }
+
+  .game-image {
+    width: 100%;
+    height: 0;
+    padding-bottom: 66.67%; /* 3:2 aspect ratio */
+    background-size: cover;
+    background-position: center;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+  }
+
+  .game-title {
+    margin-bottom: 1rem;
+    color: var(--neon-pink);
+    font-size: clamp(1.1rem, 2vw, 1.25rem);
+  }
+
+  .game-description {
+    color: var(--neon-green);
+    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+    line-height: 1.4;
+  }
+
+  .promotional-section {
+    max-width: 1200px;
+    width: calc(100% - 2rem);
+    padding: clamp(1rem, 3vw, 2rem);
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid var(--neon-blue);
+    border-radius: 10px;
+    margin: 2rem auto;
+  }
+
+  .promo-title {
+    color: var(--neon-pink);
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    margin-bottom: 1rem;
+  }
+
+  .promo-text {
+    color: var(--neon-green);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    font-size: clamp(0.9rem, 1.5vw, 1rem);
+  }
+
+  .promo-highlight {
+    color: var(--neon-blue);
+    font-weight: bold;
+  }
+
+  @keyframes glitch {
+    0% {
+      text-shadow: 0.05em 0 0 var(--neon-blue), -0.05em -0.025em 0 var(--neon-green);
+    }
+    14% {
+      text-shadow: 0.05em 0 0 var(--neon-blue), -0.05em -0.025em 0 var(--neon-green);
+    }
+    15% {
+      text-shadow: -0.05em -0.025em 0 var(--neon-blue), 0.025em 0.025em 0 var(--neon-green);
+    }
+    49% {
+      text-shadow: -0.05em -0.025em 0 var(--neon-blue), 0.025em 0.025em 0 var(--neon-green);
+    }
+    50% {
+      text-shadow: 0.025em 0.05em 0 var(--neon-blue), 0.05em 0 0 var(--neon-green);
+    }
+    99% {
+      text-shadow: 0.025em 0.05em 0 var(--neon-blue), 0.05em 0 0 var(--neon-green);
+    }
+    100% {
+      text-shadow: -0.025em 0 0 var(--neon-blue), -0.025em -0.025em 0 var(--neon-green);
+    }
+  }
+
+  @media (max-width: 600px) {
+    body {
+      padding: 0.5rem;
+    }
+
+    .games-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .promotional-section {
+      margin: 1rem;
+      width: calc(100% - 2rem);
+    }
+  }
+
+  @media (min-width: 601px) and (max-width: 1024px) {
+    .games-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .games-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  async function loadComponent(url, targetId) {
+    try {
+      const response = await fetch(url);
+      const html = await response.text();
+      document.getElementById(targetId).innerHTML = html;
+    } catch (error) {
+      console.error(`Error loading ${url}:`, error);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadComponent('https://caimeo.shop/header.html', 'header-container');
+    loadComponent('https://caimeo.shop/footer.html', 'footer-container');
+  });
+</script>
+</head>
+<body>
+
+<div id="header-container" class="header-container"></div>
+
+<div class="glitch-container">
+  <h1 class="glitch">CHESS PUZZLES</h1>
+  <div class="tagline">Challenge Your Mind!</div>
+</div>
+
+<div class="games-grid">
+  <div class="game-card">
+    <a href="https://caimeo.shop/game1.html" class="game-link">
+      <div class="game-image" style="background-image: url('https://caimeo.shop/games/game1.png')"></div>
+      <h3 class="game-title">Chess Game 1</h3>
+      <p class="game-description">Test your skills with this engaging chess puzzle!</p>
+    </a>
+  </div>
+  
+  <div class="game-card">
+    <a href="https://caimeo.shop/game2.html" class="game-link">
+      <div class="game-image" style="background-image: url('https://caimeo.shop/games/game2.png')"></div>
+      <h3 class="game-title">Chess Game 2</h3>
+      <p class="game-description">A challenging puzzle to improve your tactics.</p>
+    </a>
+  </div>
+
+  <div class="game-card">
+    <a href="https://caimeo.shop/game3.html" class="game-link">
+      <div class="game-image" style="background-image: url('https://caimeo.shop/games/game3.png')"></div>
+      <h3 class="game-title">Chess Game 3</h3>
+      <p class="game-description">Can you find the best moves in this scenario?</p>
+    </a>
+  </div>
+
+  <div class="game-card">
+    <a href="https://caimeo.shop/game4.html" class="game-link">
+      <div class="game-image" style="background-image: url('https://caimeo.shop/games/game4.png')"></div>
+      <h3 class="game-title">Chess Game 4</h3>
+      <p class="game-description">Sharpen your skills with this unique chess challenge!</p>
+    </a>
+  </div>
+
+  <div class="game-card">
+    <a href="https://caimeo.shop/game5.html" class="game-link">
+      <div class="game-image" style="background-image: url('https://caimeo.shop/games/game5.png')"></div>
+      <h3 class="game-title">Chess Game 5</h3>
+      <p class="game-description">A great way to practice your chess strategies!</p>
+    </a>
+  </div>
+</div>
+
+<div class="promotional-section">
+  <div class="promo-content">
+    <h2 class="promo-title">Master Your Chess Skills</h2>
+    <p class="promo-text">Explore a variety of chess puzzles and improve your gameplay with our unique challenges designed to sharpen your mind.</p>
+  </div>
+</div>
+
+<div id="footer-container" class="footer-container"></div>
+
+</body>
+</html>
