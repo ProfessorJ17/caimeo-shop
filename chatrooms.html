@@ -28,6 +28,7 @@
   }
 
   .header-container,
+  .header3-container,
   .footer-container {
     width: 100%;
     max-width: 1200px;
@@ -41,6 +42,10 @@
 
   .header-container {
     border-bottom: 1px solid var(--neon-blue);
+  }
+
+  .header3-container {
+    border-bottom: 1px solid var(--neon-pink);
   }
 
   .footer-container {
@@ -204,6 +209,7 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     loadComponent('https://caimeo.shop/header.html', 'header-container');
+    loadComponent('https://caimeo.shop/header3.html', 'header3-container');
     loadComponent('https://caimeo.shop/footer.html', 'footer-container');
   });
 </script>
@@ -211,6 +217,7 @@
 <body>
 
 <div id="header-container" class="header-container"></div>
+<div id="header3-container" class="header3-container"></div>
 
 <div class="glitch-container">
   <h1 class="glitch">CHAT ROOMS</h1>
