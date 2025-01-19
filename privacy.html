@@ -1,0 +1,248 @@
+<html><head><base href="https://example.com">
+<style>
+    :root {
+      --neon-pink: #ff2e88;
+      --neon-blue: #00fff9;
+      --neon-green: #39ff14;
+      --bg-dark: #0a0a0a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--neon-green);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+      width: 100%;
+    }
+
+    .header-container,
+    .footer-container {
+      width: 100%;
+      max-width: 1200px;
+      min-height: 50px;
+      color: var(--neon-green);
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .header-container {
+      border-bottom: 1px solid var(--neon-blue);
+    }
+
+    .footer-container {
+      border-top: 1px solid var(--neon-blue);
+      margin-top: auto;
+    }
+
+    .glitch-container {
+      text-align: center;
+      margin: 2.125rem 0;
+      width: 100%;
+      padding: 0 1rem;
+    }
+
+    .glitch {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--neon-pink);
+      text-shadow: 0 0 5px var(--neon-pink);
+      animation: glitch 1s infinite;
+      word-wrap: break-word;
+    }
+
+    .tagline {
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      color: var(--neon-blue);
+      margin-top: 1rem;
+    }
+
+    .policy-container {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .section-title {
+      color: var(--neon-pink);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--neon-blue);
+      padding-bottom: 0.5rem;
+    }
+
+    .policy-item {
+      margin-bottom: 2rem;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 1.5rem;
+      border-radius: 10px;
+      border: 1px solid var(--neon-blue);
+    }
+
+    .policy-item h3 {
+      color: var(--neon-blue);
+      font-size: clamp(1.1rem, 2vw, 1.25rem);
+      margin-bottom: 1rem;
+      font-weight: bold;
+    }
+
+    .policy-item p {
+      color: var(--neon-green);
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
+      line-height: 1.6;
+    }
+
+    .email-link {
+      color: var(--neon-pink);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .email-link:hover {
+      text-shadow: 0 0 5px var(--neon-pink);
+    }
+
+    @media (max-width: 600px) {
+      .policy-container {
+        padding: 1rem;
+      }
+
+      .policy-item {
+        padding: 1rem;
+      }
+    }
+
+    @keyframes glitch {
+      0% {
+        text-shadow: 0.05em 0 0 var(--neon-blue), -0.05em -0.025em 0 var(--neon-green);
+      }
+      14% {
+        text-shadow: 0.05em 0 0 var(--neon-blue), -0.05em -0.025em 0 var(--neon-green);
+      }
+      15% {
+        text-shadow: -0.05em -0.025em 0 var(--neon-blue), 0.025em 0.025em 0 var(--neon-green);
+      }
+      49% {
+        text-shadow: -0.05em -0.025em 0 var(--neon-blue), 0.025em 0.025em 0 var(--neon-green);
+      }
+      50% {
+        text-shadow: 0.025em 0.05em 0 var(--neon-blue), 0.05em 0 0 var(--neon-green);
+      }
+      99% {
+        text-shadow: 0.025em 0.05em 0 var(--neon-blue), 0.05em 0 0 var(--neon-green);
+      }
+      100% {
+        text-shadow: -0.025em 0 0 var(--neon-blue), -0.025em -0.025em 0 var(--neon-green);
+      }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    async function loadComponent(url, targetId) {
+      try {
+        const response = await fetch(url);
+        const html = await response.text();
+        document.getElementById(targetId).innerHTML = html;
+      } catch (error) {
+        console.error(`Error loading ${url}:`, error);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadComponent('https://caimeo.shop/header.html', 'header-container');
+      loadComponent('https://caimeo.shop/footer.html', 'footer-container');
+    });
+  </script>
+</head>
+<body>
+
+<div id="header-container" class="header-container"></div>
+
+<div class="glitch-container">
+  <h1 class="glitch">Privacy Policy</h1>
+  <div class="tagline">Your Data Matters to Us</div>
+</div>
+
+<div class="policy-container">
+  <div class="policy-item">
+    <h3>1. Information We Collect</h3>
+    <p>We may collect the following types of information:</p>
+    <ul>
+      <li><strong>Personal Information:</strong> Includes your name, email address, shipping address, and payment information provided during checkout.</li>
+      <li><strong>Non-Personal Information:</strong> Includes your IP address, browser type, and website usage data, collected through cookies and analytics tools.</li>
+    </ul>
+  </div>
+  
+  <div class="policy-item">
+    <h3>2. How We Use Your Information</h3>
+    <p>We use your information for the following purposes:</p>
+    <ul>
+      <li>To process and fulfill your orders.</li>
+      <li>To provide order updates and tracking information.</li>
+      <li>To communicate with you regarding promotions, updates, or inquiries.</li>
+      <li>To improve our website's functionality and your shopping experience.</li>
+    </ul>
+  </div>
+  
+  <div class="policy-item">
+    <h3>3. Sharing Your Information</h3>
+    <p>We do not sell, rent, or share your personal information with third parties, except in the following cases:</p>
+    <ul>
+      <li><strong>Service Providers:</strong> We may share data with trusted third-party vendors (e.g., payment processors and shipping companies) to fulfill your order.</li>
+      <li><strong>Legal Requirements:</strong> We may disclose information if required by law or to protect our rights.</li>
+    </ul>
+  </div>
+  
+  <div class="policy-item">
+    <h3>4. Cookies and Tracking</h3>
+    <p>We use cookies to enhance your browsing experience. Cookies help us understand how you interact with our website and improve its performance. You can manage or disable cookies through your browser settings.</p>
+  </div>
+
+  <div class="policy-item">
+    <h3>5. Security of Your Information</h3>
+    <p>We take appropriate measures to protect your personal information from unauthorized access, loss, or misuse. However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security.</p>
+  </div>
+
+  <div class="policy-item">
+    <h3>6. Your Choices</h3>
+    <p>Access and Update: You can contact us at <a href="mailto:moddarkrevolt@gmail.com" class="email-link">moddarkrevolt@gmail.com</a> to access or update your personal information.</p>
+    <p>Opt-Out: You can unsubscribe from promotional emails by clicking the “unsubscribe” link at the bottom of any email.</p>
+  </div>
+
+  <div class="policy-item">
+    <h3>7. Changes to This Policy</h3>
+    <p>We may update this Privacy Policy from time to time to reflect changes in our practices. Any updates will be posted on this page with the updated effective date.</p>
+  </div>
+
+  <div class="policy-item">
+    <h3>8. Contact Us</h3>
+    <p>If you have any questions or concerns about this Privacy Policy or how your information is handled, please contact us at:</p>
+    <p>Email: <a href="mailto:moddarkrevolt@gmail.com" class="email-link">moddarkrevolt@gmail.com</a></p>
+  </div>
+
+  <div class="policy-item">
+    <h3>Effective Date</h3>
+    <p>Effective Date: 1-17-2025</p>
+    <p>Thank you for trusting CAIMEO.SHOP!</p>
+  </div>
+</div>
+
+<div id="footer-container" class="footer-container"></div>
+
+</body>
+</html>
