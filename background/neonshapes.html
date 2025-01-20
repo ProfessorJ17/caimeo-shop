@@ -1,0 +1,112 @@
+​<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hexagonal Stars with Neon Colors</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #0b0c0e;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Canvas for Star Animation -->
+  <canvas id="canvas"></canvas>
+
+  <script>
+    let canvas = document.querySelector('#canvas'),
+        ctx = canvas.getContext('2d'),
+        w = 800,
+        h = 600;
+
+    const handleResize = () => {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+    }
+    window.onresize = () => handleResize();
+    handleResize();
+
+    let starConfigs = [];
+
+    const mapToRange = (number, inMin, inMax, outMin, outMax) => {
+        return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+    }
+
+    // Define neon colors
+    const neonColors = [
+        'cyan', 'magenta', 'purple', 'limegreen'
+    ];
+
+    for (let i = 0; i < 100; i++) {
+        let size = mapToRange(Math.random(), 0, 1, 10, 30);
+        let config = {
+            stroke: neonColors[Math.floor(Math.random() * neonColors.length)], // Neon colors for outlines
+            numPoints: 6, // Hexagon
+            origin: { x: Math.random() * w, y: mapToRange(Math.random(), 0, 1, -size, h) },
+            radiusInner: size * 0.6,
+            radiusOuter: size,
+            rotation: Math.random() * (Math.PI / 2),
+            rotationSpeed: mapToRange(Math.random(), 0, 1, 0.01, 0.025),
+            vY: mapToRange(Math.random(), 0, 1, 3, 5),
+        };
+        config.rotationSpeed *= Math.random() > 0.5 ? 1 : -1;
+        starConfigs.push(config);
+    }
+
+    const drawSide = (radius, radians, origin, rotation) => {
+        ctx.lineTo((radius * Math.cos(radians + rotation)) + origin.x,
+                   (radius * Math.sin(radians + rotation)) + origin.y);
+    }
+
+    const makeStar = (config) => {
+        let degrees = 0;
+        let rotationStep = Math.PI * 2 / config.numPoints;
+        ctx.lineWidth = 2; // Line width for the outline effect
+        ctx.strokeStyle = config.stroke;
+        ctx.beginPath();
+        for (let i = 0; i < config.numPoints; i++) {
+            degrees += rotationStep;
+            drawSide(config.radiusOuter, degrees, config.origin, config.rotation); // Use outer radius for hexagon
+        }
+        ctx.closePath();
+        ctx.stroke(); // Only stroke the path, no fill
+    }
+
+    const animate = () => {
+        ctx.fillStyle = 'rgba(10,10,10,.3)';
+        ctx.fillRect(0, 0, w, h);
+
+        starConfigs.forEach(star => {
+            star.rotation += star.rotationSpeed;
+            star.origin.y += star.vY;
+            if (star.origin.y > h + star.radiusOuter) {
+                star.origin.y = -star.radiusOuter;
+                star.origin.x = Math.random() * w;
+            }
+            makeStar(star);
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+
+</body>
+</html>
