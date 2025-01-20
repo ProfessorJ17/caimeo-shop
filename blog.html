@@ -339,20 +339,13 @@ nav a:hover {
 </style>
 </head><body>
 <canvas id="background-canvas"></canvas>
-  <nav style="text-align: center; margin: 20px 0;">
-    <a href="https://caimeo.shop/" style="margin: 0 15px; color: var(--neon-cyan); text-decoration: none;">Home</a>
-    <a href="https://caimeo.shop/hive.html" style="margin: 0 15px; color: var(--neon-cyan); text-decoration: none;">Hive</a>
-    <a href="https://caimeo.shop/studio.html" style="margin: 0 15px; color: var(--neon-cyan); text-decoration: none;">Studio</a>
-    <a href="https://caimeo.shop/games.html" style="margin: 0 15px; color: var(--neon-cyan); text-decoration: none;">Games</a>
-    <a href="https://moddarkrevolt.wixsite.com/temple777/members" style="margin: 0 15px; color: var(--neon-cyan); text-decoration: none;">Network</a>
-    <a href="https://711131719.xyz/puzzles.html" style="margin: 0 15px; color: var(--neon-cyan); text-decoration: none;">Puzzles</a>
-    <a href="https://caimeo.shop/ai.html" style="margin: 0 15px; color: var(--neon-cyan); text-decoration: none;">A.I.</a>
-    <a href="https://caimeo.shop/about.html" style="margin: 0 15px; color: var(--neon-cyan); text-decoration: none;">About</a>
-  </nav>
-
   <div class="container">
     <header style="background-image: url('https://page-images.websim.ai/holographic%20interface%20with%20floating%20data%20points,%20cyber%20punk%20style_800x400xnor5ofZXZTB5Djb7yx5530457556056.jpg'); background-size: cover; background-position: center; padding: 40px; border-radius: 15px; margin-bottom: 50px; border-bottom: 2px solid var(--neon-pink); text-shadow: 2px 2px 4px rgba(0,0,0,0.8); background-color: rgba(0,0,0,0.75); background-blend-mode: multiply;">
       <h1>CAIMEO 2099 Hive Blog</h1>
+      <nav>
+        <a href="https://caimeo.shop/blog.html">HOME</a>
+        <a href="https://caimeo.shop/submitblog.html">SUBMIT BLOG</a>
+      </nav>
       <div id="tag-filter" style="margin-top: 20px; text-align: center;">
         <span style="color: var(--neon-cyan); margin-right: 10px;">Filter by tag:</span>
         <div id="active-tags" style="display: inline-block;"></div>
@@ -591,7 +584,7 @@ Together, these devices and theories illustrate a sophisticated understanding of
           • <a href="https://arxiv.org/abs/2106.15632" style="color: var(--neon-cyan)">Quantum entanglement manifestations in agricultural landscapes</a><br>
           • <a href="https://www.nature.com/articles/s41598-018-22726-7" style="color: var(--neon-cyan)">Geometric pattern analysis and mathematical relationships</a><br>
           • <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2020.01831/full" style="color: var(--neon-cyan)">Consciousness-matter interactions</a><br>
-          • <a href="https://www.science.org/doi/10.1126/sciadv.aay9869" style="color: var(--neon-cyan)">Non-local quantum effects at macroscopic scales</a><br><br>
+          • <a href="https://www.science.org/doi/10.1126/science.abe9869" style="color: var(--neon-cyan)">Non-local quantum effects at macroscopic scales</a><br><br>
           
           <strong>Primary Hypotheses:</strong><br>
           • <a href="https://arxiv.org/abs/2003.13117" style="color: var(--neon-cyan)">Complex crop formations may represent quantum entanglement at macro scale</a><br>
@@ -704,7 +697,7 @@ function initializeTagFiltering() {
       background: transparent;
       border: 1px solid var(--neon-purple);
       color: var(--neon-cyan);
-      padding: 5px 10px;
+      padding: 5px 15px;
       margin: 5px;
       border-radius: 20px;
       cursor: pointer;
@@ -928,4 +921,372 @@ document.querySelectorAll('.blog-post h2').forEach(title => {
 });
 </script>
 
+</body></html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html><head><base href=".">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+  body {
+    background: #000;
+    font-family: 'Orbitron', sans-serif;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .widget-container {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    padding: 15px;
+    border: 2px solid #00ffff;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    transition: transform 0.3s ease-out;
+    max-width: 400px;
+    transform-origin: right top;
+  }
+
+  .widget-container.collapsed {
+    transform: translateX(calc(100% + 17px)); /* Changed from 50px to 100px to move it further right */
+  }
+
+  .toggle-button {
+    position: absolute;
+    left: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(45deg, #00ffff, #ff69b4);
+    border: none;
+    width: 30px;
+    height: 80px;
+    cursor: pointer;
+    border-radius: 10px 0 0 10px;
+    box-shadow: -5px 0 15px rgba(0, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .toggle-button:hover {
+    box-shadow: -5px 0 20px rgba(255, 105, 180, 0.5);
+  }
+
+  .toggle-button svg {
+    width: 20px;
+    height: 20px;
+    fill: white;
+    transition: transform 0.3s ease;
+  }
+
+  .widget-container.collapsed .toggle-button svg {
+    transform: rotate(180deg);
+  }
+
+  .news-container {
+    max-width: 100%;
+    margin: 0 0 10px 0;
+    transform: translateX(0);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .widget-container.collapsed .news-container {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  .title {
+    font-size: 1em;
+    margin-bottom: 0.5em;
+    position: relative;
+    background: linear-gradient(45deg, #00ffff, #ff69b4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 5px;
+    animation: titlePulsate 2s ease-in-out infinite;
+  }
+
+  .paragraph {
+    font-size: 0.6em;
+    line-height: 1.6;
+    margin-bottom: 1em;
+    position: relative;
+    color: #ff00ff;
+  }
+
+  .news-link {
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.6em;
+    color: #00ff00;
+  }
+
+  .news-link:hover {
+    color: #ff69b4 !important;
+    text-shadow: 0 0 10px #ff69b4 !important;
+  }
+
+  @keyframes titlePulsate {
+    0% {
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5), 0 0 10px rgba(255, 105, 180, 0.5);
+    }
+    50% {
+      text-shadow: 0 0 15px rgba(0, 255, 255, 0.8), 0 0 20px rgba(255, 105, 180, 0.8);
+    }
+    100% {
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5), 0 0 10px rgba(255, 105, 180, 0.5);
+    }
+  }
+</style>
+</head>
+<body>
+  <div id="news-feed"></div>
+
+<script>
+const articles = [
+  {
+    "title": "Human Mini-Brains Wirelessly Control Butterflies in Virtual World",
+    "text": "Scientists have achieved a groundbreaking feat by creating human mini-brains that can wirelessly control virtual butterflies, demonstrating the potential for brain-computer interfaces and neural network research.",
+    "link": "https://www.msn.com/en-us/news/technology/human-mini-brains-wirelessly-control-butterflies-in-virtual-world/ar-AA1sRd0x"
+  },
+  {
+    "title": "145-Year-Old Hall Effect's Twin Uncovered",
+    "text": "A new discovery resembling the Hall Effect could enhance developments in quantum communications and technologies like 6G, impacting quantum physics and its applications.",
+    "link": "https://www.msn.com/en-us/news/technology/145-year-old-hall-effect-s-twin-uncovered-to-fuel-quantum-comms-6g-and-beyond/ar-AA1sVkP3"
+  },
+  {
+    "title": "Ion Engines Could Take Us to the Solar Gravitational Lens in Less Than 13 Years",
+    "text": "Ion engines might allow spacecraft to reach the solar gravitational lens in under 13 years, advancing deep space exploration and enabling faster missions beyond our solar system.",
+    "link": "https://www.msn.com/en-us/news/technology/ion-engines-could-take-us-to-the-solar-gravitational-lens-in-less-than-13-years-suggests-paper/ar-AA1sVSoF"
+  },
+  {
+    "title": "Physicists Create Tiny Hurricanes of Light",
+    "text": "Researchers have developed miniature light-based hurricanes, which could revolutionize data transport, offering faster and more efficient data transmission for future computing technologies.",
+    "link": "https://www.msn.com/en-us/news/technology/physicists-create-tiny-hurricanes-of-light-that-could-transport-huge-amounts-of-data/ar-AA1tTxVH"
+  },
+  {
+    "title": "Universal Control of Quantum Dot System",
+    "text": "A breakthrough demonstration in universal control of quantum dots using singlet-triplet qubits could accelerate quantum computing by enabling more robust and scalable quantum systems.",
+    "link": "https://www.msn.com/en-us/news/technology/researchers-demonstrate-universal-control-of-a-quantum-dot-based-system-with-four-singlet-triplet-qubits/ar-AA1u0FPV"
+  },
+  {
+    "title": "Improved Phonon Laser Technology",
+    "text": "A new method stabilizing sound waves has enhanced phonon lasers, leading to more powerful and stable lasers that could revolutionize quantum computing and sound manipulation.",
+    "link": "https://www.msn.com/en-us/news/technology/improved-method-for-phonon-lasers-locks-sound-waves-into-a-more-stable-and-powerful-state/ar-AA1q7VXm"
+  },
+  {
+    "title": "Giant THz Kerr Effect Demonstrated",
+    "text": "Researchers have demonstrated a giant terahertz Kerr effect, enabling faster data processing and transmission, which is essential for advancing quantum systems.",
+    "link": "https://www.msn.com/en-us/news/technology/scientists-demonstrate-giant-thz-kerr-effect-via-stimulated-phonon-polaritons/ar-AA1pS8Hj"
+  },
+  {
+    "title": "Quantum Hard Drives Closer to Reality",
+    "text": "Recent breakthroughs have brought quantum hard drives closer to reality, promising faster and more efficient data storage solutions, particularly for quantum computing.",
+    "link": "https://www.msn.com/en-us/news/technology/quantum-hard-drives-closer-to-reality-after-scientists-resolve-10-year-old-problem/ar-AA1uqZog"
+  },
+  {
+    "title": "Quantum Computing Purchases Photonic Chip Foundry",
+    "text": "Quantum Computing Inc. has purchased a photonic chip foundry to accelerate quantum computing efforts, using innovative photonic solutions.",
+    "link": "https://www.msn.com/en-us/news/technology/quantum-computing-announces-purchase-order-for-tfln-photonic-chip-foundry-from-university-of-texas/ar-AA1uqN4r"
+  },
+  {
+    "title": "Reservoir Computing Device Mimics Synaptic Behavior",
+    "text": "A new reservoir computing device mimicking human synapses has shown potential to enhance AI processing, improving efficiency and computational power for autonomous systems.",
+    "link": "https://www.msn.com/en-us/health/other/novel-physical-reservoir-computing-device-mimics-human-synaptic-behavior-for-efficient-edge-ai-processing/ar-AA1uJqHp"
+  },
+  {
+    "title": "Attosecond X-Ray Pulses at Megahertz Rates",
+    "text": "High-power attosecond X-ray pulses produced at megahertz repetition rates offer new possibilities for ultrafast imaging and research in various scientific fields.",
+    "link": "https://www.msn.com/en-us/news/technology/scientists-produce-high-power-attosecond-x-ray-pulses-at-megahertz-repetition-rates/ar-AA1uJetq"
+  },
+  {
+    "title": "Polymeric Nanomaterials Detect Harmful Substances",
+    "text": "New polymeric nanomaterials can detect harmful substances in extreme environments, improving monitoring capabilities in industrial and environmental applications.",
+    "link": "https://www.msn.com/en-us/news/technology/polymeric-nanomaterials-can-detect-harmful-substances-in-extreme-environments/ar-AA1uJ3T8"
+  },
+  {
+    "title": "Scalable Production of Organoids Using Nanofiber Membranes",
+    "text": "A new platform utilizing engineered nanofiber membranes enables scalable production of high-quality organoids, offering advancements in medical research and drug testing.",
+    "link": "https://www.msn.com/en-us/health/other/scalable-production-of-high-quality-organoids-innovative-platform-utilizes-3d-engineered-nanofiber-membrane/ar-AA1uJoH6"
+  },
+  {
+    "title": "Spin-Powered Crystals Improve Water Splitting",
+    "text": "New spin-powered crystals enhance the water splitting process, which could help generate clean hydrogen for sustainable energy production.",
+    "link": "https://www.msn.com/en-us/news/technology/spin-powered-crystals-dramatically-improve-water-splitting-process-for-clean-hydrogen-production/ar-AA1uJTRt"
+  },
+  {
+    "title": "Quantum Dots in Microscopic Lasers",
+    "text": "A method for recycling quantum dots in microscopic lasers efficiently enables the creation of more sustainable, cost-effective quantum devices.",
+    "link": "https://www.msn.com/en-us/news/technology/simple-method-can-recover-and-recycle-quantum-dots-in-microscopic-lasers/ar-AA1uNzkK"
+  },
+  {
+    "title": "Machine Learning Approach Discovers Crystallizable Organic Semiconductors",
+    "text": "Machine learning has identified new organic semiconductors that crystallize, which could improve the efficiency and cost-effectiveness of electronics.",
+    "link": "https://www.msn.com/en-us/news/technology/machine-learning-approach-discovers-crystallizable-organic-semiconductors/ar-AA1uJiRM"
+  },
+  {
+    "title": "Quantum Mechanism Identified as Key to Accelerating Ocean Temperatures",
+    "text": "A new quantum mechanism could accelerate ocean temperature changes, offering insights into climate patterns and global warming.",
+    "link": "https://www.msn.com/en-us/news/technology/quantum-mechanism-identified-as-a-key-to-accelerating-ocean-temperatures/ar-AA1uNNky"
+  },
+  {
+    "title": "Microsoft Breakthrough Signals Quantum-Exclusive Future for Blockchain Mining",
+    "text": "Microsoft’s quantum breakthrough points to a future where blockchain mining will rely entirely on quantum technologies, offering better performance.",
+    "link": "https://www.msn.com/en-us/news/technology/microsoft-breakthrough-signals-quantum-exclusive-future-for-blockchain-mining/ar-AA1uWgCg"
+  },
+  {
+    "title": "First-of-Its-Kind Cryogenic Transistor 1,000 Times More Efficient",
+    "text": "A revolutionary cryogenic transistor has achieved 1,000 times greater efficiency, paving the way for powerful quantum computers.",
+    "link": "https://www.msn.com/en-us/news/technology/1st-of-its-kind-cryogenic-transistor-is-1-000-times-more-efficient-and-could-lead-to-much-more-powerful-quantum-computers/ar-AA1uMAz2"
+  },
+];
+
+let currentArticles = [];
+let lastGlowColor = '';
+
+function getRandomNeonColor() {
+  const neonColors = [
+    '#ff00ff',
+    '#00ff00', 
+    '#00ffff',
+    '#ff0000',
+    '#ff8800',
+    '#ffff00'
+  ];
+  
+  let newColor;
+  do {
+    newColor = neonColors[Math.floor(Math.random() * neonColors.length)];
+  } while (newColor === lastGlowColor);
+  
+  lastGlowColor = newColor;
+  return newColor;
+}
+
+function createArticleElement(article) {
+  const container = document.createElement('div');
+  container.className = 'news-container';
+  
+  const title = document.createElement('div');
+  title.className = 'title'; 
+  title.textContent = article.title;
+  
+  const paragraph = document.createElement('div');
+  paragraph.className = 'paragraph';
+  paragraph.textContent = article.text;
+  
+  const link = document.createElement('a');
+  link.className = 'news-link';
+  link.href = article.link;
+  link.target = "_blank";
+  link.textContent = "Read Full Article →";
+  
+  container.appendChild(title);
+  container.appendChild(paragraph);
+  container.appendChild(link);
+  
+  return container;
+}
+
+function updateColors() {
+  const containers = document.querySelectorAll('.news-container');
+  containers.forEach(container => {
+    const glowColor = getRandomNeonColor();
+    container.style.borderColor = glowColor;
+    container.style.boxShadow = `0 0 10px ${glowColor}`;
+    
+    const title = container.querySelector('.title');
+    title.style.background = 'linear-gradient(45deg, #00ffff, #ff69b4)';
+    title.style.webkitBackgroundClip = 'text';
+    title.style.webkitTextFillColor = 'transparent';
+    
+    const paragraph = container.querySelector('.paragraph');
+    paragraph.style.color = '#ff00ff';
+    
+    const link = container.querySelector('.news-link');
+    link.style.color = '#00ff00';
+    link.style.textShadow = `0 0 5px ${glowColor}`;
+  });
+}
+
+function addNewArticle() {
+  const availableArticles = articles.filter(article => !currentArticles.includes(article));
+  if (availableArticles.length === 0) {
+    currentArticles = [];
+    return addNewArticle();
+  }
+  
+  const newArticle = availableArticles[Math.floor(Math.random() * availableArticles.length)];
+  currentArticles.unshift(newArticle);
+  if (currentArticles.length > 3) {
+    currentArticles.pop();
+  }
+  
+  const newsFeed = document.getElementById('news-feed');
+  newsFeed.innerHTML = '';
+  
+  currentArticles.forEach(article => {
+    newsFeed.appendChild(createArticleElement(article));
+  });
+  
+  updateColors();
+}
+
+function createWidgetContainer() {
+  const widgetContainer = document.createElement('div');
+  widgetContainer.className = 'widget-container';
+  
+  const toggleButton = document.createElement('button');
+  toggleButton.className = 'toggle-button';
+  toggleButton.innerHTML = `
+    <svg viewBox="0 0 24 24">
+      <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+    </svg>
+  `;
+  
+  toggleButton.addEventListener('click', () => {
+    widgetContainer.classList.toggle('collapsed');
+  });
+  
+  widgetContainer.appendChild(toggleButton);
+  
+  const newsFeed = document.getElementById('news-feed');
+  document.body.removeChild(newsFeed);
+  widgetContainer.appendChild(newsFeed);
+  document.body.appendChild(widgetContainer);
+}
+
+// Initial load
+createWidgetContainer();
+addNewArticle();
+addNewArticle();
+addNewArticle();
+
+// Update articles every 10 seconds
+setInterval(addNewArticle, 10000);
+</script>
 </body></html>
