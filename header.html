@@ -16,18 +16,18 @@
         }
 
         :root {
-            --clr-bg: #000000;
-            --clr-primary: #000000; /* Dark background */
+            --clr-bg: transparent;
+            --clr-primary: transparent; 
             --easing: cubic-bezier(0.47, 1.64, 0.41, 0.8);
             /* Custom colors for each button */
-                --color-furniture: #9B4DFF; /* Bright Purple Neon */
-    --color-property: #00FFFF; /* Cyan Neon */ 
-    --color-job: #ff33cc; /* Brighter Neon Pink */
-    --color-travel: #00FF00; /* Lime Green Neon */
-    --color-boat: #ff33cc; /* Brighter Neon Pink */
-    --color-mc: #9B4DFF; /* Bright Purple Neon */
-    --color-economy: #FFFF00; /* Neon Yellow */
-    --color-holiday: #00FFFF; /* Cyan Neon */ 
+                --color-furniture: #9B4DFF; 
+    --color-property: #00FFFF; 
+    --color-job: #ff33cc; 
+    --color-travel: #00FF00; 
+    --color-boat: #ff33cc; 
+    --color-mc: #9B4DFF; 
+    --color-economy: #FFFF00; 
+    --color-holiday: #00FFFF; 
         }
 
         /* Reset button */
@@ -55,8 +55,8 @@
             display: grid;
             place-items: center;
             min-height: 100vh;
-            color: #7c4dff; /* Default Text Color */
-            background: var(--clr-primary); /* Background color */
+            color: #7c4dff; 
+            background: var(--clr-primary); 
             font-family: 'Poppins', sans-serif;
         }
 
@@ -70,20 +70,20 @@
             max-width: 840px;
             width: 100%;
             border-radius: 20px;
-            background-color: #000000; /* Black background for buttons */
+            background-color: transparent; 
             border: 1px solid #ffffff30;
-            padding: 1rem; /* Reduced padding for mobile */
+            padding: 1rem; 
             backdrop-filter: blur(12px);
             display: grid;
-            grid-template-columns: repeat(16, minmax(90px, 1fr)); /* Default desktop layout */
-            gap: 1rem; /* Reduced gap for mobile */
+            grid-template-columns: repeat(16, minmax(90px, 1fr)); 
+            gap: 1rem; 
         }
 
         .buttons::before {
             content: '';
             position: absolute;
             inset: 0;
-            background-color: #00000020;
+            background-color: transparent;
             z-index: -1;
             border-radius: inherit;
             transition: inset 500ms ease-in-out;
@@ -95,8 +95,8 @@
         }
 
         .buttons button {
-            background-color: #000000; /* Black background for buttons */
-            border: 1px solid transparent; /* Initially no border */
+            background-color: #000000; 
+            border: 1px solid transparent; 
             padding: 1rem;
             aspect-ratio: 1/1;
             border-radius: 5px;
@@ -106,40 +106,40 @@
             transition: transform 300ms ease-in-out, box-shadow 300ms ease-in-out;
             position: relative;
             isolation: isolate;
-            color: inherit; /* Default color inherits */
+            color: inherit; 
         }
 
         /* Neon colors for each button */
         .buttons button.furniture {
-            color: var(--color-furniture); /* Neon Pink */
+            color: var(--color-furniture); 
         }
 
         .buttons button.property {
-            color: var(--color-travel); /* Neon Purple */
+            color: var(--color-travel); 
         }
 
         .buttons button.job {
-            color: var(--color-job); /* Neon Blue */
+            color: var(--color-job); 
         }
 
         .buttons button.travel {
-            color: var(--color-travel); /* Neon Green */
+            color: var(--color-travel); 
         }
 
         .buttons button.boat {
-            color: var(--color-boat); /* Neon Orange */
+            color: var(--color-boat); 
         }
 
         .buttons button.mc {
-            color: var(--color-mc); /* Neon Magenta */
+            color: var(--color-mc); 
         }
 
         .buttons button.economy {
-            color: var(--color-economy); /* Neon Yellow */
+            color: var(--color-economy); 
         }
 
         .buttons button.holiday {
-            color: var(--color-holiday); /* Neon Red */
+            color: var(--color-holiday); 
         }
 
         .buttons button:hover {
@@ -181,7 +181,7 @@
 
         .buttons button svg {
             width: 1.8rem;
-            transition: color 300ms ease-in-out; /* Ensure icon color transitions */
+            transition: color 300ms ease-in-out; 
         }
 
         .buttons button p {
@@ -190,7 +190,7 @@
             font-size: 0.8rem;
             opacity: 0;
             left: 0;
-            bottom: -3.5px; /* Adjusted to move the text down 15px */
+            bottom: -3.5px; 
             padding: 0.3rem;
             text-align: center;
             transition: all 150ms ease-in-out 0ms;
@@ -243,7 +243,7 @@
         /* Add media queries for responsive design */
         @media screen and (max-width: 768px) {
             .buttons {
-                grid-template-columns: repeat(4, 1fr); /* 4 columns on tablets */
+                grid-template-columns: repeat(4, 1fr); 
                 padding: 0.75rem;
                 gap: 0.75rem;
             }
@@ -263,7 +263,7 @@
 
        @media screen and (max-width: 480px) {
     .buttons {
-        grid-template-columns: repeat(4, 1fr); /* 4 columns on mobile */
+        grid-template-columns: repeat(4, 1fr); 
         padding: 0.5rem;
         gap: 0.75rem;
     }
@@ -278,7 +278,7 @@
     
     .buttons button p {
         font-size: 0.65rem;
-        bottom: -5px; /* Move text down by 3 pixels from the previous -2px */
+        bottom: -5px; 
     }
     
     body {
