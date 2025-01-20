@@ -16,7 +16,7 @@
 
     body {
       margin: 0;
-      background: #000;
+      background: transparent;
       font-family: 'Arial', sans-serif;
       min-height: 100vh;
       display: flex;
@@ -25,7 +25,7 @@
     }
 
     .neon-menu {
-      background: #000;
+      background: transparent;
       padding: 1rem;
       width: 100%;
       box-sizing: border-box;
@@ -58,6 +58,7 @@
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
+      background: rgba(0, 0, 0, 0.5);
     }
 
     .neon-link::before {
@@ -326,5 +327,36 @@
       }
     });
   </script>
+  <script>document.addEventListener('DOMContentLoaded', () => {
+  // Add sparkles to Free Money link
+  const freeMoneyLink = document.querySelector('.neon-link:nth-child(4)');
+  
+  function createSparkle() {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'money-sparkle';
+    
+    // Random position around the button
+    const x = Math.random() * 100;
+    const y = Math.random() * 100;
+    
+    sparkle.style.left = `${x}%`;
+    sparkle.style.top = `${y}%`;
+    
+    freeMoneyLink.appendChild(sparkle);
+    
+    // Remove sparkle after animation
+    setTimeout(() => {
+      sparkle.remove();
+    }, 1500);
+  }
+
+  // Create new sparkles periodically
+  setInterval(createSparkle, 300);
+
+  // Add initial sparkles
+  for(let i = 0; i < 5; i++) {
+    createSparkle();
+  }
+});</script>
 </body>
 </html>
