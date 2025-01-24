@@ -8,6 +8,8 @@ let room = null;
 let gameMode = 'singleplayer';
 let playerColor = 'white';
 let currentGameId = null;
+let currentUsername = null;
+let isAnonymous = false;
 
 function generateGameId() {
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -25,10 +27,60 @@ function initMenu() {
   const createMultiplayerBtn = document.getElementById('createMultiplayerBtn');
   const joinMultiplayerBtn = document.getElementById('joinMultiplayerBtn');
   const backToMenuBtn = document.getElementById('backToMenuBtn');
+  const anonymousLogin = document.getElementById('anonymousLogin');
+  const usernameInput = document.getElementById('usernameInput');
+  const setUsernameBtn = document.getElementById('setUsernameBtn');
 
-  // Initialize menu chat first
-  initMenuChat();
+  // Check if user is logged in to websim
+  checkLoginStatus();
 
+  function checkLoginStatus() {
+    // Try to get username from websim
+    const user = window.websim?.getUser?.();
+    if (!user) {
+      // Show anonymous login if not logged in
+      isAnonymous = true;
+      anonymousLogin.style.display = 'block';
+      disableGameButtons();
+    } else {
+      currentUsername = user.username;
+      isAnonymous = false;
+      anonymousLogin.style.display = 'none';
+      enableGameButtons();
+    }
+  }
+
+  function disableGameButtons() {
+    singleplayerBtn.disabled = true;
+    createMultiplayerBtn.disabled = true;
+    joinMultiplayerBtn.disabled = true;
+    [singleplayerBtn, createMultiplayerBtn, joinMultiplayerBtn].forEach(btn => {
+      btn.style.opacity = '0.5';
+    });
+  }
+
+  function enableGameButtons() {
+    singleplayerBtn.disabled = false;
+    createMultiplayerBtn.disabled = false;
+    joinMultiplayerBtn.disabled = false;
+    [singleplayerBtn, createMultiplayerBtn, joinMultiplayerBtn].forEach(btn => {
+      btn.style.opacity = '1';
+    });
+  }
+
+  // Handle anonymous username setting
+  setUsernameBtn.addEventListener('click', () => {
+    const username = usernameInput.value.trim();
+    if (username.length >= 3 && username.length <= 20) {
+      currentUsername = username;
+      anonymousLogin.style.display = 'none';
+      enableGameButtons();
+    } else {
+      alert('Username must be between 3 and 20 characters');
+    }
+  });
+
+  // Initialize the rest of the menu
   singleplayerBtn.addEventListener('click', () => {
     gameMode = 'singleplayer';
     playerColor = 'white';
@@ -50,7 +102,7 @@ function initMenu() {
     const game = await room.collection('chess_game').create({
       id: shortId, // Use our custom short ID
       status: 'waiting',
-      white_player: room.party.client.username,
+      white_player: isAnonymous ? currentUsername : room.party.client.username,
       black_player: null,
       moves: [],
       current_state: board.serialize()
@@ -103,7 +155,7 @@ function initMenu() {
 
       // Join the game
       await room.collection('chess_game').update(gameId, {
-        black_player: room.party.client.username,
+        black_player: isAnonymous ? currentUsername : room.party.client.username,
         status: 'playing'
       });
 
@@ -128,6 +180,9 @@ function initMenu() {
     board.reset();
     gameMode = 'singleplayer';
   });
+
+  // Initialize menu chat first
+  initMenuChat();
 }
 
 function startMultiplayerGame(game) {
@@ -197,6 +252,8 @@ function initGame() {
   window.addEventListener('resize', debounce(handleResize, 250));
 
   updateStatus();
+  
+  addBoardHoverListeners();
 }
 
 function handleSquareClick(event) {
@@ -213,6 +270,31 @@ function handleSquareClick(event) {
   } else {
     handleMultiplayerMove(position);
   }
+}
+
+function addBoardHoverListeners() {
+  const boardElement = document.getElementById('chessboard');
+  
+  boardElement.addEventListener('mouseover', (event) => {
+    const square = event.target.closest('.square');
+    if (!square || selectedSquare) return;
+
+    const position = {
+      x: parseInt(square.dataset.x),
+      y: parseInt(square.dataset.y)
+    };
+
+    const piece = board.getPiece(position);
+    if (piece) {
+      board.showValidMovesForPiece(position);
+    }
+  });
+
+  boardElement.addEventListener('mouseout', (event) => {
+    const square = event.target.closest('.square');
+    if (!square || selectedSquare) return;
+    board.clearHighlights();
+  });
 }
 
 function handleSinglePlayerMove(position) {
@@ -294,20 +376,54 @@ function makeAIMove() {
 
 function updateStatus(message = null) {
   const statusElement = document.getElementById('status');
-  if (gameMode === 'singleplayer') {
-    if (board.isGameOver()) {
-      statusElement.textContent = 'Game Over! ' + (board.getWinner() === 'white' ? 'You win!' : 'AI wins!');
+  if (message) {
+    statusElement.textContent = message;
+    return;
+  }
+
+  if (board.isGameOver()) {
+    const winner = board.getWinner();
+    const reason = board.getGameEndReason();
+    
+    let statusMessage = '';
+    if (winner === 'draw') {
+      statusMessage = `Game Over - Draw by ${reason}`;
     } else {
-      statusElement.textContent = board.isHumanTurn() ? 'Your turn' : 'AI thinking...';
+      const winnerText = gameMode === 'singleplayer' ? 
+        (winner === 'white' ? 'You win!' : 'AI wins!') :
+        `${winner} wins by ${reason}!`;
+      statusMessage = `Game Over! ${winnerText}`;
+    }
+    
+    statusElement.textContent = statusMessage;
+    statusElement.style.color = 'var(--neon-pink)';
+
+    // If in multiplayer, update the game status in the database
+    if (gameMode === 'multiplayer' && room) {
+      room.collection('chess_game').update(currentGameId, {
+        status: 'ended',
+        winner: winner,
+        end_reason: reason
+      });
     }
   } else {
-    if (message) {
-      statusElement.textContent = message;
-    } else if (board.currentPlayer === playerColor) {
-      statusElement.textContent = 'Your turn';
+    let statusText = '';
+    
+    if (gameMode === 'singleplayer') {
+      statusText = board.isHumanTurn() ? 'Your turn' : 'AI thinking...';
     } else {
-      statusElement.textContent = 'Opponent\'s turn';
+      statusText = board.currentPlayer === playerColor ? 'Your turn' : "Opponent's turn";
     }
+
+    // Add check status
+    if (board.isInCheck(board.currentPlayer)) {
+      statusText += ' - CHECK!';
+      statusElement.style.color = 'var(--neon-pink)';
+    } else {
+      statusElement.style.color = 'var(--neon-cyan)';
+    }
+
+    statusElement.textContent = statusText;
   }
 }
 
@@ -399,7 +515,8 @@ async function sendMessage(chatType) {
       await room.collection(`${chatType}_chat_message`).create({
         content: message,
         game_id: chatType === 'game' ? currentGameId : null,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        username: isAnonymous ? currentUsername : room.party.client.username
       });
       chatInput.value = '';
     } catch (error) {
@@ -423,8 +540,10 @@ function renderMessages(messages, containerId) {
       const time = new Date(message.created_at).toLocaleTimeString();
       
       // Check if the message is from the current user
-      const isOwnMessage = message.username === room.party.client.username;
-      
+      const isOwnMessage = isAnonymous ? 
+        message.username === currentUsername :
+        message.username === room.party.client.username;
+        
       messageElement.innerHTML = `
         <span class="username">${message.username}</span>
         <span class="time">${time}</span>
@@ -449,7 +568,7 @@ function renderMessages(messages, containerId) {
       
       chatMessages.appendChild(messageElement);
     });
-    
+      
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
