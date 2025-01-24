@@ -94,8 +94,9 @@ body {
   height: 20px;
   background-color: rgba(0, 255, 255, 0.3);
   border-radius: 50%;
-  box-shadow: 0 0 10px var(--neon-cyan);
+  box-shadow: 0 0 15px var(--neon-pink);
   animation: pulse 2s infinite;
+  z-index: 1;
 }
 
 @keyframes pulse {
@@ -146,6 +147,18 @@ body {
   font-size: 18px;
   font-weight: bold;
   text-shadow: 0 0 10px var(--neon-cyan);
+  transition: color 0.3s ease;
+}
+
+.status[style*="color: var(--neon-pink)"] {
+  animation: pulse-text 2s infinite;
+  font-size: 20px;
+}
+
+@keyframes pulse-text {
+  0% { text-shadow: 0 0 5px var(--neon-pink); }
+  50% { text-shadow: 0 0 20px var(--neon-pink); }
+  100% { text-shadow: 0 0 5px var(--neon-pink); }
 }
 
 button {
@@ -425,4 +438,16 @@ button:hover {
     max-width: 300px;
     height: 300px;
   }
+}
+
+.square .piece {
+  cursor: pointer;
+}
+
+.square:hover .piece {
+  transform: scale(1.1);
+}
+
+.square.valid-move {
+  cursor: pointer;
 }
