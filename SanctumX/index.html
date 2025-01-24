@@ -1,0 +1,113 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Sanctum X  - Cyberpunk Edition</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="startMenu" class="game-container start-menu">
+    <div class="menu-content">
+      <h1 class="game-title">Sanctum X</h1>
+      <div class="menu-buttons">
+        <button id="singleplayerBtn">Singleplayer</button>
+        <button id="createMultiplayerBtn">Create Multiplayer</button>
+        <button id="joinMultiplayerBtn">Join Multiplayer</button>
+      </div>
+      <div class="chat-panel">
+        <div id="startMenuChatMessages" class="chat-messages"></div>
+        <div class="chat-input">
+          <input type="text" id="startMenuChatInput" placeholder="Type your message...">
+          <button id="startMenuSendMessage">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="gameContainer" class="game-container" style="display: none;">
+    <div class="board" id="chessboard"></div>
+    <div class="info-panel">
+      <div class="status" id="status">White's turn</div>
+      <button id="resetBtn">New Game</button>
+      <button id="instructionsBtn">Instructions</button>
+      <button id="backToMenuBtn" style="margin-top: 10px;">Back to Menu</button>
+      <div class="chat-panel">
+        <div id="gameChatMessages" class="chat-messages"></div>
+        <div class="chat-input">
+          <input type="text" id="gameChatInput" placeholder="Type your message...">
+          <button id="gameSendMessage">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="instructionsModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" id="closeInstructions">&times;</span>
+      <h2>Extended Chess Instructions</h2>
+      
+      <h3 class="instructions-heading">Pieces and Movements</h3>
+      <div class="piece-description">
+        <span class="piece-symbol">♙</span><strong>Pawn:</strong> Moves forward one square at a time, captures diagonally. Can move two squares on its first move.
+      </div>
+      <div class="piece-description">
+        <span class="piece-symbol">♖</span><strong>Rook:</strong> Moves any number of squares horizontally or vertically.
+      </div>
+      <div class="piece-description">
+        <span class="piece-symbol">♘</span><strong>Knight:</strong> Moves in an L-shape: two squares in one direction and one square perpendicular to that direction.
+      </div>
+      <div class="piece-description">
+        <span class="piece-symbol">♗</span><strong>Bishop:</strong> Moves any number of squares diagonally.
+      </div>
+      <div class="piece-description">
+        <span class="piece-symbol">♕</span><strong>Queen:</strong> Combines rook and bishop movements - can move any number of squares horizontally, vertically, or diagonally.
+      </div>
+      <div class="piece-description">
+        <span class="piece-symbol">♔</span><strong>King:</strong> Moves one square in any direction.
+      </div>
+      <div class="piece-description">
+        <span class="piece-symbol">✠</span><strong>Chancellor:</strong> Combines rook and knight movements.
+      </div>
+      <div class="piece-description">
+        <span class="piece-symbol">☨</span><strong>Archbishop:</strong> Combines bishop and knight movements.
+      </div>
+
+      <h3 class="instructions-heading">Special Rules</h3>
+      <div class="rules-section">
+        <p>The game follows standard chess rules with these additions:</p>
+        <ul>
+          <li>The board is 10x10 instead of 8x8</li>
+          <li>Two new pieces: Chancellor and Archbishop</li>
+          <li>Additional pawns on the extra files</li>
+        </ul>
+      </div>
+
+      <h3 class="instructions-heading">Winning Conditions</h3>
+      <div class="rules-section">
+        <p>The game can end in several ways:</p>
+        <ul>
+          <li><strong>Checkmate:</strong> When a king is in check and has no legal moves</li>
+          <li><strong>Stalemate:</strong> When a player has no legal moves but is not in check</li>
+          <li><strong>Draw by insufficient material:</strong> When neither player has enough pieces to force checkmate</li>
+          <li><strong>Draw by repetition:</strong> When the same position occurs three times</li>
+          <li><strong>50-move rule:</strong> If no pawn has moved and no piece has been captured in the last 50 moves</li>
+        </ul>
+      </div>
+
+      <h3 class="instructions-heading">Playing Against AI</h3>
+      <div class="rules-section">
+        <p>
+          You play as White, and the AI plays as Black. Click on your piece to select it, 
+          then click on a valid destination square to move. Valid moves will be highlighted 
+          with green dots.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
