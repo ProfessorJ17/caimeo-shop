@@ -12,6 +12,13 @@
   <div id="startMenu" class="game-container start-menu">
     <div class="menu-content">
       <h1 class="game-title">Sanctum X</h1>
+      <div id="anonymousLogin" style="margin-bottom: 20px; display: none;">
+        <input type="text" id="usernameInput" placeholder="Enter your username" 
+               style="padding: 8px; margin-right: 10px; background: rgba(0,0,0,0.3); 
+                      color: var(--neon-cyan); border: 1px solid var(--neon-cyan);
+                      border-radius: 4px;">
+        <button id="setUsernameBtn">Set Username</button>
+      </div>
       <div class="menu-buttons">
         <button id="singleplayerBtn">Singleplayer</button>
         <button id="createMultiplayerBtn">Create Multiplayer</button>
@@ -91,9 +98,17 @@
         <ul>
           <li><strong>Checkmate:</strong> When a king is in check and has no legal moves</li>
           <li><strong>Stalemate:</strong> When a player has no legal moves but is not in check</li>
-          <li><strong>Draw by insufficient material:</strong> When neither player has enough pieces to force checkmate</li>
           <li><strong>Draw by repetition:</strong> When the same position occurs three times</li>
           <li><strong>50-move rule:</strong> If no pawn has moved and no piece has been captured in the last 50 moves</li>
+          <li><strong>Insufficient Material:</strong> The following positions are automatically drawn:
+            <ul>
+              <li>King vs. King</li>
+              <li>King and Bishop vs. King</li>
+              <li>King and Knight vs. King</li>
+              <li>King and Bishop vs. King and Bishop (same color squares)</li>
+              <li>King and Archbishop vs. King and Archbishop (same color squares)</li>
+            </ul>
+          </li>
         </ul>
       </div>
 
