@@ -129,6 +129,11 @@ export class AI {
   }
 
   evaluatePosition(board) {
+    // If position has insufficient material, evaluate as draw (0)
+    if (board.hasInsufficientMaterial()) {
+      return 0;
+    }
+
     let score = 0;
     
     for (let y = 0; y < 10; y++) {
