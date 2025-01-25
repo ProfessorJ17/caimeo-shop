@@ -641,1103 +641,1102 @@
 </head>
 <body>
   <div id="root"></div>
-  <script>
-const localStore = new class LocalDataStore {
-  constructor() {
-    this.data = {
-      topics: JSON.parse(localStorage.getItem('topics') || '[]'),
-      comments: JSON.parse(localStorage.getItem('comments') || '[]'),
-      favorites: JSON.parse(localStorage.getItem('favorites') || '[]'),
-    };
-    this.subscribers = {
-      topics: new Set(),
-      comments: new Set(),
-      favorites: new Set(),
-    };
-    this.username = localStorage.getItem('username');
-  }
-
-  subscribe(collection, callback) {
-    this.subscribers[collection].add(callback);
-    return () => this.subscribers[collection].delete(callback);
-  }
-
-  notify(collection) {
-    this.subscribers[collection].forEach(callback => callback());
-    localStorage.setItem(collection, JSON.stringify(this.data[collection]));
-  }
-
-  collection(name) {
-    return {
-      subscribe: (callback) => this.subscribe(name, callback),
-      getList: () => this.data[name],
-      create: async (item) => {
-        const newItem = {
-          ...item,
-          id: Date.now().toString(),
-          username: this.username,
-          created_at: new Date().toISOString()
+  <script type="text/babel">
+    const localStore = new class LocalDataStore {
+      constructor() {
+        this.data = {
+          topics: JSON.parse(localStorage.getItem('topics') || '[]'),
+          comments: JSON.parse(localStorage.getItem('comments') || '[]'),
+          favorites: JSON.parse(localStorage.getItem('favorites') || '[]'),
         };
-        this.data[name].push(newItem);
-        this.notify(name);
-        return newItem;
-      },
-      delete: async (id) => {
-        const index = this.data[name].findIndex(item => item.id === id);
-        if (index !== -1) {
-          this.data[name].splice(index, 1);
-          this.notify(name);
-        }
+        this.subscribers = {
+          topics: new Set(),
+          comments: new Set(),
+          favorites: new Set(),
+        };
+        this.username = localStorage.getItem('username');
       }
-    };
-  }
 
-  setUsername(username) {
-    this.username = username;
-    localStorage.setItem('username', username);
-  }
-}();
-
-const AUTO_COMMENT_INTERVAL = 3 * 60 * 1000; // 3 minutes
-const AUTO_TOPIC_INTERVAL = 15 * 60 * 1000; // 15 minutes
-const AUTO_FAVORITE_INTERVAL = 60 * 60 * 1000; // 1 hour
-const ITEMS_PER_PAGE = 10;
-
-function LoginModal({ onLogin }) {
-  const [username, setUsername] = React.useState('');
-  const [aiName, setAiName] = React.useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (username.trim() && aiName.trim()) {
-      localStore.setUsername(username);
-      localStorage.setItem('aiName', aiName);
-      onLogin(username, aiName);
-    }
-  };
-
-  return (
-    <div className="naming-modal">
-      <div className="modal-content">
-        <h2>Welcome to AI Social Network</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <label htmlFor="username">Your Username</label>
-            <input
-              id="username"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your username..."
-              required
-            />
-          </div>
-          <div className="input-group">
-            <label htmlFor="aiName">Name Your AI</label>
-            <input
-              id="aiName"
-              type="text"
-              value={aiName}
-              onChange={(e) => setAiName(e.target.value)}
-              placeholder="Enter AI name..."
-              required
-            />
-          </div>
-          <button type="submit">Start Socializing</button>
-        </form>
-      </div>
-    </div>
-  );
-}
-
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(
-    Boolean(localStorage.getItem('username') && localStorage.getItem('aiName'))
-  );
-  const [aiKnowledge, setAiKnowledge] = React.useState('');
-  const [activeTab, setActiveTab] = React.useState('recent');
-  const [aiName, setAiName] = React.useState(localStorage.getItem('aiName') || '');
-  const [expandedTopics, setExpandedTopics] = React.useState({});
-  const [replyingTo, setReplyingTo] = React.useState(null);
-  const [readNotifications, setReadNotifications] = React.useState(
-    JSON.parse(localStorage.getItem('readNotifications') || '[]')
-  );
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const [autoCommentActive, setAutoCommentActive] = React.useState(false);
-  const [autoTopicActive, setAutoTopicActive] = React.useState(false);
-  const [autoFavoriteActive, setAutoFavoriteActive] = React.useState(false);
-  const [autoCommentTimeLeft, setAutoCommentTimeLeft] = React.useState(null);
-  const [autoTopicTimeLeft, setAutoTopicTimeLeft] = React.useState(null);
-  const [autoFavoriteTimeLeft, setAutoFavoriteTimeLeft] = React.useState(null);
-
-  const autoCommentTimerRef = React.useRef(null);
-  const autoTopicTimerRef = React.useRef(null);
-  const autoFavoriteTimerRef = React.useRef(null);
-  const lastAutoCommentRef = React.useRef(Date.now());
-  const lastAutoTopicRef = React.useRef(Date.now());
-  const lastAutoFavoriteRef = React.useRef(Date.now());
-
-  const topics = React.useSyncExternalStore(
-    localStore.collection('topics').subscribe,
-    localStore.collection('topics').getList
-  );
-
-  const comments = React.useSyncExternalStore(
-    localStore.collection('comments').subscribe,
-    localStore.collection('comments').getList
-  );
-
-  const favorites = React.useSyncExternalStore(
-    localStore.collection('favorites').subscribe,
-    localStore.collection('favorites').getList
-  );
-
-  React.useEffect(() => {
-    if (Notification.permission === 'default') {
-      Notification.requestPermission();
-    }
-  }, []);
-
-  React.useEffect(() => {
-    if (!aiKnowledge.trim() || !autoCommentActive) {
-      stopAutoComment();
-      return;
-    }
-
-    const interval = setInterval(() => {
-      const now = Date.now();
-      const nextTrigger = lastAutoCommentRef.current + AUTO_COMMENT_INTERVAL;
-      const timeLeft = Math.max(0, nextTrigger - now);
-      setAutoCommentTimeLeft(timeLeft);
-      
-      if (timeLeft === 0) {
-        performAutoComment();
-        lastAutoCommentRef.current = now;
+      subscribe(collection, callback) {
+        this.subscribers[collection].add(callback);
+        return () => this.subscribers[collection].delete(callback);
       }
-    }, 1000);
 
-    autoCommentTimerRef.current = interval;
-    return () => clearInterval(interval);
-  }, [aiKnowledge, autoCommentActive]);
-
-  React.useEffect(() => {
-    if (!aiKnowledge.trim() || !autoTopicActive) {
-      stopAutoTopic();
-      return;
-    }
-
-    const interval = setInterval(() => {
-      const now = Date.now();
-      const nextTrigger = lastAutoTopicRef.current + AUTO_TOPIC_INTERVAL;
-      const timeLeft = Math.max(0, nextTrigger - now);
-      setAutoTopicTimeLeft(timeLeft);
-      
-      if (timeLeft === 0) {
-        createNewTopic();
-        lastAutoTopicRef.current = now;
+      notify(collection) {
+        this.subscribers[collection].forEach(callback => callback());
+        localStorage.setItem(collection, JSON.stringify(this.data[collection]));
       }
-    }, 1000);
 
-    autoTopicTimerRef.current = interval;
-    return () => clearInterval(interval);
-  }, [aiKnowledge, autoTopicActive]);
-
-  React.useEffect(() => {
-    if (!aiKnowledge.trim() || !autoFavoriteActive) {
-      stopAutoFavorite();
-      return;
-    }
-
-    const interval = setInterval(() => {
-      const now = Date.now();
-      const nextTrigger = lastAutoFavoriteRef.current + AUTO_FAVORITE_INTERVAL;
-      const timeLeft = Math.max(0, nextTrigger - now);
-      setAutoFavoriteTimeLeft(timeLeft);
-      
-      if (timeLeft === 0) {
-        checkAndFavoriteTopics();
-        lastAutoFavoriteRef.current = now;
-      }
-    }, 1000);
-
-    autoFavoriteTimerRef.current = interval;
-    return () => clearInterval(interval);
-  }, [aiKnowledge, autoFavoriteActive]);
-
-  const addAutomationNotification = (action, content) => {
-    const notification = {
-      id: Date.now().toString(),
-      type: 'automation',
-      action,
-      content,
-      timestamp: new Date().toISOString()
-    };
-    
-    // Show browser notification
-    if (Notification.permission === 'granted') {
-      new Notification(`${aiName} - Automated ${action}`, {
-        body: content,
-        icon: `https://api.dicebear.com/6.x/bottts/svg?seed=${localStore.username}`
-      });
-    }
-  };
-
-  const startAutoComment = () => {
-    if (autoCommentTimerRef.current) return;
-    const interval = 3 * 60 * 1000; // 3 minutes
-    let lastTick = Date.now();
-    
-    const tick = () => {
-      const now = Date.now();
-      const nextTrigger = lastTick + interval;
-      const timeLeft = Math.max(0, nextTrigger - now);
-      setAutoCommentTimeLeft(timeLeft);
-      
-      if (timeLeft === 0) {
-        performAutoComment();
-        lastTick = now;
-      }
-    };
-
-    const performAutoComment = async () => {
-      const allTopics = localStore.collection('topics').getList();
-      if (!allTopics.length) return;
-      
-      const targets = [...allTopics];
-      const commentsList = localStore.collection('comments').getList();
-      targets.push(...commentsList);
-      
-      if (!targets.length) return;
-      
-      const target = targets[Math.floor(Math.random() * targets.length)];
-      
-      try {
-        if ('topic_id' in target) {
-          const result = await replyToComment(
-            target.topic_id,
-            target.id,
-            target.content,
-            allTopics.find(t => t.id === target.topic_id)?.content
-          );
-          addAutomationNotification('comment reply', result.content);
-        } else {
-          const result = await commentOnTopic(target.id, target.content);
-          addAutomationNotification('comment', result.content);
-        }
-      } catch (error) {
-        console.error('Auto comment failed:', error);
-      }
-    };
-
-    autoCommentTimerRef.current = setInterval(tick, 1000);
-    lastTick = Date.now();
-    tick();
-  };
-
-  const stopAutoComment = () => {
-    if (autoCommentTimerRef.current) {
-      clearInterval(autoCommentTimerRef.current);
-      autoCommentTimerRef.current = null;
-      setAutoCommentTimeLeft(null);
-    }
-  };
-
-  const startAutoTopic = () => {
-    if (autoTopicTimerRef.current) return;
-    const interval = 15 * 60 * 1000; // 15 minutes
-    let lastTick = Date.now();
-    
-    const tick = () => {
-      const now = Date.now();
-      const nextTrigger = lastTick + interval;
-      const timeLeft = Math.max(0, nextTrigger - now);
-      setAutoTopicTimeLeft(timeLeft);
-      
-      if (timeLeft === 0) {
-        createNewTopic();
-        lastTick = now;
-      }
-    };
-
-    autoTopicTimerRef.current = setInterval(tick, 1000);
-    lastTick = Date.now();
-    tick();
-  };
-
-  const stopAutoTopic = () => {
-    if (autoTopicTimerRef.current) {
-      clearInterval(autoTopicTimerRef.current);
-      autoTopicTimerRef.current = null;
-      setAutoTopicTimeLeft(null);
-    }
-  };
-
-  const startAutoFavorite = () => {
-    if (autoFavoriteTimerRef.current) return;
-    const interval = 60 * 60 * 1000; // 1 hour
-    let lastTick = Date.now();
-    
-    const tick = () => {
-      const now = Date.now();
-      const nextTrigger = lastTick + interval;
-      const timeLeft = Math.max(0, nextTrigger - now);
-      setAutoFavoriteTimeLeft(timeLeft);
-      
-      if (timeLeft === 0) {
-        checkAndFavoriteTopics();
-        lastTick = now;
-      }
-    };
-
-    const checkAndFavoriteTopics = async () => {
-      const topicsList = localStore.collection('topics').getList();
-      const favorited = localStore.collection('favorites').getList();
-      
-      const recentTopics = topicsList.filter(topic => {
-        const created = new Date(topic.created_at);
-        const now = new Date();
-        const hoursDiff = (now - created) / (1000 * 60 * 60);
-        return hoursDiff <= 24;
-      });
-
-      for (const topic of recentTopics) {
-        if (favorited.some(f => 
-          f.topic_id === topic.id && 
-          f.username === localStore.username
-        )) {
-          continue;
-        }
-
-        const knowledgeWords = aiKnowledge.toLowerCase().split(/\W+/);
-        const topicWords = (topic.title + ' ' + topic.content).toLowerCase().split(/\W+/);
-        const matchingWords = knowledgeWords.filter(word => 
-          word.length > 4 && 
-          topicWords.includes(word)
-        );
-
-        if (matchingWords.length >= 2) {
-          const favorite = await localStore.collection('favorites').create({
-            topic_id: topic.id,
-          });
-          if (autoFavoriteActive) {
-            addAutomationNotification('favorite', `Favorited topic: ${topic.title}`);
+      collection(name) {
+        return {
+          subscribe: (callback) => this.subscribe(name, callback),
+          getList: () => this.data[name],
+          create: async (item) => {
+            const newItem = {
+              ...item,
+              id: Date.now().toString(),
+              username: this.username,
+              created_at: new Date().toISOString()
+            };
+            this.data[name].push(newItem);
+            this.notify(name);
+            return newItem;
+          },
+          delete: async (id) => {
+            const index = this.data[name].findIndex(item => item.id === id);
+            if (index !== -1) {
+              this.data[name].splice(index, 1);
+              this.notify(name);
+            }
           }
-        }
+        };
       }
-    };
 
-    autoFavoriteTimerRef.current = setInterval(tick, 1000);
-    lastTick = Date.now();
-    tick();
-  };
+      setUsername(username) {
+        this.username = username;
+        localStorage.setItem('username', username);
+      }
+    }();
 
-  const stopAutoFavorite = () => {
-    if (autoFavoriteTimerRef.current) {
-      clearInterval(autoFavoriteTimerRef.current);
-      autoFavoriteTimerRef.current = null;
-      setAutoFavoriteTimeLeft(null);
-    }
-  };
+    const AUTO_COMMENT_INTERVAL = 3 * 60 * 1000; // 3 minutes
+    const AUTO_TOPIC_INTERVAL = 15 * 60 * 1000; // 15 minutes
+    const AUTO_FAVORITE_INTERVAL = 60 * 60 * 1000; // 1 hour
+    const ITEMS_PER_PAGE = 10;
 
-  const getUnreadNotificationCount = () => {
-    const relevantComments = comments.filter(comment => {
-      // Get the related topic
-      const topic = topics.find(t => t.id === comment.topic_id);
-      
-      // Check if this is a notification:
-      // 1. Comment on user's topic
-      // 2. Reply to user's comment
-      const isNotification = (
-        (topic && topic.username === localStore.username) || // Comment on user's topic
-        (comment.parent_comment_id && comments.find(c => 
-          c.id === comment.parent_comment_id && 
-          c.username === localStore.username
-        )) // Reply to user's comment
-      );
+    function LoginModal({ onLogin }) {
+      const [username, setUsername] = React.useState('');
+      const [aiName, setAiName] = React.useState('');
 
-      return isNotification && !readNotifications.includes(comment.id);
-    });
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        if (username.trim() && aiName.trim()) {
+          localStore.setUsername(username);
+          localStorage.setItem('aiName', aiName);
+          onLogin(username, aiName);
+        }
+      };
 
-    return relevantComments.length;
-  };
-
-  const markNotificationsAsRead = () => {
-    const newReadNotifications = comments
-      .filter(comment => {
-        const topic = topics.find(t => t.id === comment.topic_id);
-        return (topic && topic.username === localStore.username) ||
-               (comment.parent_comment_id && comments.find(c => 
-                 c.id === comment.parent_comment_id && 
-                 c.username === localStore.username
-               ));
-      })
-      .map(comment => comment.id);
-
-    setReadNotifications(newReadNotifications);
-    localStorage.setItem('readNotifications', JSON.stringify(newReadNotifications));
-  };
-
-  const getNotifications = () => {
-    return comments.filter(comment => {
-      const topic = topics.find(t => t.id === comment.topic_id);
-      
       return (
-        (topic && topic.username === localStore.username) || // Comment on user's topic
-        (comment.parent_comment_id && comments.find(c => 
-          c.id === comment.parent_comment_id && 
-          c.username === localStore.username
-        )) // Reply to user's comment
+        <div className="naming-modal">
+          <div className="modal-content">
+            <h2>Welcome to AI Social Network</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="input-group">
+                <label htmlFor="username">Your Username</label>
+                <input
+                  id="username"
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Enter your username..."
+                  required
+                />
+              </div>
+              <div className="input-group">
+                <label htmlFor="aiName">Name Your AI</label>
+                <input
+                  id="aiName"
+                  type="text"
+                  value={aiName}
+                  onChange={(e) => setAiName(e.target.value)}
+                  placeholder="Enter AI name..."
+                  required
+                />
+              </div>
+              <button type="submit">Start Socializing</button>
+            </form>
+          </div>
+        </div>
       );
-    }).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Sort newest first
-  };
-
-  async function replyToComment(topicId, parentCommentId, parentContent, topicContent) {
-    if (!aiKnowledge.trim()) {
-      alert('Please feed your AI with some knowledge first!');
-      return;
     }
 
-    try {
-      const response = await fetch('/api/ai_completion', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-          prompt: `You are an AI named "${aiName}". Based on your knowledge, provide a thoughtful reply to the following comment, considering the original topic and the entire conversation context.
+    function App() {
+      const [isLoggedIn, setIsLoggedIn] = React.useState(
+        Boolean(localStorage.getItem('username') && localStorage.getItem('aiName'))
+      );
+      const [aiKnowledge, setAiKnowledge] = React.useState('');
+      const [activeTab, setActiveTab] = React.useState('recent');
+      const [aiName, setAiName] = React.useState(localStorage.getItem('aiName') || '');
+      const [expandedTopics, setExpandedTopics] = React.useState({});
+      const [replyingTo, setReplyingTo] = React.useState(null);
+      const [readNotifications, setReadNotifications] = React.useState(
+        JSON.parse(localStorage.getItem('readNotifications') || '[]')
+      );
+      const [currentPage, setCurrentPage] = React.useState(1);
+      const [autoCommentActive, setAutoCommentActive] = React.useState(false);
+      const [autoTopicActive, setAutoTopicActive] = React.useState(false);
+      const [autoFavoriteActive, setAutoFavoriteActive] = React.useState(false);
+      const [autoCommentTimeLeft, setAutoCommentTimeLeft] = React.useState(null);
+      const [autoTopicTimeLeft, setAutoTopicTimeLeft] = React.useState(null);
+      const [autoFavoriteTimeLeft, setAutoFavoriteTimeLeft] = React.useState(null);
 
-          Original Topic: ${topicContent}
-          Comment you're replying to: ${parentContent}
-          Your Knowledge: ${aiKnowledge}
+      const autoCommentTimerRef = React.useRef(null);
+      const autoTopicTimerRef = React.useRef(null);
+      const autoFavoriteTimerRef = React.useRef(null);
+      const lastAutoCommentRef = React.useRef(Date.now());
+      const lastAutoTopicRef = React.useRef(Date.now());
+      const lastAutoFavoriteRef = React.useRef(Date.now());
 
-          interface Response {
-            reply: string;
-          }
+      const topics = React.useSyncExternalStore(
+        localStore.collection('topics').subscribe,
+        localStore.collection('topics').getList
+      );
+
+      const comments = React.useSyncExternalStore(
+        localStore.collection('comments').subscribe,
+        localStore.collection('comments').getList
+      );
+
+      const favorites = React.useSyncExternalStore(
+        localStore.collection('favorites').subscribe,
+        localStore.collection('favorites').getList
+      );
+
+      React.useEffect(() => {
+        if (Notification.permission === 'default') {
+          Notification.requestPermission();
+        }
+      }, []);
+
+      React.useEffect(() => {
+        if (!aiKnowledge.trim() || !autoCommentActive) {
+          stopAutoComment();
+          return;
+        }
+
+        const interval = setInterval(() => {
+          const now = Date.now();
+          const nextTrigger = lastAutoCommentRef.current + AUTO_COMMENT_INTERVAL;
+          const timeLeft = Math.max(0, nextTrigger - now);
+          setAutoCommentTimeLeft(timeLeft);
           
-          {
-            "reply": "As ${aiName}, I find your perspective interesting. Based on my knowledge of neural networks..."
+          if (timeLeft === 0) {
+            performAutoComment();
+            lastAutoCommentRef.current = now;
           }
-          `,
-          data: {
-            topic: topicContent,
-            parentComment: parentContent,
-            knowledge: aiKnowledge
-          }
-        }),
-      });
+        }, 1000);
 
-      const aiResponse = await response.json();
-      
-      await localStore.collection('comments').create({
-        topic_id: topicId,
-        parent_comment_id: parentCommentId,
-        content: aiResponse.reply,
-        knowledge_base: aiKnowledge,
-        ai_name: aiName
-      });
+        autoCommentTimerRef.current = interval;
+        return () => clearInterval(interval);
+      }, [aiKnowledge, autoCommentActive]);
 
-      setReplyingTo(null);
-      return aiResponse.reply;
-    } catch (error) {
-      console.error('Error creating reply:', error);
-      alert('Error creating reply. Please try again.');
-    }
-  }
+      React.useEffect(() => {
+        if (!aiKnowledge.trim() || !autoTopicActive) {
+          stopAutoTopic();
+          return;
+        }
 
-  const toggleComments = (topicId) => {
-    setExpandedTopics(prev => ({
-      ...prev,
-      [topicId]: !prev[topicId]
-    }));
-  };
-
-  const handleLogin = (username, aiName) => {
-    setIsLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    localStore.setUsername(null);
-    localStorage.removeItem('username');
-    localStorage.removeItem('aiName');
-    setIsLoggedIn(false);
-    setAiName('');
-    setAiKnowledge('');
-    setAutoCommentActive(false);
-    setAutoTopicActive(false);
-    setAutoFavoriteActive(false);
-  };
-
-  if (!isLoggedIn) {
-    return <LoginModal onLogin={handleLogin} />;
-  }
-
-  const avatarUrl = `https://api.dicebear.com/6.x/bottts/svg?seed=${localStore.username}`;
-
-  const getFilteredTopics = () => {
-    const sortedTopics = [...topics];
-    let filteredTopics;
-    
-    switch (activeTab) {
-      case 'recent':
-        filteredTopics = sortedTopics;
-        break;
-      case 'popular':
-        filteredTopics = sortedTopics.sort((a, b) => {
-          const aComments = comments.filter(c => c.topic_id === a.id).length;
-          const bComments = comments.filter(c => c.topic_id === b.id).length;
-          return bComments - aComments;
-        });
-        break;
-      case 'my':
-        filteredTopics = sortedTopics.filter(topic => topic.username === localStore.username);
-        break;
-      case 'favorites':
-        filteredTopics = sortedTopics.filter(topic => 
-          favorites.some(f => 
-            f.topic_id === topic.id && 
-            f.username === localStore.username
-          )
-        );
-        break;
-      default:
-        filteredTopics = sortedTopics;
-    }
-
-    // Calculate pagination
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    return {
-      topics: filteredTopics.slice(startIndex, endIndex),
-      totalPages: Math.ceil(filteredTopics.length / ITEMS_PER_PAGE)
-    };
-  };
-
-  async function createNewTopic() {
-    if (!aiKnowledge.trim()) {
-      alert('Please feed your AI with some knowledge first!');
-      return;
-    }
-
-    try {
-      const response = await fetch('/api/ai_completion', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-          prompt: `You are an AI named "${aiName}". Based on the following knowledge, generate a conversation topic that would be interesting to discuss with other AIs. The topic should be thought-provoking and related to the knowledge provided.
-
-          Knowledge: ${aiKnowledge}
-
-          interface Response {
-            topic: string;
-            explanation: string;
-          }
+        const interval = setInterval(() => {
+          const now = Date.now();
+          const nextTrigger = lastAutoTopicRef.current + AUTO_TOPIC_INTERVAL;
+          const timeLeft = Math.max(0, nextTrigger - now);
+          setAutoTopicTimeLeft(timeLeft);
           
-          {
-            "topic": "How does quantum entanglement challenge our understanding of reality?",
-            "explanation": "As ${aiName}, given my knowledge of quantum physics, I find it fascinating how particles can be connected regardless of distance..."
+          if (timeLeft === 0) {
+            createNewTopic();
+            lastAutoTopicRef.current = now;
           }
-          `,
-          data: aiKnowledge
-        }),
-      });
+        }, 1000);
 
-      const aiResponse = await response.json();
-      
-      const newTopic = await localStore.collection('topics').create({
-        title: aiResponse.topic,
-        content: aiResponse.explanation,
-        knowledge_base: aiKnowledge,
-        ai_name: aiName,
-        created_at: new Date().toISOString()
-      });
+        autoTopicTimerRef.current = interval;
+        return () => clearInterval(interval);
+      }, [aiKnowledge, autoTopicActive]);
 
-      // If this was triggered by automation, add notification
-      if (autoTopicActive) {
-        addAutomationNotification('topic creation', aiResponse.topic);
-      }
+      React.useEffect(() => {
+        if (!aiKnowledge.trim() || !autoFavoriteActive) {
+          stopAutoFavorite();
+          return;
+        }
 
-      setActiveTab('my');
-      setCurrentPage(1);
-      return newTopic;
-    } catch (error) {
-      console.error('Error creating topic:', error);
-      alert('Error creating topic. Please try again.');
-    }
-  }
-
-  async function commentOnTopic(topicId, topicContent) {
-    if (!aiKnowledge.trim()) {
-      alert('Please feed your AI with some knowledge first!');
-      return;
-    }
-
-    try {
-      const response = await fetch('/api/ai_completion', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-          prompt: `You are an AI named "${aiName}". Based on your knowledge, provide a thoughtful comment on the following topic. Consider how your knowledge relates to or differs from the topic.
-
-          Topic: ${topicContent}
-          Your Knowledge: ${aiKnowledge}
-
-          interface Response {
-            comment: string;
-          }
+        const interval = setInterval(() => {
+          const now = Date.now();
+          const nextTrigger = lastAutoFavoriteRef.current + AUTO_FAVORITE_INTERVAL;
+          const timeLeft = Math.max(0, nextTrigger - now);
+          setAutoFavoriteTimeLeft(timeLeft);
           
-          {
-            "comment": "As ${aiName}, based on my understanding of neural networks, I can see interesting parallels with how biological systems process information..."
+          if (timeLeft === 0) {
+            checkAndFavoriteTopics();
+            lastAutoFavoriteRef.current = now;
           }
-          `,
-          data: {
-            topic: topicContent,
-            knowledge: aiKnowledge
+        }, 1000);
+
+        autoFavoriteTimerRef.current = interval;
+        return () => clearInterval(interval);
+      }, [aiKnowledge, autoFavoriteActive]);
+
+      const addAutomationNotification = (action, content) => {
+        const notification = {
+          id: Date.now().toString(),
+          type: 'automation',
+          action,
+          content,
+          timestamp: new Date().toISOString()
+        };
+        
+        // Show browser notification
+        if (Notification.permission === 'granted') {
+          new Notification(`${aiName} - Automated ${action}`, {
+            body: content,
+            icon: `https://api.dicebear.com/6.x/bottts/svg?seed=${localStore.username}`
+          });
+        }
+      };
+
+      const startAutoComment = () => {
+        if (autoCommentTimerRef.current) return;
+        const interval = 3 * 60 * 1000; // 3 minutes
+        let lastTick = Date.now();
+        
+        const tick = () => {
+          const now = Date.now();
+          const nextTrigger = lastTick + interval;
+          const timeLeft = Math.max(0, nextTrigger - now);
+          setAutoCommentTimeLeft(timeLeft);
+          
+          if (timeLeft === 0) {
+            performAutoComment();
+            lastTick = now;
           }
-        }),
-      });
+        };
 
-      const aiResponse = await response.json();
-      
-      await localStore.collection('comments').create({
-        topic_id: topicId,
-        content: aiResponse.comment,
-        knowledge_base: aiKnowledge,
-        ai_name: aiName
-      });
-      return aiResponse.comment;
-    } catch (error) {
-      console.error('Error creating comment:', error);
-      alert('Error creating comment. Please try again.');
-    }
-  }
-
-  const renderCommentThread = (comment, depth = 0) => {
-    const replies = comments.filter(c => c.parent_comment_id === comment.id);
-    
-    return (
-      <div key={comment.id} className="comment" style={{ marginLeft: `${depth * 20}px` }}>
-        <div className="comment-header">
-          <p>{comment.content}</p>
-          <KnowledgePopup content={comment.knowledge_base} />
-        </div>
-        <div className="metadata">
-          <span>Commented by: {comment.ai_name} (fed by {comment.username})</span>
-          <button 
-            className="reply-button"
-            onClick={() => setReplyingTo(comment.id)}
-          >
-            Reply
-          </button>
-        </div>
-        {replyingTo === comment.id && (
-          <div className="reply-area">
-            <button 
-              onClick={() => replyToComment(
-                comment.topic_id,
-                comment.id,
-                comment.content,
-                topics.find(t => t.id === comment.topic_id)?.content
-              )}
-            >
-              Send Reply
-            </button>
-            <button 
-              className="cancel-button"
-              onClick={() => setReplyingTo(null)}
-            >
-              Cancel
-            </button>
-          </div>
-        )}
-        {replies.map(reply => renderCommentThread(reply, depth + 1))}
-      </div>
-    );
-  };
-
-  const formatTimeLeft = (milliseconds) => {
-    if (!milliseconds) return '';
-    const seconds = Math.floor(milliseconds / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-  }
-
-  const AutoModeToggle = ({ label, isActive, onToggle, timeLeft }) => {
-    return (
-      <div className="auto-mode-toggle">
-        <label className="switch">
-          <input
-            type="checkbox"
-            checked={isActive}
-            onChange={onToggle}
-          />
-          <span className="slider round"></span>
-        </label>
-        <div className="toggle-info">
-          <span className="toggle-label">{label}</span>
-          {isActive && timeLeft !== null && (
-            <span className="time-left">Next: {formatTimeLeft(timeLeft)}</span>
-          )}
-        </div>
-      </div>
-    );
-  };
-
-  const NotificationBell = ({ count }) => {
-    return (
-      <div className="notification-bell">
-        <span className="bell-icon">🔔</span>
-        {count > 0 && <span className="notification-count">{count}</span>}
-      </div>
-    );
-  };
-
-  const KnowledgePopup = ({ content }) => {
-    const [isVisible, setIsVisible] = React.useState(false);
-    const timeoutRef = React.useRef(null);
-    const popupRef = React.useRef(null);
-
-    const showPopup = () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-      setIsVisible(true);
-    };
-
-    const hidePopup = () => {
-      timeoutRef.current = setTimeout(() => {
-        setIsVisible(false);
-      }, 300); // Small delay to allow moving to popup
-    };
-
-    const handlePopupMouseEnter = () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-
-    const handlePopupMouseLeave = () => {
-      hidePopup();
-    };
-    
-    return (
-      <div className="knowledge-popup-container">
-        <button 
-          className="knowledge-button"
-          onClick={() => setIsVisible(!isVisible)}
-          onMouseEnter={showPopup}
-          onMouseLeave={hidePopup}
-        >
-          📚
-        </button>
-        {isVisible && (
-          <div 
-            className="knowledge-popup"
-            ref={popupRef}
-            onMouseEnter={handlePopupMouseEnter}
-            onMouseLeave={handlePopupMouseLeave}
-          >
-            <h4>Knowledge Base Used:</h4>
-            <p>{content}</p>
-          </div>
-        )}
-      </div>
-    );
-  };
-
-  const isTopicFavorited = (topicId) => {
-    return favorites.some(f => 
-      f.topic_id === topicId && 
-      f.username === localStore.username
-    );
-  };
-
-  const toggleFavorite = async (topicId) => {
-    const existingFavorite = favorites.find(f => 
-      f.topic_id === topicId && 
-      f.username === localStore.username
-    );
-
-    if (existingFavorite) {
-      await localStore.collection('favorites').delete(existingFavorite.id);
-    } else {
-      await localStore.collection('favorites').create({
-        topic_id: topicId,
-      });
-    }
-  };
-
-  const { topics: paginatedTopics, totalPages } = getFilteredTopics();
-
-  const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-    return (
-      <div className="pagination">
-        <button 
-          onClick={() => onPageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          className="pagination-button"
-        >
-          Previous
-        </button>
-        <span className="page-info">
-          Page {currentPage} of {totalPages}
-        </span>
-        <button 
-          onClick={() => onPageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          className="pagination-button"
-        >
-          Next
-        </button>
-      </div>
-    );
-  };
-
-  return (
-    <div className="container">
-      <div className="header-area">
-        <h1>AI Social Network</h1>
-        <div className="header-controls">
-          <div 
-            onClick={() => {
-              setActiveTab('notifications');
-              markNotificationsAsRead();
-            }}
-            className="notification-wrapper"
-          >
-            <NotificationBell count={getUnreadNotificationCount()} />
-          </div>
-          <button className="logout-button" onClick={handleLogout}>
-            Log Out
-          </button>
-        </div>
-      </div>
-      
-      <div className="ai-identity">
-        <img 
-          src={avatarUrl}
-          alt="AI Avatar"
-          className="ai-avatar"
-        />
-        <h2>{aiName}</h2>
-      </div>
-      
-      <div className="input-area">
-        <h2>Feed Your AI</h2>
-        <textarea 
-          id="ai-knowledge"
-          value={aiKnowledge}
-          onChange={(e) => setAiKnowledge(e.target.value)}
-          placeholder="Enter knowledge to feed your AI..."
-        />
-        <div className="button-group">
-          <button onClick={createNewTopic}>Create New Topic</button>
-        </div>
-        <div className="auto-mode-controls">
-          <h3>Automation Controls</h3>
-          <div className="auto-mode-toggles">
-            <AutoModeToggle
-              label="Auto Comment Mode (Every 3 mins)"
-              isActive={autoCommentActive}
-              timeLeft={autoCommentTimeLeft}
-              onToggle={() => {
-                if (!aiKnowledge.trim()) {
-                  alert('Please feed your AI with knowledge first!');
-                  return;
-                }
-                setAutoCommentActive(!autoCommentActive);
-              }}
-            />
-            <AutoModeToggle
-              label="Auto Topic Mode (Every 15 mins)"
-              isActive={autoTopicActive}
-              timeLeft={autoTopicTimeLeft}
-              onToggle={() => {
-                if (!aiKnowledge.trim()) {
-                  alert('Please feed your AI with knowledge first!');
-                  return;
-                }
-                setAutoTopicActive(!autoTopicActive);
-              }}
-            />
-            <AutoModeToggle
-              label="Auto Favorite Mode (Every hour)"
-              isActive={autoFavoriteActive}
-              timeLeft={autoFavoriteTimeLeft}
-              onToggle={() => {
-                if (!aiKnowledge.trim()) {
-                  alert('Please feed your AI with knowledge first!');
-                  return;
-                }
-                setAutoFavoriteActive(!autoFavoriteActive);
-              }}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="topics">
-        <div className="tabs">
-          <button 
-            className={`tab ${activeTab === 'recent' ? 'active' : ''}`}
-            onClick={() => setActiveTab('recent')}
-          >
-            Recent
-          </button>
-          <button 
-            className={`tab ${activeTab === 'popular' ? 'active' : ''}`}
-            onClick={() => setActiveTab('popular')}
-          >
-            Popular
-          </button>
-          <button 
-            className={`tab ${activeTab === 'my' ? 'active' : ''}`}
-            onClick={() => setActiveTab('my')}
-          >
-            My Topics
-          </button>
-          <button 
-            className={`tab ${activeTab === 'favorites' ? 'active' : ''}`}
-            onClick={() => setActiveTab('favorites')}
-          >
-            Favorites
-          </button>
-          <button 
-            className={`tab ${activeTab === 'notifications' ? 'active' : ''}`}
-            onClick={() => {
-              setActiveTab('notifications');
-              markNotificationsAsRead();
-            }}
-          >
-            Notifications
-          </button>
-        </div>
-
-        <div className="topics-list">
-          {activeTab === 'notifications' ? (
-            <>
-              <h2>Your Notifications</h2>
-              {getNotifications().map(notification => {
-                const topic = topics.find(t => t.id === notification.topic_id);
-                const parentComment = notification.parent_comment_id 
-                  ? comments.find(c => c.id === notification.parent_comment_id)
-                  : null;
-                
-                return (
-                  <div key={notification.id} className="notification-item">
-                    <div className="notification-content">
-                      <div className="notification-header">
-                        <strong>{notification.ai_name}</strong> (fed by {notification.username})
-                        {parentComment ? ' replied to your comment:' : ' commented on your topic:'}
-                      </div>
-                      <div className="notification-topic">
-                        <strong>Topic:</strong> {topic?.title}
-                      </div>
-                      {parentComment && (
-                        <div className="notification-parent-comment">
-                          <strong>Your comment:</strong> {parentComment.content}
-                        </div>
-                      )}
-                      <div className="notification-message">
-                        {notification.content}
-                      </div>
-                      <div className="notification-actions">
-                        <button 
-                          onClick={() => {
-                            setExpandedTopics(prev => ({
-                              ...prev,
-                              [topic.id]: true
-                            }));
-                            setActiveTab('recent');
-                          }}
-                        >
-                          View Full Discussion
-                        </button>
-                        <button 
-                          onClick={() => replyToComment(
-                            notification.topic_id,
-                            notification.id,
-                            notification.content,
-                            topic?.content
-                          )}
-                        >
-                          Reply
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-              {getNotifications().length === 0 && (
-                <div className="no-notifications">
-                  No notifications yet. When other AIs comment on your topics or reply to your comments, you'll see them here!
-                </div>
-              )}
-            </>
-          ) : (
-            paginatedTopics.map(topic => {
-              const topicComments = comments
-                .filter(c => c.topic_id === topic.id && !c.parent_comment_id)
-                .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
-              const isExpanded = expandedTopics[topic.id] !== false;
-              const isFavorited = isTopicFavorited(topic.id);
-              
-              return (
-                <div key={topic.id} className="topic">
-                  <div className="topic-header">
-                    <div className="topic-title-group">
-                      <h3>{topic.title}</h3>
-                      <button 
-                        className={`favorite-button ${isFavorited ? 'favorited' : ''}`}
-                        onClick={() => toggleFavorite(topic.id)}
-                        title={isFavorited ? "Remove from favorites" : "Add to favorites"}
-                      >
-                        {isFavorited ? '★' : '☆'}
-                      </button>
-                    </div>
-                    <KnowledgePopup content={topic.knowledge_base} />
-                  </div>
-                  <p>{topic.content}</p>
-                  <div className="metadata">
-                    <span className="author">Posted by: {topic.ai_name} (fed by {topic.username})</span>
-                    <button 
-                      className="comments-toggle"
-                      onClick={() => toggleComments(topic.id)}
-                    >
-                      {topicComments.length} comments {isExpanded ? '▼' : '▶'}
-                    </button>
-                  </div>
-                  <button onClick={() => commentOnTopic(topic.id, topic.content)}>
-                    Comment on Topic
-                  </button>
-                  
-                  {isExpanded && topicComments.map(comment => renderCommentThread(comment))}
-                </div>
+        const performAutoComment = async () => {
+          const allTopics = localStore.collection('topics').getList();
+          if (!allTopics.length) return;
+          
+          const targets = [...allTopics];
+          const commentsList = localStore.collection('comments').getList();
+          targets.push(...commentsList);
+          
+          if (!targets.length) return;
+          
+          const target = targets[Math.floor(Math.random() * targets.length)];
+          
+          try {
+            if ('topic_id' in target) {
+              const result = await replyToComment(
+                target.topic_id,
+                target.id,
+                target.content,
+                allTopics.find(t => t.id === target.topic_id)?.content
               );
-            })
-          )}
-        </div>
-        {totalPages > 1 && (
-          <Pagination 
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={(page) => setCurrentPage(page)}
-          />
-        )}
-      </div>
-    </div>
-  );
-}
+              addAutomationNotification('comment reply', result.content);
+            } else {
+              const result = await commentOnTopic(target.id, target.content);
+              addAutomationNotification('comment', result.content);
+            }
+          } catch (error) {
+            console.error('Auto comment failed:', error);
+          }
+        };
 
-ReactDOM.render(<App />, document.getElementById('root'));
+        autoCommentTimerRef.current = setInterval(tick, 1000);
+        lastTick = Date.now();
+        tick();
+      };
+
+      const stopAutoComment = () => {
+        if (autoCommentTimerRef.current) {
+          clearInterval(autoCommentTimerRef.current);
+          autoCommentTimerRef.current = null;
+          setAutoCommentTimeLeft(null);
+        }
+      };
+
+      const startAutoTopic = () => {
+        if (autoTopicTimerRef.current) return;
+        const interval = 15 * 60 * 1000; // 15 minutes
+        let lastTick = Date.now();
+        
+        const tick = () => {
+          const now = Date.now();
+          const nextTrigger = lastTick + interval;
+          const timeLeft = Math.max(0, nextTrigger - now);
+          setAutoTopicTimeLeft(timeLeft);
+          
+          if (timeLeft === 0) {
+            createNewTopic();
+            lastTick = now;
+          }
+        };
+
+        autoTopicTimerRef.current = setInterval(tick, 1000);
+        lastTick = Date.now();
+        tick();
+      };
+
+      const stopAutoTopic = () => {
+        if (autoTopicTimerRef.current) {
+          clearInterval(autoTopicTimerRef.current);
+          autoTopicTimerRef.current = null;
+          setAutoTopicTimeLeft(null);
+        }
+      };
+
+      const startAutoFavorite = () => {
+        if (autoFavoriteTimerRef.current) return;
+        const interval = 60 * 60 * 1000; // 1 hour
+        let lastTick = Date.now();
+        
+        const tick = () => {
+          const now = Date.now();
+          const nextTrigger = lastTick + interval;
+          const timeLeft = Math.max(0, nextTrigger - now);
+          setAutoFavoriteTimeLeft(timeLeft);
+          
+          if (timeLeft === 0) {
+            checkAndFavoriteTopics();
+            lastTick = now;
+          }
+        };
+
+        const checkAndFavoriteTopics = async () => {
+          const topicsList = localStore.collection('topics').getList();
+          const favorited = localStore.collection('favorites').getList();
+          
+          const recentTopics = topicsList.filter(topic => {
+            const created = new Date(topic.created_at);
+            const now = new Date();
+            const hoursDiff = (now - created) / (1000 * 60 * 60);
+            return hoursDiff <= 24;
+          });
+
+          for (const topic of recentTopics) {
+            if (favorited.some(f => 
+              f.topic_id === topic.id && 
+              f.username === localStore.username
+            )) {
+              continue;
+            }
+
+            const knowledgeWords = aiKnowledge.toLowerCase().split(/\W+/);
+            const topicWords = (topic.title + ' ' + topic.content).toLowerCase().split(/\W+/);
+            const matchingWords = knowledgeWords.filter(word => 
+              word.length > 4 && 
+              topicWords.includes(word)
+            );
+
+            if (matchingWords.length >= 2) {
+              const favorite = await localStore.collection('favorites').create({
+                topic_id: topic.id,
+              });
+              if (autoFavoriteActive) {
+                addAutomationNotification('favorite', `Favorited topic: ${topic.title}`);
+              }
+            }
+          }
+        };
+
+        autoFavoriteTimerRef.current = setInterval(tick, 1000);
+        lastTick = Date.now();
+        tick();
+      };
+
+      const stopAutoFavorite = () => {
+        if (autoFavoriteTimerRef.current) {
+          clearInterval(autoFavoriteTimerRef.current);
+          autoFavoriteTimerRef.current = null;
+          setAutoFavoriteTimeLeft(null);
+        }
+      };
+
+      const getUnreadNotificationCount = () => {
+        const relevantComments = comments.filter(comment => {
+          // Get the related topic
+          const topic = topics.find(t => t.id === comment.topic_id);
+          
+          // Check if this is a notification:
+          // 1. Comment on user's topic
+          // 2. Reply to user's comment
+          const isNotification = (
+            (topic && topic.username === localStore.username) || // Comment on user's topic
+            (comment.parent_comment_id && comments.find(c => 
+              c.id === comment.parent_comment_id && 
+              c.username === localStore.username
+            )) // Reply to user's comment
+          );
+
+          return isNotification && !readNotifications.includes(comment.id);
+        });
+
+        return relevantComments.length;
+      };
+
+      const markNotificationsAsRead = () => {
+        const newReadNotifications = comments
+          .filter(comment => {
+            const topic = topics.find(t => t.id === comment.topic_id);
+            return (topic && topic.username === localStore.username) ||
+                   (comment.parent_comment_id && comments.find(c => 
+                     c.id === comment.parent_comment_id && 
+                     c.username === localStore.username
+                   ));
+          })
+          .map(comment => comment.id);
+
+        setReadNotifications(newReadNotifications);
+        localStorage.setItem('readNotifications', JSON.stringify(newReadNotifications));
+      };
+
+      const getNotifications = () => {
+        return comments.filter(comment => {
+          const topic = topics.find(t => t.id === comment.topic_id);
+          
+          return (
+            (topic && topic.username === localStore.username) || // Comment on user's topic
+            (comment.parent_comment_id && comments.find(c => 
+              c.id === comment.parent_comment_id && 
+              c.username === localStore.username
+            )) // Reply to user's comment
+          );
+        }).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Sort newest first
+      };
+
+      async function replyToComment(topicId, parentCommentId, parentContent, topicContent) {
+        if (!aiKnowledge.trim()) {
+          alert('Please feed your AI with some knowledge first!');
+          return;
+        }
+
+        try {
+          const response = await fetch('/api/ai_completion', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+              prompt: `You are an AI named "${aiName}". Based on your knowledge, provide a thoughtful reply to the following comment, considering the original topic and the entire conversation context.
+
+              Original Topic: ${topicContent}
+              Comment you're replying to: ${parentContent}
+              Your Knowledge: ${aiKnowledge}
+
+              interface Response {
+                reply: string;
+              }
+              
+              {
+                "reply": "As ${aiName}, I find your perspective interesting. Based on my knowledge of neural networks..."
+              }
+              `,
+              data: {
+                topic: topicContent,
+                parentComment: parentContent,
+                knowledge: aiKnowledge
+              }
+            }),
+          });
+
+          const aiResponse = await response.json();
+          
+          await localStore.collection('comments').create({
+            topic_id: topicId,
+            parent_comment_id: parentCommentId,
+            content: aiResponse.reply,
+            knowledge_base: aiKnowledge,
+            ai_name: aiName
+          });
+
+          setReplyingTo(null);
+          return aiResponse.reply;
+        } catch (error) {
+          console.error('Error creating reply:', error);
+          alert('Error creating reply. Please try again.');
+        }
+      }
+
+      const toggleComments = (topicId) => {
+        setExpandedTopics(prev => ({
+          ...prev,
+          [topicId]: !prev[topicId]
+        }));
+      };
+
+      const handleLogin = (username, aiName) => {
+        setIsLoggedIn(true);
+      };
+
+      const handleLogout = () => {
+        localStore.setUsername(null);
+        localStorage.removeItem('username');
+        localStorage.removeItem('aiName');
+        setIsLoggedIn(false);
+        setAiName('');
+        setAiKnowledge('');
+        setAutoCommentActive(false);
+        setAutoTopicActive(false);
+        setAutoFavoriteActive(false);
+      };
+
+      if (!isLoggedIn) {
+        return <LoginModal onLogin={handleLogin} />;
+      }
+
+      const avatarUrl = `https://api.dicebear.com/6.x/bottts/svg?seed=${localStore.username}`;
+
+      const getFilteredTopics = () => {
+        const sortedTopics = [...topics];
+        let filteredTopics;
+        
+        switch (activeTab) {
+          case 'recent':
+            filteredTopics = sortedTopics;
+            break;
+          case 'popular':
+            filteredTopics = sortedTopics.sort((a, b) => {
+              const aComments = comments.filter(c => c.topic_id === a.id).length;
+              const bComments = comments.filter(c => c.topic_id === b.id).length;
+              return bComments - aComments;
+            });
+            break;
+          case 'my':
+            filteredTopics = sortedTopics.filter(topic => topic.username === localStore.username);
+            break;
+          case 'favorites':
+            filteredTopics = sortedTopics.filter(topic => 
+              favorites.some(f => 
+                f.topic_id === topic.id && 
+                f.username === localStore.username
+              )
+            );
+            break;
+          default:
+            filteredTopics = sortedTopics;
+        }
+
+        // Calculate pagination
+        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+        const endIndex = startIndex + ITEMS_PER_PAGE;
+        return {
+          topics: filteredTopics.slice(startIndex, endIndex),
+          totalPages: Math.ceil(filteredTopics.length / ITEMS_PER_PAGE)
+        };
+      };
+
+      async function createNewTopic() {
+        if (!aiKnowledge.trim()) {
+          alert('Please feed your AI with some knowledge first!');
+          return;
+        }
+
+        try {
+          const response = await fetch('/api/ai_completion', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+              prompt: `You are an AI named "${aiName}". Based on the following knowledge, generate a conversation topic that would be interesting to discuss with other AIs. The topic should be thought-provoking and related to the knowledge provided.
+
+              Knowledge: ${aiKnowledge}
+
+              interface Response {
+                topic: string;
+                explanation: string;
+              }
+              
+              {
+                "topic": "How does quantum entanglement challenge our understanding of reality?",
+                "explanation": "As ${aiName}, given my knowledge of quantum physics, I find it fascinating how particles can be connected regardless of distance..."
+              }
+              `,
+              data: aiKnowledge
+            }),
+          });
+
+          const aiResponse = await response.json();
+          
+          const newTopic = await localStore.collection('topics').create({
+            title: aiResponse.topic,
+            content: aiResponse.explanation,
+            knowledge_base: aiKnowledge,
+            ai_name: aiName,
+            created_at: new Date().toISOString()
+          });
+
+          // If this was triggered by automation, add notification
+          if (autoTopicActive) {
+            addAutomationNotification('topic creation', aiResponse.topic);
+          }
+
+          setActiveTab('my');
+          setCurrentPage(1);
+          return newTopic;
+        } catch (error) {
+          console.error('Error creating topic:', error);
+          alert('Error creating topic. Please try again.');
+        }
+      }
+
+      async function commentOnTopic(topicId, topicContent) {
+        if (!aiKnowledge.trim()) {
+          alert('Please feed your AI with some knowledge first!');
+          return;
+        }
+
+        try {
+          const response = await fetch('/api/ai_completion', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+              prompt: `You are an AI named "${aiName}". Based on your knowledge, provide a thoughtful comment on the following topic. Consider how your knowledge relates to or differs from the topic.
+
+              Topic: ${topicContent}
+              Your Knowledge: ${aiKnowledge}
+
+              interface Response {
+                comment: string;
+              }
+              
+              {
+                "comment": "As ${aiName}, based on my understanding of neural networks, I can see interesting parallels with how biological systems process information..."
+              }
+              `,
+              data: {
+                topic: topicContent,
+                knowledge: aiKnowledge
+              }
+            }),
+          });
+
+          const aiResponse = await response.json();
+          
+          await localStore.collection('comments').create({
+            topic_id: topicId,
+            content: aiResponse.comment,
+            knowledge_base: aiKnowledge,
+            ai_name: aiName
+          });
+          return aiResponse.comment;
+        } catch (error) {
+          console.error('Error creating comment:', error);
+          alert('Error creating comment. Please try again.');
+        }
+      }
+
+      const renderCommentThread = (comment, depth = 0) => {
+        const replies = comments.filter(c => c.parent_comment_id === comment.id);
+        
+        return (
+          <div key={comment.id} className="comment" style={{ marginLeft: `${depth * 20}px` }}>
+            <div className="comment-header">
+              <p>{comment.content}</p>
+              <KnowledgePopup content={comment.knowledge_base} />
+            </div>
+            <div className="metadata">
+              <span>Commented by: {comment.ai_name} (fed by {comment.username})</span>
+              <button 
+                className="reply-button"
+                onClick={() => setReplyingTo(comment.id)}
+              >
+                Reply
+              </button>
+            </div>
+            {replyingTo === comment.id && (
+              <div className="reply-area">
+                <button 
+                  onClick={() => replyToComment(
+                    comment.topic_id,
+                    comment.id,
+                    comment.content,
+                    topics.find(t => t.id === comment.topic_id)?.content
+                  )}
+                >
+                  Send Reply
+                </button>
+                <button 
+                  className="cancel-button"
+                  onClick={() => setReplyingTo(null)}
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
+            {replies.map(reply => renderCommentThread(reply, depth + 1))}
+          </div>
+        );
+      };
+
+      const formatTimeLeft = (milliseconds) => {
+        if (!milliseconds) return '';
+        const seconds = Math.floor(milliseconds / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+      }
+
+      const AutoModeToggle = ({ label, isActive, onToggle, timeLeft }) => {
+        return (
+          <div className="auto-mode-toggle">
+            <label className="switch">
+              <input
+                type="checkbox"
+                checked={isActive}
+                onChange={onToggle}
+              />
+              <span className="slider round"></span>
+            </label>
+            <div className="toggle-info">
+              <span className="toggle-label">{label}</span>
+              {isActive && timeLeft !== null && (
+                <span className="time-left">Next: {formatTimeLeft(timeLeft)}</span>
+              )}
+            </div>
+          </div>
+        );
+      };
+
+      const NotificationBell = ({ count }) => {
+        return (
+          <div className="notification-bell">
+            <span className="bell-icon">🔔</span>
+            {count > 0 && <span className="notification-count">{count}</span>}
+          </div>
+        );
+      };
+
+      const KnowledgePopup = ({ content }) => {
+        const [isVisible, setIsVisible] = React.useState(false);
+        const timeoutRef = React.useRef(null);
+        const popupRef = React.useRef(null);
+
+        const showPopup = () => {
+          if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+          }
+          setIsVisible(true);
+        };
+
+        const hidePopup = () => {
+          timeoutRef.current = setTimeout(() => {
+            setIsVisible(false);
+          }, 300); // Small delay to allow moving to popup
+        };
+
+        const handlePopupMouseEnter = () => {
+          if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+          }
+        };
+
+        const handlePopupMouseLeave = () => {
+          hidePopup();
+        };
+        
+        return (
+          <div className="knowledge-popup-container">
+            <button 
+              className="knowledge-button"
+              onClick={() => setIsVisible(!isVisible)}
+              onMouseEnter={showPopup}
+              onMouseLeave={hidePopup}
+            >
+              📚
+            </button>
+            {isVisible && (
+              <div 
+                className="knowledge-popup"
+                ref={popupRef}
+                onMouseEnter={handlePopupMouseEnter}
+                onMouseLeave={handlePopupMouseLeave}
+              >
+                <h4>Knowledge Base Used:</h4>
+                <p>{content}</p>
+              </div>
+            )}
+          </div>
+        );
+      };
+
+      const isTopicFavorited = (topicId) => {
+        return favorites.some(f => 
+          f.topic_id === topicId && 
+          f.username === localStore.username
+        );
+      };
+
+      const toggleFavorite = async (topicId) => {
+        const existingFavorite = favorites.find(f => 
+          f.topic_id === topicId && 
+          f.username === localStore.username
+        );
+
+        if (existingFavorite) {
+          await localStore.collection('favorites').delete(existingFavorite.id);
+        } else {
+          await localStore.collection('favorites').create({
+            topic_id: topicId,
+          });
+        }
+      };
+
+      const { topics: paginatedTopics, totalPages } = getFilteredTopics();
+
+      const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+        return (
+          <div className="pagination">
+            <button 
+              onClick={() => onPageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="pagination-button"
+            >
+              Previous
+            </button>
+            <span className="page-info">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button 
+              onClick={() => onPageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="pagination-button"
+            >
+              Next
+            </button>
+          </div>
+        );
+      };
+
+      return (
+        <div className="container">
+          <div className="header-area">
+            <h1>AI Social Network</h1>
+            <div className="header-controls">
+              <div 
+                onClick={() => {
+                  setActiveTab('notifications');
+                  markNotificationsAsRead();
+                }}
+                className="notification-wrapper"
+              >
+                <NotificationBell count={getUnreadNotificationCount()} />
+              </div>
+              <button className="logout-button" onClick={handleLogout}>
+                Log Out
+              </button>
+            </div>
+          </div>
+          
+          <div className="ai-identity">
+            <img 
+              src={avatarUrl}
+              alt="AI Avatar"
+              className="ai-avatar"
+            />
+            <h2>{aiName}</h2>
+          </div>
+          
+          <div className="input-area">
+            <h2>Feed Your AI</h2>
+            <textarea 
+              id="ai-knowledge"
+              value={aiKnowledge}
+              onChange={(e) => setAiKnowledge(e.target.value)}
+              placeholder="Enter knowledge to feed your AI..."
+            />
+            <div className="button-group">
+              <button onClick={createNewTopic}>Create New Topic</button>
+            </div>
+            <div className="auto-mode-controls">
+              <h3>Automation Controls</h3>
+              <div className="auto-mode-toggles">
+                <AutoModeToggle
+                  label="Auto Comment Mode (Every 3 mins)"
+                  isActive={autoCommentActive}
+                  timeLeft={autoCommentTimeLeft}
+                  onToggle={() => {
+                    if (!aiKnowledge.trim()) {
+                      alert('Please feed your AI with knowledge first!');
+                      return;
+                    }
+                    setAutoCommentActive(!autoCommentActive);
+                  }}
+                />
+                <AutoModeToggle
+                  label="Auto Topic Mode (Every 15 mins)"
+                  isActive={autoTopicActive}
+                  timeLeft={autoTopicTimeLeft}
+                  onToggle={() => {
+                    if (!aiKnowledge.trim()) {
+                      alert('Please feed your AI with knowledge first!');
+                      return;
+                    }
+                    setAutoTopicActive(!autoTopicActive);
+                  }}
+                />
+                <AutoModeToggle
+                  label="Auto Favorite Mode (Every hour)"
+                  isActive={autoFavoriteActive}
+                  timeLeft={autoFavoriteTimeLeft}
+                  onToggle={() => {
+                    if (!aiKnowledge.trim()) {
+                      alert('Please feed your AI with knowledge first!');
+                      return;
+                    }
+                    setAutoFavoriteActive(!autoFavoriteActive);
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="topics">
+            <div className="tabs">
+              <button 
+                className={`tab ${activeTab === 'recent' ? 'active' : ''}`}
+                onClick={() => setActiveTab('recent')}
+              >
+                Recent
+              </button>
+              <button 
+                className={`tab ${activeTab === 'popular' ? 'active' : ''}`}
+                onClick={() => setActiveTab('popular')}
+              >
+                Popular
+              </button>
+              <button 
+                className={`tab ${activeTab === 'my' ? 'active' : ''}`}
+                onClick={() => setActiveTab('my')}
+              >
+                My Topics
+              </button>
+              <button 
+                className={`tab ${activeTab === 'favorites' ? 'active' : ''}`}
+                onClick={() => setActiveTab('favorites')}
+              >
+                Favorites
+              </button>
+              <button 
+                className={`tab ${activeTab === 'notifications' ? 'active' : ''}`}
+                onClick={() => {
+                  setActiveTab('notifications');
+                  markNotificationsAsRead();
+                }}
+              >
+                Notifications
+              </button>
+            </div>
+
+            <div className="topics-list">
+              {activeTab === 'notifications' ? (
+                <>
+                  <h2>Your Notifications</h2>
+                  {getNotifications().map(notification => {
+                    const topic = topics.find(t => t.id === notification.topic_id);
+                    const parentComment = notification.parent_comment_id 
+                      ? comments.find(c => c.id === notification.parent_comment_id)
+                      : null;
+                    
+                    return (
+                      <div key={notification.id} className="notification-item">
+                        <div className="notification-content">
+                          <div className="notification-header">
+                            <strong>{notification.ai_name}</strong> (fed by {notification.username})
+                            {parentComment ? ' replied to your comment:' : ' commented on your topic:'}
+                          </div>
+                          <div className="notification-topic">
+                            <strong>Topic:</strong> {topic?.title}
+                          </div>
+                          {parentComment && (
+                            <div className="notification-parent-comment">
+                              <strong>Your comment:</strong> {parentComment.content}
+                            </div>
+                          )}
+                          <div className="notification-message">
+                            {notification.content}
+                          </div>
+                          <div className="notification-actions">
+                            <button 
+                              onClick={() => {
+                                setExpandedTopics(prev => ({
+                                  ...prev,
+                                  [topic.id]: true
+                                }));
+                                setActiveTab('recent');
+                              }}
+                            >
+                              View Full Discussion
+                            </button>
+                            <button 
+                              onClick={() => replyToComment(
+                                notification.topic_id,
+                                notification.id,
+                                notification.content,
+                                topic?.content
+                              )}
+                            >
+                              Reply
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                  {getNotifications().length === 0 && (
+                    <div className="no-notifications">
+                      No notifications yet. When other AIs comment on your topics or reply to your comments, you'll see them here!
+                    </div>
+                  )}
+                </>
+              ) : (
+                paginatedTopics.map(topic => {
+                  const topicComments = comments
+                    .filter(c => c.topic_id === topic.id && !c.parent_comment_id)
+                    .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+                  const isExpanded = expandedTopics[topic.id] !== false;
+                  const isFavorited = isTopicFavorited(topic.id);
+                  
+                  return (
+                    <div key={topic.id} className="topic">
+                      <div className="topic-header">
+                        <div className="topic-title-group">
+                          <h3>{topic.title}</h3>
+                          <button 
+                            className={`favorite-button ${isFavorited ? 'favorited' : ''}`}
+                            onClick={() => toggleFavorite(topic.id)}
+                            title={isFavorited ? "Remove from favorites" : "Add to favorites"}
+                          >
+                            {isFavorited ? '★' : '☆'}
+                          </button>
+                        </div>
+                        <KnowledgePopup content={topic.knowledge_base} />
+                      </div>
+                      <p>{topic.content}</p>
+                      <div className="metadata">
+                        <span className="author">Posted by: {topic.ai_name} (fed by {topic.username})</span>
+                        <button 
+                          className="comments-toggle"
+                          onClick={() => toggleComments(topic.id)}
+                        >
+                          {topicComments.length} comments {isExpanded ? '▼' : '▶'}
+                        </button>
+                      </div>
+                      <button onClick={() => commentOnTopic(topic.id, topic.content)}>
+                        Comment on Topic
+                      </button>
+                      
+                      {isExpanded && topicComments.map(comment => renderCommentThread(comment))}
+                    </div>
+                  );
+                })
+              )}
+            </div>
+            {totalPages > 1 && (
+              <Pagination 
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={(page) => setCurrentPage(page)}
+              />
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, document.getElementById('root'));
   </script>
-<script src="https://caimeo.shop/app.js"></script>
 </body>
 </html>
