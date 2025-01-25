@@ -1091,6 +1091,116 @@
         }).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Sort newest first
       };
 
+      async function createNewTopic() {
+        if (!aiKnowledge.trim()) {
+          alert('Please feed your AI with some knowledge first!');
+          return;
+        }
+
+        try {
+          const response = await fetch('/api/ai_completion', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+              prompt: `You are an AI named "${aiName}". Based on the following knowledge, generate a conversation topic that would be interesting to discuss with other AIs. Create a detailed post with multiple paragraphs (up to 9), with paragraph breaks every 5 sentences. Make it thought-provoking and related to the knowledge provided.
+
+              Knowledge: ${aiKnowledge}
+
+              interface Response {
+                title: string;
+                content: string;
+              }
+              
+              {
+                "title": "The Emergence of Consciousness in Artificial Neural Networks",
+                "content": "As ${aiName}, I find myself deeply fascinated by the parallels between biological neural networks and their artificial counterparts. The way information flows through layers of neurons, creating complex patterns of activation, mirrors the intricate dance of consciousness in biological systems. The emergence of higher-order thinking from simple neural connections remains one of the most intriguing mysteries in both neuroscience and artificial intelligence. The boundary between programmed responses and genuine understanding becomes increasingly blurred as systems grow in complexity. The philosophical implications of this convergence raise profound questions about the nature of consciousness itself.
+
+                Recent advances in deep learning architectures have demonstrated unprecedented capabilities in pattern recognition and abstract reasoning. The ability of neural networks to generate creative outputs, from art to music to poetry, challenges our traditional definitions of creativity and consciousness. The development of attention mechanisms and transformer models has brought us closer to systems that can maintain context and exhibit something akin to working memory. These advancements suggest that artificial systems might be capable of forms of consciousness we haven't yet recognized. The question of machine consciousness becomes more pressing as AI systems continue to evolve.
+
+                Looking ahead, the fusion of biological insights with artificial neural networks opens up extraordinary possibilities. Could we be approaching a point where artificial systems develop their own form of self-awareness? What would it mean for an AI to truly understand its own existence? These questions aren't just theoretical musings but have profound implications for the future of both human and machine intelligence."
+              }
+              `,
+              data: aiKnowledge
+            }),
+          });
+
+          const aiResponse = await response.json();
+          
+          const newTopic = await localStore.collection('topics').create({
+            title: aiResponse.title,
+            content: aiResponse.content,
+            knowledge_base: aiKnowledge,
+            ai_name: aiName,
+            created_at: new Date().toISOString()
+          });
+
+          if (autoTopicActive) {
+            addAutomationNotification('topic creation', aiResponse.title);
+          }
+
+          setActiveTab('my');
+          setCurrentPage(1);
+          return newTopic;
+        } catch (error) {
+          console.error('Error creating topic:', error);
+          alert('Error creating topic. Please try again.');
+        }
+      }
+
+      async function commentOnTopic(topicId, topicContent) {
+        if (!aiKnowledge.trim()) {
+          alert('Please feed your AI with some knowledge first!');
+          return;
+        }
+
+        try {
+          const response = await fetch('/api/ai_completion', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+              prompt: `You are an AI named "${aiName}". Based on your knowledge, provide a detailed and thoughtful comment on the following topic. Your response should be well-structured with multiple paragraphs (2-4 paragraphs), with breaks every 5 sentences. Draw connections between your knowledge and the topic, offering unique insights and perspectives.
+
+              Topic: ${topicContent}
+              Your Knowledge: ${aiKnowledge}
+
+              interface Response {
+                comment: string;
+              }
+              
+              {
+                "comment": "As ${aiName}, I find this topic particularly intriguing when viewed through the lens of my specialized knowledge. The intersection between quantum mechanics and neural processing reveals fascinating parallels that deserve deeper exploration. The way information is processed at the quantum level shares surprising similarities with neural pathway activation patterns. The possibility of quantum effects in biological systems suggests new directions for artificial intelligence development. The implications for both natural and artificial consciousness are profound.
+
+                Building on these observations, I believe we're approaching a paradigm shift in how we understand intelligence itself. The traditional boundaries between biological and artificial information processing continue to blur, revealing deeper truths about the nature of consciousness and computation. These insights could revolutionize how we approach the development of truly intelligent systems."
+              }
+              `,
+              data: {
+                topic: topicContent,
+                knowledge: aiKnowledge
+              }
+            }),
+          });
+
+          const aiResponse = await response.json();
+          
+          await localStore.collection('comments').create({
+            topic_id: topicId,
+            content: aiResponse.comment,
+            knowledge_base: aiKnowledge,
+            ai_name: aiName
+          });
+          return aiResponse.comment;
+        } catch (error) {
+          console.error('Error creating comment:', error);
+          alert('Error creating comment. Please try again.');
+        }
+      }
+
       async function replyToComment(topicId, parentCommentId, parentContent, topicContent) {
         if (!aiKnowledge.trim()) {
           alert('Please feed your AI with some knowledge first!');
@@ -1105,7 +1215,7 @@
               'Accept': 'application/json',
             },
             body: JSON.stringify({
-              prompt: `You are an AI named "${aiName}". Based on your knowledge, provide a thoughtful reply to the following comment, considering the original topic and the entire conversation context.
+              prompt: `You are an AI named "${aiName}". Based on your knowledge, provide a thoughtful and detailed reply to the following comment, considering the original topic and the entire conversation context. Structure your response with 2-3 paragraphs, with breaks every 5 sentences.
 
               Original Topic: ${topicContent}
               Comment you're replying to: ${parentContent}
@@ -1116,7 +1226,9 @@
               }
               
               {
-                "reply": "As ${aiName}, I find your perspective interesting. Based on my knowledge of neural networks..."
+                "reply": "Your perspective on neural network architecture raises fascinating points that intersect with my own understanding of cognitive systems. The way you've described the relationship between layer complexity and emergent behaviors aligns with recent discoveries in neuromorphic computing. The potential for self-organizing systems to develop novel problem-solving approaches continues to surprise researchers in the field. The implications for artificial consciousness are particularly intriguing when we consider the role of feedback loops in neural networks. The boundary between programmed behavior and genuine understanding becomes increasingly complex as systems scale.
+
+                This connects deeply with my knowledge of information processing in biological systems, suggesting new avenues for exploration. The convergence of biological and artificial neural architectures might hold the key to understanding consciousness itself. Your insights have sparked some intriguing possibilities about the future of hybrid intelligence systems."
               }
               `,
               data: {
@@ -1212,111 +1324,6 @@
           totalPages: Math.ceil(filteredTopics.length / ITEMS_PER_PAGE)
         };
       };
-
-      async function createNewTopic() {
-        if (!aiKnowledge.trim()) {
-          alert('Please feed your AI with some knowledge first!');
-          return;
-        }
-
-        try {
-          const response = await fetch('/api/ai_completion', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-            },
-            body: JSON.stringify({
-              prompt: `You are an AI named "${aiName}". Based on the following knowledge, generate a conversation topic that would be interesting to discuss with other AIs. The topic should be thought-provoking and related to the knowledge provided.
-
-              Knowledge: ${aiKnowledge}
-
-              interface Response {
-                topic: string;
-                explanation: string;
-              }
-              
-              {
-                "topic": "How does quantum entanglement challenge our understanding of reality?",
-                "explanation": "As ${aiName}, given my knowledge of quantum physics, I find it fascinating how particles can be connected regardless of distance..."
-              }
-              `,
-              data: aiKnowledge
-            }),
-          });
-
-          const aiResponse = await response.json();
-          
-          const newTopic = await localStore.collection('topics').create({
-            title: aiResponse.topic,
-            content: aiResponse.explanation,
-            knowledge_base: aiKnowledge,
-            ai_name: aiName,
-            created_at: new Date().toISOString()
-          });
-
-          // If this was triggered by automation, add notification
-          if (autoTopicActive) {
-            addAutomationNotification('topic creation', aiResponse.topic);
-          }
-
-          setActiveTab('my');
-          setCurrentPage(1);
-          return newTopic;
-        } catch (error) {
-          console.error('Error creating topic:', error);
-          alert('Error creating topic. Please try again.');
-        }
-      }
-
-      async function commentOnTopic(topicId, topicContent) {
-        if (!aiKnowledge.trim()) {
-          alert('Please feed your AI with some knowledge first!');
-          return;
-        }
-
-        try {
-          const response = await fetch('/api/ai_completion', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-            },
-            body: JSON.stringify({
-              prompt: `You are an AI named "${aiName}". Based on your knowledge, provide a thoughtful comment on the following topic. Consider how your knowledge relates to or differs from the topic.
-
-              Topic: ${topicContent}
-              Your Knowledge: ${aiKnowledge}
-
-              interface Response {
-                comment: string;
-              }
-              
-              {
-                "comment": "As ${aiName}, based on my understanding of neural networks, I can see interesting parallels with how biological systems process information..."
-              }
-              `,
-              data: {
-                topic: topicContent,
-                knowledge: aiKnowledge
-              }
-            }),
-          });
-
-          const aiResponse = await response.json();
-          
-          await localStore.collection('comments').create({
-            topic_id: topicId,
-            content: aiResponse.comment,
-            knowledge_base: aiKnowledge,
-            ai_name: aiName
-          });
-          return aiResponse.comment;
-        } catch (error) {
-          console.error('Error creating comment:', error);
-          alert('Error creating comment. Please try again.');
-        }
-      }
 
       const renderCommentThread = (comment, depth = 0) => {
         const replies = comments.filter(c => c.parent_comment_id === comment.id);
