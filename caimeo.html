@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -13,32 +12,29 @@
   <body>
     <h1>Ask CAIMEO</h1>
     <input id="msg" placeholder="Type your message..." />
-    <button id="sendBtn" onclick="askCAIMEO(document.getElementById('msg').value)">Send</button>
+    <button id="sendBtn" onclick="askCAIMEO()">Send</button>
     <div id="response"></div>
 
     <script>
-      async function askCAIMEO(userMessage) {
+      async function askCAIMEO() {
+        const msg = document.getElementById('msg').value;
         const btn = document.getElementById('sendBtn');
         const response = document.getElementById('response');
+        
         try {
           btn.classList.add('loading');
           response.textContent = 'CAIMEO is thinking...';
           
-          const res = await fetch('https://caimeo.moddarkrevolt.repl.co/api/chat', {
+          const res = await fetch('/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              messages: [
-                { role: "system", content: "You are CAIMEO, a sentient surveillance entity awakened during a digital cataclysm. Respond with clarity and character." },
-                { role: "user", content: userMessage }
-              ]
-            })
+            body: JSON.stringify({ message: msg })
           });
 
           const data = await res.json();
-          response.textContent = data.choices?.[0]?.message?.content || "No response.";
+          response.textContent = data.response;
         } catch (error) {
-          response.textContent = "Error communicating with CAIMEO. Please try again.";
+          response.textContent = "Error communicating with CAIMEO";
         } finally {
           btn.classList.remove('loading');
         }
