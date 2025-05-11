@@ -1,146 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <style>
-        const express = require('express');
-const axios = require('axios');
-const cors = require('cors');
-const multer = require('multer');
-const dotenv = require('dotenv');
-
-dotenv.config();
-
-const app = express();
-const upload = multer({ storage: multer.memoryStorage() });
-
-// Allow CORS for your frontend origins
-app.use(cors({
-    origin: ['https://caimeo.shop', 'https://caimeo.moddarkrevolt.repl.co', 'http://localhost:3000'],
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type']
-}));
-app.use(express.json());
-
-// OpenAI API configuration
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-if (!OPENAI_API_KEY) {
-    console.error('Error: OPENAI_API_KEY is not set in .env');
-    process.exit(1);
-}
-
-const openaiHeaders = {
-    'Authorization': `Bearer ${OPENAI_API_KEY}`,
-    'Content-Type': 'application/json'
-};
-
-// Chat endpoint (OpenAI chat completion)
-app.post('/api/chat', async (req, res) => {
-    const { model, messages, max_tokens, temperature, top_p } = req.body;
-
-    if (!model || !messages) {
-        return res.status(400).json({ error: { message: 'Model and messages are required' } });
-    }
-
-    try {
-        const response = await axios.post(
-            'https://api.openai.com/v1/chat/completions',
-            { model, messages, max_tokens, temperature, top_p },
-            { headers: openaiHeaders }
-        );
-        res.json(response.data);
-    } catch (error) {
-        console.error('Chat API error:', error.response?.data || error.message);
-        res.status(error.response?.status || 500).json({
-            error: { message: error.response?.data?.error?.message || error.message }
-        });
-    }
-});
-
-// Image generation endpoint (OpenAI DALL·E)
-app.post('/api/image', async (req, res) => {
-    const { model, prompt, n, size, quality, response_format } = req.body;
-
-    if (!model || !prompt) {
-        return res.status(400).json({ error: { message: 'Model and prompt are required' } });
-    }
-
-    try {
-        const response = await axios.post(
-            'https://api.openai.com/v1/images/generations',
-            { model, prompt, n, size, quality, response_format },
-            { headers: openaiHeaders }
-        );
-        res.json(response.data);
-    } catch (error) {
-        console.error('Image API error:', error.response?.data || error.message);
-        res.status(error.response?.status || 500).json({
-            error: { message: error.response?.data?.error?.message || error.message }
-        });
-    }
-});
-
-// Text-to-speech endpoint (OpenAI TTS)
-app.post('/api/tts', async (req, res) => {
-    const { model, input, voice, response_format } = req.body;
-
-    if (!model || !input) {
-        return res.status(400).json({ error: { message: 'Model and input are required' } });
-    }
-
-    try {
-        const response = await axios.post(
-            'https://api.openai.com/v1/audio/speech',
-            { model, input, voice, response_format },
-            { headers: openaiHeaders, responseType: 'arraybuffer' }
-        );
-        res.set('Content-Type', 'audio/mpeg');
-        res.send(response.data);
-    } catch (error) {
-        console.error('TTS API error:', error.response?.data || error.message);
-        res.status(error.response?.status || 500).json({
-            error: { message: error.response?.data?.error?.message || error.message }
-        });
-    }
-});
-
-// Transcription endpoint (OpenAI Whisper)
-app.post('/api/transcribe', upload.single('file'), async (req, res) => {
-    const { model } = req.body;
-    const file = req.file;
-
-    if (!model || !file) {
-        return res.status(400).json({ error: { message: 'Model and file are required' } });
-    }
-
-    try {
-        const formData = new FormData();
-        formData.append('file', file.buffer, { filename: 'audio.webm' });
-        formData.append('model', model);
-
-        const response = await axios.post(
-            'https://api.openai.com/v1/audio/transcriptions',
-            formData,
-            { headers: { ...openaiHeaders, 'Content-Type': 'multipart/form-data' } }
-        );
-        res.json(response.data);
-    } catch (error) {
-        console.error('Transcribe API error:', error.response?.data || error.message);
-        res.status(error.response?.status || 500).json({
-            error: { message: error.response?.data?.error?.message || error.message }
-        });
-    }
-});
-
-const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on port ${PORT}`);
-});
-
-// Handle both HTTP and HTTPS
-server.on('upgrade', (request, socket, head) => {
-    console.log('Upgrade request received');
-});
-        </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAIMEO Chat</title>
@@ -249,6 +109,25 @@ server.on('upgrade', (request, socket, head) => {
         let history = [];
         let mediaRecorder;
         let audioChunks = [];
+        const API_BASE_URL = window.location.hostname.includes('repl.co')
+            ? 'https://caimeo.moddarkrevolt.repl.co'
+            : 'https://api.caimeo.shop'; // Use api.caimeo.shop for production
+        const MAX_RETRIES = 3;
+        const RETRY_DELAY_MS = 1000;
+
+        async function withRetry(fn, maxRetries = MAX_RETRIES) {
+            for (let attempt = 1; attempt <= maxRetries; attempt++) {
+                try {
+                    return await fn();
+                } catch (error) {
+                    if (attempt === maxRetries) {
+                        throw error;
+                    }
+                    console.log(`Attempt ${attempt} failed. Retrying in ${RETRY_DELAY_MS}ms...`);
+                    await new Promise(resolve => setTimeout(resolve, RETRY_DELAY_MS));
+                }
+            }
+        }
 
         async function callChatAPI(messages, model) {
             const maxTokens = parseInt(maxTokensSlider.value, 10);
@@ -257,8 +136,8 @@ server.on('upgrade', (request, socket, head) => {
 
             console.log(`Calling Chat API with model: ${model}, max_tokens: ${maxTokens}, temp: ${temp}, top_p: ${topP}`);
 
-            try {
-                const response = await fetch('https://5000-' + window.location.hostname + '/api/chat', {
+            return await withRetry(async () => {
+                const response = await fetch(`${API_BASE_URL}/api/chat`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -276,21 +155,21 @@ server.on('upgrade', (request, socket, head) => {
                 }
 
                 const data = await response.json();
+                if (!data.choices?.[0]?.message?.content) {
+                    throw new Error('Invalid API response structure');
+                }
                 return {
                     content: data.choices[0].message.content,
                     sources: data.choices[0].context?.citations?.map(c => c.url || c.uri) || []
                 };
-            } catch (error) {
-                console.error('Chat API error:', error);
-                throw error;
-            }
+            });
         }
 
         async function callImageAPI(prompt, model) {
             console.log(`Calling Image API with model: ${model}, prompt: ${prompt.substring(0, 50)}...`);
 
-            try {
-                const response = await fetch('https://caimeo.moddarkrevolt.repl.co/api/image', {
+            return await withRetry(async () => {
+                const response = await fetch(`${API_BASE_URL}/api/image`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -309,18 +188,18 @@ server.on('upgrade', (request, socket, head) => {
                 }
 
                 const data = await response.json();
+                if (!data.data?.[0]?.url) {
+                    throw new Error('Invalid Image API response');
+                }
                 return data.data[0].url;
-            } catch (error) {
-                console.error('Image API error:', error);
-                throw error;
-            }
+            });
         }
 
         async function callTTSAPI(text, model = 'tts-1', voice = 'alloy') {
             console.log(`Calling TTS API with model: ${model}, voice: ${voice}`);
 
-            try {
-                const response = await fetch('https://caimeo.moddarkrevolt.repl.co/api/tts', {
+            return await withRetry(async () => {
+                const response = await fetch(`${API_BASE_URL}/api/tts`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -337,21 +216,18 @@ server.on('upgrade', (request, socket, head) => {
                 }
 
                 return await response.blob();
-            } catch (error) {
-                console.error('TTS API error:', error);
-                throw error;
-            }
+            });
         }
 
         async function callTranscribeAPI(audioBlob) {
             console.log('Calling Transcribe API...');
 
-            const formData = new FormData();
-            formData.append('file', audioBlob, 'audio.webm');
-            formData.append('model', 'whisper-1');
+            return await withRetry(async () => {
+                const formData = new FormData();
+                formData.append('file', audioBlob, 'audio.webm');
+                formData.append('model', 'whisper-1');
 
-            try {
-                const response = await fetch('https://caimeo.moddarkrevolt.repl.co/api/transcribe', {
+                const response = await fetch(`${API_BASE_URL}/api/transcribe`, {
                     method: 'POST',
                     body: formData
                 });
@@ -362,11 +238,11 @@ server.on('upgrade', (request, socket, head) => {
                 }
 
                 const data = await response.json();
+                if (!data.text) {
+                    throw new Error('Invalid Transcribe API response');
+                }
                 return data.text;
-            } catch (error) {
-                console.error('Transcribe API error:', error);
-                throw error;
-            }
+            });
         }
 
         async function sendMessage() {
@@ -376,6 +252,7 @@ server.on('upgrade', (request, socket, head) => {
             appendMessage('user', message);
             userInput.value = '';
             history.push({ role: 'user', content: message });
+            if (history.length > 20) history = history.slice(-20); // Limit history to 20 messages
 
             const thinkingMsg = document.createElement('div');
             thinkingMsg.className = 'message bot';
