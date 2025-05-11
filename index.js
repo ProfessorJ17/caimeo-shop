@@ -11,11 +11,21 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 // CORS configuration
 app.use(cors({
-    origin: ['https://caimeo.shop', 'https://caimeo.moddarkrevolt.repl.co', 'http://localhost:3000'],
+    origin: [
+        'https://caimeo.shop',
+        'https://caimeo.moddarkrevolt.repl.co',
+        'http://localhost:3000',
+        'https://ProfessorJ17.github.io'
+    ],
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type']
 }));
 app.use(express.json());
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+    res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
+});
 
 // OpenAI API configuration
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
