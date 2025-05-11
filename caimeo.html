@@ -118,7 +118,7 @@
             console.log(`Calling Chat API with model: ${model}, max_tokens: ${maxTokens}, temp: ${temp}, top_p: ${topP}`);
 
             try {
-                const response = await fetch('/api/chat', {
+                const response = await fetch('http://0.0.0.0:5000/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
