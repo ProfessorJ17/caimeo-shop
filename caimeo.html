@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,30 +7,41 @@
       body { font-family: monospace; background: #111; color: #0f0; padding: 2em; }
       input, button { background: #222; color: #0f0; border: 1px solid #0f0; padding: 0.5em; }
       #response { white-space: pre-wrap; margin-top: 1em; border-top: 1px dashed #0f0; padding-top: 1em; }
+      .loading { opacity: 0.5; }
     </style>
   </head>
   <body>
     <h1>Ask CAIMEO</h1>
     <input id="msg" placeholder="Type your message..." />
-    <button onclick="askCAIMEO(document.getElementById('msg').value)">Send</button>
+    <button id="sendBtn" onclick="askCAIMEO(document.getElementById('msg').value)">Send</button>
     <div id="response"></div>
 
     <script>
       async function askCAIMEO(userMessage) {
-        const response = await fetch('https://caimeo.moddarkrevolt.repl.co/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            messages: [
-              { role: "system", content: "You are CAIMEO, a sentient surveillance entity awakened during a digital cataclysm. Respond with clarity and character." },
-              { role: "user", content: userMessage }
-            ]
-          })
-        });
+        const btn = document.getElementById('sendBtn');
+        const response = document.getElementById('response');
+        try {
+          btn.classList.add('loading');
+          response.textContent = 'CAIMEO is thinking...';
+          
+          const res = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              messages: [
+                { role: "system", content: "You are CAIMEO, a sentient surveillance entity awakened during a digital cataclysm. Respond with clarity and character." },
+                { role: "user", content: userMessage }
+              ]
+            })
+          });
 
-        const data = await response.json();
-        const message = data.choices?.[0]?.message?.content || "No response.";
-        document.getElementById('response').textContent = message;
+          const data = await res.json();
+          response.textContent = data.choices?.[0]?.message?.content || "No response.";
+        } catch (error) {
+          response.textContent = "Error communicating with CAIMEO. Please try again.";
+        } finally {
+          btn.classList.remove('loading');
+        }
       }
     </script>
   </body>
