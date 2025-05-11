@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAIMEO Chat</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -75,7 +76,7 @@
         <div id="input-container">
             <input type="text" id="user-input" placeholder="Type your message...">
             <button onclick="sendMessage()">Send</button>
-            <button onclick="startRecording()">🎤 Record</button>
+            <button onclick="startRecording()">🎙️ Record</button>
         </div>
         <div id="controls">
             <label>Text Model:
@@ -109,9 +110,8 @@
         let history = [];
         let mediaRecorder;
         let audioChunks = [];
-        const API_BASE_URL = window.location.hostname.includes('repl.co')
-            ? 'https://caimeo.moddarkrevolt.repl.co'
-            : 'https://api.caimeo.shop'; // Use api.caimeo.shop for production
+        const API_BASE_URL = 'https://caimeo.moddarkrevolt.repl.co'; // Replit backend URL
+        // For production, configure api.caimeo.shop and update to: 'https://api.caimeo.shop'
         const MAX_RETRIES = 3;
         const RETRY_DELAY_MS = 1000;
 
@@ -252,7 +252,7 @@
             appendMessage('user', message);
             userInput.value = '';
             history.push({ role: 'user', content: message });
-            if (history.length > 20) history = history.slice(-20); // Limit history to 20 messages
+            if (history.length > 20) history = history.slice(-20);
 
             const thinkingMsg = document.createElement('div');
             thinkingMsg.className = 'message bot';
@@ -334,7 +334,7 @@
                 }
             } else {
                 mediaRecorder.stop();
-                document.querySelector('#input-container button:last-child').textContent = '🎤 Record';
+                document.querySelector('#input-container button:last-child').textContent = '🎙️ Record';
             }
         }
 
