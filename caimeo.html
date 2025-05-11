@@ -109,7 +109,7 @@
         let history = [];
         let mediaRecorder;
         let audioChunks = [];
-        const API_BASE_URL = 'https://caimeo.moddarkrevolt.repl.co'; // Replace with your actual Replit URL
+        const API_BASE_URL = 'https://caimeo.moddarkrevolt.repl.co'; // Correct Replit URL
 
         async function callChatAPI(messages, model) {
             const maxTokens = parseInt(maxTokensSlider.value, 10);
@@ -225,7 +225,7 @@
 
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error twenty`Transcribe API Error (${response.status}): ${errorData.error?.message || response.statusText}`);
+                    throw new Error(`Transcribe API Error (${response.status}): ${errorData.error?.message || response.statusText}`);
                 }
 
                 const data = await response.json();
