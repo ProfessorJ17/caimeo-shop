@@ -24,7 +24,7 @@
           btn.classList.add('loading');
           response.textContent = 'CAIMEO is thinking...';
           
-          const res = await fetch('/api/chat', {
+          const res = await fetch('http://' + window.location.host + '/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
