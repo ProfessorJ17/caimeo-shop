@@ -117,17 +117,17 @@
         let history = [];
         let mediaRecorder;
         let audioChunks = [];
-        const API_BASE_URL = 'https://caimeo.moddarkrevolt.repl.co'; // Primary Replit backend URL
-        const FALLBACK_API_URL = 'https://caimeo.moddarkrevolt.repl.co'; // Update with new Replit URL if changed
+        const API_BASE_URL = 'https://caimeo.moddarkrevolt.repl.co'; // Update with Replit Webview URL if changed
+        const FALLBACK_API_URL = 'https://caimeo.moddarkrevolt.repl.co';
         const MAX_RETRIES = 3;
-        const RETRY_DELAY_MS = 1000;
+        const INITIAL_DELAY_MS = 1000;
 
         console.log('Frontend loaded with API_BASE_URL:', API_BASE_URL);
         console.log('Fallback API URL:', FALLBACK_API_URL);
         console.log('Frontend origin:', window.location.origin);
         console.log('Testing API connectivity at:', `${API_BASE_URL}/api/health`);
 
-        async function withRetry(fn, maxRetries = MAX_RETRIES) {
+        async function withRetry(fn, maxRetries = MAX_RETRIES, initialDelay = INITIAL_DELAY_MS) {
             for (let attempt = 1; attempt <= maxRetries; attempt++) {
                 try {
                     return await fn();
@@ -135,8 +135,9 @@
                     if (attempt === maxRetries) {
                         throw error;
                     }
-                    console.log(`Attempt ${attempt} failed: ${error.message}. Retrying in ${RETRY_DELAY_MS}ms...`);
-                    await new Promise(resolve => setTimeout(resolve, RETRY_DELAY_MS));
+                    const delay = initialDelay * Math.pow(2, attempt - 1);
+                    console.log(`Attempt ${attempt} failed: ${error.message}. Retrying in ${delay}ms...`);
+                    await new Promise(resolve => setTimeout(resolve, delay));
                 }
             }
         }
@@ -340,7 +341,8 @@
                 }
             } catch (error) {
                 chatBox.removeChild(thinkingMsg);
-                appendMessage('bot', `Error: ${error.message}`, [], true);
+                appendMessage('bot', `Error: Unable to connect to the server. Please try again later or contact support.`, [], true);
+                apiErrorDiv.textContent = `⚠️ Server connection failed: ${error.message}. Check if the Replit server is running at ${API_BASE_URL}.`;
             }
         }
 
@@ -360,6 +362,7 @@
                             sendMessage();
                         } catch (error) {
                             appendMessage('bot', `Transcription failed: ${error.message}`, [], true);
+                            apiErrorDiv.textContent = `⚠️ Transcription failed: ${error.message}. Check server connectivity.`;
                         }
                     };
 
@@ -367,6 +370,7 @@
                     document.querySelector('#input-container button:last-child').textContent = '⏹ Stop';
                 } catch (error) {
                     appendMessage('bot', `Recording failed: ${error.message}`, [], true);
+                    apiErrorDiv.textContent = `⚠️ Recording failed: ${error.message}.`;
                 }
             } else {
                 mediaRecorder.stop();
@@ -395,6 +399,7 @@
                         audio.play();
                     } catch (error) {
                         appendMessage('bot', `TTS failed: ${error.message}`, [], true);
+                        apiErrorDiv.textContent = `⚠️ TTS failed: ${error.message}.`;
                     }
                 };
                 msgDiv.appendChild(speakButton);
@@ -411,12 +416,13 @@
         async function testAPI() {
             try {
                 const response = await fetch(`${API_BASE_URL}/api/health`);
-                console.log('API health check:', response.status, await response.json());
+                const data = await response.json();
+                console.log('API health check:', response.status, data);
                 apiErrorDiv.textContent = '';
             } catch (error) {
                 console.log('API health check failed:', error.message);
-                apiErrorDiv.textContent = `⚠️ Backend not reachable at ${API_BASE_URL}. Check Replit server status and update API_BASE_URL if the Webview URL has changed.`;
-                appendMessage('bot', `API connectivity test failed: ${error.message}`, [], true);
+                apiErrorDiv.textContent = `⚠️ Cannot connect to server at ${API_BASE_URL}. Please check if the Replit server is running or update the API URL.`;
+                appendMessage('bot', `Server connection failed: ${error.message}. Try refreshing or contacting support.`, [], true);
             }
         }
         testAPI();
