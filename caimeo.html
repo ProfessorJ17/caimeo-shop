@@ -111,9 +111,12 @@
         let mediaRecorder;
         let audioChunks = [];
         const API_BASE_URL = 'https://caimeo.moddarkrevolt.repl.co'; // Replit backend URL
-        // For production, configure api.caimeo.shop and update to: 'https://api.caimeo.shop'
         const MAX_RETRIES = 3;
         const RETRY_DELAY_MS = 1000;
+
+        console.log('Frontend loaded with API_BASE_URL:', API_BASE_URL);
+        console.log('Frontend origin:', window.location.origin);
+        console.log('Testing API connectivity at:', `${API_BASE_URL}/api/health`);
 
         async function withRetry(fn, maxRetries = MAX_RETRIES) {
             for (let attempt = 1; attempt <= maxRetries; attempt++) {
@@ -123,7 +126,7 @@
                     if (attempt === maxRetries) {
                         throw error;
                     }
-                    console.log(`Attempt ${attempt} failed. Retrying in ${RETRY_DELAY_MS}ms...`);
+                    console.log(`Attempt ${attempt} failed: ${error.message}. Retrying in ${RETRY_DELAY_MS}ms...`);
                     await new Promise(resolve => setTimeout(resolve, RETRY_DELAY_MS));
                 }
             }
@@ -134,7 +137,7 @@
             const temp = parseFloat(temperatureSlider.value);
             const topP = parseFloat(topPSlider.value);
 
-            console.log(`Calling Chat API with model: ${model}, max_tokens: ${maxTokens}, temp: ${temp}, top_p: ${topP}`);
+            console.log(`Calling Chat API with model: ${model}, max_tokens: ${maxTokens}, temp: ${temp}, top_p: ${topP}, URL: ${API_BASE_URL}/api/chat`);
 
             return await withRetry(async () => {
                 const response = await fetch(`${API_BASE_URL}/api/chat`, {
@@ -148,6 +151,8 @@
                         top_p: topP
                     })
                 });
+
+                console.log('Chat API response status:', response.status, 'URL:', response.url);
 
                 if (!response.ok) {
                     const errorData = await response.json();
@@ -166,7 +171,7 @@
         }
 
         async function callImageAPI(prompt, model) {
-            console.log(`Calling Image API with model: ${model}, prompt: ${prompt.substring(0, 50)}...`);
+            console.log(`Calling Image API with model: ${model}, prompt: ${prompt.substring(0, 50)}..., URL: ${API_BASE_URL}/api/image`);
 
             return await withRetry(async () => {
                 const response = await fetch(`${API_BASE_URL}/api/image`, {
@@ -182,6 +187,8 @@
                     })
                 });
 
+                console.log('Image API response status:', response.status, 'URL:', response.url);
+
                 if (!response.ok) {
                     const errorData = await response.json();
                     throw new Error(`Image API Error (${response.status}): ${errorData.error?.message || response.statusText}`);
@@ -196,7 +203,7 @@
         }
 
         async function callTTSAPI(text, model = 'tts-1', voice = 'alloy') {
-            console.log(`Calling TTS API with model: ${model}, voice: ${voice}`);
+            console.log(`Calling TTS API with model: ${model}, voice: ${voice}, URL: ${API_BASE_URL}/api/tts`);
 
             return await withRetry(async () => {
                 const response = await fetch(`${API_BASE_URL}/api/tts`, {
@@ -210,6 +217,8 @@
                     })
                 });
 
+                console.log('TTS API response status:', response.status, 'URL:', response.url);
+
                 if (!response.ok) {
                     const errorData = await response.json();
                     throw new Error(`TTS API Error (${response.status}): ${errorData.error?.message || response.statusText}`);
@@ -220,7 +229,7 @@
         }
 
         async function callTranscribeAPI(audioBlob) {
-            console.log('Calling Transcribe API...');
+            console.log(`Calling Transcribe API, URL: ${API_BASE_URL}/api/transcribe`);
 
             return await withRetry(async () => {
                 const formData = new FormData();
@@ -231,6 +240,8 @@
                     method: 'POST',
                     body: formData
                 });
+
+                console.log('Transcribe API response status:', response.status, 'URL:', response.url);
 
                 if (!response.ok) {
                     const errorData = await response.json();
@@ -370,6 +381,17 @@
         userInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendMessage();
         });
+
+        // Test API connectivity on load
+        async function testAPI() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/health`);
+                console.log('API health check:', response.status, await response.json());
+            } catch (error) {
+                console.log('API health check failed:', error.message);
+            }
+        }
+        testAPI();
     </script>
 </body>
 </html>
