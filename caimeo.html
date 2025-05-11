@@ -68,6 +68,11 @@
         select, input[type="range"], input[type="checkbox"] {
             margin: 0 5px;
         }
+        #api-error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -78,6 +83,7 @@
             <button onclick="sendMessage()">Send</button>
             <button onclick="startRecording()">🎙️ Record</button>
         </div>
+        <div id="api-error"></div>
         <div id="controls">
             <label>Text Model:
                 <select id="text-model-select">
@@ -100,6 +106,7 @@
     <script>
         const chatBox = document.getElementById('chat-box');
         const userInput = document.getElementById('user-input');
+        const apiErrorDiv = document.getElementById('api-error');
         const textModelSelect = document.getElementById('text-model-select');
         const imageModelSelect = document.getElementById('image-model-select');
         const maxTokensSlider = document.getElementById('max-tokens-slider');
@@ -405,8 +412,10 @@
             try {
                 const response = await fetch(`${API_BASE_URL}/api/health`);
                 console.log('API health check:', response.status, await response.json());
+                apiErrorDiv.textContent = '';
             } catch (error) {
                 console.log('API health check failed:', error.message);
+                apiErrorDiv.textContent = `⚠️ Backend not reachable at ${API_BASE_URL}. Check Replit server status and update API_BASE_URL if the Webview URL has changed.`;
                 appendMessage('bot', `API connectivity test failed: ${error.message}`, [], true);
             }
         }
