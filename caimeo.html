@@ -110,11 +110,13 @@
         let history = [];
         let mediaRecorder;
         let audioChunks = [];
-        const API_BASE_URL = 'https://caimeo.moddarkrevolt.repl.co'; // Replit backend URL
+        const API_BASE_URL = 'https://caimeo.moddarkrevolt.repl.co'; // Primary Replit backend URL
+        const FALLBACK_API_URL = 'https://caimeo.moddarkrevolt.repl.co'; // Update with new Replit URL if changed
         const MAX_RETRIES = 3;
         const RETRY_DELAY_MS = 1000;
 
         console.log('Frontend loaded with API_BASE_URL:', API_BASE_URL);
+        console.log('Fallback API URL:', FALLBACK_API_URL);
         console.log('Frontend origin:', window.location.origin);
         console.log('Testing API connectivity at:', `${API_BASE_URL}/api/health`);
 
@@ -140,17 +142,33 @@
             console.log(`Calling Chat API with model: ${model}, max_tokens: ${maxTokens}, temp: ${temp}, top_p: ${topP}, URL: ${API_BASE_URL}/api/chat`);
 
             return await withRetry(async () => {
-                const response = await fetch(`${API_BASE_URL}/api/chat`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        model,
-                        messages,
-                        max_tokens: maxTokens,
-                        temperature: temp,
-                        top_p: topP
-                    })
-                });
+                let response;
+                try {
+                    response = await fetch(`${API_BASE_URL}/api/chat`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            model,
+                            messages,
+                            max_tokens: maxTokens,
+                            temperature: temp,
+                            top_p: topP
+                        })
+                    });
+                } catch (error) {
+                    console.log(`Primary URL failed: ${error.message}. Trying fallback URL: ${FALLBACK_API_URL}`);
+                    response = await fetch(`${FALLBACK_API_URL}/api/chat`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            model,
+                            messages,
+                            max_tokens: maxTokens,
+                            temperature: temp,
+                            top_p: topP
+                        })
+                    });
+                }
 
                 console.log('Chat API response status:', response.status, 'URL:', response.url);
 
@@ -389,6 +407,7 @@
                 console.log('API health check:', response.status, await response.json());
             } catch (error) {
                 console.log('API health check failed:', error.message);
+                appendMessage('bot', `API connectivity test failed: ${error.message}`, [], true);
             }
         }
         testAPI();
