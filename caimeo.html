@@ -118,7 +118,7 @@
             console.log(`Calling Chat API with model: ${model}, max_tokens: ${maxTokens}, temp: ${temp}, top_p: ${topP}`);
 
             try {
-                const response = await fetch('/api/chat', {
+                const response = await fetch('https://5000-caimeo-moddarkrevolt-xxxxx.repl.co/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
