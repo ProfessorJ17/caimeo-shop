@@ -109,7 +109,6 @@
         let history = [];
         let mediaRecorder;
         let audioChunks = [];
-        const API_BASE_URL = 'https://caimeo.moddarkrevolt.repl.co'; // Correct Replit URL
 
         async function callChatAPI(messages, model) {
             const maxTokens = parseInt(maxTokensSlider.value, 10);
@@ -119,7 +118,7 @@
             console.log(`Calling Chat API with model: ${model}, max_tokens: ${maxTokens}, temp: ${temp}, top_p: ${topP}`);
 
             try {
-                const response = await fetch(`${API_BASE_URL}/api/chat`, {
+                const response = await fetch('http://0.0.0.0:5000/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -137,9 +136,6 @@
                 }
 
                 const data = await response.json();
-                if (!data.choices?.[0]?.message?.content) {
-                    throw new Error('Invalid API response structure');
-                }
                 return {
                     content: data.choices[0].message.content,
                     sources: data.choices[0].context?.citations?.map(c => c.url || c.uri) || []
@@ -154,7 +150,7 @@
             console.log(`Calling Image API with model: ${model}, prompt: ${prompt.substring(0, 50)}...`);
 
             try {
-                const response = await fetch(`${API_BASE_URL}/api/image`, {
+                const response = await fetch('https://caimeo.moddarkrevolt.repl.co/api/image', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -173,9 +169,6 @@
                 }
 
                 const data = await response.json();
-                if (!data.data?.[0]?.url) {
-                    throw new Error('Invalid Image API response');
-                }
                 return data.data[0].url;
             } catch (error) {
                 console.error('Image API error:', error);
@@ -187,7 +180,7 @@
             console.log(`Calling TTS API with model: ${model}, voice: ${voice}`);
 
             try {
-                const response = await fetch(`${API_BASE_URL}/api/tts`, {
+                const response = await fetch('https://caimeo.moddarkrevolt.repl.co/api/tts', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -218,7 +211,7 @@
             formData.append('model', 'whisper-1');
 
             try {
-                const response = await fetch(`${API_BASE_URL}/api/transcribe`, {
+                const response = await fetch('https://caimeo.moddarkrevolt.repl.co/api/transcribe', {
                     method: 'POST',
                     body: formData
                 });
@@ -229,9 +222,6 @@
                 }
 
                 const data = await response.json();
-                if (!data.text) {
-                    throw new Error('Invalid Transcribe API response');
-                }
                 return data.text;
             } catch (error) {
                 console.error('Transcribe API error:', error);
@@ -246,7 +236,6 @@
             appendMessage('user', message);
             userInput.value = '';
             history.push({ role: 'user', content: message });
-            if (history.length > 20) history = history.slice(-20); // Limit history to 20 messages
 
             const thinkingMsg = document.createElement('div');
             thinkingMsg.className = 'message bot';
