@@ -142,7 +142,7 @@
     const errorMessage = document.getElementById('error-message');
 
     async function getUserData(user) {
-      const userDocRef = db.collection('users').doc(user.email);
+      const userDocRef = db.collection('allowedEmails').doc(user.email);
       const userDoc = await userDocRef.get();
       let userData;
       if (userDoc.exists) {
@@ -150,10 +150,11 @@
       } else {
         // Create user document if it doesn't exist
         userData = {
+          date: new Date().toLocaleDateString('en-CA'), // e.g., "2025-05-26"
           name: user.email.split('@')[0],
           email: user.email,
           uid: user.uid,
-          purchased: true // Assume active subscription
+          purchased: true
         };
         await userDocRef.set(userData);
       }
