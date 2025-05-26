@@ -1,94 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Authenticate</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Orbitron', sans-serif;
-        }
-        body {
-            background: linear-gradient(135deg, #6B48FF 0%, #1A0033 100%), url('https://via.placeholder.com/1920x1080') no-repeat center center fixed;
-            background-size: cover;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-        .container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            width: 90vw;
-            max-width: 600px;
-            border-radius: 20px;
-            box-shadow: 0 0 20px rgba(107, 72, 255, 0.5);
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-            z-index: 2;
-        }
-        h1 {
-            color: #fff;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(255, 165, 0, 0.8);
-        }
-        p.subtitle {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.2em;
-            margin-bottom: 20px;
-            text-shadow: 0 0 5px rgba(107, 72, 255, 0.5);
-        }
-        input {
-            margin-bottom: 15px;
-            padding: 12px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 25px;
-            color: white;
-            font-size: 1em;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-        input:focus {
-            box-shadow: 0 0 15px rgba(255, 165, 0, 0.7);
-            border-color: #FFA500;
-        }
-        button {
-            padding: 12px;
-            width: 100%;
-            background: linear-gradient(90deg, #FFA500 0%, #FF4500 100%);
-            border: none;
-            border-radius: 25px;
-            color: #fff;
-            font-size: 1.1em;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
-        }
-        button:hover {
-            box-shadow: 0 0 20px rgba(255, 165, 0, 0.8);
-            transform: translateY(-2px);
-        }
-        #error-message {
-            color: rgba(255, 255, 255, 0.9);
-            text-shadow: 0 0 5px rgba(107, 72, 255, 0.5);
-            margin-top: 10px;
-            display: none;
-        }
-        ::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caimeo</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Orbitron', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #6B48FF 0%, #1A0033 100%), url('https://via.placeholder.com/1920x1080') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      width: 90vw;
+      max-width: 600px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(107, 72, 255, 0.5);
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      z-index: 2;
+    }
+    h1 {
+      color: #fff;
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px rgba(255, 165, 0, 0.8);
+    }
+    p.subtitle {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      text-shadow: 0 0 5px rgba(107, 72, 255, 0.5);
+    }
+    p {
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 0 5px rgba(107, 72, 255, 0.5);
+      margin: 10px 0;
+    }
+    input {
+      margin-bottom: 15px;
+      padding: 12px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 25px;
+      color: white;
+      font-size: 1em;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    input:focus {
+      box-shadow: 0 0 15px rgba(255, 165, 0, 0.7);
+      border-color: #FFA500;
+    }
+    button {
+      padding: 12px;
+      width: 100%;
+      background: linear-gradient(90deg, #FFA500 0%, #FF4500 100%);
+      border: none;
+      border-radius: 25px;
+      color: #fff;
+      font-size: 1.1em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+    }
+    button:hover {
+      box-shadow: 0 0 20px rgba(255, 165, 0, 0.8);
+      transform: translateY(-2px);
+    }
+    #error-message {
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 0 5px rgba(107, 72, 255, 0.5);
+      margin-top: 10px;
+      display: none;
+    }
+    ::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .hidden {
+      display: none;
+    }
+    #logout-btn {
+      width: 50%;
+      margin: 20px auto 0;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -99,6 +111,12 @@
       <input id="password" type="password" placeholder="Password" required>
       <button id="submit">Sign In</button>
       <p id="error-message"></p>
+    </div>
+    <div id="dashboard-section" class="hidden">
+      <h1>Caimeo</h1>
+      <p class="subtitle">Welcome <span id="username"></span>!</p>
+      <p>Subscription Status: <span id="purchase-status"></span></p>
+      <button id="logout-btn">Logout</button>
     </div>
   </div>
 
@@ -136,10 +154,15 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
+    const loginSection = document.getElementById('login-section');
+    const dashboardSection = document.getElementById('dashboard-section');
     const submitButton = document.getElementById('submit');
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
     const errorMessage = document.getElementById('error-message');
+    const usernameDisplay = document.getElementById('username');
+    const purchaseStatusDisplay = document.getElementById('purchase-status');
+    const logoutBtn = document.getElementById('logout-btn');
 
     async function getUserData(user) {
       const userDocRef = db.collection('allowedEmails').doc(user.email);
@@ -161,26 +184,49 @@
       return userData;
     }
 
+    function showLogin() {
+      loginSection.classList.remove('hidden');
+      dashboardSection.classList.add('hidden');
+      emailInput.value = '';
+      passwordInput.value = '';
+      errorMessage.style.display = 'none';
+    }
+
+    function showDashboard(userData) {
+      loginSection.classList.add('hidden');
+      dashboardSection.classList.remove('hidden');
+      usernameDisplay.textContent = userData.name;
+      purchaseStatusDisplay.textContent = userData.purchased ? 'Active' : 'Inactive';
+    }
+
     submitButton.addEventListener('click', async () => {
-      const email = emailInput.value;
+      const email = emailInput.value.trim();
       const password = passwordInput.value;
       try {
         const userCredential = await auth.signInWithEmailAndPassword(email, password);
         const user = userCredential.user;
         const userData = await getUserData(user);
         sessionStorage.setItem('userData', JSON.stringify(userData));
-        window.location.href = '/dashboard.html';
+        showDashboard(userData');
       } catch (error) {
         errorMessage.style.display = 'block';
         errorMessage.textContent = error.message;
       }
     });
 
+    logoutBtn.addEventListener('click', async () => {
+      sessionStorage.removeItem('userData');
+      await auth.signOut();
+      showLogin();
+    });
+
     auth.onAuthStateChanged(async (user) => {
       if (user) {
         const userData = await getUserData(user);
         sessionStorage.setItem('userData', JSON.stringify(userData));
-        window.location.href = '/dashboard.html';
+        showDashboard(userData);
+      } else {
+        showLogin();
       }
     });
   </script>
