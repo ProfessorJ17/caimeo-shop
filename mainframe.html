@@ -144,7 +144,17 @@
 
   <script>
     // Prevent right-click and disallowed key shortcuts
-
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.addEventListener('keydown', event => {
+      if (event.ctrlKey && (event.key === 'u' || event.key === 'U' ||
+          event.key === 's' || event.key === 'S' ||
+          event.key === 'j' || event.key === 'J' ||
+          event.key === 'i' || event.key === 'I' ||
+          event.key === 'c' || event.key === 'C' ||
+          event.key === 'k' || event.key === 'K')) {
+        event.preventDefault();
+      }
+    });
 
     // Firebase configuration
     const firebaseConfig = {
@@ -174,23 +184,28 @@
     const logoutBtn = document.getElementById('logout-btn');
 
     async function getUserData(user) {
-      const userDocRef = db.collection('allowedEmails').doc(user.email);
-      const userDoc = await userDocRef.get();
-      let userData;
-      if (userDoc.exists) {
-        userData = userDoc.data();
-      } else {
-        // Create user document if it doesn't exist
-        userData = {
-          date: new Date().toLocaleDateString('en-CA'), // e.g., "2025-05-26"
-          email: user.email,
-          name: user.email.split('@')[0],
-          purchased: true,
-          uid: user.uid
-        };
-        await userDocRef.set(userData);
+      try {
+        alert('Fetching data for: ' + user.email);
+        const userDocRef = db.collection('allowedEmails').doc(user.email.toLowerCase());
+        const userDoc = await userDocRef.get();
+        let userData;
+        if (userDoc.exists) {
+          userData = userDoc.data();
+        } else {
+          userData = {
+            date: new Date().toLocaleDateString('en-CA'),
+            email: user.email,
+            name: user.email.split('@')[0],
+            purchased: true,
+            uid: user.uid
+          };
+          await userDocRef.set(userData);
+        }
+        return userData;
+      } catch (error) {
+        alert('Firestore error: ' + error.message);
+        throw error;
       }
-      return userData;
     }
 
     function showLogin() {
@@ -214,6 +229,7 @@
       const email = emailInput.value.trim();
       const password = passwordInput.value;
       try {
+        alert('Attempting login for: ' + email);
         const userCredential = await auth.signInWithEmailAndPassword(email, password);
         const user = userCredential.user;
         const userData = await getUserData(user);
@@ -222,6 +238,7 @@
       } catch (error) {
         errorMessage.style.display = 'block';
         errorMessage.textContent = error.message;
+        alert('Login error: ' + error.message);
       }
     });
 
@@ -233,9 +250,15 @@
 
     auth.onAuthStateChanged(async (user) => {
       if (user) {
-        const userData = await getUserData(user);
-        sessionStorage.setItem('userData', JSON.stringify(userData));
-        showDashboard(userData);
+        alert('User authenticated: ' + user.email);
+        try {
+          const userData = await getUserData(user);
+          sessionStorage.setItem('userData', JSON.stringify(userData));
+          showDashboard(userData);
+        } catch (error) {
+          alert('Error loading dashboard: ' + error.message);
+          showLogin();
+        }
       } else {
         showLogin();
       }
