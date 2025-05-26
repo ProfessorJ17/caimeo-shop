@@ -126,28 +126,22 @@
   <!-- Hidden section for your other HTML page content -->
   <div id="custom-content" class="hidden">
     <!-- 
-      Paste your other HTML page's <head>, <body>, and <footer> content here.
+      Paste your other HTML page's content here (e.g., <header>, <main>, <footer>).
       Example:
-      <head>
-        <title>Your Other Page</title>
-        <link rel="stylesheet" href="other.css">
-      </head>
-      <body>
-        <header>Your Header Content</header>
-        <main>Your Main Content</main>
-      </body>
+      <header>Your Header Content</header>
+      <main>Your Main Content</main>
       <footer>Your Footer Content</footer>
       
-      Note: Only include the content inside <head>, <body>, and <footer> tags, not the outer <html> or DOCTYPE.
-      This section is hidden by default (display: none).
-      To show it, use JavaScript, e.g., document.getElementById('custom-content').style.display = 'block';
+      Note: Do not include outer <html> or DOCTYPE. If you have <head> elements (e.g., <title>, <link>), consider adding them to the main <head> of this document.
+      This section is hidden by default (display: none). To show it, use JavaScript, e.g., document.getElementById('custom-content').style.display = 'block';
     -->
   </div>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"></script>
+  <!-- Firebase SDK (Compatibility Layer) -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
   <script>
     // Prevent right-click and disallowed key shortcuts
     document.addEventListener('contextmenu', event => event.preventDefault());
