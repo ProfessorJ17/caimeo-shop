@@ -101,7 +101,7 @@
       margin: 20px auto 0;
     }
     #custom-content {
-      display: none; /* Hidden by default */
+      display: none;
     }
   </style>
 </head>
@@ -123,27 +123,15 @@
     </div>
   </div>
 
-  <!-- Hidden section for your other HTML page content -->
   <div id="custom-content" class="hidden">
-    <!-- 
-      Paste your other HTML page's content here (e.g., <header>, <main>, <footer>).
-      Example:
-      <header>Your Header Content</header>
-      <main>Your Main Content</main>
-      <footer>Your Footer Content</footer>
-      
-      Note: Do not include outer <html> or DOCTYPE. If you have <head> elements (e.g., <title>, <link>), consider adding them to the main <head> of this document.
-      This section is hidden by default (display: none). To show it, use JavaScript, e.g., document.getElementById('custom-content').style.display = 'block';
-    -->
+    <!-- Add custom HTML here -->
   </div>
 
-  <!-- Firebase SDK (Compatibility Layer) -->
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 
   <script>
-    // Prevent right-click and disallowed key shortcuts
     document.addEventListener('contextmenu', event => event.preventDefault());
     document.addEventListener('keydown', event => {
       if (event.ctrlKey && (event.key === 'u' || event.key === 'U' ||
@@ -156,7 +144,6 @@
       }
     });
 
-    // Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyDYXyAmDC_HF4scI21VeLlS4aM2k2RJ1Wc",
       authDomain: "mainframe-e3b13.firebaseapp.com",
@@ -167,7 +154,6 @@
       measurementId: "G-N2Q017PZXB"
     };
 
-    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
