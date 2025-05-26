@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caimeo - Dashboard</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Orbitron', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #6B48FF 0%, #1A0033 100%), url('https://711131719.xyz/images/1540588933.svg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 5%;
+      width: 50vw;
+      max-width: 600px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(107, 72, 255, 0.5);
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2.5em;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 165, 0, 0.8);
+    }
+    p.subtitle {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      text-shadow: 0 0 5px rgba(107, 72, 255, 0.5);
+    }
+    p {
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 0 5px rgba(107, 72, 255, 0.5);
+      margin: 10px 0;
+    }
+    button {
+      padding: 12px;
+      width: 50%;
+      margin: 20px auto 0;
+      background: linear-gradient(90deg, #FFA500 0%, #FF4500 100%);
+      border: none;
+      border-radius: 25px;
+      color: #fff;
+      font-size: 1.1em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+    }
+    button:hover {
+      box-shadow: 0 0 20px rgba(255, 165, 0, 0.8);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Caimeo</h1>
+    <p class="subtitle">Welcome <span id="username"></span>!</p>
+    <p>Subscription Status: <span id="purchase-status"></span></p>
+    <button id="logout-btn">Logout</button>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js"></script>
+  <script>
+    // Prevent right-click and disallowed key shortcuts
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.addEventListener('keydown', event => {
+      if (event.ctrlKey && (event.key === 'u' || event.key === 'U' ||
+          event.key === 's' || event.key === 'S' ||
+          event.key === 'j' || event.key === 'J' ||
+          event.key === 'i' || event.key === 'I' ||
+          event.key === 'c' || event.key === 'C' ||
+          event.key === 'k' || event.key === 'K')) {
+        event.preventDefault();
+      }
+    });
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDYXyAmDC_HF4scI21VeLlS4aM2k2RJ1Wc",
+      authDomain: "mainframe-e3b13.firebaseapp.com",
+      projectId: "mainframe-e3b13",
+      storageBucket: "mainframe-e3b13.firebasestorage.app",
+      messagingSenderId: "85561924382",
+      appId: "1:85561924382:web:5d5eddda04a466ec56870f",
+      measurementId: "G-N2Q017PZXB"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    const usernameDisplay = document.getElementById('username');
+    const purchaseStatusDisplay = document.getElementById('purchase-status');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    const userData = JSON.parse(sessionStorage.getItem('userData'));
+
+    auth.onAuthStateChanged((user) => {
+      if (!user || !userData) {
+        window.location.href = '/mainframe.html';
+        return;
+      }
+      usernameDisplay.textContent = userData.name;
+      purchaseStatusDisplay.textContent = userData.purchased ? 'Active' : 'Inactive';
+    });
+
+    logoutBtn.addEventListener('click', async () => {
+      sessionStorage.removeItem('userData');
+      await auth.signOut();
+      window.location.href = '/mainframe.html';
+    });
+  </script>
+</body>
+</html>
