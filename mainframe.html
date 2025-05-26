@@ -100,6 +100,9 @@
       width: 50%;
       margin: 20px auto 0;
     }
+    #custom-content {
+      display: none; /* Hidden by default */
+    }
   </style>
 </head>
 <body>
@@ -118,6 +121,27 @@
       <p>Subscription Status: <span id="purchase-status"></span></p>
       <button id="logout-btn">Logout</button>
     </div>
+  </div>
+
+  <!-- Hidden section for your other HTML page content -->
+  <div id="custom-content" class="hidden">
+    <!-- 
+      Paste your other HTML page's <head>, <body>, and <footer> content here.
+      Example:
+      <head>
+        <title>Your Other Page</title>
+        <link rel="stylesheet" href="other.css">
+      </head>
+      <body>
+        <header>Your Header Content</header>
+        <main>Your Main Content</main>
+      </body>
+      <footer>Your Footer Content</footer>
+      
+      Note: Only include the content inside <head>, <body>, and <footer> tags, not the outer <html> or DOCTYPE.
+      This section is hidden by default (display: none).
+      To show it, use JavaScript, e.g., document.getElementById('custom-content').style.display = 'block';
+    -->
   </div>
 
   <!-- Firebase SDK -->
@@ -156,6 +180,7 @@
 
     const loginSection = document.getElementById('login-section');
     const dashboardSection = document.getElementById('dashboard-section');
+    const customContent = document.getElementById('custom-content');
     const submitButton = document.getElementById('submit');
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
@@ -187,6 +212,7 @@
     function showLogin() {
       loginSection.classList.remove('hidden');
       dashboardSection.classList.add('hidden');
+      customContent.classList.add('hidden');
       emailInput.value = '';
       passwordInput.value = '';
       errorMessage.style.display = 'none';
@@ -195,6 +221,7 @@
     function showDashboard(userData) {
       loginSection.classList.add('hidden');
       dashboardSection.classList.remove('hidden');
+      customContent.classList.add('hidden');
       usernameDisplay.textContent = userData.name;
       purchaseStatusDisplay.textContent = userData.purchased ? 'Active' : 'Inactive';
     }
@@ -207,7 +234,7 @@
         const user = userCredential.user;
         const userData = await getUserData(user);
         sessionStorage.setItem('userData', JSON.stringify(userData));
-        showDashboard(userData');
+        showDashboard(userData);
       } catch (error) {
         errorMessage.style.display = 'block';
         errorMessage.textContent = error.message;
