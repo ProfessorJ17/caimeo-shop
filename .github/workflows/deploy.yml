@@ -10,8 +10,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Replace placeholders
         run: |
-          sed -i "s|ENCRYPTED_SIMPLE_USERS_PLACEHOLDER|${{ secrets.ENCRYPTED_SIMPLE_USERS }}|g" index.html
-          sed -i "s|ENCRYPTION_KEY_PLACEHOLDER|${{ secrets.ENCRYPTION_KEY }}|g" index.html
+          sed -i "s|ENCRYPTED_SIMPLE_USERS|${{ secrets.ENCRYPTED_SIMPLE_USERS }}|g" mainframe.html
+          sed -i "s|ENCRYPTION_KEY|${{ secrets.ENCRYPTION_KEY }}|g" mainframe.html
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
