@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - main
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -11,8 +15,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Replace placeholders
         run: |
-          sed -i 's|${{ secrets.ENCRYPTED_SIMPLE_USERS }}|${{ secrets.ENCRYPTED_SIMPLE_USERS }}|g' mainframe.html
-          sed -i 's|${{ secrets.ENCRYPTION_KEY }}|${{ secrets.ENCRYPTION_KEY }}|g' mainframe.html
+          sed -i 's@${{ secrets.ENCRYPTED_SIMPLE_USERS }}@${{ secrets.ENCRYPTED_SIMPLE_USERS }}@g' mainframe.html
+          sed -i 's@${{ secrets.ENCRYPTION_KEY }}@${{ secrets.ENCRYPTION_KEY }}@g' mainframe.html
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
