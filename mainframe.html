@@ -2,71 +2,64 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>MAINFRAME LOGIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mainframe Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet"
+  />
   <style>
-    body { font-family: Arial; background: #f0f0f0; display: flex; justify-content: center; align-items: center; height: 100vh; }
-    #login-container, #content-container {
-      background: white; padding: 30px; border-radius: 8px; width: 350px; box-shadow: 0 0 10px #aaa; text-align: center;
+    body {
+      font-family: 'Share Tech Mono', monospace;
     }
-    input, button {
-      width: 100%; padding: 10px; margin: 10px 0; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;
+    h1.page-title {
+      font-family: 'Orbitron', monospace;
     }
-    button { background: black; color: white; border: none; cursor: pointer; }
-    button:hover { opacity: 0.85; }
-    #error-msg { color: red; min-height: 20px; white-space: pre-wrap; }
-
-    #custom-content {
-      display: none;
-      background: white; 
-      padding: 30px; 
-      border-radius: 8px; 
-      width: 350px; 
-      box-shadow: 0 0 10px #aaa; 
-      margin-top: 20px;
+    #error-msg {
+      color: #ffb347; /* Bright orange for visibility */
+      min-height: 20px;
+      white-space: pre-wrap;
+      margin-top: 0.75rem; /* Consistent with Tailwind's mb-3 or mt-3 */
       text-align: center;
+      font-weight: bold;
     }
-    #custom-header {
-      font-size: 24px; 
-      font-weight: bold; 
-      margin-bottom: 15px;
+
+    /* Styling for placeholder text color consistency across browsers */
+    .placeholder-white\/70::placeholder { /* Tailwind class placeholder-white/70 */
+      color: rgba(255, 255, 255, 0.7);
+      opacity: 1; /* Firefox needs this */
     }
-    #custom-footer {
-      margin-top: 30px; 
-      font-size: 12px; 
-      color: gray;
+    
+    /* Ensure input text is white */
+    input[type="email"], input[type="password"] {
+        color: white;
     }
-    #close-welcome-btn {
-      margin-top: 15px;
-      background: #333;
-      width: auto;
-      padding: 8px 20px;
-    }
+
   </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col items-center justify-center text-white" style="background: linear-gradient(90deg, #5a3bdc 0%, #1a0a3a 100%);">
 
-<div id="login-container">
-  <h2>MAINFRAME</h2>
-  <input type="email" id="email" placeholder="Enter your email" autocomplete="username" />
-  <input type="password" id="access-password" placeholder="Enter your access password" autocomplete="current-password" />
-  <button id="login-button">Login</button>
+<div id="login-container" class="w-full max-w-md bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-8 sm:p-10 shadow-[0_0_20px_#5a3bdc]">
+  <h1 class="page-title text-3xl mb-2 text-center drop-shadow-[0_0_6px_#ffb347]">Mainframe</h1>
+  <p class="text-center mb-6 text-sm text-white/80">Empowering the Future with Intelligence</p>
+  <input type="email" id="email" placeholder="Enter your email" autocomplete="username" class="w-full mb-4 px-4 py-3 rounded-full bg-white/20 border border-white/30 placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-[#5a3bdc] transition" />
+  <input type="password" id="access-password" placeholder="Enter your access password" autocomplete="current-password" class="w-full mb-6 px-4 py-3 rounded-full bg-white/20 border border-white/30 placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-[#5a3bdc] transition" />
+  <button id="login-button" class="w-full py-3 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-orange-500 to-orange-700 shadow-[0_0_10px_#ff7f00] hover:opacity-90 transition">Sign In</button>
   <div id="error-msg"></div>
 </div>
 
-<div id="content-container" style="display:none;">
-  <h1>Welcome!</h1>
-  <p id="welcome-msg" style="white-space: pre-wrap;"></p>
-  <button id="close-welcome-btn">Continue</button>
-  <button id="logout-button">Logout</button>
+<div id="content-container" style="display:none;" class="w-full max-w-md bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-8 sm:p-10 shadow-[0_0_20px_#5a3bdc] text-center">
+  <h1 class="page-title text-2xl mb-4 drop-shadow-[0_0_4px_#ffffff]">Welcome!</h1>
+  <p id="welcome-msg" class="mb-6 white-space-pre-wrap text-white/90"></p>
+  <button id="close-welcome-btn" class="w-full py-3 mt-4 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-sky-500 to-sky-700 shadow-[0_0_10px_#0ea5e9] hover:opacity-90 transition">Continue</button>
+  <button id="logout-button" class="w-full py-3 mt-4 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-red-500 to-red-700 shadow-[0_0_10px_#ef4444] hover:opacity-90 transition">Logout</button>
 </div>
 
-<div id="custom-content">
-  <style>
-    /* Example custom styles */
-  </style>
-  <div id="custom-header">[Custom Header Content]</div>
-  <p>[Custom Body Content]</p>
-  <div id="custom-footer">[Custom Footer Content]</div>
+<div id="custom-content" style="display:none;" class="w-full max-w-md bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-8 sm:p-10 shadow-[0_0_20px_#5a3bdc] text-center mt-8">
+  <h2 id="custom-header" class="text-xl font-bold mb-3 text-white/90">[Custom Header Content]</h2>
+  <p class="mb-6 text-white/80">[Custom Body Content]</p>
+  <div id="custom-footer" class="mt-6 text-xs text-white/60">[Custom Footer Content]</div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -146,7 +139,8 @@
       showContent(email, validUser.startDay, validUser.endDay);
 
     } catch (error) {
-      errorMsg.textContent = 'Login error: ' + error.message;
+      console.error("Login error details:", error); // Added for better debugging
+      errorMsg.textContent = 'Login error. Please try again or contact support.'; // User-friendly generic error
     }
   });
 
@@ -174,15 +168,59 @@
   function showContent(email, startDay, endDay) {
     loginContainer.style.display = 'none';
     contentContainer.style.display = 'block';
-    welcomeMsg.textContent = `Logged in as: ${email}\nPurchase valid from ${new Date(startDay).toDateString()} to ${new Date(endDay).toDateString()}`;
+    customContent.style.display = 'none';
+
+    let startDateStr = '[Session Data N/A]';
+    let endDateStr = '[Session Data N/A]';
+
+    if (startDay !== '[Session]' && endDay !== '[Session]') {
+        try {
+            startDateStr = new Date(startDay).toLocaleDateString();
+            endDateStr = new Date(endDay).toLocaleDateString();
+        } catch(e) {
+            console.warn("Could not parse session dates from Firestore:", startDay, endDay);
+        }
+    } else if (startDay === '[Session]' && endDay === '[Session]') {
+        startDateStr = "Active";
+        endDateStr = "Session";
+    }
+    
+    welcomeMsg.innerHTML = `Logged in as: <span class="font-semibold">${email}</span><br>Access: <span class="font-semibold">${startDateStr}</span> to <span class="font-semibold">${endDateStr}</span>`;
   }
 
-  // Optional: Check for session on page load
-  window.addEventListener('load', () => {
+  window.addEventListener('load', async () => {
     const token = sessionStorage.getItem('sessionToken');
-    const user = sessionStorage.getItem('loggedInUser');
-    if (token && user) {
-      showContent(user, '[Session]', '[Session]');
+    const userEmail = sessionStorage.getItem('loggedInUser');
+    if (token && userEmail) {
+      try {
+        const querySnapshot = await db.collection('purchasedUsers').where('email', '==', userEmail).get();
+        if (!querySnapshot.empty) {
+          let foundUser = null;
+          querySnapshot.forEach(doc => {
+            if(doc.data().purchased === true) { 
+                const data = doc.data();
+                const now = new Date();
+                const start = new Date(data.startDay);
+                const end = new Date(data.endDay);
+                if (now >= start && now <= end) {
+                    foundUser = data;
+                }
+            }
+          });
+          if (foundUser) {
+            showContent(userEmail, foundUser.startDay, foundUser.endDay);
+          } else {
+            console.warn("Session user data from DB indicates expired or invalid. Logging out.");
+            logoutBtn.click(); 
+          }
+        } else {
+             console.warn("Session user not found in DB. Logging out.");
+            logoutBtn.click(); 
+        }
+      } catch (error) {
+        console.error("Error fetching user data on load:", error);
+        showContent(userEmail, '[Session]', '[Session]'); 
+      }
     }
   });
 </script>
