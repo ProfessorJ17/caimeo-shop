@@ -2352,13 +2352,23 @@
                 finalContent = jsonMatch[1].replace(/\\n/g, ' ').replace(/\\"/g, '"');
             }
 
+            // Remove any JSON-like structure with thoughts, reasoning, plan, etc.
+            finalContent = finalContent.replace(/\{\s*"thoughts"[\s\S]*?"speak"\s*:\s*"([\s\S]*?)"\s*\}/g, "$1")
+                                      .replace(/\\n/g, ' ')
+                                      .replace(/\\"/g, '"');
+                                      
+            // Remove any standalone thinking patterns
+            finalContent = finalContent.replace(/^Thoughts:[\s\S]*?(?=\n\n|$)/im, '')
+                                      .replace(/^Reasoning:[\s\S]*?(?=\n\n|$)/im, '')
+                                      .replace(/^Plan:[\s\S]*?(?=\n\n|$)/im, '');
+
             // Remove leading persona prefixes if still present
             const personaPrefix = new RegExp("^" + currentPersonaId + "\\s*:\\s*", "i");
             finalContent = finalContent.replace(personaPrefix, "");
             
             // Remove trailing instructions and meta information
             finalContent = finalContent.replace(/My paragraphs are typically concise, ranging from 3 to 5 sentences, to ensure clarity and coherence\.?$/i, '').trim();
-            finalContent = finalContent.replace(/\.? My tone is (formal and professional, )?aimed at delivering the most (relevant and accurate|accurate and relevant) information possible\.?$/i, '').trim();
+            finalContent = finalContent.replace(/Each paragraph in my responses typically consists of 3-5 sentences\.? My tone is (formal and professional, )?aimed at delivering the most (relevant and accurate|accurate and relevant) information possible\.?$/i, '').trim();
             
             // Remove any lingering Markdown/boilerplate
             finalContent = finalContent.replace(/(^|\n)\s*markdown.*$/ims, '').trim();
