@@ -10,6 +10,7 @@
   </script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
     /* Theme variables */
     :root {
@@ -20,6 +21,8 @@
       --input-radius: 10px;
       --button-radius: 8px;
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --base-font-size: 16px;
+      --mobile-font-size: 18px;
 
       /* Default to light theme variables */
       --bg-color: #f3f4f6; /* Gray 100 */
@@ -485,7 +488,7 @@
     .personas-dropdown-container,
     .models-dropdown-container,
     .settings-dropdown-container {
-        padding: 10px 16px; 
+        padding: 5px 16px; 
         border-bottom: 1px solid var(--input-border);
     }
 
@@ -570,7 +573,7 @@
 
     /* Conversation History Styles */
     .conversations-dropdown-container {
-        padding: 10px 16px; 
+        padding: 5px 16px; 
         border-bottom: 1px solid var(--input-border);
         display: flex;
         justify-content: space-between;
@@ -675,7 +678,7 @@
         font-weight: 500;
         word-break: break-word;
         flex: 1;
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
 
     .conversation-timestamp {
@@ -775,8 +778,61 @@
         .logo-container {
             flex-direction: column;
         }
+        
+        .conversations-dropdown-btn,
+        .personas-dropdown-btn,
+        .models-dropdown-btn,
+        .settings-dropdown-btn {
+            font-size: 1.3rem;
+            padding: 15px 0;
+            height: 50px;
+        }
+        
+        .conversations-dropdown-container,
+        .personas-dropdown-container,
+        .models-dropdown-container,
+        .settings-dropdown-container {
+            padding: 5px 16px; 
+        }
+        
+        .dropdown-arrow svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .conversation-item,
+        .persona-item {
+            padding: 16px;
+            margin-bottom: 10px;
+        }
     }
-
+    
+    @media (max-width: 480px) {
+        .input-controls {
+            gap: 12px;
+        }
+        
+        #input-box {
+            padding: 15px 16px;
+            font-size: 1.1rem;
+        }
+        
+        #send-button, #clear-button {
+            padding: 12px 16px;
+            font-size: 1rem;
+        }
+        
+        .message {
+            max-width: 98%;
+            padding: 14px 16px;
+            font-size: 1.1rem;
+        }
+        
+        .bot-message code, .bot-message pre code {
+            font-size: 1rem;
+        }
+    }
+    
     * {
         margin: 0;
         padding: 0;
@@ -800,6 +856,7 @@
         color: var(--text-color);
         transition: background 0.3s ease;
         overflow: hidden;
+        font-size: var(--base-font-size);
     }
 
     .header {
@@ -833,13 +890,14 @@
     }
 
     .message { 
-        padding: 14px 18px;
-        margin-bottom: 16px;
+        padding: 16px 20px;
+        margin-bottom: 18px;
         border-radius: var(--card-radius);
-        max-width: 85%;
+        max-width: 90%;
         line-height: 1.6;
         transition: all 0.3s ease;
         animation: messageAppear 0.3s ease-out forwards;
+        font-size: 1.05rem;
     }
 
     @keyframes messageAppear {
@@ -867,6 +925,7 @@
         margin-right: auto;
         box-shadow: 0 4px 12px var(--shadow);
         border-radius: var(--card-radius);
+        font-size: 1.05rem;
     }
 
     .bot-message a {
@@ -889,7 +948,7 @@
 
     .bot-message code, .bot-message pre code {
         font-family: 'Consolas', 'Courier New', monospace;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         line-height: 1.5;
     }
 
@@ -937,10 +996,10 @@
 
     #input-box { 
         flex: 1;
-        padding: 14px 18px;
+        padding: 16px 20px;
         border: 2px solid var(--input-border);
         border-radius: var(--input-radius);
-        font-size: 1rem;
+        font-size: 1.05rem;
         transition: all 0.3s ease;
         background-color: var(--card-bg);
         color: var(--input-text);
@@ -966,7 +1025,7 @@
         color: var(--btn-text);
         border: none;
         border-radius: var(--button-radius);
-        padding: 14px;
+        padding: 16px;
         font-weight: 600;
         transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
         display: flex;
@@ -974,6 +1033,7 @@
         align-items: center;
         cursor: pointer;
         box-shadow: 0 4px 12px rgba(40, 115, 216, 0.2);
+        font-size: 1rem;
     }
 
     #image-button {
@@ -988,7 +1048,8 @@
     }
 
     #send-button {
-        padding: 14px 28px;
+        padding: 16px 28px;
+        min-width: 90px;
     }
 
     #send-button:hover {
@@ -1002,11 +1063,12 @@
         color: var(--clear-btn-color);
         border: none;
         border-radius: var(--button-radius);
-        padding: 10px 18px;
+        padding: 12px 20px;
         font-weight: 600;
         transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
         cursor: pointer;
         box-shadow: 0 2px 8px var(--shadow);
+        font-size: 1rem;
     }
 
     #clear-button:hover {
@@ -1029,6 +1091,7 @@
         flex-direction: column;
         overflow-y: auto;
         border-right: 1px solid var(--input-border);
+        font-size: 1rem;
     }
 
     .conversation-sidebar.visible {
@@ -1211,9 +1274,9 @@
     .suggestion-chip {
         background-color: var(--clear-btn-bg); 
         color: var(--text-color); 
-        padding: 8px 12px;
+        padding: 10px 14px;
         border-radius: 20px; 
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         cursor: pointer;
         transition: background-color 0.2s ease, transform 0.2s ease;
         flex-shrink: 0; 
@@ -1242,59 +1305,103 @@
         
         .input-controls {
             flex-wrap: wrap;
+            gap: 15px;
         }
 
         .input-container {
             max-width: 100%;
+            padding: 18px 15px;
         }
         
         #send-button, #clear-button {
-            padding: 10px 16px;
-            font-size: 0.9rem;
+            padding: 14px 18px;
+            font-size: 1.05rem;
+            min-width: 90px;
         }
         
         .message {
             max-width: 95%;
-            padding: 12px 14px;
-            font-size: 0.95rem;
+            padding: 15px 18px;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
         }
         
         .bot-message pre {
             max-width: 100%;
             overflow-x: auto;
+            padding: 18px;
         }
         
         .suggestion-chip {
-            max-width: 100%;
-            padding: 6px 12px;
-            font-size: 0.85rem;
+            padding: 10px 16px;
+            font-size: 1rem;
         }
         
         .sidebar-toggle {
-            left: 10px;
+            width: 50px;
+            height: 50px;
+            top: 15px;
+            left: 15px;
+        }
+        
+        .sidebar-toggle svg {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .conversation-title, 
+        .persona-title {
+            font-size: 1.05rem;
+        }
+        
+        .conversation-timestamp {
+            font-size: 0.85rem;
+        }
+        
+        #input-box {
+            padding: 16px 18px;
+            font-size: 1.1rem;
+            min-height: 58px;
+        }
+        
+        .conversations-dropdown-btn,
+        .personas-dropdown-btn,
+        .models-dropdown-btn,
+        .settings-dropdown-btn {
+            font-size: 1.3rem;
+            padding: 15px 0;
         }
     }
 
     @media (max-width: 480px) {
-        .input-box {
-            padding: 10px 14px;
-            font-size: 0.9rem;
+        .input-controls {
+            gap: 12px;
+        }
+        
+        #input-box {
+            padding: 15px 16px;
+            font-size: 1.1rem;
         }
         
         #send-button, #clear-button {
-            padding: 8px 12px;
-            font-size: 0.85rem;
+            padding: 12px 16px;
+            font-size: 1rem;
         }
         
         .message {
             max-width: 98%;
-            padding: 10px 12px;
-            font-size: 0.9rem;
+            padding: 14px 16px;
+            font-size: 1.1rem;
+        }
+        
+        .bot-message code, .bot-message pre code {
+            font-size: 1rem;
         }
     }
   </style>
 </head>
 <body>
+
 <style>
   #page-blur {
     position: fixed;
@@ -1446,25 +1553,25 @@
         DEFAULT_THEME: 'dark',
         MAX_SAVED_CONVERSATIONS: 10, // Max number of conversations to keep
         FREE_OPENROUTER_MODELS: [
-            { id: 'openrouter:mistralai/devstral-small:free', name: 'Devstral Small', provider: 'mistralai', description: 'Free model from Mistral AI.' },
-            { id: 'openrouter:google/gemma-3n-e4b-it:free', name: 'Gemma 3n 4B', provider: 'google', description: 'Free model from Google.' },
-            { id: 'openrouter:meta-llama/llama-3.3-8b-instruct:free', name: 'Llama 3.3 8B Instruct', provider: 'meta-llama', description: 'Free model from Meta.' },
-            { id: 'openrouter:nousresearch/deephermes-3-mistral-24b-preview:free', name: 'DeepHermes 3 Mistral 24B Preview', provider: 'nousresearch', description: 'Free model from Nous Research.' },
-            { id: 'openrouter:microsoft/phi-4-reasoning-plus:free', name: 'Phi 4 Reasoning Plus', provider: 'microsoft', description: 'Free model from Microsoft.' },
-            { id: 'openrouter:microsoft/phi-4-reasoning:free', name: 'Phi 4 Reasoning', provider: 'microsoft', description: 'Free model from Microsoft.' },
-            { id: 'openrouter:opengvlab/internvl3-14b:free', name: 'InternVL3 14B', provider: 'opengvlab', description: 'Free model from OpenGVLab.' },
-            { id: 'openrouter:opengvlab/internvl3-2b:free', name: 'InternVL3 2B', provider: 'opengvlab', description: 'Free model from OpenGVLab.' },
-            { id: 'openrouter:deepseek/deepseek-prover-v2:free', name: 'DeepSeek Prover V2', provider: 'deepseek', description: 'Free model from DeepSeek.' },
-            { id: 'openrouter:qwen/qwen3-30b-a3b:free', name: 'Qwen3 30B A3B', provider: 'qwen', description: 'Free model from Qwen.' },
-            { id: 'openrouter:qwen/qwen3-8b:free', name: 'Qwen3 8B', provider: 'qwen', description: 'Free model from Qwen.' },
-            { id: 'openrouter:qwen/qwen3-14b:free', name: 'Qwen3 14B', provider: 'qwen', description: 'Free model from Qwen.' },
-            { id: 'openrouter:qwen/qwen3-32b:free', name: 'Qwen3 32B', provider: 'qwen', description: 'Free model from Qwen.' },
-            { id: 'openrouter:qwen/qwen3-235b-a22b:free', name: 'Qwen3 235B A22B', provider: 'qwen', description: 'Free model from Qwen.' },
-            { id: 'openrouter:tngtech/deepseek-r1t-chimera:free', name: 'DeepSeek R1T Chimera', provider: 'tngtech', description: 'Free model from TNGTech.' },
-            { id: 'openrouter:microsoft/mai-ds-r1:free', name: 'MAI DS R1', provider: 'microsoft', description: 'Free model from Microsoft.' },
-            { id: 'openrouter:thudm/glm-z1-32b:free', name: 'GLM Z1 32B', provider: 'thudm', description: 'Free model from THUDM.' },
-            { id: 'openrouter:thudm/glm-4-32b:free', name: 'GLM 4 32B', provider: 'thudm', description: 'Free model from THUDM.' },
-            { id: 'openrouter:shisa-ai/shisa-v2-llama3.3-70b:free', name: 'Shisa AI: Shisa V2 Llama 3.3 70B', provider: 'shisa-ai', description: 'Free model from Shisa AI.' }
+            { id: 'openrouter:qwen/qwen3-8b:free', name: 'Qwen3 8B', provider: 'qwen', description: 'Free model from Qwen.', tokenCost: 1 },
+            { id: 'openrouter:microsoft/phi-4-reasoning:free', name: 'Phi 4 Reasoning', provider: 'microsoft', description: 'Free model from Microsoft.', tokenCost: 2 },
+            { id: 'openrouter:mistralai/devstral-small:free', name: 'Devstral Small', provider: 'mistralai', description: 'Free model from Mistral AI.', tokenCost: 3 },
+            { id: 'openrouter:google/gemma-3n-e4b-it:free', name: 'Gemma 3n 4B', provider: 'google', description: 'Free model from Google.', tokenCost: 3 },
+            { id: 'openrouter:meta-llama/llama-3.3-8b-instruct:free', name: 'Llama 3.3 8B Instruct', provider: 'meta-llama', description: 'Free model from Meta.', tokenCost: 4 },
+            { id: 'openrouter:opengvlab/internvl3-2b:free', name: 'InternVL3 2B', provider: 'opengvlab', description: 'Free model from OpenGVLab.', tokenCost: 4 },
+            { id: 'openrouter:qwen/qwen3-14b:free', name: 'Qwen3 14B', provider: 'qwen', description: 'Free model from Qwen.', tokenCost: 5 },
+            { id: 'openrouter:opengvlab/internvl3-14b:free', name: 'InternVL3 14B', provider: 'opengvlab', description: 'Free model from OpenGVLab.', tokenCost: 6 },
+            { id: 'openrouter:nousresearch/deephermes-3-mistral-24b-preview:free', name: 'DeepHermes 3 Mistral 24B Preview', provider: 'nousresearch', description: 'Free model from Nous Research.', tokenCost: 7 },
+            { id: 'openrouter:microsoft/phi-4-reasoning-plus:free', name: 'Phi 4 Reasoning Plus', provider: 'microsoft', description: 'Free model from Microsoft.', tokenCost: 7 },
+            { id: 'openrouter:deepseek/deepseek-prover-v2:free', name: 'DeepSeek Prover V2', provider: 'deepseek', description: 'Free model from DeepSeek.', tokenCost: 8 },
+            { id: 'openrouter:tngtech/deepseek-r1t-chimera:free', name: 'DeepSeek R1T Chimera', provider: 'tngtech', description: 'Free model from TNGTech.', tokenCost: 8 },
+            { id: 'openrouter:qwen/qwen3-30b-a3b:free', name: 'Qwen3 30B A3B', provider: 'qwen', description: 'Free model from Qwen.', tokenCost: 9 },
+            { id: 'openrouter:thudm/glm-4-32b:free', name: 'GLM 4 32B', provider: 'thudm', description: 'Free model from THUDM.', tokenCost: 10 },
+            { id: 'openrouter:thudm/glm-z1-32b:free', name: 'GLM Z1 32B', provider: 'thudm', description: 'Free model from THUDM.', tokenCost: 10 },
+            { id: 'openrouter:qwen/qwen3-32b:free', name: 'Qwen3 32B', provider: 'qwen', description: 'Free model from Qwen.', tokenCost: 10 },
+            { id: 'openrouter:microsoft/mai-ds-r1:free', name: 'MAI DS R1', provider: 'microsoft', description: 'Free model from Microsoft.', tokenCost: 11 },
+            { id: 'openrouter:qwen/qwen3-235b-a22b:free', name: 'Qwen3 235B A22B', provider: 'qwen', description: 'Free model from Qwen.', tokenCost: 12 },
+            { id: 'openrouter:shisa-ai/shisa-v2-llama3.3-70b:free', name: 'Shisa AI: Shisa V2 Llama 3.3 70B', provider: 'shisa-ai', description: 'Free model from Shisa AI.', tokenCost: 12 }
         ],
         API_SETTINGS_COLLECTION_NAME: 'allgpt_api_settings_v1',
         DEFAULT_SYSTEM_PROMPT: "You are a helpful assistant."
@@ -1690,13 +1797,16 @@
     function fetchOpenRouterModels(modelSelector) {
         modelSelector.innerHTML = '';
 
-        config.FREE_OPENROUTER_MODELS.forEach(model => {
+        // Sort models by token cost (lowest first)
+        const sortedModels = [...config.FREE_OPENROUTER_MODELS].sort((a, b) => a.tokenCost - b.tokenCost);
+        
+        sortedModels.forEach(model => {
             addModelToSelector(
                 modelSelector,
                 model.name,
                 model.id,
                 model.provider,
-                model.description || `Free model by ${model.provider}`
+                `${model.description} (Token Cost: ${model.tokenCost})`
             );
         });
     }
@@ -1787,7 +1897,6 @@
                 optionsPanel.appendChild(customOption);
             }
         });
-
         optionsPanel.appendChild(searchInput);
         updateDisplayButton();
     }
@@ -2346,22 +2455,6 @@
                 finalContent = finalContent.replace(personaDoublePrefix, personaName + ": ");
             }
 
-            // Remove JSON structure if present (thoughts, reasoning, plan, etc.)
-            const jsonMatch = finalContent.match(/\{\s*"thoughts".*"speak"\s*:\s*"(.+?)"\s*\}/s);
-            if (jsonMatch) {
-                finalContent = jsonMatch[1].replace(/\\n/g, ' ').replace(/\\"/g, '"');
-            }
-
-            // Remove any JSON-like structure with thoughts, reasoning, plan, etc.
-            finalContent = finalContent.replace(/\{\s*"thoughts"[\s\S]*?"speak"\s*:\s*"([\s\S]*?)"\s*\}/g, "$1")
-                                      .replace(/\\n/g, ' ')
-                                      .replace(/\\"/g, '"');
-                                      
-            // Remove any standalone thinking patterns
-            finalContent = finalContent.replace(/^Thoughts:[\s\S]*?(?=\n\n|$)/im, '')
-                                      .replace(/^Reasoning:[\s\S]*?(?=\n\n|$)/im, '')
-                                      .replace(/^Plan:[\s\S]*?(?=\n\n|$)/im, '');
-
             // Remove leading persona prefixes if still present
             const personaPrefix = new RegExp("^" + currentPersonaId + "\\s*:\\s*", "i");
             finalContent = finalContent.replace(personaPrefix, "");
@@ -2379,9 +2472,7 @@
 
             let toRender = personaName + ": " + finalContent + (tokenCount !== null ? ` Tokens: ${tokenCount}` : "");
             messageDiv.textContent = toRender;
-            chatLog.scrollTop = chatLog.scrollHeight;
-        } else {
-            // User message unchanged
+        } else { // user message
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = marked.parse(message);
             const parsedHTML = tempDiv.innerHTML;
@@ -2435,64 +2526,6 @@
                 }
             }, 10000);
         }
-    }
-
-    function appendMessage(sender, message, tokenCount = null) {
-        let displayMessageContent = message;
-        if (sender === 'user') {
-            displayMessageContent = extractUserMessageFromAugmented(message);
-        }
-
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message');
-        messageDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
-        
-        if (sender === 'user') {
-            const textNode = document.createElement('span');
-            textNode.textContent = displayMessageContent;
-            messageDiv.appendChild(textNode);
-            
-        } else { // bot message
-            const currentDisplayPersona = PERSONAS[currentPersonaId] || PERSONAS['caimeo'];
-            const personaNamePrefix = `${currentDisplayPersona.name}: `;
-            // Remove any residual "plaintext" or "markdown" prefixes before displaying
-            let cleanContent = displayMessageContent
-                .replace(/^plaintext\s*/i, "")
-                .replace(/^markdown\s*/i, "");
-
-            // Remove persona double prefix (e.g., "CAIMEO : CAIMEO:")
-            const personaDoublePrefix = new RegExp("^" + personaNamePrefix + personaNamePrefix, "i");
-            if (personaDoublePrefix.test(cleanContent)) {
-                cleanContent = cleanContent.replace(personaDoublePrefix, personaNamePrefix);
-            }
-
-            // Remove JSON structure if present (thoughts, reasoning, plan, etc.)
-            const jsonMatch = cleanContent.match(/\{\s*"thoughts".*"speak"\s*:\s*"(.+?)"\s*\}/s);
-            if (jsonMatch) {
-                cleanContent = jsonMatch[1].replace(/\\n/g, ' ').replace(/\\"/g, '"');
-            }
-
-            // Remove leading persona prefixes if still present
-            const personaPrefix = new RegExp("^" + currentDisplayPersona.name + "\\s*:\\s*", "i");
-            cleanContent = cleanContent.replace(personaPrefix, "");
-            
-            // Remove trailing instructions and meta information
-            cleanContent = cleanContent.replace(/My paragraphs are typically concise, ranging from 3 to 5 sentences, to ensure clarity and coherence\.?$/i, '').trim();
-            cleanContent = cleanContent.replace(/Each paragraph in my responses typically consists of 3-5 sentences\.? My tone is (formal and professional, )?aimed at delivering the most (relevant and accurate|accurate and relevant) information possible\.?$/i, '').trim();
-            
-            // Remove any lingering Markdown/boilerplate
-            cleanContent = cleanContent.replace(/(^|\n)\s*markdown.*$/ims, '').trim();
-            cleanContent = cleanContent.replace(/^(In summary|To summarize):?\s*/ims, '');
-            
-            // Remove existing token count if present
-            cleanContent = cleanContent.replace(/Tokens\s*:\s*\d+.*$/is, '').trim();
-
-            let toRender = personaNamePrefix + cleanContent + (tokenCount !== null ? ` Tokens: ${tokenCount}` : "");
-            messageDiv.textContent = toRender;
-        }
-        
-        chatLog.appendChild(messageDiv);
-        chatLog.scrollTop = chatLog.scrollHeight; 
     }
 
     /**
@@ -2575,8 +2608,35 @@
             effectiveSystemPrompt = config.DEFAULT_SYSTEM_PROMPT;
         }
         
-        // Use the new augmentMessageWithSystemPrompt
-        const augmentedMessageContent = augmentMessageWithSystemPrompt(message, effectiveSystemPrompt);
+        // Do NOT augment user input with system prompt anymore, just store the actual user text ONLY for user message pairs
+        const augmentedMessageContent = message; // ← no preamble/system prompt!
+
+        // Remove embedded system prompt header from user message on display
+        function appendMessage(sender, message) {
+          // Remove previous typing indicators if present (clean up)
+          const typingIndicators = chatLog.querySelectorAll('.typing-indicator');
+          typingIndicators.forEach(el => el.parentNode && el.parentNode.removeChild(el));
+
+          if (sender === 'user') {
+            // show only what user typed, NO system prompt
+            typewriterEffect('user', message, chatLog);
+            chatLog.scrollTop = chatLog.scrollHeight;
+            messagePairs.push({
+              userMessage: message, // save user message ONLY, not with any system prompt
+              assistantMessage: null,
+            });
+          } else if (sender === 'bot') {
+            typewriterEffect('bot', message, chatLog);
+            chatLog.scrollTop = chatLog.scrollHeight;
+            // Set bot's response on last messagePair
+            if (messagePairs.length > 0) {
+              messagePairs[messagePairs.length - 1].assistantMessage = message;
+            }
+            // After bot response, prepare next suggestions
+            suggestionsManager.generateSuggestions(messagePairs, modelSelector.value);
+          }
+        }
+
         appendMessage('user', augmentedMessageContent);
         inputBox.value = '';
 
@@ -2585,14 +2645,17 @@
         const historyPairsLimit = config.MAX_CHAT_HISTORY > 0 ? config.MAX_CHAT_HISTORY -1 : 0; 
         const relevantMessagePairs = messagePairs.slice(-historyPairsLimit);
 
+        // Build OpenRouter/AI API messages: Add system prompt as a separate system message, user messages with only user's text
+        apiMessages = [];
         relevantMessagePairs.forEach(pair => {
-            apiMessages.push({ role: "user", content: extractUserMessageFromAugmented(pair.userMessage) });
+            apiMessages.push({ role: "user", content: pair.userMessage }); // ONLY typed user message
             if (pair.assistantMessage) {
                 apiMessages.push({ role: "assistant", content: pair.assistantMessage });
             }
         });
         apiMessages.push({ role: "user", content: message });
 
+        // SYSTEM prompt as separate message for API (not for display)
         if (userApiKey && selectedModelId.startsWith('openrouter:')) {
             apiMessages = [{ role: "system", content: effectiveSystemPrompt }, ...apiMessages];
         }
@@ -2601,126 +2664,87 @@
 
         try {
             if (userApiKey && selectedModelId.startsWith('openrouter:')) {
-                botResponseData = await callOpenRouterAPI(userApiKey, selectedModelId, apiMessages, 0.7);
+                try {
+                    botResponseData = await callOpenRouterAPI(userApiKey, selectedModelId, apiMessages, 0.7);
+                } catch (error) {
+                    console.warn(`Error with model ${selectedModelId}:`, error.message);
+                    if (error.message.includes("out of credits") || 
+                        error.message.includes("quota exceeded") || 
+                        error.message.includes("rate limit")) {
+                        // Try fallback to a model with lower token cost
+                        const currentModelInfo = config.FREE_OPENROUTER_MODELS.find(m => m.id === selectedModelId);
+                        const fallbackModels = config.FREE_OPENROUTER_MODELS
+                            .filter(m => m.tokenCost < (currentModelInfo?.tokenCost || Infinity))
+                            .sort((a, b) => a.tokenCost - b.tokenCost);
+                        
+                        if (fallbackModels.length > 0) {
+                            const fallbackModel = fallbackModels[0];
+                            console.log(`Falling back to model ${fallbackModel.name} with lower token cost`);
+                            botResponseData = await callOpenRouterAPI(userApiKey, fallbackModel.id, apiMessages, 0.7);
+                            
+                            // Update the model selector to reflect the change
+                            modelSelector.value = fallbackModel.id;
+                            modelSelector.dispatchEvent(new Event('change'));
+                        } else {
+                            throw error; // No fallback available, propagate the error
+                        }
+                    } else {
+                        throw error; // Not a quota error, propagate
+                    }
+                }
             } else if (selectedModelId.startsWith('openrouter:')) {
-                await ensurePuterReady();
-                const currentTurnForPuter = [{role: "user", content: augmentedMessageContent}];
-                const response = await puter.ai.chat(currentTurnForPuter, { model: selectedModelId }); 
-                botResponseData = { response: response.message.content, raw: response.message.content };
+                try {
+                    await ensurePuterReady();
+                    const currentTurnForPuter = [{role: "user", content: augmentedMessageContent}];
+                    const response = await puter.ai.chat(
+                        [{ role: "system", content: effectiveSystemPrompt }, ...relevantMessagePairs.map(pair => [
+                            { role: "user", content: pair.userMessage },
+                            pair.assistantMessage ? { role: "assistant", content: pair.assistantMessage } : null
+                        ]).flat().filter(Boolean), { role: "user", content: message }], 
+                        { model: selectedModelId }
+                    );
+                    botResponseData = { response: response.message.content, raw: response.message.content };
+                } catch (error) {
+                    console.warn(`Error with model ${selectedModelId}:`, error.message);
+                    // Try fallback to a model with lower token cost
+                    const currentModelInfo = config.FREE_OPENROUTER_MODELS.find(m => m.id === selectedModelId);
+                    const fallbackModels = config.FREE_OPENROUTER_MODELS
+                        .filter(m => m.tokenCost < (currentModelInfo?.tokenCost || Infinity))
+                        .sort((a, b) => a.tokenCost - b.tokenCost);
+                    
+                    if (fallbackModels.length > 0) {
+                        const fallbackModel = fallbackModels[0];
+                        console.log(`Falling back to model ${fallbackModel.name} with lower token cost`);
+                        await ensurePuterReady();
+                        const response = await puter.ai.chat(
+                            [{ role: "system", content: effectiveSystemPrompt }, ...relevantMessagePairs.map(pair => [
+                                { role: "user", content: pair.userMessage },
+                                pair.assistantMessage ? { role: "assistant", content: pair.assistantMessage } : null
+                            ]).flat().filter(Boolean), { role: "user", content: message }], 
+                            { model: fallbackModel.id }
+                        );
+                        botResponseData = { response: response.message.content, raw: response.message.content };
+                        
+                        // Update the model selector to reflect the change
+                        modelSelector.value = fallbackModel.id;
+                        modelSelector.dispatchEvent(new Event('change'));
+                    } else {
+                        throw error; // No fallback available, propagate the error
+                    }
+                }
             } else {
                 typewriterEffect('bot', "Selected model type not configured for this mode.", chatLog);
                 return;
             }
-
-            const responseTokenCount = Math.ceil(botResponseData.raw.length / 4);
-
-            messagePairs.push({
-                userMessage: augmentedMessageContent,
-                assistantMessage: botResponseData.response,
-                model: selectedModelId,
-                tokenCount: responseTokenCount
-            });
-
-            typewriterEffect('bot', botResponseData.response, chatLog, responseTokenCount);
-            
-            if (window.suggestionsEnabled) {
-                suggestionsManager.generateSuggestions(messagePairs, selectedModelId);
-            }
-
+            appendMessage('bot', botResponseData.response);
         } catch (error) {
             console.error("Error during API call:", error);
             typewriterEffect('bot', `Error: ${error.message}`, chatLog);
         }
     }
 
-    function clearChat(isLoadingConversation = false) {
-        if (!isLoadingConversation && messagePairs.length > 0) {
-            saveCurrentConversation();
-        }
-
-        if (chatLog) chatLog.innerHTML = '';
-        messagePairs = [];
-        suggestionsManager.clearSuggestions();
-
-        if (!isLoadingConversation) { 
-            currentLoadedConversationId = null;
-            updateConversationSelectionVisuals();
-        }
-    }
-
-    function saveCurrentConversation() {
-        if (messagePairs.length === 0) return;
-
-        const now = new Date();
-        const firstUserMessageAugmented = messagePairs[0]?.userMessage;
-        const firstUserMessageClean = firstUserMessageAugmented ? extractUserMessageFromAugmented(firstUserMessageAugmented) : "Untitled Conversation";
-        const preview = firstUserMessageClean.substring(0, 35) + (firstUserMessageClean.length > 35 ? "..." : "");
-
-        const conversationToSave = {
-            id: `conv-${nextConversationId++}`,
-            title: preview,
-            timestamp: now.toLocaleString(),
-            messages: JSON.parse(JSON.stringify(messagePairs)), // Deep copy
-            personaId: currentPersonaId,
-            modelId: modelSelector.value
-        };
-
-        savedConversations.unshift(conversationToSave); 
-
-        if (savedConversations.length > config.MAX_SAVED_CONVERSATIONS) {
-            savedConversations.pop(); 
-        }
-        localStorage.setItem('savedConversations', JSON.stringify(savedConversations));
-        
-        const conversationsContentContainer = document.getElementById('conversations-content-container');
-        if (conversationsContentContainer) {
-            populateConversationsContent(conversationsContentContainer);
-        }
-        
-        const currentLoadedConversationIdField = document.getElementById('currentLoadedConversationId');
-        if (currentLoadedConversationIdField) {
-            currentLoadedConversationIdField.value = conversationToSave.id;
-        }
-    }
-
-    function loadConversation(conversationId) {
-        const convoToLoad = savedConversations.find(c => c.id === conversationId);
-        if (convoToLoad) {
-            clearChat(true); // Pass true to prevent re-saving the conversation being cleared
-
-            messagePairs = JSON.parse(JSON.stringify(convoToLoad.messages)); // Deep copy
-            currentPersonaId = convoToLoad.personaId || 'caimeo';
-            
-            const modelToSet = convoToLoad.modelId || (config.FREE_OPENROUTER_MODELS.length > 0 ? config.FREE_OPENROUTER_MODELS[0].id : '');
-            if (modelSelector.querySelector(`option[value="${modelToSet}"]`)) {
-                modelSelector.value = modelToSet;
-            } else if (modelSelector.options.length > 0) {
-                 modelSelector.value = modelSelector.options[0].value; // Fallback
-            }
-
-            updatePersonaSelection();
-            modelSelector.dispatchEvent(new Event('change')); // To update custom selector display & save settings
-
-            chatLog.innerHTML = ''; 
-            messagePairs.forEach(pair => {
-                appendMessage('user', pair.userMessage); 
-                if (pair.assistantMessage) {
-                    appendMessage('bot', pair.assistantMessage, pair.tokenCount);
-                }
-            });
-            chatLog.scrollTop = chatLog.scrollHeight;
-            
-            currentLoadedConversationId = conversationId;
-            updateConversationSelectionVisuals();
-            suggestionsManager.clearSuggestions();
-            if (inputBox && PERSONAS[currentPersonaId]) {
-                inputBox.placeholder = `Speak to ${PERSONAS[currentPersonaId].name.toUpperCase()}...`;
-            }
-        }
-    }
-
-    async function loadApiSettings() {
-        const defaultModelId = 'openrouter:qwen/qwen3-235b-a22b:free';
+    function loadApiSettings() {
+        const defaultModelId = 'openrouter:qwen/qwen3-8b:free'; // Lowest token cost model as default
         let modelToSet = null;
 
         const localApiKey = localStorage.getItem('allgpt_apiKey');
