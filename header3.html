@@ -1,0 +1,362 @@
+<html><head><base href="https://caimeo.shop/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fancy Neon Menu</title>
+  <style>
+    :root {
+      --neon-red: #f40;
+      --neon-blue: #0ff;
+      --neon-purple: #f0f;
+      --neon-green: #0f0;
+      --neon-yellow: #ff0;
+      --neon-orange: #f70;
+      --neon-pink: #f0b;
+      --neon-aqua: #0fb;
+    }
+
+    body {
+      margin: 0;
+      background: transparent;
+      font-family: 'Arial', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .neon-menu {
+      background: transparent;
+      padding: 1rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .menu-container {
+      display: flex;
+      gap: clamp(0.5rem, 2vw, 1.5rem);
+      overflow: visible;
+      padding: 0.5rem;
+      justify-content: center;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      max-width: 1600px;
+    }
+
+    .neon-link {
+      text-decoration: none;
+      font-size: clamp(0.8rem, 2.5vw, 1.2rem);
+      text-transform: uppercase;
+      padding: clamp(0.3rem, 1vw, 0.5rem) clamp(0.6rem, 2vw, 1rem);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+      text-align: center;
+      min-width: 100px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .neon-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      transition: 0.5s;
+      pointer-events: none;
+    }
+
+    .neon-link:hover::before {
+      left: 100%;
+    }
+
+    .neon-link:nth-child(1) {
+      color: var(--neon-red);
+      text-shadow: 0 0 7px var(--neon-red),
+                   0 0 10px var(--neon-red),
+                   0 0 21px var(--neon-red);
+      border: 1px solid var(--neon-red);
+      animation: float 2s ease-in-out infinite;
+    }
+
+    .neon-link:nth-child(2) {
+      color: var(--neon-blue);
+      text-shadow: 0 0 7px var(--neon-blue),
+                   0 0 10px var(--neon-blue),
+                   0 0 21px var(--neon-blue);
+      border: 1px solid var(--neon-blue);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .neon-link:nth-child(3) {
+      color: var(--neon-purple);
+      text-shadow: 0 0 7px var(--neon-purple),
+                   0 0 10px var(--neon-purple),
+                   0 0 21px var(--neon-purple);
+      border: 1px solid var(--neon-purple);
+      animation: wave 2s ease-in-out infinite;
+    }
+
+    .neon-link:nth-child(4) {
+      color: var(--neon-green);
+      text-shadow: 0 0 7px var(--neon-green),
+                   0 0 10px var(--neon-green),
+                   0 0 21px var(--neon-green);
+      border: 1px solid var(--neon-green);
+      position: relative;
+      animation: float 2s ease-in-out infinite;
+    }
+
+    .neon-link:nth-child(4)::after {
+      content: '💰';
+      margin-left: 5px;
+      animation: spin 3s linear infinite;
+    }
+
+    .money-sparkle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: var(--neon-yellow);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: sparkle 1.5s infinite;
+    }
+
+    .neon-link:nth-child(5) {
+      color: var(--neon-yellow);
+      text-shadow: 0 0 7px var(--neon-yellow),
+                   0 0 10px var(--neon-yellow),
+                   0 0 21px var(--neon-yellow);
+      border: 1px solid var(--neon-yellow);
+      animation: glitch 2s infinite;
+    }
+
+    .neon-link:nth-child(6) {
+      color: var(--neon-orange);
+      text-shadow: 0 0 7px var(--neon-orange),
+                   0 0 10px var(--neon-orange),
+                   0 0 21px var(--neon-orange);
+      border: 1px solid var(--neon-orange);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .neon-link:nth-child(7) {
+      color: var(--neon-pink);
+      text-shadow: 0 0 7px var(--neon-pink),
+                   0 0 10px var(--neon-pink),
+                   0 0 21px var(--neon-pink);
+      border: 1px solid var(--neon-pink);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .neon-link:nth-child(8) {
+      color: var(--neon-aqua);
+      text-shadow: 0 0 7px var(--neon-aqua),
+                   0 0 10px var(--neon-aqua),
+                   0 0 21px var(--neon-aqua);
+      border: 1px solid var(--neon-aqua);
+      animation: wave 3s ease-in-out infinite;
+    }
+
+    .neon-link:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px currentColor;
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0); }
+      50% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(2px, -2px); }
+      60% { transform: translate(-2px, -2px); }
+      80% { transform: translate(2px, 2px); }
+      100% { transform: translate(0); }
+    }
+
+    @keyframes wave {
+      0% { transform: rotate(0); }
+      25% { transform: rotate(-5deg); }
+      75% { transform: rotate(5deg); }
+      100% { transform: rotate(0); }
+    }
+
+    @media (min-width: 1201px) {
+      .neon-menu {
+        padding: 1rem;
+      }
+      
+      .menu-container {
+        padding: 0.5rem 2rem;
+        justify-content: center;
+        gap: 1.5rem;
+      }
+
+      .neon-link {
+        flex: 0 1 auto;
+      }
+    }
+
+    @media (max-width: 1200px) {
+      .menu-container {
+        justify-content: center;
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .menu-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      .neon-link {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .menu-container {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+      
+      .neon-link {
+        font-size: 1rem;
+        padding: 0.8rem;
+      }
+    }
+
+    @media (min-width: 481px) and (max-width: 768px) {
+      .menu-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .menu-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (hover: none) {
+      .neon-link:hover {
+        transform: none;
+        box-shadow: none;
+      }
+      
+      .neon-link:active {
+        transform: scale(0.95);
+        opacity: 0.8;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="neon-menu">
+    <div class="menu-container">
+      <a href="https://caimeo.shop/funapps.html" class="neon-link" target="_blank">🎮 Fun Apps</a>
+      <a href="https://caimeo.shop/chatrooms.html" class="neon-link" target="_blank">💬 Chat Rooms</a>
+      <a href="https://caimeo.shop/esoteric.html" class="neon-link" target="_blank">🔮 Esoteric</a>
+      <a href="https://711131719.xyz/survey.html" class="neon-link" target="_blank">Free Money 💎</a>
+      <a href="hacking.html" class="neon-link" target="_blank">🔓 Hacking Tutorials</a>
+      <a href="https://caimeo.shop/trippy.html" class="neon-link" target="_blank">🌀 Trippy Stuff</a>
+      <a href="https://711131719.xyz/mysterybox.html" class="neon-link" target="_blank">📦 Mystery Boxes</a>
+      <a href="https://caimeo.shop/mariana.html" class="neon-link" target="_blank">🌊 Mariana's Web</a>
+    </div>
+  </nav>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add sparkles to Free Money link
+      const freeMoneyLink = document.querySelector('.neon-link:nth-child(4)');
+      
+      function createSparkle() {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'money-sparkle';
+        
+        // Random position around the button
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        sparkle.style.left = `${x}%`;
+        sparkle.style.top = `${y}%`;
+        
+        freeMoneyLink.appendChild(sparkle);
+        
+        // Remove sparkle after animation
+        setTimeout(() => {
+          sparkle.remove();
+        }, 1500);
+      }
+
+      // Create new sparkles periodically
+      setInterval(createSparkle, 300);
+
+      // Add initial sparkles
+      for(let i = 0; i < 5; i++) {
+        createSparkle();
+      }
+    });
+  </script>
+  <script>document.addEventListener('DOMContentLoaded', () => {
+  // Add sparkles to Free Money link
+  const freeMoneyLink = document.querySelector('.neon-link:nth-child(4)');
+  
+  function createSparkle() {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'money-sparkle';
+    
+    // Random position around the button
+    const x = Math.random() * 100;
+    const y = Math.random() * 100;
+    
+    sparkle.style.left = `${x}%`;
+    sparkle.style.top = `${y}%`;
+    
+    freeMoneyLink.appendChild(sparkle);
+    
+    // Remove sparkle after animation
+    setTimeout(() => {
+      sparkle.remove();
+    }, 1500);
+  }
+
+  // Create new sparkles periodically
+  setInterval(createSparkle, 300);
+
+  // Add initial sparkles
+  for(let i = 0; i < 5; i++) {
+    createSparkle();
+  }
+});</script>
+</body>
+</html>
