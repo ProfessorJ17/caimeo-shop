@@ -817,7 +817,7 @@
             font-size: 1.1rem;
         }
         
-        #send-button, #clear-button {
+        #send-button, #image-button {
             padding: 12px 16px;
             font-size: 1rem;
         }
@@ -1398,11 +1398,47 @@
             font-size: 1rem;
         }
     }
+    
+    @keyframes thinking-spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+
+    .typing-indicator-block {
+      min-height: 36px;
+      margin-left: 0;
+      background: none !important;
+    }
+    .thinking-spinner {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .thinking-timer {
+      min-width: 48px;
+      text-align: right;
+      margin-left: 0.4em;
+    }
+
+    @media (max-width: 480px) {
+      .typing-indicator-block {
+        font-size: 1.09rem;
+      }
+      .thinking-timer {
+        font-size: 1.12rem;
+      }
+    }
+    @media (max-width: 800px) and (min-width: 480px) {
+      .thinking-timer, .typing-indicator-block {
+        font-size: 1.08rem;
+      } 
+    }
   </style>
 </head>
 <body>
 
-<style>
+
+  <style>
   #page-blur {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -1441,7 +1477,6 @@
     });
   }
 </script>
-
   
   <div id="app-sidebar-toggle-container"></div> 
   <div id="sidebar-staging-area" style="display: none;">
@@ -2614,7 +2649,7 @@
         // Remove embedded system prompt header from user message on display
         function appendMessage(sender, message) {
           // Remove previous typing indicators if present (clean up)
-          const typingIndicators = chatLog.querySelectorAll('.typing-indicator');
+          const typingIndicators = chatLog.querySelectorAll('.typing-indicator-block');
           typingIndicators.forEach(el => el.parentNode && el.parentNode.removeChild(el));
 
           if (sender === 'user') {
@@ -2639,6 +2674,69 @@
 
         appendMessage('user', augmentedMessageContent);
         inputBox.value = '';
+
+        // Insert thinking indicator UNDER the last user message:
+        let userMessages = [...chatLog.querySelectorAll('.user-message')];
+        let lastUserMessage = userMessages[userMessages.length - 1];
+        // Create the indicator block
+        let thinkingBlock = document.createElement('div');
+        thinkingBlock.className = "typing-indicator-block";
+        thinkingBlock.style.display = 'flex';
+        thinkingBlock.style.alignItems = "center";
+        thinkingBlock.style.marginTop = "5px";
+        thinkingBlock.style.marginBottom = "2px";
+        thinkingBlock.style.gap = "10px";
+        // spinner
+        let spinner = document.createElement('div');
+        spinner.className = "thinking-spinner";
+        spinner.style.width = "22px";
+        spinner.style.height = "22px";
+        spinner.style.border = "3px solid #d1d5db";
+        spinner.style.borderTop = "3px solid var(--primary)";
+        spinner.style.borderRadius = "50%";
+        spinner.style.animation = "thinking-spin 1s linear infinite";
+        spinner.setAttribute("aria-label", "Thinking…");
+        spinner.style.boxSizing = 'border-box';
+
+        // timer text node
+        let timerText = document.createElement('span');
+        timerText.className = "thinking-timer";
+        timerText.style.fontWeight = "500";
+        timerText.style.fontSize = "1.08rem";
+        timerText.style.letterSpacing = "0.01em";
+        timerText.style.color = "var(--primary)";
+        timerText.innerText = "0.0s";
+
+        // label
+        let label = document.createElement('span');
+        label.style.fontSize = "1.01rem";
+        label.style.color = "var(--input-placeholder)";
+        label.style.marginLeft = "2px";
+        label.innerText = "Thinking…";
+
+        thinkingBlock.appendChild(spinner);
+        thinkingBlock.appendChild(label);
+        thinkingBlock.appendChild(timerText);
+
+        // Place it just under the last user message
+        if (lastUserMessage) {
+            // insert after user message in DOM
+            if (lastUserMessage.nextSibling) {
+                chatLog.insertBefore(thinkingBlock, lastUserMessage.nextSibling);
+            } else {
+                chatLog.appendChild(thinkingBlock);
+            }
+        }
+
+        // Timer logic
+        let tStart = Date.now();
+        thinkingBlock._thinkingTimerInterval = setInterval(() => {
+            let elapsed = (Date.now() - tStart) / 1000;
+            timerText.innerText = elapsed.toFixed(1) + "s";
+        }, 80);
+
+        // To allow access for external cleanup
+        chatLog._currentThinkingBlock = thinkingBlock;
 
         let apiMessages = [];
         
@@ -2734,11 +2832,29 @@
                 }
             } else {
                 typewriterEffect('bot', "Selected model type not configured for this mode.", chatLog);
+                // Remove spinner and timer if present:
+                if (thinkingBlock && thinkingBlock.parentNode) {
+                    if (thinkingBlock._thinkingTimerInterval) clearInterval(thinkingBlock._thinkingTimerInterval);
+                    thinkingBlock.parentNode.removeChild(thinkingBlock);
+                }
+                chatLog._currentThinkingBlock = null;
                 return;
             }
+            // Remove spinner/timer when bot answer is fully ready:
+            if (thinkingBlock && thinkingBlock.parentNode) {
+                if (thinkingBlock._thinkingTimerInterval) clearInterval(thinkingBlock._thinkingTimerInterval);
+                thinkingBlock.parentNode.removeChild(thinkingBlock);
+            }
+            chatLog._currentThinkingBlock = null;
+
             appendMessage('bot', botResponseData.response);
         } catch (error) {
             console.error("Error during API call:", error);
+            if (thinkingBlock && thinkingBlock.parentNode) {
+                if (thinkingBlock._thinkingTimerInterval) clearInterval(thinkingBlock._thinkingTimerInterval);
+                thinkingBlock.parentNode.removeChild(thinkingBlock);
+            }
+            chatLog._currentThinkingBlock = null;
             typewriterEffect('bot', `Error: ${error.message}`, chatLog);
         }
     }
