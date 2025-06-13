@@ -1,0 +1,478 @@
+<html>
+<head>
+  <title>Knight-Rook Swap Game</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #000;
+      color: #0ff;
+      font-family: 'Courier New', monospace;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-shadow: 0 0 5px #0ff;
+    }
+
+    #game-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      background: rgba(0, 30, 30, 0.3);
+      border: 2px solid #0ff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #0ff, inset 0 0 20px #0ff;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 20px #0ff, inset 0 0 20px #0ff; }
+      50% { box-shadow: 0 0 30px #0ff, inset 0 0 30px #0ff; }
+      100% { box-shadow: 0 0 20px #0ff, inset 0 0 20px #0ff; }
+    }
+
+    #board {
+      display: grid;
+      grid-template-columns: repeat(5, 80px);
+      grid-template-rows: repeat(4, 80px);
+      gap: 2px;
+      background: #0ff;
+      padding: 5px;
+      border-radius: 5px;
+      box-shadow: 0 0 15px #0ff;
+    }
+
+    .cell {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 40px;
+      cursor: pointer;
+      transition: all 0.3s;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cell::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 0%, rgba(0, 255, 255, 0.1) 50%, transparent 100%);
+      animation: sweep 2s infinite;
+      pointer-events: none;
+    }
+
+    @keyframes sweep {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .cell.white {
+      background: #001a1a;
+      color: #0ff;
+    }
+
+    .cell.black {
+      background: #003333;
+      color: #0ff;
+    }
+
+    .cell.selected {
+      background: #005555;
+      box-shadow: inset 0 0 10px #0ff;
+    }
+
+    .cell.valid-move {
+      background: #004444;
+      box-shadow: inset 0 0 15px #0f0;
+    }
+
+    .cell.blocked {
+      background: #000;
+      cursor: not-allowed;
+      box-shadow: inset 0 0 10px #f00;
+    }
+
+    .cell.target {
+      background: #330000 !important;
+      box-shadow: inset 0 0 20px #f00;
+    }
+
+    .cell.red-knight {
+      color: #f00 !important;
+      text-shadow: 0 0 10px #f00;
+    }
+
+    #status {
+      margin: 20px;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    #move-counter {
+      font-size: 20px;
+      margin: 10px 0;
+      color: #0ff;
+    }
+
+    #timer {
+      font-size: 20px;
+      margin: 10px 0;
+      color: #0ff;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      background: transparent;
+      color: #0ff;
+      border: 2px solid #0ff;
+      border-radius: 5px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.3s;
+      margin-top: 10px;
+      text-shadow: 0 0 5px #0ff;
+      box-shadow: 0 0 10px #0ff;
+    }
+
+    button:hover {
+      background: #0ff;
+      color: #000;
+      box-shadow: 0 0 20px #0ff;
+    }
+
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 30, 30, 0.95);
+      padding: 30px;
+      border: 2px solid #0ff;
+      border-radius: 10px;
+      box-shadow: 0 0 40px #0ff;
+      z-index: 100;
+      text-align: center;
+      animation: modalAppear 0.5s ease-out;
+    }
+
+    @keyframes modalAppear {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .modal h2 {
+      color: #0ff;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .modal button {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <h1 style="color: #0ff; text-align: center; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 3px;">Knight-Rook Swap</h1>
+    <div id="board"></div>
+    <div id="move-counter">Moves: 0 | Target: Swap Knights and Rooks</div>
+    <div id="timer">Time: 00:00</div>
+    <div id="status">Move knights to rook positions and rooks to knight positions!</div>
+    <button id="reset">Reset Game</button>
+  </div>
+
+  <script>
+    const BOARD_ROWS = 4;
+    const BOARD_COLS = 5;
+    
+    class ChessGame {
+      constructor() {
+        this.board = [];
+        this.selectedCell = null;
+        this.gameOver = false;
+        this.moveCount = 0;
+        this.startTime = Date.now();
+        this.timerInterval = null;
+        this.initializeBoard();
+        this.setupEventListeners();
+        this.updateMoveCounter();
+        this.startTimer();
+      }
+      
+      startTimer() {
+        this.startTime = Date.now();
+        this.timerInterval = setInterval(() => this.updateTimer(), 1000);
+      }
+      
+      updateTimer() {
+        const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
+        document.getElementById('timer').textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      }
+      
+      showWinModal() {
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
+        const timeStr = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        modal.innerHTML = `
+          <h2>Victory!</h2>
+          <p>You won in ${this.moveCount} moves!</p>
+          <p>Time taken: ${timeStr}</p>
+          <button onclick="location.reload()">Play Again</button>
+        `;
+        document.body.appendChild(modal);
+      }
+      
+      initializeBoard() {
+        // Initialize 4x5 board 
+        for (let i = 0; i < BOARD_ROWS; i++) {
+          this.board[i] = new Array(BOARD_COLS).fill(null);
+        }
+        
+        // Add 6 knights on the left side
+        const knightPositions = [
+          [1, 0], [2, 0], [3, 0], 
+          [0, 1], [1, 1], [2, 1]
+        ];
+        
+        knightPositions.forEach(([row, col]) => {
+          this.board[row][col] = { piece: 'knight', color: 'black' };
+        });
+        
+        // Add 6 rooks mirrored on the right side
+        const rookPositions = [
+          [1, 4], [2, 4], [3, 4], 
+          [0, 3], [1, 3], [2, 3]
+        ];
+        
+        rookPositions.forEach(([row, col]) => {
+          this.board[row][col] = { piece: 'rook', color: 'black' };
+        });
+        
+        this.renderBoard();
+      }
+      
+      setupEventListeners() {
+        document.getElementById('board').addEventListener('click', e => {
+          const cell = e.target.closest('.cell');
+          if (!cell || this.gameOver) return;
+          const row = parseInt(cell.dataset.row);
+          const col = parseInt(cell.dataset.col);
+          this.handleCellClick(row, col);
+        });
+        document.getElementById('reset').addEventListener('click', () => {
+          this.reset();
+        });
+      }
+      
+      handleCellClick(row, col) {
+        // Block top corners and middle 3 bottom cells
+        if (!this.isValidPosition(row, col)) return;
+        
+        const clickedPiece = this.board[row][col];
+        
+        if (!this.selectedCell) {
+          // Only allow selecting non-null pieces
+          if (!clickedPiece) return;
+          this.selectedCell = { row, col };
+          this.renderBoard();
+          return;
+        }
+
+        // If a cell is already selected
+        if (this.isValidMove(this.selectedCell.row, this.selectedCell.col, row, col)) {
+          this.movePiece(this.selectedCell.row, this.selectedCell.col, row, col);
+          this.moveCount++;
+          this.updateMoveCounter();
+          this.checkWinCondition();
+          this.selectedCell = null;
+        } else {
+          // If clicking on another piece, select it instead
+          if (clickedPiece) {
+            this.selectedCell = { row, col };
+          } else {
+            this.selectedCell = null;
+          }
+        }
+        this.renderBoard();
+      }
+      
+      isValidPosition(row, col) {
+        // Block middle 3 bottom cells
+        if (row === 3 && col > 0 && col < 4) return false;
+        
+        // Block top left and top right corners
+        if ((row === 0 && (col === 0 || col === 4))) return false;
+        
+        // Block middle top cell and the cell below it
+        if ((row === 0 && col === 2) || (row === 1 && col === 2)) return false;
+        
+        return row >= 0 && row < BOARD_ROWS && col >= 0 && col < BOARD_COLS;
+      }
+      
+      getValidMoves(row, col) {
+        const piece = this.board[row][col];
+        if (!piece) return [];
+
+        const moves = [];
+        switch (piece.piece) {
+          case 'knight':
+            const knightMoves = [[-2, -1], [-2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2], [2, -1], [2, 1]];
+            for (const [dx, dy] of knightMoves) {
+              const newRow = row + dx;
+              const newCol = col + dy;
+              if (this.isValidPosition(newRow, newCol) && !this.board[newRow][newCol]) {
+                moves.push([newRow, newCol]);
+              }
+            }
+            break;
+          case 'rook':
+            const rookMoves = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+            for (const [dx, dy] of rookMoves) {
+              let newRow = row + dx;
+              let newCol = col + dy;
+              while (this.isValidPosition(newRow, newCol) && !this.board[newRow][newCol]) {
+                moves.push([newRow, newCol]);
+                newRow += dx;
+                newCol += dy;
+              }
+            }
+            break;
+        }
+        return moves;
+      }
+      
+      isValidMove(fromRow, fromCol, toRow, toCol) {
+        const validMoves = this.getValidMoves(fromRow, fromCol);
+        return validMoves.some(([row, col]) => row === toRow && col === toCol);
+      }
+      
+      movePiece(fromRow, fromCol, toRow, toCol) {
+        const piece = this.board[fromRow][fromCol];
+        this.board[toRow][toCol] = piece;
+        this.board[fromRow][fromCol] = null;
+      }
+      
+      checkWinCondition() {
+        // Check if all knights are on rook positions and vice versa
+        const knightPositions = [
+          [1, 4], [2, 4], [3, 4], 
+          [0, 3], [1, 3], [2, 3]
+        ];
+        
+        const rookPositions = [
+          [1, 0], [2, 0], [3, 0], 
+          [0, 1], [1, 1], [2, 1]
+        ];
+        
+        const isWinningState = knightPositions.every(([row, col]) => 
+          this.board[row][col] && this.board[row][col].piece === 'knight'
+        ) && rookPositions.every(([row, col]) => 
+          this.board[row][col] && this.board[row][col].piece === 'rook'
+        );
+        
+        if (isWinningState) {
+          this.gameOver = true;
+          clearInterval(this.timerInterval);
+          this.showWinModal();
+        }
+      }
+      
+      updateMoveCounter() {
+        const counter = document.getElementById('move-counter');
+        counter.textContent = `Moves: ${this.moveCount} | Target: Swap Knights and Rooks`;
+      }
+      
+      getPieceSymbol(piece) {
+        if (!piece) return '';
+        const symbols = {
+          'black': {
+            'knight': '♞',
+            'rook': '♜'
+          }
+        };
+        return symbols[piece.color][piece.piece];
+      }
+      
+      renderBoard() {
+        const boardElement = document.getElementById('board');
+        boardElement.innerHTML = '';
+        for (let row = 0; row < BOARD_ROWS; row++) {
+          for (let col = 0; col < BOARD_COLS; col++) {
+            const cell = document.createElement('div');
+            cell.className = `cell ${(row + col) % 2 === 0 ? 'white' : 'black'}`;
+            
+            // Block top left and right corners
+            if ((row === 0 && (col === 0 || col === 4))) {
+              cell.className += ' blocked';
+            }
+            
+            // Block middle top cell and the cell below it
+            if ((row === 0 && col === 2) || (row === 1 && col === 2)) {
+              cell.className += ' blocked';
+            }
+            
+            // Block middle 3 bottom cells
+            if (row === 3 && col > 0 && col < 4) {
+              cell.className += ' blocked';
+            }
+
+            cell.dataset.row = row;
+            cell.dataset.col = col;
+            const piece = this.board[row][col];
+            cell.textContent = this.getPieceSymbol(piece);
+            
+            if (this.selectedCell && this.selectedCell.row === row && this.selectedCell.col === col) {
+              cell.className += ' selected';
+            } else if (this.selectedCell && this.isValidMove(this.selectedCell.row, this.selectedCell.col, row, col)) {
+              cell.className += ' valid-move';
+            }
+            
+            boardElement.appendChild(cell);
+          }
+        }
+      }
+      
+      reset() {
+        clearInterval(this.timerInterval);
+        this.initializeBoard();
+        this.selectedCell = null;
+        this.gameOver = false;
+        this.moveCount = 0;
+        this.startTime = Date.now();
+        this.startTimer();
+        this.updateMoveCounter();
+        document.getElementById('status').textContent = 'Move knights to rook positions and rooks to knight positions!';
+        const modal = document.querySelector('.modal');
+        if (modal) {
+          modal.remove();
+        }
+      }
+    }
+    new ChessGame();
+  </script>
+</body>
+</html>
