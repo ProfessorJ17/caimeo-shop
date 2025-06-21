@@ -505,6 +505,15 @@
         display: flex;
         align-items: center;
         transition: color 0.2s ease;
+        width: 100%; /* Ensure full width for click */
+        justify-content: space-between; /* Pushes arrow to the right */
+    }
+
+    .personas-dropdown-btn span:first-child,
+    .models-dropdown-btn span:first-child,
+    .settings-dropdown-btn span:first-child {
+        flex-grow: 1;
+        text-align: left;
     }
 
     .personas-dropdown-btn:hover,
@@ -657,7 +666,6 @@
         display: flex;
         flex-direction: column;
         gap: 4px;
-        margin-bottom: 8px;
     }
 
     .conversation-item:hover,
@@ -868,12 +876,18 @@
         background: var(--card-bg);
         border-radius: 0;
         box-shadow: none;
-        display: flex;
+        display: none; /* Hidden by default */
         flex-direction: column;
         height: 100vh;
         margin-top: 0;
         transition: all 0.3s ease;
         overflow: hidden;
+        opacity: 0; /* Hidden by default */
+    }
+
+    .chat-container.visible {
+        display: flex; /* Shown when authenticated */
+        opacity: 1;
     }
 
     .chat-container.with-sidebar {
@@ -1708,6 +1722,31 @@
   <script>
     const token = sessionStorage.getItem('sessionToken');
 
+    function showChatInterface() {
+        const chatContainer = document.querySelector('.chat-container');
+        const sidebar = document.querySelector('.conversation-sidebar');
+        
+        // Remove blur effect
+        const blurDiv = document.getElementById('page-blur');
+        if (blurDiv) blurDiv.style.display = 'none';
+        
+        // Show chat container with fade in
+        if (chatContainer) chatContainer.classList.add('visible');
+        
+        // Use existing logic to show sidebar if it was configured to be visible
+        if (sidebar && localStorage.getItem('sidebarVisible') === 'true') {
+            sidebar.classList.add('visible');
+        } else if (sidebar) {
+            // Even if the sidebar isn't slid out, its container logic might need it to be visible in the DOM
+            // to function correctly. Let's ensure it's not translated off-screen by a different rule.
+            // The existing .visible class handles the slide-in, so we don't force it here if user hid it.
+        }
+        
+        // Update version display
+        const sidebarLogo = document.querySelector('.sidebar-logo');
+        if (sidebarLogo) sidebarLogo.textContent = 'MAINFRAME v1.1.1';
+    }
+
     if (!token) {
       const blurDiv = document.getElementById('page-blur');
       blurDiv.innerHTML = 'Access Denied. Please <a href="mainframe.html">log in</a>.';
@@ -1723,14 +1762,8 @@
         }
       });
     } else {
-      // Verify token (add your token validation logic here, e.g., API call)
-      window.addEventListener('DOMContentLoaded', () => {
-        const blurDiv = document.getElementById('page-blur');
-        if (blurDiv) blurDiv.style.display = 'none';
-        // Update version display
-        const sidebarLogo = document.querySelector('.sidebar-logo');
-        if (sidebarLogo) sidebarLogo.textContent = 'MAINFRAME v1.1.1';
-      });
+      // Show chat interface when authenticated
+      window.addEventListener('DOMContentLoaded', showChatInterface);
     }
   </script>
   <script type="module">
