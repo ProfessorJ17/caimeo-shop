@@ -1655,6 +1655,7 @@
   </style>
 </head>
 <body>
+  <div id="page-blur">Authenticating...</div>
   <div id="app-sidebar-toggle-container"></div> 
   <div id="sidebar-staging-area" style="display: none;">
     <input type="text" id="api-key-input" placeholder="OpenRouter API Key (optional for free models)">
@@ -1704,6 +1705,34 @@
     </div>
   </div>
 
+  <script>
+    const token = sessionStorage.getItem('sessionToken');
+
+    if (!token) {
+      const blurDiv = document.getElementById('page-blur');
+      blurDiv.innerHTML = 'Access Denied. Please <a href="mainframe.html">log in</a>.';
+      blurDiv.style.display = 'flex';
+      // Prevent unauthorized access to source or dev tools
+      document.addEventListener('contextmenu', e => e.preventDefault());
+      document.addEventListener('keydown', e => {
+        if (
+          (e.ctrlKey && ['u','s','c','i','j'].includes(e.key.toLowerCase())) ||
+          e.key === 'F12'
+        ) {
+          e.preventDefault();
+        }
+      });
+    } else {
+      // Verify token (add your token validation logic here, e.g., API call)
+      window.addEventListener('DOMContentLoaded', () => {
+        const blurDiv = document.getElementById('page-blur');
+        if (blurDiv) blurDiv.style.display = 'none';
+        // Update version display
+        const sidebarLogo = document.querySelector('.sidebar-logo');
+        if (sidebarLogo) sidebarLogo.textContent = 'MAINFRAME v1.1.1';
+      });
+    }
+  </script>
   <script type="module">
     import { marked } from 'marked';
     import katex from 'katex';
@@ -3562,6 +3591,7 @@ Generate 3-5 relevant follow-up questions or short conversation starters a user 
         // If a persona is selected, display its intro message (unless it's a load operation)
         if (saveIfNeeded) { // Only show intro for genuinely new chats, not for loads cleared by selectPersona
             let selectedPersonaDetails = PERSONAS[currentPersonaId] || customPersonas.find(p => p.id === currentPersonaId);
+
             if (selectedPersonaDetails && selectedPersonaDetails.intro) {
                 // typewriterEffect('bot', selectedPersonaDetails.intro, chatLog); // Might re-enable later if desired
             }
@@ -3910,7 +3940,7 @@ Generate 3-5 relevant follow-up questions or short conversation starters a user 
           commRow.style.justifyContent = "center";
           commRow.style.marginTop = "4px";
           const communityBtn = document.createElement('button');
-          communityBtn.innerHTML = `<svg style="margin-right:5px;vertical-align:-2px;" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21a4 4 0 0 1-4 0"/><path d="M7 21a4 4 0 0 0 4 0"/><circle cx="12" cy="7" r="4"/><path d="M6 17a6 6 0 0 1 12 0"/></svg> Browser Community`;
+          communityBtn.innerHTML = `<svg style="margin-right:5px;vertical-align:-2px;" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21a4 4 0 0 1-4 0"/></svg> Browser Community`;
           communityBtn.style.background = "var(--primary)";
           communityBtn.style.color = "#fff";
           communityBtn.style.fontWeight = "600";
