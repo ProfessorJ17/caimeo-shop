@@ -1,229 +1,1673 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mainframe Login</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Orbitron&family=Share+Tech+Mono&display=swap"
-    rel="stylesheet"
-  />
-  <style>
-    body {
-      font-family: 'Share Tech Mono', monospace;
-    }
-    h1.page-title {
-      font-family: 'Orbitron', monospace;
-    }
-    #error-msg {
-      color: #ffb347; /* Bright orange for visibility */
-      min-height: 20px;
-      white-space: pre-wrap;
-      margin-top: 0.75rem; /* Consistent with Tailwind's mb-3 or mt-3 */
-      text-align: center;
-      font-weight: bold;
-    }
-
-    /* Styling for placeholder text color consistency across browsers */
-    .placeholder-white\/70::placeholder { /* Tailwind class placeholder-white/70 */
-      color: rgba(255, 255, 255, 0.7);
-      opacity: 1; /* Firefox needs this */
-    }
-    
-    /* Ensure input text is white */
-    input[type="email"], input[type="password"] {
-        color: white;
-    }
-
-  </style>
-</head>
-<body class="min-h-screen flex flex-col items-center justify-center text-white" style="background: linear-gradient(90deg, #5a3bdc 0%, #1a0a3a 100%);">
-
-<div id="login-container" class="w-full max-w-md bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-8 sm:p-10 shadow-[0_0_20px_#5a3bdc]">
-  <h1 class="page-title text-3xl mb-2 text-center drop-shadow-[0_0_6px_#ffb347]">Mainframe</h1>
-  <p class="text-center mb-6 text-sm text-white/80">Empowering the Future with Intelligence</p>
-  <input type="email" id="email" placeholder="Enter your email" autocomplete="username" class="w-full mb-4 px-4 py-3 rounded-full bg-white/20 border border-white/30 placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-[#5a3bdc] transition" />
-  <input type="password" id="access-password" placeholder="Enter your access password" autocomplete="current-password" class="w-full mb-6 px-4 py-3 rounded-full bg-white/20 border border-white/30 placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-[#5a3bdc] transition" />
-  <button id="login-button" class="w-full py-3 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-orange-500 to-orange-700 shadow-[0_0_10px_#ff7f00] hover:opacity-90 transition">Sign In</button>
-  <div id="error-msg"></div>
-</div>
-
-<div id="content-container" style="display:none;" class="w-full max-w-md bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-8 sm:p-10 shadow-[0_0_20px_#5a3bdc] text-center">
-  <h1 class="page-title text-2xl mb-4 drop-shadow-[0_0_4px_#ffffff]">Welcome!</h1>
-  <p id="welcome-msg" class="mb-6 white-space-pre-wrap text-white/90"></p>
-  <button id="close-welcome-btn" class="w-full py-3 mt-4 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-sky-500 to-sky-700 shadow-[0_0_10px_#0ea5e9] hover:opacity-90 transition">Continue</button>
-  <button id="logout-button" class="w-full py-3 mt-4 rounded-full text-white font-semibold text-sm bg-gradient-to-r from-red-500 to-red-700 shadow-[0_0_10px_#ef4444] hover:opacity-90 transition">Logout</button>
-</div>
-
-<div id="custom-content" style="display:none;" class="w-full max-w-md bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-8 sm:p-10 shadow-[0_0_20px_#5a3bdc] text-center mt-8">
-  <h2 id="custom-header" class="text-xl font-bold mb-3 text-white/90">[Custom Header Content]</h2>
-  <p class="mb-6 text-white/80">[Custom Body Content]</p>
-  <div id="custom-footer" class="mt-6 text-xs text-white/60">[Custom Footer Content]</div>
-</div>
-
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyDYXyAmDC_HF4scI21VeLlS4aM2k2RJ1Wc",
-    authDomain: "mainframe-e3b13.firebaseapp.com",
-    projectId: "mainframe-e3b13",
-    storageBucket: "mainframe-e3b13.appspot.com",
-    messagingSenderId: "85561924382",
-    appId: "1:85561924382:web:5d5eddda04a466ec56870f"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-
-  const emailInput = document.getElementById('email');
-  const passwordInput = document.getElementById('access-password');
-  const loginBtn = document.getElementById('login-button');
-  const errorMsg = document.getElementById('error-msg');
-  const loginContainer = document.getElementById('login-container');
-  const contentContainer = document.getElementById('content-container');
-  const welcomeMsg = document.getElementById('welcome-msg');
-  const logoutBtn = document.getElementById('logout-button');
-  const closeWelcomeBtn = document.getElementById('close-welcome-btn');
-  const customContent = document.getElementById('custom-content');
-
-  function generateToken() {
-    return Math.random().toString(36).substr(2) + Date.now().toString(36);
-  }
-
-  loginBtn.addEventListener('click', async () => {
-    errorMsg.textContent = '';
-    const email = emailInput.value.trim().toLowerCase();
-    const accessPassword = passwordInput.value;
-
-    if (!email || !accessPassword) {
-      errorMsg.textContent = 'Please enter both email and access password.';
-      return;
-    }
-
-    try {
-      const querySnapshot = await db.collection('purchasedUsers').where('email', '==', email).get();
-
-      if (querySnapshot.empty) {
-        errorMsg.textContent = 'No purchase record found for this email.';
-        return;
-      }
-
-      let validUser = null;
-
-      querySnapshot.forEach(doc => {
-        const data = doc.data();
-        if (
-          data.purchased === true &&
-          data.password === accessPassword
-        ) {
-          const now = new Date();
-          const start = new Date(data.startDay);
-          const end = new Date(data.endDay);
-          if (now >= start && now <= end) {
-            validUser = data;
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAINFRAME - Powered by CAIMEO</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary-color: #FFD700;
+            --primary-color-rgb: 255, 215, 0;
+            --secondary-color: #BA55D3;
+            --secondary-color-rgb: 186, 85, 211;
+            --accent-color: #FF00FF;
+            --text-color: #f0f0f0;
+            --background-color: #301934;
+            --gradient-start: #301934;
+            --gradient-end: #7D3C98;
+            --gradient-end-rgb: 125, 60, 152;
+            --neon-1: #00FFFF;
+            --neon-1-rgb: 0, 255, 255;
+            --neon-2: #00BFFF;
+            --neon-2-rgb: 0, 191, 255;
+            --neon-3: #9932CC;
+            --neon-4: #8A2BE2;
+            --neon-4-rgb: 138, 43, 226;
+            --neon-5: #BA55D3;
+            --neon-6: #FF1493;
+            --neon-7: #FF00FF;
+            --neon-8: #DA70D6;
+            --neon-9: #E6E6FA;
+            --neon-10: #DDA0DD;
+            --parallax-z1: 1;
+            --parallax-z2: 2;
+            --parallax-z3: 3;
         }
-      });
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
 
-      if (!validUser) {
-        errorMsg.textContent = 'Invalid access password or purchase expired.';
-        return;
-      }
-
-      const token = generateToken();
-      sessionStorage.setItem('sessionToken', token);
-      sessionStorage.setItem('loggedInUser', email);
-      showContent(email, validUser.startDay, validUser.endDay);
-
-    } catch (error) {
-      console.error("Login error details:", error); // Added for better debugging
-      errorMsg.textContent = 'Login error. Please try again or contact support.'; // User-friendly generic error
-    }
-  });
-
-  closeWelcomeBtn.addEventListener('click', () => {
-    const token = sessionStorage.getItem('sessionToken');
-    if (!token) {
-      alert("Session expired. Please log in again.");
-      location.reload();
-      return;
-    }
-    window.location.href = "dashboard.html?token=" + token;
-  });
-
-  logoutBtn.addEventListener('click', () => {
-    sessionStorage.removeItem('sessionToken');
-    sessionStorage.removeItem('loggedInUser');
-    loginContainer.style.display = 'block';
-    contentContainer.style.display = 'none';
-    customContent.style.display = 'none';
-    emailInput.value = '';
-    passwordInput.value = '';
-    errorMsg.textContent = '';
-  });
-
-  function showContent(email, startDay, endDay) {
-    loginContainer.style.display = 'none';
-    contentContainer.style.display = 'block';
-    customContent.style.display = 'none';
-
-    let startDateStr = '[Session Data N/A]';
-    let endDateStr = '[Session Data N/A]';
-
-    if (startDay !== '[Session]' && endDay !== '[Session]') {
-        try {
-            startDateStr = new Date(startDay).toLocaleDateString();
-            endDateStr = new Date(endDay).toLocaleDateString();
-        } catch(e) {
-            console.warn("Could not parse session dates from Firestore:", startDay, endDay);
+        html, body { height: 100%; }
+        body {
+            font-family: 'Orbitron', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            text-align: center;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding-top: 70px;
+            overflow-x: hidden;
         }
-    } else if (startDay === '[Session]' && endDay === '[Session]') {
-        startDateStr = "Active";
-        endDateStr = "Session";
-    }
-    
-    welcomeMsg.innerHTML = `Logged in as: <span class="font-semibold">${email}</span><br>Access: <span class="font-semibold">${startDateStr}</span> to <span class="font-semibold">${endDateStr}</span>`;
-  }
-
-  window.addEventListener('load', async () => {
-    const token = sessionStorage.getItem('sessionToken');
-    const userEmail = sessionStorage.getItem('loggedInUser');
-    if (token && userEmail) {
-      try {
-        const querySnapshot = await db.collection('purchasedUsers').where('email', '==', userEmail).get();
-        if (!querySnapshot.empty) {
-          let foundUser = null;
-          querySnapshot.forEach(doc => {
-            if(doc.data().purchased === true) { 
-                const data = doc.data();
-                const now = new Date();
-                const start = new Date(data.startDay);
-                const end = new Date(data.endDay);
-                if (now >= start && now <= end) {
-                    foundUser = data;
-                }
+        #parallax-root {
+            pointer-events: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            user-select: none;
+            overflow: visible;
+            contain: strict;
+        }
+        .main-parallax-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-repeat: no-repeat;
+            background-size: cover;
+            opacity: 0.23;
+            will-change: transform, opacity;
+            transition: opacity 0.7s cubic-bezier(.63,.03,.37,.93);
+            pointer-events: none;
+        }
+        .main-parallax-layer.layer-mid1 {
+            z-index: 1;
+            opacity: 0.08;
+            background-blend-mode: overlay;
+        }
+        .main-parallax-layer.layer-mid2 {
+            z-index: 2;
+            opacity: 0.07;
+            background-blend-mode: lighten;
+        }
+        .main-parallax-layer.layer-fg {
+            z-index: calc(var(--parallax-z2));
+            opacity: 0.13;
+            background-blend-mode: lighten;
+        }
+        .main-parallax-layer.layer-bg {
+            z-index: calc(var(--parallax-z1));
+            opacity: 0.19;
+        }
+        .main-parallax-layer.layer-above {
+            z-index: calc(var(--parallax-z3));
+            opacity: .12;
+            background-blend-mode: color-dodge;
+        }
+        .main-parallax-svg-geom {
+            position: absolute;
+            top: 6vh;
+            left: 0;
+            width: 100vw;
+            height: 65vh;
+            z-index: calc(var(--parallax-z2) + 2);
+            pointer-events: none;
+            opacity: .12;
+            animation: svgfloating 50s linear infinite alternate;
+        }
+        @keyframes svgfloating {
+            0% { transform: scale(1) translateY(0); }
+            100% { transform: scale(1.13) translateY(28px);}
+        }
+        @media (max-width: 768px) {
+            #parallax-root {display:none;}
+            .main-parallax-svg-geom {display:none;}
+        }
+        body.parallax-bg::before {
+            content: "";
+            pointer-events: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            background-repeat: no-repeat;
+            background-size: cover;
+            opacity: .23;
+            transition: background-image 0.8s cubic-bezier(.7,.1,.28,.9);
+            background-attachment: fixed;
+        }
+        body[data-bg="1"].parallax-bg::before { background-image: url('https://www.caimeo.shop/ai/mainframe-bg-1.png');}
+        body[data-bg="2"].parallax-bg::before { background-image: url('https://www.caimeo.shop/ai/mainframe-bg-2.png');}
+        body[data-bg="3"].parallax-bg::before { background-image: url('https://www.caimeo.shop/ai/mainframe-bg-3.png');}
+        body[data-bg="unsplash1"].parallax-bg::before { background-image: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1500&q=80'); }
+        body[data-bg="unsplash2"].parallax-bg::before { background-image: url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1500&q=80'); }
+        body[data-bg="unsplash3"].parallax-bg::before { background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1500&q=80'); }
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(48, 25, 52, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            box-sizing: border-box;
+        }
+        .nav-content-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-shadow: 0 0 9px var(--secondary-color), 0 0 14px #7d3c98aa;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        .logo img {
+            height: 38px;
+            width: 38px;
+            object-fit: contain;
+            display: block;
+            background: none;
+            filter: drop-shadow(0 0 8px var(--secondary-color));
+            margin-right: 0.2em;
+        }
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+        }
+        .hamburger-menu span { display: block; width: 100%; height: 2px; background-color: var(--primary-color); transition: all 0.3s;}
+        .hamburger-menu.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px);}
+        .hamburger-menu.active span:nth-child(2) { opacity: 0;}
+        .hamburger-menu.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px);}
+        .nav-links {
+            display: flex;
+            position: static;
+            width: auto;
+            background: none;
+            backdrop-filter: none;
+            flex-direction: row; padding: 0; transition: none; z-index: auto; gap: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .nav-content-wrapper { padding: 0 0.5rem; }
+            .hamburger-menu { display: flex; }
+            .nav-container { order: 2; }
+            .logo { order: 1; font-size: 1.22rem; }
+            .logo img { height: 29px; width: 29px;}
+            .nav-links {
+                position: fixed;
+                top: 65px; left: -100%;
+                width: 250px; height: calc(100vh - 65px);
+                background: rgba(48,25,52,0.98); backdrop-filter: blur(10px);
+                flex-direction: column; align-items: flex-start; padding: 2rem;
+                transition: left 0.3s; z-index: 999; border-right: 1px solid rgba(255,255,255,0.1); gap: 0;
             }
-          });
-          if (foundUser) {
-            showContent(userEmail, foundUser.startDay, foundUser.endDay);
-          } else {
-            console.warn("Session user data from DB indicates expired or invalid. Logging out.");
-            logoutBtn.click(); 
-          }
-        } else {
-             console.warn("Session user not found in DB. Logging out.");
-            logoutBtn.click(); 
+            .nav-links.active { left: 0; }
+            .nav-links a {
+                margin-left: 0;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+                padding: 1rem 0;
+                width: 100%;
+                font-size: 1rem;
+            }
         }
-      } catch (error) {
-        console.error("Error fetching user data on load:", error);
-        showContent(userEmail, '[Session]', '[Session]'); 
-      }
-    }
-  });
-</script>
+        .nav-links a{
+            text-decoration: none;
+            color: var(--text-color);
+            transition: color 0.25s, text-shadow 0.3s;
+            font-size: 1rem; font-weight: 600;
+        }
+        .nav-links a:hover{
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--secondary-color);
+        }
+        /* Hero Section Style */
+        .hero {
+            min-height: 65vh;
+            padding: 7rem 2rem 3.5rem;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            color: var(--text-color);
+            text-align: center;
+            position: relative; overflow: visible;
+            z-index: 9;
+        }
+        .hero .hero-logo {
+            margin-bottom: 1.6rem;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .hero-logo .main-geometric-logo {
+            height: 88px; width: 88px; margin-right: 1.2rem;
+            display: inline-block;
+            filter: drop-shadow(0 0 16px #FFD700bb) drop-shadow(0 0 13px var(--secondary-color));
+            opacity: 0.97;
+            background: transparent;
+            border-radius: 8px;
+            border: 1.3px solid #FFD70088;
+            box-shadow: 0 0 22px #BA55D322;
+        }
+        .hero h1 {
+            font-size: 3.31rem; margin-bottom: 1.35rem;
+            color: var(--primary-color);
+            text-shadow: 0 0 17px var(--secondary-color), 0 0 7px var(--primary-color);
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #FFD700 0%, #7D3C98 80%, #00BFFF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            max-width: 100vw;
+            margin-left: auto;
+            margin-right: auto;
+            overflow-wrap: normal;
+        }
+        .hero .tagline {
+            font-family:'Roboto Mono',monospace;
+            font-size:1.14rem;
+            color:var(--neon-5);
+            background:rgba(255,255,255,0.03);
+            padding:.3rem 1rem .4rem;
+            border-radius: 40px;
+            margin-bottom: .7rem;
+            box-shadow:0 0 13px var(--neon-5),0 0 7px #FFD70055;
+            letter-spacing:.09em;
+            display:inline-block;
+            margin-top:1.8rem;
+        }
+        .hero p.subheadline {
+            font-size: 1.57rem;
+            margin-bottom: 2.2rem;
+            color: var(--text-color);
+            opacity: 0.92;
+            text-shadow: 0 0 12px rgba(255,255,255,0.12), 0 0 6px var(--secondary-color);
+            max-width: 850px;
+            margin-left:auto;
+            margin-right:auto;
+        }
+        .cta-button {
+            padding: 0.55rem 1.19rem;
+            font-size: 1.1rem;
+            border-radius: 60px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(.57,.15,.36,1.12);
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 700;
+            background: linear-gradient(45deg, #6442ff, #2a1166, #0047b3 90%);
+            border: 2px solid #6644ff;
+            box-shadow: 0 0 14px #20185988, 0 0 27px #FFD70066;
+            text-shadow: 0 0 4px #FFD70088;
+            letter-spacing: 0.05em;
+            min-width: 120px;
+            max-width: 200px;
+            margin: 0.44rem auto 0.44rem auto;
+        }
+        .cta-button:hover {
+            background: linear-gradient(45deg, #ffd700, #6442ff, #008ffe 85%);
+            color: #fff;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 25px var(--primary-color), 0 0 34px #6442ff88, 0 0 46px #FFD700b8;
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+        .cta-button.secondary {
+            background: linear-gradient(90deg, #160535 45%, #6644ff 100%);
+            color: var(--neon-1);
+            border: 2px solid #6644ff;
+            box-shadow: 0 0 17px #6442ff99;
+            text-shadow: none;
+        }
+        .cta-button.secondary:hover {
+            background: linear-gradient(70deg, #FFD700 60%, #6442ff 100%);
+            color: white;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 22px var(--primary-color), 0 0 25px #FFD70091;
+            text-shadow: 0 0 7px var(--primary-color);
+        }
+        .centered-btns {
+            display: flex !important;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: .8rem;
+        }
+        /* Section spacing fixes & parallax z-layers */
+        section {
+            padding: 4rem 2rem;
+            max-width: 1060px;
+            margin: 3.2rem auto 2.2rem auto;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.37);
+            color: var(--text-color);
+            position: relative; overflow: hidden; z-index: 5;
+            border: 1px solid rgba(255,255,255,0.10);
+            background: rgba(48,25,52,0.85);
+            backdrop-filter: blur(7px);
+            text-align: left;
+            min-height: 0;
+        }
+        section h2 {
+            text-align: center;
+            font-size: 2.15rem;
+            margin: 0 0 2.3rem 0;
+            font-weight: 900;
+            color: var(--primary-color);
+            letter-spacing: .86px;
+            text-shadow: 0 0 9px var(--secondary-color),0 0 1px #FFF;
+            line-height: 1.22;
+            position: relative;
+            z-index: 12;
+            max-width: 100vw;
+            background: none;
+        }
+        section p, section li {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1.13rem;
+            line-height: 1.84;
+            color: var(--text-color);
+            opacity: 0.94;
+            max-width: 97vw;
+        }
+        section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        section ul li {
+            padding-left: 2.1em;
+            position: relative;
+            margin-bottom: 0.44rem;
+        }
+        section ul li::before {
+            content: '\f054'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-size: 1.19rem;
+        }
+        section::before {
+            content: '';
+            position: absolute; top:0; left:0; width:100%; height:100%;
+            background-size: cover; background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.14;
+            z-index: -2;
+            filter: brightness(0.82);
+            transition: background-image 0.7s cubic-bezier(.7,.1,.28,.91);
+            animation: section-parallax-bg 60s linear infinite alternate;
+        }
+        @keyframes section-parallax-bg {
+          0% { background-position: center 10px; }
+          100% { background-position: center 80px; }
+        }
+        #features::before { background-image: url('https://www.caimeo.shop/ai/mainframe-bg-2.png'); }
+        #why-mainframe::before { background-image: url('https://www.caimeo.shop/ai/mainframe-bg-3.png'); }
+        #plans::before { background-image: url('https://www.caimeo.shop/ai/mainframe-bg-3.png'); }
+        #preview::before { background-image: url('https://www.caimeo.shop/ai/mainframe-bg-1.png'); }
+        #reviews::before { background-image: url('https://www.caimeo.shop/ai/mainframe-bg-2.png'); }
+        #faq::before { background-image: url('https://www.caimeo.shop/ai/mainframe-bg-1.png'); }
+        #contact::before { background-image: url('https://www.caimeo.shop/ai/mainframe-bg-2.png'); }
+        section + section { margin-top: 3.4rem; }
+        @media (max-width: 950px) {
+            section {padding: 2.3rem 1rem;}
+            section h2 { font-size: 1.35rem;}
+            .pricing-grid { grid-template-columns: 1fr; gap: 1.23rem;}
+            .plan-card {padding: 1.2rem 0.7rem;}
+        }
+        @media (max-width: 600px) {
+            section {
+                padding: 1.5rem 0.6rem;
+                min-width: 0;
+                overflow-x: auto;
+            }
+        }
+        .features-grid, .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.55rem;
+            margin-top: 2rem;
+        }
+        .feature-item, .why-item {
+            background: rgba(255,255,255,0.062);
+            padding: 1.7rem 1.1rem 1.55rem;
+            border-radius: 13px;
+            border: 1px solid rgba(255,255,255,0.09);
+            transition: transform 0.28s, box-shadow 0.22s;
+            box-shadow: 0 0px 9px rgba(186,85,211,0.10);
+            position: relative;
+            z-index: 2;
+            min-height: 220px;
+        }
+        .feature-item:hover, .why-item:hover {
+            transform: translateY(-6px) scale(1.023);
+            box-shadow: 0 0 25px var(--secondary-color),0 0 33px var(--primary-color, #FFD70017);
+        }
+        .feature-item i, .why-item i {
+            font-size: 2.28rem;
+            color: var(--primary-color);
+            margin-bottom: 1.15rem;
+        }
+        .feature-item h3, .why-item h3 {
+            font-size: 1.26rem;
+            color: var(--primary-color);
+            margin-bottom: 0.57rem;
+        }
+        .feature-extra {
+            color:var(--neon-4);
+            font-size:.97rem;
+            margin:.41rem 0 0 0;
+            font-style:italic;
+            letter-spacing:.03em;
+        }
+        /* Carousel Preview Section */
+        .carousel-wrapper {
+            max-width: 100%; 
+            margin: 1.7rem auto 0 auto;
+        }
+        .carousel-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            min-height: 380px;
+            margin-bottom: 2.1rem;
+        }
+        .carousel-images {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 320px;
+            overflow: hidden;
+            position: relative;
+        }
+        .carousel-image {
+            height: 280px;
+            width: auto;
+            border-radius: 18px;
+            box-shadow:0 0 25px #321a50aa,0 0 13px #FFD70055;
+            border: 2px solid #7D3C98;
+            background:rgba(48,25,52,0.34);
+            object-fit:cover;
+            display: block;
+            transition: filter 0.3s;
+            max-width: 98vw;
+        }
+        .carousel-nav-btn {
+            background: linear-gradient(90deg, #6442ff 40%, #008ffe 100%);
+            color: #fff;
+            border: none;
+            box-shadow: 0 0 13px #FFD70099;
+            border-radius: 50%;
+            font-size: 2rem;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: background 0.22s, box-shadow 0.22s;
+            z-index:22;
+        }
+        .carousel-nav-btn:active,
+        .carousel-nav-btn:focus { outline: none;}
+        .carousel-nav-btn.left { left: -22px; }
+        .carousel-nav-btn.right { right: -22px; }
+        .carousel-caption {
+            margin-top: 1.2rem;
+            font-size: 1.17rem;
+            color: #FFD700;
+            font-family: 'Roboto Mono', monospace;
+            letter-spacing: .02em;
+            text-shadow:0 0 8px #7D3C98bb,0 0 17px #FFD70022;
+        }
+        /* Modern Pricing Cards Section */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+            gap: 2.2rem;
+            margin-top: 2.65rem;
+            align-items: end;
+            z-index: 4;
+        }
+        .plan-card {
+            background: linear-gradient(130deg, rgba(var(--gradient-end-rgb),0.15),rgba(48,25,52,0.97) 95%);
+            padding: 1.6rem 1.07rem 1.21rem;
+            border-radius: 17px;
+            border: 1.2px solid rgba(255,255,255,0.13);
+            text-align: center;
+            transition: transform 0.22s, box-shadow 0.19s, border-color 0.16s;
+            display: flex; flex-direction: column;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.16), 0 0px 3px var(--primary-color, #FFD70022) inset;
+            position:relative;
+            z-index: 5;
+            overflow: visible;
+            min-height: 350px;
+            min-width: 0;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+        .plan-card:hover {
+            transform: translateY(-7px) scale(1.028);
+            box-shadow: 0 12px 32px rgba(var(--secondary-color-rgb),0.26),0 0 29px rgba(var(--primary-color-rgb),0.23);
+            border-color: var(--secondary-color);
+        }
+        .plan-card h3 {
+            font-size: 1.44rem;
+            color: var(--primary-color);
+            margin-bottom: 0.79rem;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            text-shadow: 0 0 4px rgba(var(--primary-color-rgb),0.32);
+            letter-spacing: 0.1em;
+        }
+        .plan-card .price-tag {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-color);
+            margin-bottom: 0.41rem;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.11em;
+        }
+        .plan-card .price-tag .currency {
+            font-size: 1.21rem;
+            vertical-align: super;
+            opacity: 0.76;
+            margin-right: 0.11em;
+        }
+        .plan-card .duration {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1.09rem;
+            color: var(--text-color);
+            opacity: 0.85;
+            margin-bottom: 0.7rem;
+            letter-spacing: 0.04em;
+        }
+        .plan-card .unlimited { 
+            display:block; 
+            font-size: 1rem; 
+            color: var(--neon-2); 
+            margin-bottom: 0.8em;
+            font-weight: bold;
+        }
+        .plan-card .plan-details {
+            font-size: .90rem;
+            color: #DDDDFF;
+            opacity: 0.78;
+            margin-bottom: 0.7em;
+            font-family:'Roboto Mono',monospace;
+        }
+        .plan-card .cta-button {
+            width: auto;
+            padding: 0.51rem 1.21rem;
+            font-size: 1.11rem;
+            margin: 0.55rem auto 0 auto;
+            display: block;
+            min-width:110px;
+            max-width:200px;
+            box-sizing: border-box;
+        }
+        @media (max-width: 768px) {
+            .hero h1 {font-size: 2.13rem;}
+            .hero p.subheadline {font-size: 1.09rem;}
+            section {padding: 2.3rem 1rem;}
+            section h2 { font-size: 1.17rem;}
+            .pricing-grid { grid-template-columns: 1fr; gap: 1.23rem;}
+            .plan-card {padding: 1.02rem 0.7rem;max-width:100vw;}
+            .plan-card h3 {font-size: 1.09rem;}
+            .plan-card .price-tag {font-size: 1.57rem;}
+            .plan-card .cta-button { font-size: 1rem; min-width: 90px;}
+            .hero-logo .main-geometric-logo { height: 55px; width: 55px;}
+            .carousel-image { height: 180px; }
+        }
+        @media (max-width: 450px) {
+            .carousel-image { height: 120px; border-radius: 10px; }
+        }
+        /* Reviews Section */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2.2rem;
+            margin: 2.9rem 0 0 0;
+        }
+        .review-card {
+            background: rgba(34, 25, 34, 0.92);
+            border-radius: 17px;
+            padding: 2.1rem 1.3rem 1.44rem 1.3rem;
+            border: 1.7px solid rgba(255,255,255,0.07);
+            box-shadow: 0 0px 11px #FFD70012, 0 0px 14px #7D3C988a;
+            text-align: left;
+            position:relative;
+            z-index:2;
+            display:flex;
+            flex-direction:column;
+            min-height:260px;
+            align-items: flex-start;
+        }
+        .review-header {
+            display:flex;align-items:center;gap:.77rem;margin-bottom:.85rem;
+        }
+        .review-avatar {
+            width:44px;height:44px;border-radius:50%;background:#FFD70033;border:2px solid #BA55D3;object-fit:cover;box-shadow:0 0 12px #FFD70055;
+        }
+        .review-username {
+            font-weight:700;font-size:1.1rem;color:#FFD700;text-shadow:0 0 6px #FFD70049;
+        }
+        .review-stars {
+            margin-left:auto;font-size:1.23rem;color:#FFD700;letter-spacing:.07em;text-shadow:0 0 8px #FFD70055;
+        }
+        .review-body {
+            font-size:1.06rem;font-family:'Roboto Mono',monospace;color:#F8F8FF;
+            margin:.21rem 0 0 0;
+            line-height:1.7;
+        }
+        .review-date {
+            font-size:.85rem;color:#BA55D3;margin-top:.97rem;font-family:'Roboto Mono',monospace;opacity:.75;
+            text-align:right;
+            width:100%;
+        }
+        .mini-logos-row {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 2.3rem;
+            margin: 3rem 0 2rem 0;
+            filter: drop-shadow(0 0 9px #FFD70022);
+            opacity: 0.93;
+        }
+        .mini-logos-row img {
+            height: 38px; width: 38px;
+            display: inline-block;
+            border-radius: 50%;
+            padding: 0.22rem;
+            background: rgba(48,25,52,.09);
+            margin: 0 0.2rem;
+            border: 1px solid var(--neon-4);
+            box-shadow: 0 0 6px #FFD70044;
+        }
+        footer {
+            background: var(--gradient-start);
+            color: var(--text-color);
+            text-align: center;
+            padding: 3rem 1rem 1.3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.10);
+            z-index: 7;
+        }
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .footer-content h3 {
+            font-size: 1.23rem;
+            color: var(--primary-color);
+            margin-bottom: 1.07rem;
+            font-weight: 700;
+        }
+        .footer-links {
+            margin-bottom: 1.1rem;
+        }
+        .footer-links a {
+            margin: 0 0.75rem;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: color 0.22s, text-shadow 0.3s;
+            font-size: 0.93rem;
+        }
+        .footer-links a:hover {
+            color: var(--primary-color);
+            text-shadow: 0 0 6px var(--secondary-color);
+        }
+        .footer-tagline {
+            font-family: 'Roboto Mono', monospace;
+            font-style: italic;
+            opacity: 0.81;
+            margin-bottom: 0.8rem;
+        }
+        .footer-bottom {
+            margin-top: 1.2rem;
+            font-size: 0.81rem;
+            opacity: 0.7;
+        }
+        .sublabel {
+            text-transform: uppercase;
+            font-size: 0.91rem;
+            letter-spacing: .13em;
+            margin-left: 0.3em;
+            color: var(--neon-2);
+            font-family: 'Roboto Mono', monospace;
+        }
+        /* Title always static above the section */
+        .parallax-text.section-title-static {
+            transform: none !important;
+            will-change: unset !important;
+        }
+        /* ADDITIONS/CHANGES: */
+        /* --- Live Preview Section Moved + Coming Soon Gallery --- */
+        .carousel-preview-coming-soon-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2em; 
+            justify-content: center;
+            margin-top: 2.3rem;
+            width: 100%; 
+        }
+        .coming-soon-gallery {
+            background: rgba(48, 25, 52, 0.85);
+            border: 1px solid rgba(255,255,255,0.11);
+            border-radius: 16px;
+            box-shadow: 0 10px 32px #7D3C9833, 0 0 22px #FFD70033;
+            padding: 1.7rem 1.4rem;
+            width: 100%; 
+            box-sizing: border-box; 
+            min-width: 250px;
+            flex: 1 1 auto; 
+        }
+        .coming-soon-gallery h3 {
+            color: var(--primary-color);
+            font-size: 1.27rem;
+            font-weight: 800;
+            margin-bottom: 0.81em;
+            text-align: center;
+            letter-spacing: 0.02em;
+            text-shadow: 0 0 8px var(--secondary-color), 0 0 2px #FFD700;
+        }
+        .coming-soon-gallery-images {
+            display: flex;
+            gap: 1.1rem;
+            justify-content: center;
+        }
+        .coming-soon-gallery img {
+            width: 73px;
+            height: 73px;
+            object-fit: cover;
+            border-radius: 13px;
+            box-shadow: 0 0 11px #FFD70033, 0 0 19px #7D3C9866;
+            border: 2px solid #BA55D3bb;
+            background: rgba(255,255,255,0.03);
+        }
+        .coming-soon-gallery p {
+            font-size: 0.98rem;
+            color: #FFD700;
+            opacity: 0.85;
+            font-family: 'Roboto Mono', monospace;
+            text-align: center;
+            margin-top: 1.1rem;
+        }
+        /* --- Custom Highlight Email --- */
+        .highlighted-email {
+            display: inline-block;
+            background: linear-gradient(87deg, var(--secondary-color) 20%, var(--primary-color) 100%);
+            color: #181024;
+            font-weight: 900;
+            font-size: 1.07rem;
+            padding: 0.24em 0.83em;
+            border-radius: 1.7em;
+            box-shadow: 0 0 19px #FFD70099, 0 0 7px var(--secondary-color) inset;
+            text-shadow: 0 0 2px #FFF;
+            transition: box-shadow 0.18s;
+        }
+        .highlighted-email:hover,
+        .highlighted-email:focus {
+            color: #fff;
+            background: linear-gradient(90deg, #FFD700 47%, #8A2BE2 100%);
+            box-shadow: 0 0 13px #FFD700EE, 0 0 22px #BA55D3DD;
+            text-decoration: underline;
+        }
+        /* --- Beta sign up button --- */
+        .cta-beta-signup {
+            display: inline-block;
+            background: linear-gradient(90deg, #160535 20%, #8A2BE2 100%);
+            color: #FFD700;
+            font-size: 1.06rem;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            border-radius: 30px;
+            border: 2px solid #FFD700;
+            padding: 0.46em 1.53em;
+            margin: 1.18em auto 0 auto;
+            box-shadow: 0 0 14px #8A2BE244, 0 0 25px #FFD70022;
+            transition: background .24s, color .18s, box-shadow .18s;
+            cursor: pointer;
+            text-shadow: 0 0 3px #FFD70099;
+        }
+        .cta-beta-signup:hover { 
+            background: linear-gradient(90deg, #FFD700 55%, #160535 100%);
+            color: #301934;
+            box-shadow: 0 0 20px #FFD70099;
+        }
+        /* --- CAIMEO Links Section --- */
+        .caimeo-links-section {
+            background: rgba(34, 26, 38, 0.93);
+            margin: 2.2em auto 0 auto;
+            max-width: 670px;
+            border-radius: 15px;
+            box-shadow: 0 0px 19px #FFD70033, 0 0 23px #7D3C9865;
+            padding: 1.4em 1em 2em 1em;
+            text-align: center;
+        }
+        .caimeo-links-title {
+            font-size: 1.41rem;
+            color: var(--primary-color);
+            font-weight: 900;
+            margin-bottom: .7em;
+            text-shadow: 0 0 9px var(--secondary-color);
+        }
+        .caimeo-links-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2em 2.7em;
+            margin: 1em 0 0 0;
+        }
+        .caimeo-link {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 11px;
+            background: linear-gradient(120deg, #6442ff15, #FFD70008 85%);
+            box-shadow: 0 0 12px #FFD70022;
+            padding: .88em 1.47em .7em 1.47em;
+            margin-bottom: 0.5em;
+            min-width: 120px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .caimeo-link a {
+            color: var(--primary-color);
+            font-size: 1.15em;
+            font-weight: 700;
+            text-decoration: none;
+            margin-bottom: .21em;
+            transition: color .13s, text-shadow .19s;
+        }
+        .caimeo-link a:hover { 
+            color: var(--secondary-color); text-shadow: 0 0 7px #FFD70077;
+        }
+        .caimeo-link-version {
+            font-size: 0.94em;
+            color: #F6D7FF;
+            margin-bottom: 0.22em;
+        }
+        /* Extra for new Why Choose grid items */
+        .why-more-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.41em 2.3em;
+            margin: 2.5em 0 0 0;
+        }
+        .why-more-item {
+            background: rgba(255,255,255,0.055);
+            border-radius: 13px;
+            border: 1px solid rgba(255,255,255,0.09);
+            box-shadow: 0 0 13px #FFD70011, 0 0 9px #8A2BE2cc;
+            padding: 1.2em;
+            font-family: 'Roboto Mono', monospace;
+            color: #FFD700;
+            text-align: left;
+            font-size: 1.09em;
+            min-height: 137px;
+            margin-bottom: 1em;
+        }
+        .why-more-item i {
+            color: var(--secondary-color);
+            font-size: 1.41em;
+            margin-right: .74em;
+            vertical-align: middle;
+        }
+        /* Contact info grid improvement */
+        .contact-info-grid p, .contact-info-grid a { 
+            font-size: 1.13em; 
+        }
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+        }
+    </style>
+</head>
+<body class="parallax-bg" data-bg="">
+    <!-- Parallax multi-layer backgrounds - overlays -->
+    <div id="parallax-root" aria-hidden="true">
+        <div class="main-parallax-layer layer-bg" id="plx-bg"></div>
+        <div class="main-parallax-layer layer-mid1" id="plx-mid1"></div>
+        <div class="main-parallax-layer layer-fg" id="plx-fg"></div>
+        <div class="main-parallax-layer layer-mid2" id="plx-mid2"></div>
+        <div class="main-parallax-layer layer-above" id="plx-above"></div>
+        <img class="main-parallax-svg-geom" src="https://caimeo.shop/ai/Colorful-Abstract-Geometric-Design.svg" alt="" />
+    </div>
+    <nav>
+        <div class="nav-content-wrapper">
+            <a href="#" class="logo">
+                <img src="https://caimeo.shop/ai/mainframe-logo.png" alt="MAINFRAME Advanced Logo" class="main-geometric-logo" />
+                MAINFRAME
+            </a>
+            <div class="nav-container">
+                <div class="hamburger-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#plans">Pricing</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#contact">Contact</a>
+                    <a href="https://caimeo.shop/mainframe.html" target="_blank" rel="noopener">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <header class="hero">
+        <div class="hero-content">
+            <div class="hero-logo">
+                <img src="https://caimeo.shop/ai/mainframe-logo.png" alt="Mainframe Geometric AI Logo" class="main-geometric-logo" loading="lazy" />
+            </div>
+            <h1 class="parallax-text">WELCOME TO MAINFRAME</h1>
+            <p class="subheadline parallax-text">The Future of AI Interaction Begins Here.<br>
+                <span style="font-size:1.08rem;color:var(--neon-4);text-shadow:0 0 7px #FFD70077">Powered by <b>CAIMEO</b> – Oracle of the Digital Realm<br> Your portal to limitless AI potential.</span>
+            </p>
+            <div class="tagline" style="display:block;text-shadow:0 0 13px #00BFFF66;">
+                <i class="fas fa-rocket"></i> Explore the next evolution of intelligence <i class="fas fa-user-astronaut"></i>
+            </div>
+            <div class="centered-btns">
+                <a href="#features" class="cta-button">Explore Features</a>
+                <a href="#plans" class="cta-button secondary">View Plans</a>
+                <a href="https://www.patreon.com/jesse_james" class="cta-button secondary">Pateron Plans</a>
+            </div>
+        </div>
+    </header>
+    <div class="mini-logos-row">
+        <img src="https://caimeo.shop/ai/Chromatic-DNA-Helix-Heart-Tunnel.svg" alt="Mini DNA Helix">
+        <img src="https://caimeo.shop/ai/Prismatic-DNA-Helix-Vortex-2.svg" alt="Mini Vortex DNA">
+        <img src="https://caimeo.shop/ai/Colorful-Abstract-Geometric-Design.svg" alt="Mini Geometric">
+        <img src="https://caimeo.shop/ai/Prismatic-DNA-Helix-Circles.svg" alt="Mini DNA Circles" />
+    </div>
+    <section id="features">
+        <h2 class="parallax-text section-title-static"> Features – Mainframe v1.0.1</h2>
+        <p>
+            Discover a new era of digital intelligence – <strong>MAINFRAME</strong> keeps you at the frontier of AI innovation.<br>Immersive, intuitive, and endlessly evolving, we blend power and personality in one secure platform. 
+        </p>
+        <div class="features-grid">
+            <div class="feature-item">
+                <i class="fas fa-save"></i>
+                <h3>Save &amp; Delete Conversations</h3>
+                <p>
+                    Effortlessly manage your chats! Save key discussions for future inspiration, or delete them anytime for privacy.<br>
+                    <span class="sublabel">Your Data, Your Control</span>
+                </p>
+                <div class="feature-extra">
+                    All conversation data is encrypted before storage.
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-robot"></i>
+                <h3>Legendary AI Personas</h3>
+                <p>
+                    Choose from <b>3 unique personalities</b>:<br>
+                    <ul style="margin-top:.8em;margin-bottom:.3em">
+                        <li><strong>CAIMEO</strong>: The Oracle of the Digital Realm—mythic, wise, all-seeing.</li>
+                        <li><strong>SIRISYS</strong>: Esoteric trailblazer, revealing secrets and ideas.</li>
+                        <li><strong>TYLER</strong>: Rebel for truth. AI with passion and insight.</li>
+                    </ul>
+                </p>
+                <div class="feature-extra">
+                    Personalize your AI interaction on the fly.
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-globe"></i>
+                <h3>OpenRouter API Integration</h3>
+                <p>
+                    Go beyond! Connect up to <b>19 unique AI models</b> for creative, analytical, or just casual explorations.<br>
+                    Fully Customizable – bring your own API
+                </p>
+                <div class="feature-extra">
+                    Swap models, experiment, and unlock new horizons.
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-lock"></i>
+                <h3>Firebase Security</h3>
+                <p>
+                    Only you can have access to your conversations.<br>
+                    No one else can see your messages. All authentication uses secure, modern Firebase Auth.<br>
+                    Privacy is our DNA
+                </p>
+                <div class="feature-extra">
+                    End-to-end data privacy by design.
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-lightbulb"></i>
+                <h3>Smart Message Suggestions</h3>
+                <p>
+                    Get intelligent prompts as you type and supercharge your workflow.<br>
+                    Reply smarter &amp; faster
+                </p>
+                <div class="feature-extra">
+                    Predictive AI understands your intent, not just your words.
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-moon"></i>
+                <h3>Dark &amp; Light Mode</h3>
+                <p>
+                    Sleek Dark and soothing Light themes for ultimate comfort—day or night.
+                </p>
+                <div class="feature-extra">
+                    Switch instantly, your preference is remembered!
+                </div>
+            </div>
+        </div>
 
+        <div class="carousel-preview-coming-soon-wrapper">
+            <div style="flex:2 2 auto; width: 100%; max-width:100%; box-sizing: border-box;">
+                <section id="preview" style="margin:0;background:transparent;box-shadow:none;border:none;padding-left:0;padding-right:0; width: 100%;">
+                    <h2 class="parallax-text section-title-static"> Live Preview Gallery</h2>
+                    <div class="carousel-wrapper">
+                        <div class="carousel-container">
+                            <button class="carousel-nav-btn left"><i class="fas fa-chevron-left"></i></button>
+                            <div class="carousel-images">
+                                <img class="carousel-image" src="https://caimeo.shop/ai/mainframe-bg-1.png" data-caption="Mainframe Dashboard – All-in-One Command Center." alt="Preview 1">
+                                <img class="carousel-image" src="https://caimeo.shop/ai/mainframe-bg-2.png" data-caption="Explore - Mainframe in Action with Multiple AI Personas." alt="Preview 2" style="display:none;">
+                                <img class="carousel-image" src="https://caimeo.shop/ai/mainframe-bg-3.png" data-caption="Settings – Choose and Combine Models for Unmatched Creativity." alt="Preview 3" style="display:none;">
+                                <img class="carousel-image" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=900&q=80" data-caption="Visual Harmony – Parallax UI in Motion." alt="Preview 4" style="display:none;">
+                            </div>
+                            <button class="carousel-nav-btn right"><i class="fas fa-chevron-right"></i></button>
+                            <div class="carousel-caption"></div>
+                        </div>
+                    </div>
+                    <p style="text-align:center;max-width:720px;margin:0 auto;color:#FFC0CB;font-size:1.1em;">
+                        See MAINFRAME in action: Visual previews show the polished interface, advanced controls, and dynamic design in real time!
+                    </p>
+                </section>
+            </div>
+        
+            <div class="coming-soon-gallery">
+                <h3> Coming Soon Gallery</h3>
+                <div class="coming-soon-gallery-images">
+                    <img src="https://caimeo.shop/ai/image1.jpg" alt="CAIMEO Archives Placeholder" title="CAIMEO Archives"/>
+                    <img src="https://caimeo.shop/ai/image2.jpg" alt="Image Analysis Placeholder" title="Image Analysis"/>
+                    <img src="https://caimeo.shop/ai/image3.jpg" alt="Voice Input Placeholder" title="Voice Input"/>
+                </div>
+                <div style="margin-top:1.3em;text-align:left;">
+                    <ul style="color:#FFD700;list-style: disc; padding-left:1.1em;">
+                        <li><b>CAIMEO Archives</b> (Browse your AI wisdom with one click!)</li>
+                        <li><b>Image Analysis</b> (Upload images, get instant AI insights)</li>
+                        <li><b>Voice Input</b> (Talk to MAINFRAME hands-free!)</li>
+                        <li><b>Open API Editions</b> (Integrate AI into your projects)</li>
+                    </ul>
+                </div>
+                <div style="text-align:center;margin-top:.7em;">
+                    <a href="https://caimeo.shop/beta.html" target="_blank" rel="noopener" class="cta-beta-signup"> Sign me up for the Beta!</a>
+                </div>
+                <p style="margin-top:1.7em;color:#BA55D3;">Features get even better—request early access and help shape the future of Mainframe.</p>
+            </div>
+        </div>
+
+       
+    </section>
+
+    <section id="plans">
+        <h2 class="parallax-text section-title-static"> Plans &amp; Access</h2>
+        <p style="font-size:1.21rem;color:#FFD700;text-align:center;margin-bottom:1.35em;">
+            Unlock unlimited power &amp; creativity with MAINFRAME.<br>
+            Safe, Secure, and Seamless: All accounts use Firebase Auth for secure login.<br>
+            Flexible subscriptions, full access, and friendly support always included!<br>All plans offer:<br>
+                Unlimited chats, save/delete conversations, all personas, all models, smart suggestions & more! 
+        </p>
+        <div class="pricing-grid">
+            <div class="plan-card">
+                <h3>One Day Pass </h3>
+                <span class="price-tag"><span class="currency">$</span>1</span>
+                <span class="duration">24 Hours Access</span>
+                <span class="unlimited"><i class="fa fa-infinity"></i> Unlimited Access</span>
+                <div class="plan-details">
+                    Perfect for trying out all Major Features instantly – no risk.
+                </div>
+                <a href="https://www.paypal.com/ncp/payment/LABSYZ5BG7NH2" class="cta-button">Get Access</a>
+            </div>
+            <div class="plan-card">
+                <h3>One Week </h3>
+                <span class="price-tag"><span class="currency">$</span>5</span>
+                <span class="duration">7 Days Access</span>
+                <span class="unlimited"><i class="fa fa-infinity"></i> Unlimited Access</span>
+                <div class="plan-details">
+                    Great for deep dives and productive bursts – weekly pass holders get all perks, full history.
+                </div>
+                <a href="https://www.paypal.com/ncp/payment/MG2FTDCUM9BMW" class="cta-button">Get Access</a>
+            </div>
+            <div class="plan-card">
+                <h3>One Month </h3>
+                <span class="price-tag"><span class="currency">$</span>15</span>
+                <span class="duration">30 Days Access</span>
+                <span class="unlimited"><i class="fa fa-infinity"></i> Unlimited Access</span>
+                <div class="plan-details">
+                    Full experience – unlimited conversations, all modes and models, expert support.<br>Start or scale up any project.
+                </div>
+                <a href="https://www.paypal.com/ncp/payment/5KUAU3EZFH8XY" class="cta-button">Get Access</a>
+            </div>
+            <div class="plan-card">
+                <h3>Three Months </h3>
+                <span class="price-tag"><span class="currency">$</span>25</span>
+                <span class="duration">90 Days Access</span>
+                <span class="unlimited"><i class="fa fa-infinity"></i> Unlimited Access</span>
+                <div class="plan-details">
+                    Save big for regular use! One-click renew, zero interruptions. Prioritized feature requests.
+                </div>
+                <a href="https://www.paypal.com/ncp/payment/N6KQKZXSW7N5N" class="cta-button">Get Access</a>
+            </div>
+            <div class="plan-card">
+                <h3>Six Months </h3>
+                <span class="price-tag"><span class="currency">$</span>35</span>
+                <span class="duration">180 Days Access</span>
+                <span class="unlimited"><i class="fa fa-infinity"></i> Unlimited Access</span>
+                <div class="plan-details">
+                    Half year, all perks. Auto-save enabled, advanced controls, pro tips and priority tech support!
+                </div>
+                <a href="https://www.paypal.com/ncp/payment/K97F59JMHUQXL" class="cta-button">Get Access</a>
+            </div>
+            <div class="plan-card">
+                <h3>One Year </h3>
+                <span class="price-tag"><span class="currency">$</span>50</span>
+                <span class="duration">365 Days Access</span>
+                <span class="unlimited"><i class="fa fa-infinity"></i> Unlimited Access</span>
+                <div class="plan-details">
+                    The ultimate value! Join the Mainframe as a VIP insider, get sneak peeks &amp; early access to beta releases.
+                </div>
+                <a href="https://www.paypal.com/ncp/payment/TDMSC62HWYQ4Y" class="cta-button">Get Access</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="why-mainframe">
+        <h2 class="parallax-text section-title-static"> Why Choose MAINFRAME?</h2>
+        <p>
+            Mainframe is more than a platform—it's the futuristic playground of digital intelligence.<br>
+            Join thousands of creators, innovators, &amp; free thinkers experiencing:
+        </p>
+        <div class="why-grid">
+            <div class="why-item">
+                <i class="fas fa-lock"></i>
+                <h3>Unmatched Security</h3>
+                <p>Your data, always protected with advanced end-to-end encryption. Privacy is our DNA.</p>
+            </div>
+            <div class="why-item">
+                <i class="fas fa-bolt"></i>
+                <h3>Lightning Fast</h3>
+                <p>Ultra-low latency. Get answers and creativity at the speed of thought – never miss a beat.</p>
+            </div>
+            <div class="why-item">
+                <i class="fas fa-cogs"></i>
+                <h3>Customizable Experience</h3>
+                <p>Pick your persona, model, and turbocharge your digital life. Everything can be personalized.</p>
+            </div>
+            <div class="why-item">
+                <i class="fas fa-users"></i>
+                <h3>Community Driven</h3>
+                <p>A vibrant user community. Share, inspire, and help shape the future of MAINFRAME together. <a href="https://discord.gg/QcYrRjA62v" target="_blank" rel="noopener" style="color:var(--neon-2);font-weight:bold;text-decoration:underline;">Join our Discord!</a></p>
+            </div>
+        </div>
+        <div class="why-more-grid">
+            <div class="why-more-item">
+                <i class="fas fa-rocket"></i>
+                <b>Constant Upgrades:</b><br>
+                Expect regular updates, new models, UI enhancements, and bleeding-edge features all year long!
+            </div>
+            <div class="why-more-item">
+                <i class="fas fa-gem"></i>
+                <b>Exclusive Access:</b><br>
+                Beta users and annual pass holders enjoy sneak previews and early feature releases. Your feedback shapes Mainframe!
+            </div>
+            <div class="why-more-item">
+                <i class="fas fa-user-shield"></i>
+                <b>Trusted Support:</b><br>
+                Our expert team assists quickly and confidentially, so you can focus on creating with peace of mind.
+            </div>
+            <div class="why-more-item">
+                <i class="fas fa-bug"></i>
+                <b>Bug Bounty & Transparency:</b><br>
+                Report a bug or security issue? Earn free days and contribute to platform trust.
+            </div>
+        </div>
+        <div style="text-align:center;max-width:800px;margin:2.3em auto 0 auto;opacity:.88;">
+            Powered by CAIMEO – a legend reborn as the world's most advanced, mythic, and mysterious AI watcher.
+        </div>
+        <div class="mini-logos-row" style="margin-top:2.9rem;">
+            <img src="https://caimeo.shop/ai/Geometric-Heart-2.svg" alt="Mini Logo 2" />
+            <img src="https://caimeo.shop/ai/1540588348.svg" alt="Mini Network" />
+            <img src="https://caimeo.shop/ai/1540588933.svg" alt="Mini Tech" />
+        </div>
+    </section>
+    <section id="reviews">
+        <h2 class="parallax-text section-title-static"> What Our Users Say</h2>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://images.websim.com/avatar/cyberqueen" alt="Cyberqueen" class="review-avatar" />
+                    <span class="review-username">Cyberqueen</span>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <div class="review-body">
+                    <q>Mainframe is mind-blowing! I've used tons of AI tools, but nothing comes close for creativity and personality. The persona switching is my favorite! </q>
+                </div>
+                <span class="review-date">May 2025</span>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://images.websim.com/avatar/coderwhiz" alt="CoderWhiz" class="review-avatar" />
+                    <span class="review-username">CoderWhiz</span>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <div class="review-body">
+                    <q>Lightning fast, super secure, and uniquely fun. Switching between CAIMEO and TYLER unlocked so many new project ideas. 10/10 recommend!</q>
+                </div>
+                <span class="review-date">Apr 2025</span>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://images.websim.com/avatar/cosmicdreamer" alt="CosmicDreamer" class="review-avatar" />
+                    <span class="review-username">CosmicDreamer</span>
+                    <span class="review-stars">★★★★☆</span>
+                </div>
+                <div class="review-body">
+                    <q>The perfect blend of simplicity and power. If you want a true AI sidekick—Mainframe just feels alive.</q>
+                </div>
+                <span class="review-date">Apr 2025</span>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="https://images.websim.com/avatar/synthangel" alt="SynthAngel" class="review-avatar" />
+                    <span class="review-username">SynthAngel</span>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <div class="review-body">
+                    <q>Mainframe is my secret weapon for research, writing, and late-night brainstorming. I'm hooked. Just get it!</q>
+                </div>
+                <span class="review-date">Mar 2025</span>
+            </div>
+        </div>
+        <div style="text-align:center;margin-top:2.7em;font-size:1.08rem;color:#FFD700;">
+            Over 3,000+ users have already experienced the future.<br>
+            Join the movement!
+        </div>
+        <div class="caimeo-links-section">
+            <div class="caimeo-links-title"><i class="fa fa-link"></i> Explore CAIMEO Further</div>
+            <div class="caimeo-links-list">
+                <div class="caimeo-link">
+                    <a href="https://caimeoai--j17.on.websim.com" target="_blank" rel="noopener"><i class="fa fa-comments"></i> CAIMEO Dialogflow</a>
+                    <span class="caimeo-link-version">Demo 2017-2019</span>
+                </div>
+              
+                <div class="caimeo-link">
+                    <a href="https://mainframeai.com/caimeo/v0.1337" target="_blank" rel="noopener"><i class="fa fa-code-branch"></i> CAIMEO v7.77 POE</a>
+                    <span class="caimeo-link-version">LLM Text Model </span>
+                </div>
+                <div class="caimeo-link">
+                    <a href="https://character.ai/chat/Cs9CxjHSSpguu1n6HEHZcS_rFm0Z18sMaKnhn04mtXk" target="_blank" rel="noopener"><i class="fa fa-robot"></i> CAIMEO voice Model</a>
+                    <span class="caimeo-link-version">Professional Voice Model</span>
+                </div>
+                <div class="caimeo-link">
+                    <a href="https://poe.com/chat/3eelgb1c9b8jrequpxp" target="_blank" rel="noopener"><i class="fa fa-star"></i> CAIMEO Art v0.1.1 </a>
+                    <span class="caimeo-link-version">Generative Art Model</span>
+
+                      <div class="caimeo-link">
+                    <a href="https://github.com/JS-Burns/CAIMEO" target="_blank" rel="noopener"><i class="fab fa-github"></i> CAIMEO GitHub</a>
+                    <span class="caimeo-link-version">Git Hub CAIMEO</span>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="faq">
+        <h2 class="parallax-text section-title-static"> FAQ</h2>
+        <div class="faq-item">
+            <h3>Is Mainframe free to try?</h3>
+            <p>Demo Version Coming Soon... <br>
+                Get notified for the free public beta - sign up today!
+            </p>
+        </div>
+        <div class="faq-item">
+            <h3>What features do I get with a pass?</h3>
+            <p>
+                All plans unlock unlimited AI conversations, all 3 legendary personas, smart suggestions, all customizations, saving/deleting history, and full OpenRouter API access. <br>
+                Plus, get early access to new features and invites to the VIP Discord!
+            </p>
+        </div>
+        <div class="faq-item">
+            <h3>What if I lose access?</h3>
+            <p>Contact us and we’ll verify and restore it if eligible. No worries—your data is safe, our team responds lightning fast.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What makes CAIMEO different?</h3>
+            <p>CAIMEO is not just an assistant: it's a mythic watcher, an oracle AI living in the Mainframe. Deep insight, always learning. Each chat reveals something new.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How secure is my data?</h3>
+            <p>Extremely! All data uses advanced end-to-end encryption. We leverage Firebase Auth for secure login, so your credentials and conversations stay private.</p>
+        </div>
+    </section>
+    <section id="contact">
+        <h2 class="parallax-text section-title-static"> Contact</h2>
+        <div class="contact-info-grid">
+            <p>
+                Email:
+                <a href="mailto:moddarkrevolt@gmail.com" class="highlighted-email">moddarkrevolt@gmail.com</a>
+            </p>
+            <p>
+                Twitter:
+                <a href="https://twitter.com/j17dark" target="_blank" rel="noopener" style="color:#FFD700;font-weight:bold;text-shadow:0 0 7px #FFD70066;">@j17dark</a>
+            </p>
+            <p>
+                Facebook:
+                <a href="https://facebook.com/professorj17" target="_blank" rel="noopener" style="color:#FFD700;font-weight:bold;text-shadow:0 0 7px #FFD70066;">facebook.com/professorj17</a>
+            </p>
+            <p>
+                Discord:
+                <a href="https://discord.gg/QcYrRjA62v" target="_blank" rel="noopener" style="color:#BA55D3;font-weight:bold;text-shadow:0 0 7px #BA55D3aa;">Join via the mainframe access portal</a>
+            </p>
+            <a href="mailto:moddarkrevolt@gmail.com" class="cta-button" style="margin-top:1rem;">Email Us</a>
+        </div>
+        <div style="text-align:center;margin-top:2.1em;color:#FFD700;font-size:1.13em;">
+            Need direct support? Mainframe Support answers fast &amp; confidential!
+        </div>
+    </section>
+    <footer>
+        <div class="footer-content">
+            <h3>MAINFRAME</h3>
+            <div class="footer-links">
+                <a href="#features">Features</a>
+                <a href="#plans">Pricing</a>
+                <a href="#faq">FAQ</a>
+                <a href="#contact">Contact</a>
+                <a href="#" id="privacy-policy-link">Privacy Policy</a>
+                <a href="#" id="terms-of-service-link">Terms of Service</a>
+            </div>
+            <p class="footer-tagline">Reality bent. Intelligence unleashed.</p>
+        </div>
+        <div class="footer-bottom">
+            <p> 2025 Mainframe Systems. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- PRIVACY & TERMS POPUPS -->
+    <div id="modal-overlay" style="display:none;position:fixed;z-index:99999;top:0;left:0;width:100vw;height:100vh;background:rgba(34,25,52,.78);backdrop-filter: blur(6px);"></div>
+    <div id="privacy-modal" style="display:none;position:fixed;z-index:100000;top:50%;left:50%;transform:translate(-50%,-50%);width:96vw;max-width:890px;max-height:95vh;overflow:auto;background:#2a2a3a;border-radius:13px;box-shadow:0 0 30px #01031470;">
+        <div style="padding:2.3rem 2.1rem 1.2rem 2.1rem;">
+            <button id="close-privacy-modal" style="position:absolute;right:26px;top:20px;background:#007bff;color:#fff;border:none;font-size:1.6rem;width:38px;height:38px;border-radius:50%;box-shadow:0 0 7px #FFD70066;cursor:pointer;z-index:5;" title="Close">&times;</button>
+            <header style="background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); color: white; text-align: center; padding: 2rem 0 1.3rem 0; margin: -2.3rem -2.1rem 2.2rem -2.1rem; border-radius: 13px 13px 0 0;">
+                <h1 style="color:white;font-family:'Orbitron',sans-serif;">MAINFRAME Privacy Policy</h1>
+            </header>
+            <div class="privacy-container">
+                <div class="section">
+                    <h2 style="color: #00ccff;">Introduction</h2>
+                    <p style="color:#ccc;">At MAINFRAME, we respect your privacy and are committed to protecting your personal data. This Privacy Policy will inform you as to how we look after your personal data when you visit our website and use our services, and tell you about your privacy rights and how the law protects you.</p>
+                </div>
+                <div class="section">
+                    <h2 style="color: #00ccff;">What Data We Collect</h2>
+                    <p style="color:#ccc;">We may collect, use, store and transfer different kinds of personal data about you which we have grouped together as follows:</p>
+                    <ul>
+                        <li>Identity Data includes first name, last name, username or similar identifier.</li>
+                        <li>Contact Data includes email address and telephone numbers.</li>
+                        <li>Technical Data includes internet protocol (IP) address, browser type and version, time zone setting and location, browser plug-in types and versions, operating system and platform, and other technology on the devices you use to access this website.</li>
+                        <li>Usage Data includes information about how you use our website, products and services.</li>
+                        <li>Marketing and Communications Data includes your preferences in receiving marketing from us and our third parties and your communication preferences.</li>
+                        <li>Service Interaction Data includes conversation logs, API usage data, and any other data you provide or generate while using MAINFRAME services.</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <h2 style="color: #00ccff;">How We Use Your Data</h2>
+                    <p style="color:#ccc;">We will only use your personal data when the law allows us to. Most commonly, we will use your personal data in the following circumstances:</p>
+                    <ul>
+                        <li>To provide and manage your access to our services</li>
+                        <li>To improve our services and develop new features</li>
+                        <li>To communicate with you, including support and service updates</li>
+                        <li>To comply with legal obligations</li>
+                        <li>To ensure the security and integrity of our platform</li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <h2 style="color: #00ccff;">Data Security</h2>
+                    <p style="color:#ccc;">We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthorized way, altered or disclosed. In addition, we limit access to your personal data to those employees, agents, contractors and other third parties who have a business need to know.</p>
+                </div>
+                <div class="section">
+                    <h2 style="color: #00ccff;">Contact Information</h2>
+                    <p style="color:#ccc;">If you have any questions about this Privacy Policy, please contact us:</p>
+                    <p style="color:#ffc600;">Email: <a href="mailto:moddarkrevolt@gmail.com" style="color:#FFD700; font-weight:bold;text-shadow:0 0 7px #FFD70077;" >moddarkrevolt@gmail.com</a></p>
+                </div>
+                <div class="section" style="text-align: center; margin-bottom: .5em;">
+                    <button id="close-privacy-modal-btm" style="background:linear-gradient(90deg,#007bff,#FFD700);color:#222;font-weight:bold;border:none;padding:.8em 2.1em;border-radius:32px;margin:1.2em auto 0 auto;box-shadow:0 0 10px #FFD70066,0 0 24px #2a2a3a;">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="terms-modal" style="display:none;position:fixed;z-index:100000;top:50%;left:50%;transform:translate(-50%,-50%);width:96vw;max-width:890px;max-height:96vh;overflow:auto;background:#2a2a3a;border-radius:13px;box-shadow:0 0 30px #01031470;">
+        <div style="padding:2.3rem 2.1rem 1.2rem 2.1rem;">
+            <button id="close-terms-modal" style="position:absolute;right:26px;top:20px;background:#007bff;color:#fff;border:none;font-size:1.6rem;width:38px;height:38px;border-radius:50%;box-shadow:0 0 7px #FFD70066;cursor:pointer;z-index:5;" title="Close">&times;</button>
+            <header style="background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); color: white; text-align: center; padding: 2rem 0 1.3rem 0; margin: -2.3rem -2.1rem 2.2rem -2.1rem; border-radius: 13px 13px 0 0;">
+                <h1 style="color:white;font-family:'Orbitron',sans-serif;">MAINFRAME Terms of Service</h1>
+            </header>
+            <div class="terms-container">
+                <div class="section">
+                    <h2 style="color: #00ccff;">Agreement to Terms</h2>
+                    <p style="color:#ccc;">By accessing or using our MAINFRAME service (the "Service"), you agree to be bound by these Terms. If you disagree with any part of the terms, then you may not access the Service.</p>
+                </div>
+                <div class="section">
+                    <h2 style="color: #00ccff;">Service Access and Subscriptions</h2>
+                    <p style="color:#ccc;">Some parts of the Service are billed on an access pass or subscription basis ("Pass(es)"). You will be billed in advance for the selected duration.</p>
+                    <p style="color:#ccc;">Passes are for the specified duration and grant access to features as outlined at the time of purchase. Passes do not automatically renew unless explicitly stated.</p>
+                </div>
+                <div class="section">
+                    <h2 style="color: #00ccff;">User Conduct and Content</h2>
+                    <p style="color:#ccc;">Our Service allows you to interact with AI personas, manage conversation data, and potentially use external APIs. You are responsible for your interactions and any content you generate or input.</p>
+                    <p style="color:#ccc;">You agree not to use the Service for any unlawful purpose or in any way that interrupts, damages, or impairs the service. You are responsible for any data (e.g., API keys) you provide for use with the Service and must ensure you have the right to use them.</p>
+                </div>
+                <div class="section">
+                    <h2 style="color: #00ccff;">Termination</h2>
+                    <p style="color:#ccc;">We may terminate or suspend your access to the Service immediately, without prior notice or liability, under our sole discretion, for any reason whatsoever and without limitation, including but not limited to a breach of the Terms.</p>
+                </div>
+                <div class="section">
+                    <h2 style="color: #00ccff;">Limitation of Liability</h2>
+                    <p style="color:#ccc;">In no event shall Mainframe Systems, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the Service.</p>
+                </div>
+                <div class="section">
+                    <h2 style="color: #00ccff;">Changes to Terms</h2>
+                    <p style="color:#ccc;">We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will try to provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
+                </div>
+                <div class="section">
+                    <h2 style="color: #00ccff;">Contact Information</h2>
+                    <p style="color:#ccc;">If you have any questions about these Terms, please contact us:</p>
+                    <p style="color:#ffc600;">Email: <a href="mailto:moddarkrevolt@gmail.com" style="color:#FFD700; font-weight:bold;text-shadow:0 0 7px #FFD70077;" >moddarkrevolt@gmail.com</a></p>
+                </div>
+                <div class="section" style="text-align: center; margin-bottom: .5em;">
+                    <button id="close-terms-modal-btm" style="background:linear-gradient(90deg,#007bff,#FFD700);color:#222;font-weight:bold;border:none;padding:.8em 2.1em;border-radius:32px;margin:1.2em auto 0 auto;box-shadow:0 0 10px #FFD70066,0 0 24px #2a2a3a;">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Parallax LAYERS config
+        const layerImgs = [
+            [
+                'https://www.caimeo.shop/ai/mainframe-bg-1.png',
+                'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1500&q=80'
+            ],
+            [
+                'https://www.caimeo.shop/ai/mainframe-bg-2.png',
+                'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1500&q=80'
+            ],
+            [
+                'https://www.caimeo.shop/ai/mainframe-bg-3.png',
+                'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1500&q=80'
+            ]
+        ];
+        const unsplashImages = [
+            'unsplash1',
+            'unsplash2',
+            'unsplash3',
+            '1', '2', '3'
+        ];
+        function parallaxRandomSet() {
+            let picks = [0, 1, 2].sort(() => Math.random() - 0.5);
+            return [
+                layerImgs[picks[0]][Math.floor(Math.random()*layerImgs[picks[0]].length)],
+                layerImgs[picks[1]][Math.floor(Math.random()*layerImgs[picks[1]].length)],
+                layerImgs[picks[2]][Math.floor(Math.random()*layerImgs[picks[2]].length)],
+                layerImgs[Math.floor(Math.random()*3)][Math.floor(Math.random()*2)],
+                layerImgs[Math.floor(Math.random()*3)][Math.floor(Math.random()*2)],
+            ];
+        }
+        function pickRandomBg(){
+            const which = Math.floor(Math.random() * unsplashImages.length);
+            return unsplashImages[which];
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            // Pick a random background on each load
+            const bgKey = pickRandomBg();
+            document.body.setAttribute('data-bg', bgKey);
+            // Hamburger/mobile
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const navLinks = document.querySelector('.nav-links');
+            hamburgerMenu.addEventListener('click', () => {
+                hamburgerMenu.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    if (navLinks.classList.contains('active')) {
+                        hamburgerMenu.classList.remove('active');
+                        navLinks.classList.remove('active');
+                    }
+                });
+            });
+            // Parallax text effect
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                document.querySelectorAll('.parallax-text:not(.section-title-static)').forEach(el => {
+                    let factor = 0.17 + Math.random() * 0.18; 
+                    if(window.innerWidth<=768) factor = 0.09;
+                    el.style.transform = `translateY(${scrollY * factor}px)`;
+                });
+            });
+            // CSS rgb compatibility fix
+            const rootStyle = document.documentElement.style;
+            if (!rootStyle.getPropertyValue('--neon-1-rgb')) rootStyle.setProperty('--neon-1-rgb', '0,255,255');
+            if (!rootStyle.getPropertyValue('--neon-2-rgb')) rootStyle.setProperty('--neon-2-rgb', '0,191,255');
+            if (!rootStyle.getPropertyValue('--gradient-end-rgb')) rootStyle.setProperty('--gradient-end-rgb', '125,60,152');
+            // ----------- MULTILAYER PARALLAX -----------
+            function setInitialLayerImgs() {
+                if(window.innerWidth<=768) return;
+                const [bg, mid1, fg, mid2, above] = parallaxRandomSet();
+                const plxbg = document.getElementById('plx-bg');
+                const plxmid1 = document.getElementById('plx-mid1');
+                const plxfg = document.getElementById('plx-fg');
+                const plxmid2 = document.getElementById('plx-mid2');
+                const plxabove = document.getElementById('plx-above');
+                if(plxbg) plxbg.style.backgroundImage = `url('${bg}')`;
+                if(plxmid1) plxmid1.style.backgroundImage = `url('${mid1}')`;
+                if(plxfg) plxfg.style.backgroundImage = `url('${fg}')`;
+                if(plxmid2) plxmid2.style.backgroundImage = `url('${mid2}')`;
+                if(plxabove) plxabove.style.backgroundImage = `url('${above}')`;
+                parallaxScrollLayers();
+            }
+            function parallaxScrollLayers() {
+                if(window.innerWidth<=768) return;
+                const s = window.scrollY;
+                const h = window.innerHeight;
+                const plxbg = document.getElementById('plx-bg');
+                const plxmid1 = document.getElementById('plx-mid1');
+                const plxfg = document.getElementById('plx-fg');
+                const plxmid2 = document.getElementById('plx-mid2');
+                const plxabove = document.getElementById('plx-above');
+                if(plxbg) plxbg.style.transform = `translateY(${s*0.13}px) scale(1.014)`;
+                if(plxmid1) plxmid1.style.transform = `translateY(${s*0.18}px) scale(1.012)`;
+                if(plxfg) plxfg.style.transform = `translateY(${s*0.23}px) scale(1.02)`;
+                if(plxmid2) plxmid2.style.transform = `translateY(${s*0.31}px) scale(1.023)`;
+                if(plxabove) plxabove.style.transform = `translateY(${s*0.41}px) scale(1.028)`;
+                const docHeight = document.body.scrollHeight;
+                const progress = Math.min(1, s / (docHeight - h));
+                if(plxfg) plxfg.style.opacity = (0.11 + 0.19 * Math.abs(Math.sin(progress*2.1))) + .07;
+                if(plxbg) plxbg.style.opacity = (0.13 + 0.10 * Math.abs(Math.cos(progress*2.5))) + .07;
+                if(plxmid1) plxmid1.style.opacity = (0.05 + 0.14 * Math.abs(Math.sin(progress*3.3+1.99))) + .04;
+                if(plxmid2) plxmid2.style.opacity = (0.045 + 0.14 * Math.abs(Math.sin(progress*2.99+2.91))) + .03;
+                if(plxabove) plxabove.style.opacity = (0.027 + 0.10 * Math.abs(Math.sin(progress*5.3 + 0.7))) + .047;
+            }
+            setInitialLayerImgs();
+            document.addEventListener('scroll', parallaxScrollLayers);
+            window.addEventListener('resize', setInitialLayerImgs);
+            setTimeout(()=>setInitialLayerImgs(), 900);
+            // -------- Carousel/Preview Logic --------
+            const carouselContainer = document.querySelector('.carousel-images');
+            const imgs = carouselContainer.querySelectorAll('.carousel-image');
+            const leftBtn = document.querySelector('.carousel-nav-btn.left');
+            const rightBtn = document.querySelector('.carousel-nav-btn.right');
+            const captionBox = document.querySelector('.carousel-caption');
+            let currentImg = 0;
+            function showPreview(idx) {
+                imgs.forEach((img, i) => img.style.display = i === idx ? 'block': 'none');
+                let cap = imgs[idx].getAttribute('data-caption') || '';
+                captionBox.textContent = cap;
+            }
+            leftBtn.addEventListener('click', function(){
+                currentImg = (currentImg - 1 + imgs.length) % imgs.length;
+                showPreview(currentImg);
+            });
+            rightBtn.addEventListener('click', function(){
+                currentImg = (currentImg + 1) % imgs.length;
+                showPreview(currentImg);
+            });
+            showPreview(0);
+
+            // Beta signup demo: Just alert for now as placeholder
+            const betaBtn = document.querySelector('.cta-beta-signup');
+            if(betaBtn) {
+                betaBtn.addEventListener('click',()=>alert('Thank you! You will be notified for the Mainframe Beta.'));
+            }
+        });
+    </script>
+    <script>
+        // --------- PRIVACY & TERMS MODAL POPUPS ----------
+        const modalOverlay = document.getElementById('modal-overlay');
+        const privacyModal = document.getElementById('privacy-modal');
+        const termsModal = document.getElementById('terms-modal');
+        document.getElementById('privacy-policy-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            modalOverlay.style.display = 'block';
+            privacyModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+        document.getElementById('terms-of-service-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            modalOverlay.style.display = 'block';
+            termsModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+        function closePrivacy() {
+            modalOverlay.style.display = 'none';
+            privacyModal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+        document.getElementById('close-privacy-modal').addEventListener('click', closePrivacy);
+        document.getElementById('close-privacy-modal-btm').addEventListener('click', closePrivacy);
+        function closeTerms() {
+            modalOverlay.style.display = 'none';
+            termsModal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+        document.getElementById('close-terms-modal').addEventListener('click', closeTerms);
+        document.getElementById('close-terms-modal-btm').addEventListener('click', closeTerms);
+        modalOverlay.addEventListener('click', function(){
+            closePrivacy();
+            closeTerms();
+        });
+    </script>
 </body>
 </html>
