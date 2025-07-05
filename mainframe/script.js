@@ -1,4 +1,4 @@
-{ marked } from 'marked';
+import { marked } from 'marked';
 import katex from 'katex';
 import hljs from 'highlight.js';
 import DOMPurify from 'dompurify';
@@ -7,6 +7,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signO
 import { getFirestore, doc, getDoc, setDoc, updateDoc, increment, serverTimestamp, collection, addDoc, query, where, orderBy, getDocs } from 'firebase/firestore';
 
 // --- Firebase Configuration ---
+/* @tweakable Firebase project configuration - update if deploying to different domains */
 const firebaseConfig = {
   apiKey: "AIzaSyDYXyAmDC_HF4scI21VeLlS4aM2k2RJ1Wc",
   authDomain: "mainframe-e3b13.firebaseapp.com",
@@ -15,6 +16,23 @@ const firebaseConfig = {
   messagingSenderId: "85561924382",
   appId: "1:85561924382:web:5d5eddda04a466ec56870f",
   measurementId: "G-N2Q017PZXB"
+};
+
+/* @tweakable List of authorized domains for Firebase authentication */
+const AUTHORIZED_DOMAINS = [
+  'caimeo.shop',
+  'mainframe-e3b13.firebaseapp.com',
+  'localhost'
+];
+
+/* @tweakable Application deployment configuration */
+const DEPLOYMENT_CONFIG = {
+  /* @tweakable Base URL for the application when deployed */
+  BASE_URL: 'https://caimeo.shop/mainframe/',
+  /* @tweakable Whether to use the custom domain for referer headers */
+  USE_CUSTOM_DOMAIN_REFERER: true,
+  /* @tweakable Google AdSense client ID for ad serving */
+  GOOGLE_ADS_CLIENT_ID: 'ca-pub-3839146786704737'
 };
 
 // Initialize Firebase
@@ -722,12 +740,17 @@ function showTypingIndicator() {
 async function callOpenRouterAPI(apiKey, model, messages) {
     const openRouterModelId = model.startsWith('openrouter:') ? model : `openrouter:${model}`;
     
+    /* @tweakable Referer URL to send with OpenRouter API requests */
+    const refererUrl = DEPLOYMENT_CONFIG.USE_CUSTOM_DOMAIN_REFERER 
+        ? DEPLOYMENT_CONFIG.BASE_URL 
+        : window.location.origin;
+    
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${apiKey}`,
-            'HTTP-Referer': `${window.location.origin}`,
+            'HTTP-Referer': refererUrl,
             'X-Title': 'ORION'
         },
         body: JSON.stringify({ model: model.replace('openrouter:', ''), messages })
@@ -1566,6 +1589,16 @@ function generateDeviceFingerprint() {
 function initializeAppUI() {
     /* @tweakable Time in milliseconds to wait for UI elements to be ready */
     const UI_INIT_TIMEOUT = 1000;
+    
+    /* @tweakable Check if running on authorized domain */
+    const currentDomain = window.location.hostname;
+    const isAuthorizedDomain = AUTHORIZED_DOMAINS.some(domain => 
+        currentDomain === domain || currentDomain.endsWith('.' + domain)
+    );
+    
+    if (!isAuthorizedDomain && currentDomain !== 'localhost' && !currentDomain.includes('127.0.0.1')) {
+        console.warn(`Application running on unauthorized domain: ${currentDomain}`);
+    }
     
     return new Promise((resolve, reject) => {
         const initTimer = setTimeout(() => {
