@@ -1,2 +1,331 @@
+<html lang="en">
+<head>
+
+
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839146786704737"
      crossorigin="anonymous"></script>
+
+
+
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ORION UI</title>
+    <script type="importmap">
+    {
+      "imports": {
+        "marked": "https://cdn.jsdelivr.net/npm/marked@13.0.0/lib/marked.esm.js",
+        "katex": "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.mjs",
+        "highlight.js": "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/es/highlight.min.js",
+        "dompurify": "https://cdn.jsdelivr.net/npm/dompurify/dist/purify.es.min.js",
+        "firebase/app": "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js",
+        "firebase/auth": "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js",
+        "firebase/firestore": "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
+      }
+    }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSY3SV" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="glow-container"></div>
+
+    <!-- Firebase Login Screen -->
+    <div id="login-overlay">
+        <div id="login-box">
+            <div class="orion-logo">Mainframe</div>
+            <div id="auth-error" class="auth-error-message hidden"></div>
+            
+            <form class="auth-form" id="auth-form">
+                 <input type="email" id="email-input" class="auth-input" placeholder="Email" required autocomplete="email">
+                 <input type="password" id="password-input" class="auth-input" placeholder="Password" required autocomplete="current-password">
+                 <button id="auth-action-btn" class="auth-button">Sign In</button>
+            </form>
+
+            <div class="auth-separator">
+                <span>or</span>
+            </div>
+            
+            <button id="sign-in-btn" class="animated-text-button animated-container google-signin-btn">
+                <div class="glow-overlay"></div>
+                <i class="fab fa-google" style="margin-right: 10px; z-index: 2;"></i>
+                <span style="z-index: 2;">Sign in with Google</span>
+            </button>
+            
+            <p class="auth-toggle-text">
+                <span id="auth-toggle-message">Don't have an account?</span>
+                <a href="#" id="auth-toggle-link">Register</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="app-container" class="hidden">
+        <header>
+            <div class="orion-logo">Mainframe<br><span style="font-size: 16px; margin-top: -9px; display: block;">Orion <span style="font-size: 16px;">Version 1.0.5</span> <span id="credits-display" style="font-size: 16px; color: var(--placeholder-color); margin-left: 8px;"></span></span></div>
+            <div class="header-buttons">
+                <button id="subscription-btn" class="animated-icon-button animated-container" aria-label="Subscription Status">
+                    <div class="glow-overlay"></div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="z-index: 11;">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#999"/>
+                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14px" fill="#999" dy=".1em">U</text>
+                    </svg>
+                </button>
+                <button id="q-btn" class="animated-icon-button animated-container" aria-label="Q Button">
+                    <div class="glow-overlay"></div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="z-index: 11;">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#999"/>
+                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14px" fill="#999" dy=".1em">Q</text>
+                    </svg>
+                </button>
+                <button id="info-btn" class="animated-icon-button animated-container" aria-label="Information">
+                    <div class="glow-overlay"></div>
+                    <i class="fas fa-info-circle"></i>
+                </button>
+                <button id="help-btn" class="animated-icon-button animated-container" aria-label="Help">
+                    <div class="glow-overlay"></div>
+                    <i class="fas fa-question-circle"></i>
+                </button>
+                <button id="theme-toggle-btn" class="animated-icon-button animated-container theme-toggle-button" aria-label="Toggle Theme">
+                    <div class="glow-overlay"></div>
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="settings-btn" class="animated-icon-button animated-container" aria-label="Settings">
+                    <div class="glow-overlay"></div>
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </header>
+
+        <div id="main-content">
+            <div id="chat-log" class="chat-container">
+                <!-- Messages will be injected here by JavaScript -->
+            </div>
+
+            <div id="suggestions-container" class="suggestion-buttons">
+                <!-- Suggestion chips will be added here -->
+            </div>
+
+            <div class="bottom-area">
+                <div class="main-container">
+                    <div class="search-box animated-container" style="position: relative;">
+                        <div id="image-preview-container" class="hidden">
+                            <img id="image-preview" src="" alt="Image preview"/>
+                            <button id="remove-image-btn" title="Remove image">&times;</button>
+                        </div>
+                        <div class="glow-overlay"></div>
+                        <input type="text" id="input-box" class="search-input" placeholder="Type your message here...">
+                        <input type="file" id="file-input" accept="image/*" class="hidden">
+                    </div>
+                    <button id="attach-button" class="animated-icon-button animated-container" aria-label="Attach file">
+                        <div class="glow-overlay"></div>
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                    <button id="send-button" class="animated-icon-button animated-container" aria-label="Send message">
+                        <div class="glow-overlay"></div>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div> <!-- end main-content -->
+
+        <aside id="sidebar">
+            <button id="close-sidebar"><i class="fas fa-times"></i></button>
+            <h2 class="text-2xl font-semibold mb-6">Settings</h2>
+            <div class="space-y-4">
+                
+                <!-- Conversations Section -->
+                <div class="sidebar-setting-group">
+                    <h3 style="cursor: pointer;" id="conversations-header">Conversations <span id="conversations-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <div id="conversations-content-container" class="space-y-2" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
+                        <!-- Conversation items will be injected here -->
+                    </div>
+                </div>
+
+                <!-- Keys Section -->
+                <div class="sidebar-setting-group">
+                    <h3 style="cursor: pointer;" id="keys-header">Keys <span id="keys-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <div id="keys-content-container" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
+                        <div>
+                            <label for="api-key-input" class="text-sm" style="color: var(--sidebar-label-color);">OpenRouter API Key:</label>
+                            <div id="api-key-display" style="display: none;">
+                                <span class="api-key-masked">••••••••••••••••</span>
+                                <button class="edit-api-btn animated-container" style="position: relative; z-index: 1;">
+                                    <div class="glow-overlay"></div>
+                                    <span>Edit API</span>
+                                </button>
+                            </div>
+                            <input type="password" id="api-key-input" class="api-key-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Model Section -->
+                <div class="sidebar-setting-group">
+                    <h3 style="cursor: pointer;" id="chat-model-header">Chat Model <span id="chat-model-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <div id="chat-model-content-container" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
+                        <div class="relative">
+                            <button id="chat-model-btn" class="sidebar-setting animated-container custom-dropdown-button">
+                                <div class="glow-overlay"></div>
+                                <span id="selected-chat-model">Select Model</span>
+                                <i class="fas fa-chevron-up"></i>
+                            </button>
+                            <div id="model-selector" class="custom-dropdown-menu hidden">
+                                <!-- Model options will be injected here by new JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Persona Section -->
+                <div class="sidebar-setting-group">
+                    <h3 style="cursor: pointer;" id="persona-header">Persona <span id="persona-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <div id="persona-content-container" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
+                        <div class="relative">
+                            <button id="persona-btn" class="sidebar-setting animated-container custom-dropdown-button">
+                                <div class="glow-overlay"></div>
+                                <span id="selected-persona">ORION</span>
+                                <i class="fas fa-chevron-up"></i>
+                            </button>
+                            <div id="personas-content-container" class="custom-dropdown-menu hidden">
+                               <!-- Persona options will be injected here by new JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Themes Section -->
+                <div class="sidebar-setting-group">
+                    <h3 style="cursor: pointer;" id="themes-header">Themes <span id="themes-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <div id="themes-content-container" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
+                        <div class="relative">
+                            <button id="theme-btn" class="sidebar-setting animated-container custom-dropdown-button">
+                                <div class="glow-overlay"></div>
+                                <span id="selected-theme">ORION</span>
+                                <i class="fas fa-chevron-up"></i>
+                            </button>
+                            <div id="theme-dropdown" class="custom-dropdown-menu hidden">
+                               <a href="#" data-value="orion">ORION</a>
+                               <a href="#" data-value="gemini">GEMINI</a>
+                               <a href="#" data-value="anthropic-dawn">Anthropic-Dawn</a>
+                               <a href="#" data-value="copilot-neon">Copilot-Neon</a>
+                               <a href="#" data-value="cyber-forge">Cyber-Forge</a>
+                               <a href="#" data-value="quantum-flux">Quantum-Flux</a>
+                               <a href="#" data-value="google-ai-mode">Google-AI-Mode</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Section -->
+                <div class="sidebar-setting-group" style="margin-top: auto;">
+                    <button id="sign-out-btn">Sign Out</button>
+                </div>
+
+            </div>
+        </aside>
+
+        <!-- Info Popup -->
+        <div id="info-popup-overlay" class="hidden popup-overlay">
+            <div id="info-popup" class="info-popup-container">
+                <button id="close-info-popup" class="close-popup-btn"><i class="fas fa-times"></i></button>
+                <h3>Model Information</h3>
+                <ul id="model-info-list" class="list-disc list-inside space-y-2" style="color: var(--sidebar-label-color); max-height: 200px; overflow-y: auto;">
+                    <!-- Model info will be dynamically populated -->
+                </ul>
+                <p class="mt-4 text-sm text-center" style="color: var(--placeholder-color);">System Last Updated: <span id="last-update-date"></span></p>
+            </div>
+        </div>
+
+        <!-- Help Popup -->
+        <div id="help-popup-overlay" class="hidden popup-overlay">
+            <div id="help-popup" class="info-popup-container">
+                <button id="close-help-popup" class="close-popup-btn"><i class="fas fa-times"></i></button>
+                <h3>MAINFRAME : ORION Edition</h3>
+                <p class="text-center" style="color: var(--sidebar-label-color);">
+                    This is the ORION user interface, designed for seamless interaction with various AI models and tools.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Subscription Popup -->
+        <div id="subscription-popup-overlay" class="hidden popup-overlay">
+            <div id="subscription-popup" class="info-popup-container">
+                <button id="close-subscription-popup" class="close-popup-btn"><i class="fas fa-times"></i></button>
+                <h3>Subscription Status</h3>
+                <div id="subscription-info-content" style="color: var(--sidebar-label-color);">
+                    <!-- Content will be populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Persona Modal -->
+        <div id="create-persona-modal" class="hidden popup-overlay">
+          <div id="create-persona-content" class="info-popup-container">
+             <button id="close-create-persona-btn" class="close-popup-btn"><i class="fas fa-times"></i></button>
+             <h3>Create New Persona</h3>
+             <form id="create-persona-form">
+                <div class="space-y-4">
+                    <div>
+                        <label for="persona-name">Persona Name</label>
+                        <input type="text" id="persona-name" required class="api-key-input" maxlength="30">
+                    </div>
+                    <div>
+                        <label for="persona-description">System Prompt</label>
+                        <textarea id="persona-description" required class="api-key-input" rows="6" style="resize: vertical;"></textarea>
+                    </div>
+                </div>
+                <div style="text-align: right; margin-top: 1rem;">
+                    <button type="submit" class="add-community-persona-btn">Create</button>
+                </div>
+             </form>
+          </div>
+        </div>
+
+        <!-- Community Personas Modal -->
+        <div id="community-personas-modal" class="hidden popup-overlay">
+          <div id="community-personas-content" class="info-popup-container">
+             <button id="close-community-personas-btn" class="close-popup-btn"><i class="fas fa-times"></i></button>
+             <h3>Community Personas</h3>
+             <p style="text-align: center; margin-bottom: 1rem; color: var(--sidebar-label-color);">
+                Submit your personas to: moddarkrevolt@gmail.com
+             </p>
+             <div id="community-personas-list">
+               <!-- Populated by JS -->
+             </div>
+          </div>
+        </div>
+        
+        <!-- Publish Persona Modal -->
+        <div id="publish-persona-modal" class="hidden popup-overlay">
+          <form id="publish-persona-form" class="info-popup-container" autocomplete="off">
+             <button type="button" id="publish-persona-cancel-btn" class="close-popup-btn"><i class="fas fa-times"></i></button>
+            <h3 class="publish-persona-header">Share Persona</h3>
+            <div class="space-y-4">
+                <div>
+                  <label for="publish-persona-username">Creator Username <span style="color:#aaa">(optional)</span></label>
+                  <input type="text" id="publish-persona-username" maxlength="20" placeholder="anon" class="api-key-input">
+                </div>
+                <div>
+                  <label for="publish-persona-title">Persona Name</label>
+                  <input type="text" id="publish-persona-title" maxlength="34" required class="api-key-input">
+                </div>
+                <div>
+                  <label for="publish-persona-prompt">System Prompt:</label>
+                  <textarea id="publish-persona-prompt" rows="4" required class="api-key-input" style="resize: vertical;"></textarea>
+                </div>
+            </div>
+            <div style="text-align: right; margin-top: 1rem;">
+              <button type="submit" class="add-community-persona-btn">Publish</button>
+            </div>
+          </form>
+        </div>
+
+    </div>
+
+    <script type="module" src="script.js"></script>
+
+</body>
+</html>
