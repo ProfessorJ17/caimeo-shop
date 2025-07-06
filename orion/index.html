@@ -1,16 +1,8 @@
 <html lang="en">
 <head>
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839146786704737"
-     crossorigin="anonymous"></script>
-
-  
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ORION UI</title>
-    <meta name="google-signin-client_id" content="85561924382-t8ua162b0jaufroelvmb314foagrr80s.apps.googleusercontent.com">
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script src="https://unpkg.com/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
     <script type="importmap">
     {
       "imports": {
@@ -20,8 +12,7 @@
         "dompurify": "https://cdn.jsdelivr.net/npm/dompurify/dist/purify.es.min.js",
         "firebase/app": "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js",
         "firebase/auth": "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js",
-        "firebase/firestore": "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js",
-        "jwt-decode": "https://cdn.jsdelivr.net/npm/jwt-decode@4.0.0/+esm"
+        "firebase/firestore": "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
       }
     }
     </script>
@@ -49,18 +40,11 @@
                 <span>or</span>
             </div>
             
-            <div id="g_id_onload"
-                 data-client_id="85561924382-t8ua162b0jaufroelvmb314foagrr80s.apps.googleusercontent.com"
-                 data-callback="handleGoogleCredentialResponse"
-                 data-auto_select="true">
-            </div>
-            <div class="g_id_signin" 
-                 data-type="standard" 
-                 data-size="large" 
-                 data-text="signin_with" 
-                 data-shape="rectangular" 
-                 data-logo_alignment="left">
-            </div>
+            <button id="sign-in-btn" class="animated-text-button animated-container google-signin-btn">
+                <div class="glow-overlay"></div>
+                <i class="fab fa-google" style="margin-right: 10px; z-index: 2;"></i>
+                <span style="z-index: 2;">Sign in with Google</span>
+            </button>
             
             <p class="auth-toggle-text">
                 <span id="auth-toggle-message">Don't have an account?</span>
@@ -69,20 +53,10 @@
         </div>
     </div>
 
-    <!-- Ad containers for inactive users only -->
-    <div id="ad-container-top" class="ad-container hidden">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-3839146786704737"
-             data-ad-slot="1234567890"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-    </div>
-
     <!-- Main App Container -->
     <div id="app-container" class="hidden">
         <header>
-            <div class="orion-logo">Mainframe<br><span style="font-size: 16px; margin-top: -9px; display: block;">Orion <span style="font-size: 16px;">Version 1.0.5</span> <span id="credits-display" style="font-size: 16px; color: var(--placeholder-color); margin-left: 8px;"></span></span></div>
+            <div class="orion-logo">Mainframe<br><span style="font-size: 16px; margin-top: -9px; display: block;">Orion <span style="font-size: 16px;">Version 1.0.6</span> <span id="credits-display" style="font-size: 16px; color: var(--placeholder-color); margin-left: 8px;"></span></span></div>
             <div class="header-buttons">
                 <button id="subscription-btn" class="animated-icon-button animated-container" aria-label="Subscription Status">
                     <div class="glow-overlay"></div>
@@ -149,16 +123,6 @@
             </div>
         </div> <!-- end main-content -->
 
-        <!-- Ad container for inactive users -->
-        <div id="ad-container-bottom" class="ad-container hidden">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-3839146786704737"
-                 data-ad-slot="0987654321"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-        </div>
-
         <aside id="sidebar">
             <button id="close-sidebar"><i class="fas fa-times"></i></button>
             <h2 class="text-2xl font-semibold mb-6">Settings</h2>
@@ -166,7 +130,7 @@
                 
                 <!-- Conversations Section -->
                 <div class="sidebar-setting-group">
-                    <h3 style="cursor: pointer;" id="conversations-header" aria-expanded="true">Conversations <span id="conversations-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <h3 style="cursor: pointer;" id="conversations-header">Conversations <span id="conversations-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
                     <div id="conversations-content-container" class="space-y-2" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
                         <!-- Conversation items will be injected here -->
                     </div>
@@ -174,7 +138,7 @@
 
                 <!-- Keys Section -->
                 <div class="sidebar-setting-group">
-                    <h3 style="cursor: pointer;" id="keys-header" aria-expanded="true">Keys <span id="keys-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <h3 style="cursor: pointer;" id="keys-header">Keys <span id="keys-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
                     <div id="keys-content-container" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
                         <div>
                             <label for="api-key-input" class="text-sm" style="color: var(--sidebar-label-color);">OpenRouter API Key:</label>
@@ -192,7 +156,7 @@
 
                 <!-- Chat Model Section -->
                 <div class="sidebar-setting-group">
-                    <h3 style="cursor: pointer;" id="chat-model-header" aria-expanded="true">Chat Model <span id="chat-model-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <h3 style="cursor: pointer;" id="chat-model-header">Chat Model <span id="chat-model-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
                     <div id="chat-model-content-container" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
                         <div class="relative">
                             <button id="chat-model-btn" class="sidebar-setting animated-container custom-dropdown-button">
@@ -209,7 +173,7 @@
 
                 <!-- Persona Section -->
                 <div class="sidebar-setting-group">
-                    <h3 style="cursor: pointer;" id="persona-header" aria-expanded="true">Persona <span id="persona-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <h3 style="cursor: pointer;" id="persona-header">Persona <span id="persona-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
                     <div id="persona-content-container" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
                         <div class="relative">
                             <button id="persona-btn" class="sidebar-setting animated-container custom-dropdown-button">
@@ -226,7 +190,7 @@
 
                 <!-- Themes Section -->
                 <div class="sidebar-setting-group">
-                    <h3 style="cursor: pointer;" id="themes-header" aria-expanded="true">Themes <span id="themes-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <h3 style="cursor: pointer;" id="themes-header">Themes <span id="themes-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
                     <div id="themes-content-container" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
                         <div class="relative">
                             <button id="theme-btn" class="sidebar-setting animated-container custom-dropdown-button">
