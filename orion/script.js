@@ -634,6 +634,12 @@ class SuggestionsManager {
 const suggestionsManager = new SuggestionsManager();
 
 // --- Chat & API Logic ---
+// Function to sanitize header values to ISO-8859-1
+function sanitizeHeaderValue(value) {
+    // Replace non-ISO-8859-1 characters (outside U+0000 to U+00FF) with a space
+    return value.replace(/[^\x00-\xFF]/g, ' ').trim();
+}
+
 function typewriterEffect(sender, message) {
     // Remove any existing typing indicator
     const typingIndicator = chatLog.querySelector('.typing-indicator');
@@ -695,22 +701,42 @@ function showTypingIndicator() {
 async function callOpenRouterAPI(apiKey, model, messages) {
     const openRouterModelId = model.startsWith('openrouter:') ? model : `openrouter:${model}`;
     
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`,
-            'HTTP-Referer': `${window.location.origin}`,
-            'X-Title': 'ORION'
-        },
-        body: JSON.stringify({ model: model.replace('openrouter:', ''), messages })
-    });
-    if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.error?.message || `OpenRouter API Error: ${response.status}`);
+    // Get persona name safely and sanitize it
+    let activePersonaDetails = PERSONAS[currentPersonaId] || customPersonas.find(p => p.id === currentPersonaId);
+    const title = activePersonaDetails ? activePersonaDetails.name : 'ORION';
+    const sanitizedTitle = sanitizeHeaderValue(title);
+
+    // Validate and sanitize apiKey
+    const sanitizedApiKey = sanitizeHeaderValue(apiKey);
+
+    // Validate HTTP-Referer
+    const referer = window.location.origin; // Should be a valid URL, but verify
+    if (referer && !referer.match(/^https?:\/\/[a-zA-Z0-9.-]+/)) {
+        console.error('Invalid HTTP-Referer:', referer);
+        throw new Error('Invalid HTTP-Referer value');
     }
-    const data = await response.json();
-    return data.choices[0].message.content;
+
+    try {
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sanitizedApiKey}`,
+                'HTTP-Referer': referer,
+                'X-Title': sanitizedTitle // Use sanitized title
+            },
+            body: JSON.stringify({ model: model.replace('openrouter:', ''), messages })
+        });
+        if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.error?.message || `OpenRouter API Error: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.choices[0].message.content;
+    } catch (error) {
+        console.error('Fetch error:', error, { title, sanitizedTitle, apiKey, referer });
+        throw error; // Re-throw to be handled by the caller
+    }
 }
 
 async function sendMessage() {
@@ -787,7 +813,7 @@ async function sendMessage() {
         } else {
             await ensurePuterReady();
             // Puter.ai.chat needs to be checked if it supports complex content
-            const response = await websim.chat.completions.create({ messages: apiMessages, model: selectedModelId });
+            const response = await window.puter.ai.chat.completions.create({ messages: apiMessages, model: selectedModelId });
             botResponse = response.content;
         }
 
@@ -1846,7 +1872,7 @@ function setupUIEventListeners() {
 
     createPersonaForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const name = document.getElementById('persona-name').value.trim();
+        const name = sanitizeHeaderValue(document.getElementById('persona-name').value.trim());
         const description = document.getElementById('persona-description').value.trim();
         
         const newPersona = {
@@ -1872,6 +1898,14 @@ function setupUIEventListeners() {
     sendButton.addEventListener('click', sendMessage);
     inputBox.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
     
+    apiKeyInput.addEventListener('input', (e) => {
+        const value = e.target.value;
+        if (/[^\x00-\xFF]/.test(value)) {
+            alert('API key contains invalid characters. Please use only Latin-1 (ISO-8859-1) characters.');
+            e.target.value = sanitizeHeaderValue(value);
+        }
+    });
+
     apiKeyInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             const key = apiKeyInput.value.trim();
