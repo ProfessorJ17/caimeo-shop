@@ -2,9 +2,8 @@ import { marked } from 'marked';
 import katex from 'katex';
 import hljs from 'highlight.js';
 import DOMPurify from 'dompurify';
-import { jwtDecode } from 'jwt-decode';
 import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc, updateDoc, increment, serverTimestamp, collection, addDoc, query, where, orderBy, getDocs } from 'firebase/firestore';
 
 // --- Firebase Configuration ---
@@ -23,41 +22,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
-
-// Add Google Sign-In handler
-window.handleGoogleCredentialResponse = function(response) {
-  console.log("Google Sign-In response received.");
-  if (response.credential) {
-    try {
-      if (typeof jwtDecode === 'undefined') {
-        throw new Error('jwt-decode library not loaded');
-      }
-      const data = jwtDecode(response.credential);
-      console.log("Decoded token:", data);
-
-      const credential = GoogleAuthProvider.credential(response.credential);
-      signInWithCredential(auth, credential).then((result) => {
-        console.log("Firebase authentication successful:", result.user.email);
-        // The onAuthStateChanged listener will handle the full UI setup
-      }).catch((error) => {
-        console.error("Firebase sign-in error:", { code: error.code, message: error.message, credential: response.credential });
-        const authErrorDiv = document.getElementById('auth-error');
-        authErrorDiv.textContent = `Google sign-in failed: ${error.message} (${error.code})`;
-        authErrorDiv.classList.remove('hidden');
-      });
-    } catch (error) {
-       console.error("Token decoding error:", { message: error.message, stack: error.stack, credential: response.credential });
-      const authErrorDiv = document.getElementById('auth-error');
-      authErrorDiv.textContent = `Failed to process Google Sign-In token: ${error.message}`;
-      authErrorDiv.classList.remove('hidden');
-    }
-  } else {
-    console.error("No credential received from Google Sign-In", response);
-    const authErrorDiv = document.getElementById('auth-error');
-    authErrorDiv.textContent = "Google Sign-in failed: No credential received.";
-    authErrorDiv.classList.remove('hidden');
-  }
-};
 
 // --- Glow Effect Manager ---
 class GlowManager {
@@ -338,14 +302,10 @@ function updateSubscriptionDisplay(details) {
         statusText = `Status: Active<br>Expires on: ${endDate ? endDate.toLocaleDateString() : 'N/A'}`;
         statusColor = 'green';
         userLetter = 'U';
-        // Hide ads for active users
-        hideAds();
     } else {
         statusText = 'Status: Inactive<br>Please purchase a subscription.';
         statusColor = 'red';
         userLetter = 'P';
-        // Show ads for inactive users
-        showAds();
     }
 
     subscriptionInfoContent.innerHTML = statusText;
@@ -366,34 +326,6 @@ function updateSubscriptionDisplay(details) {
     }
 }
 
-function showAds() {
-    const adContainers = document.querySelectorAll('.ad-container');
-    adContainers.forEach(container => {
-        container.classList.remove('hidden');
-    });
-    
-    // Initialize ads if they haven't been loaded yet
-    if (typeof adsbygoogle !== 'undefined') {
-        try {
-            const ads = document.querySelectorAll('.adsbygoogle');
-            ads.forEach(ad => {
-                if (!ad.getAttribute('data-adsbygoogle-status')) {
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                }
-            });
-        } catch (e) {
-            console.log('Ad loading error:', e);
-        }
-    }
-}
-
-function hideAds() {
-    const adContainers = document.querySelectorAll('.ad-container');
-    adContainers.forEach(container => {
-        container.classList.add('hidden');
-    });
-}
-
 async function decrementCredits() {
     const user = auth.currentUser;
     if (!user) return;
@@ -401,6 +333,7 @@ async function decrementCredits() {
     try {
         // Add usage to local storage first
         const updatedUsage = addLocalCreditUsage(user.uid);
+        /* @tweakable Maximum daily message limit for inactive users */
         const maxCredits = config.DAILY_CREDIT_LIMIT;
         userCredits.count = maxCredits - updatedUsage.length;
 
@@ -421,6 +354,7 @@ async function decrementCredits() {
         // Update the credits display immediately
         const creditsDisplay = document.getElementById('credits-display');
         if (creditsDisplay && subscriptionDetails.status !== 'Active') {
+            /* @tweakable Format for displaying remaining credits */
             creditsDisplay.textContent = `Credits: ${userCredits.count}/${maxCredits}`;
         }
 
@@ -445,6 +379,7 @@ function getLocalCreditUsage(userId) {
         if (stored) {
             const usage = JSON.parse(stored);
             
+            /* @tweakable Credit reset time (hours and minutes in 24hr format) */
             const RESET_HOUR = 19;
             const RESET_MINUTE = 0;
 
@@ -467,6 +402,7 @@ function addLocalCreditUsage(userId) {
         const key = `credit_usage_${userId}`;
         let usage = getLocalCreditUsage(userId);
         
+        /* @tweakable Maximum number of stored credit usage entries */
         const MAX_STORED_ENTRIES = 100;
 
         // Add new usage entry
@@ -727,6 +663,7 @@ function typewriterEffect(sender, message) {
          const imgElement = document.createElement('img');
          imgElement.src = URL.createObjectURL(attachedFile);
          imgElement.style.maxWidth = '200px';
+         /* @tweakable Controls the max height of the attached image preview in the chat */
          imgElement.style.maxHeight = '200px';
          imgElement.style.borderRadius = '8px';
          imgElement.style.marginTop = '8px';
@@ -845,10 +782,13 @@ async function sendMessage() {
     try {
         let botResponse = '';
         if (userApiKey && selectedModelId) {
+            // Modify callOpenRouterAPI to handle complex content
             botResponse = await callOpenRouterAPI(userApiKey, selectedModelId, apiMessages);
         } else {
-            typewriterEffect('bot', 'Error: Please enter your OpenRouter API key in the settings to use the chat.');
-            return;
+            await ensurePuterReady();
+            // Puter.ai.chat needs to be checked if it supports complex content
+            const response = await websim.chat.completions.create({ messages: apiMessages, model: selectedModelId });
+            botResponse = response.content;
         }
 
         typewriterEffect('bot', botResponse);
@@ -1337,46 +1277,48 @@ onAuthStateChanged(auth, async (user) => {
     if (window.creditRefreshInterval) {
         clearInterval(window.creditRefreshInterval);
     }
-
+    
     if (user) {
+        // User is signed in.
         console.log("User signed in:", user.uid, user.email);
 
-        // Fetch subscription status
+        // Fetch subscription status from Firestore
         try {
             const userDocRef = doc(db, config.USER_DATA_COLLECTION_NAME, user.uid);
             const userDocSnap = await getDoc(userDocRef);
 
             if (userDocSnap.exists()) {
                 const data = userDocSnap.data();
-                console.log("Subscription data:", data);
+                console.log("Subscription data found:", data);
+                
+                /* @tweakable This logic determines if a subscription is active. It checks if 'purchased' is true and if the current date is between the start and end dates. */
                 const now = new Date();
                 const startDate = data.startDay ? new Date(data.startDay) : null;
-                let endDate = data.endDay ? new Date(data.endDay) : null;
+                const endDate = data.endDay ? new Date(data.endDay) : null;
                 const isPurchased = data.purchased === true;
+                
                 let isActive = false;
                 if (isPurchased && startDate && endDate) {
-                    // Set endDate to the end of the day to include the entire last day
-                    endDate.setHours(23, 59, 59, 999);
                     isActive = now >= startDate && now <= endDate;
                 }
+
                 subscriptionDetails = {
                     purchased: isPurchased,
                     startDate: data.startDay || null,
                     endDate: data.endDay || null,
                     status: isActive ? 'Active' : 'Inactive'
                 };
+                 console.log("Processed subscription status:", subscriptionDetails.status);
             } else {
-                console.log(`No subscription document found for user UID: ${user.uid}`);
-                subscriptionDetails = { purchased: false, startDate: null, endDate: null, status: 'Inactive' };
+                console.log(`No subscription document found for user UID: ${user.uid} in collection '${config.USER_DATA_COLLECTION_NAME}'.`);
+                 subscriptionDetails = { purchased: false, startDate: null, endDate: null, status: 'Inactive' };
             }
-            updateSubscriptionDisplay(subscriptionDetails);
         } catch (error) {
             console.error("Error fetching subscription status:", error);
             subscriptionDetails = { purchased: false, startDate: null, endDate: null, status: 'Inactive' };
-            updateSubscriptionDisplay(subscriptionDetails);
         }
 
-        // Manage credits
+        // Manage credits based on subscription status
         if (subscriptionDetails.status === 'Active') {
             userCredits = { count: Infinity, lastReset: new Date() };
             updateCreditsDisplay();
@@ -1385,19 +1327,15 @@ onAuthStateChanged(auth, async (user) => {
             await fetchAndManageCredits(user);
         }
 
-        // Initialize UI
-        try {
-            if (!window.appInitialized) {
-                await initializeAppUI();
-                window.appInitialized = true;
+        // Initialize the main app UI
+        // Use a flag to prevent multiple initializations
+        if (!window.appInitialized) {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initializeAppUI);
+            } else {
+                initializeAppUI();
             }
-            // Ensure UI is visible after successful login and initialization
-            loginOverlay.classList.add('hidden');
-            appContainer.classList.remove('hidden');
-        } catch (error) {
-            console.error("UI initialization failed:", error);
-            authErrorDiv.textContent = `Failed to initialize app: ${error.message}`;
-            authErrorDiv.classList.remove('hidden');
+            window.appInitialized = true;
         }
 
       } else {
@@ -1410,7 +1348,6 @@ onAuthStateChanged(auth, async (user) => {
         document.getElementById('credits-display').textContent = '';
         // Reset subscription details on logout
         subscriptionDetails = { purchased: false, startDate: null, endDate: null, status: 'Inactive' };
-        updateSubscriptionDisplay(subscriptionDetails);
         window.appInitialized = false; // Allow re-initialization on next login
       }
 });
@@ -1433,8 +1370,10 @@ function updateCreditsDisplay() {
     if (user && subscriptionDetails.status !== 'Active') {
         // For inactive users, use local storage count
         const usage = getLocalCreditUsage(user.uid);
+        /* @tweakable How remaining credits are calculated */
         const remainingCredits = config.DAILY_CREDIT_LIMIT - usage.length;
         userCredits.count = Math.max(0, remainingCredits);
+        /* @tweakable Format for credits display */
         creditsDisplay.textContent = `Credits: ${userCredits.count}/${config.DAILY_CREDIT_LIMIT}`;
         checkCreditAndToggleInput();
     } else if (subscriptionDetails.status === 'Active') {
@@ -1526,7 +1465,7 @@ async function fetchAndManageCredits(user) {
                 updateCreditsDisplay();
                 checkCreditAndToggleInput();
             }
-        }, 30000);
+        }, CREDIT_REFRESH_INTERVAL);
 
     } catch (error) {
         console.error("Error fetching/managing credits:", error);
@@ -1580,6 +1519,7 @@ function generateDeviceFingerprint() {
         hardwareConcurrency: navigator.hardwareConcurrency || 0,
         cookieEnabled: navigator.cookieEnabled,
         doNotTrack: navigator.doNotTrack,
+        /* @tweakable Additional fingerprinting data points */
         touchPoints: navigator.maxTouchPoints,
         vendor: navigator.vendor,
         plugins: Array.from(navigator.plugins).map(p => p.name).join(','),
@@ -1676,7 +1616,6 @@ function setupUIEventListeners() {
 
         header.addEventListener('click', () => {
             isExpanded = !isExpanded;
-            header.setAttribute('aria-expanded', isExpanded);
             if (isExpanded) {
                 content.style.maxHeight = content.scrollHeight + 'px';
                 content.style.opacity = '1';
@@ -1969,18 +1908,4 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedThemeMode === 'light') document.body.classList.add('light-theme');
     document.body.classList.add(savedColorTheme + '-theme');
     glowManager.updateTheme(savedColorTheme);
-
-    const initializeGoogleSignIn = () => {
-        if (window.google && window.google.accounts && window.handleGoogleCredentialResponse) {
-            window.google.accounts.id.initialize({
-                client_id: '85561924382-t8ua162b0jaufroelvmb314foagrr80s.apps.googleusercontent.com',
-                callback: window.handleGoogleCredentialResponse,
-            });
-            console.log("Google Sign-In initialized.");
-        } else {
-            console.warn("Google Sign-In library or callback not ready, retrying in 100ms...");
-            setTimeout(initializeGoogleSignIn, 100);
-        }
-    };
-    initializeGoogleSignIn();
 });
