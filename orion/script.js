@@ -3,7 +3,7 @@ import katex from 'katex';
 import hljs from 'highlight.js';
 import DOMPurify from 'dompurify';
 import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc, updateDoc, increment, serverTimestamp, collection, addDoc, query, where, orderBy, getDocs } from 'firebase/firestore';
 
 // --- Firebase Configuration ---
@@ -26,23 +26,33 @@ const provider = new GoogleAuthProvider();
 // Add Google Sign-In handler
 window.handleGoogleCredentialResponse = function(response) {
     if (response.credential) {
-        const data = jwt_decode(response.credential);
-        console.log("Google Sign-In successful:", data);
-        
-        // Create a credential for Firebase using the Google token
-        const credential = GoogleAuthProvider.credential(response.credential);
-        
-        // Sign in to Firebase with the Google credential
-        signInWithPopup(auth, provider).then((result) => {
-            console.log("Firebase authentication successful");
-        }).catch((error) => {
-            console.error("Firebase authentication failed:", error);
-            authErrorDiv.textContent = error.message;
+        try {
+            const data = jwt_decode(response.credential);
+            console.log("Google Sign-In successful:", data);
+
+            // Create a credential for Firebase using the Google ID token.
+            const credential = GoogleAuthProvider.credential(response.credential);
+            
+            // Sign in to Firebase with the credential.
+            signInWithCredential(auth, credential).then((result) => {
+                console.log("Firebase authentication successful for:", result.user.email);
+                 // The onAuthStateChanged listener will handle the UI update.
+            }).catch((error) => {
+                console.error("Firebase credential sign-in failed:", error);
+                const authErrorDiv = document.getElementById('auth-error');
+                authErrorDiv.textContent = `Google sign-in failed: ${error.message}`;
+                authErrorDiv.classList.remove('hidden');
+            });
+        } catch (error) {
+            console.error("Error decoding Google credential:", error);
+            const authErrorDiv = document.getElementById('auth-error');
+            authErrorDiv.textContent = "Failed to process Google Sign-In token.";
             authErrorDiv.classList.remove('hidden');
-        });
+        }
     } else {
         console.error("Google Sign-in failed: No credential received");
-        authErrorDiv.textContent = "Google Sign-in failed";
+        const authErrorDiv = document.getElementById('auth-error');
+        authErrorDiv.textContent = "Google Sign-in failed. Please try again.";
         authErrorDiv.classList.remove('hidden');
     }
 };
@@ -1660,6 +1670,7 @@ function setupUIEventListeners() {
 
         header.addEventListener('click', () => {
             isExpanded = !isExpanded;
+            header.setAttribute('aria-expanded', isExpanded);
             if (isExpanded) {
                 content.style.maxHeight = content.scrollHeight + 'px';
                 content.style.opacity = '1';
