@@ -26,39 +26,37 @@ const provider = new GoogleAuthProvider();
 
 // Add Google Sign-In handler
 window.handleGoogleCredentialResponse = function(response) {
-    if (response.credential) {
-        try {
-            if (typeof jwtDecode === 'undefined') {
-                throw new Error('jwt-decode library not loaded');
-            }
-            const data = jwtDecode(response.credential);
-            console.log("Google Sign-In successful for:", data.email);
+  console.log("Google Sign-In response:", response);
+  if (response.credential) {
+    try {
+      if (typeof jwtDecode === 'undefined') {
+        throw new Error('jwt-decode library not loaded');
+      }
+      const data = jwtDecode(response.credential);
+      console.log("Decoded token:", data);
 
-            // Create a credential for Firebase using the Google ID token
-            const credential = GoogleAuthProvider.credential(response.credential);
-            
-            // Sign in to Firebase with the credential
-            signInWithCredential(auth, credential).then((result) => {
-                console.log("Firebase authentication successful for:", result.user.email);
-                 // The onAuthStateChanged listener will handle the full UI setup
-            }).catch((error) => {
-                console.error("Firebase credential sign-in failed:", error);
-                const authErrorDiv = document.getElementById('auth-error');
-                authErrorDiv.textContent = `Google sign-in failed: ${error.message}`;
-                authErrorDiv.classList.remove('hidden');
-            });
-        } catch (error) {
-            console.error("Error decoding Google credential:", error);
-            const authErrorDiv = document.getElementById('auth-error');
-            authErrorDiv.textContent = `Failed to process Google Sign-In token: ${error.message}`;
-            authErrorDiv.classList.remove('hidden');
-        }
-    } else {
-        console.error("Google Sign-in failed: No credential received");
+      const credential = GoogleAuthProvider.credential(response.credential);
+      signInWithCredential(auth, credential).then((result) => {
+        console.log("Firebase authentication successful:", result.user.email, result);
+        // The onAuthStateChanged listener will handle the full UI setup
+      }).catch((error) => {
+        console.error("Firebase sign-in error:", error.code, error.message, error);
         const authErrorDiv = document.getElementById('auth-error');
-        authErrorDiv.textContent = "Google Sign-in failed. Please try again.";
+        authErrorDiv.textContent = `Google sign-in failed: ${error.message} (${error.code})`;
         authErrorDiv.classList.remove('hidden');
+      });
+    } catch (error) {
+      console.error("Token decoding error:", error.message, error);
+      const authErrorDiv = document.getElementById('auth-error');
+      authErrorDiv.textContent = `Failed to process Google Sign-In token: ${error.message}`;
+      authErrorDiv.classList.remove('hidden');
     }
+  } else {
+    console.error("No credential received from Google Sign-In");
+    const authErrorDiv = document.getElementById('auth-error');
+    authErrorDiv.textContent = "Google Sign-in failed: No credential received.";
+    authErrorDiv.classList.remove('hidden');
+  }
 };
 
 // --- Glow Effect Manager ---
