@@ -11,7 +11,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 200px; 
+    height: 200px; /* Only top 200px */
     pointer-events: none;
     z-index: -5;
     overflow: hidden;
@@ -20,13 +20,14 @@
 .glow-bubble {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px); 
-    opacity: 0.45; 
+    filter: blur(80px); /* Slightly less blur for smaller bubbles */
+    opacity: 0.45; /* Increased saturation */
     transition: all 1s ease-in-out;
     will-change: transform, background;
 }
 
 :root {
+    /* These will be controlled by JS for light/dark themes */
     --bg-color: #0d0d0d;
     --text-color: #ffffff;
     --container-bg: #171717;
@@ -44,6 +45,7 @@
     --popup-bg: #0d0d0d;
 }
 
+/* Firebase Login Styles */
 #login-overlay {
     position: fixed;
     top: 0;
@@ -76,9 +78,9 @@
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    padding: 2px; 
+    padding: 2px; /* This is the border width */
     background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
-    border-radius: inherit; 
+    border-radius: inherit; /* Use the same border-radius as the sidebar */
     z-index: -1;
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -88,6 +90,7 @@
 }
 
 .auth-error-message {
+    /* @tweakable The color for authentication error messages */
     color: #ff4d4d;
     background-color: rgba(255, 77, 77, 0.1);
     padding: 0.5rem 1rem;
@@ -184,12 +187,12 @@
 }
 
 #app-container {
-    display: contents; 
+    display: contents; /* Use contents to avoid breaking flex layout of body */
 }
 
 #sign-out-btn {
     width: 100%;
-    margin-top: auto; 
+    margin-top: auto; /* Pushes to the bottom */
     padding-top: 1rem;
     text-align: center;
     background-color: transparent;
@@ -218,7 +221,7 @@ body {
     align-items: flex-start;
     height: 100vh;
     margin: 0;
-    padding: 10px; 
+    padding: 10px; /* leave room for glow */
     overflow: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -227,6 +230,7 @@ body {
     box-sizing: border-box;
 }
 
+/* replaced Google logo with ORION gradient text */
 .orion-logo {
     font-size: 48px;
     font-weight: 500;
@@ -235,6 +239,7 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
+/* Adjust ORION logo size for mobile */
 @media (max-width: 640px) {
     .orion-logo {
         font-size: 32px;
@@ -263,6 +268,7 @@ body {
     color: var(--placeholder-color);
 }
 
+/* Shared styles for animated containers */
 .animated-container {
     position: relative;
     display: flex;
@@ -382,7 +388,7 @@ body {
 .animated-text-button span {
     position: relative;
     z-index: 2;
-    font-size: 8px; 
+    font-size: 8px; /* Half the size */
 }
 
 .animated-icon-button {
@@ -399,7 +405,7 @@ body {
 
 .animated-icon-button i {
     position: relative;
-    z-index: 11; 
+    z-index: 11; /* Increased z-index */
 }
 
 .animated-icon-button:hover {
@@ -440,7 +446,9 @@ body {
 }
 
 .popup-overlay {
+    /* @tweakable Controls the overlay background color and opacity for popups */
     --overlay-bg-color: rgba(0, 0, 0, 0.7);
+    /* @tweakable Controls the z-index for popups to ensure they are on top */
     --popup-z-index: 50;
 
     display: flex;
@@ -458,30 +466,30 @@ body {
 
 #sidebar {
     position: fixed;
-    top: 10px; 
-    bottom: 10px; 
-    right: 10px; 
-    width: 18rem; 
-    height: calc(100vh - 20px); 
-    transform: translateX(calc(100% + 20px)); 
+    top: 10px; /* Match body padding */
+    bottom: 10px; /* Match body padding */
+    right: 10px; /* Match body padding */
+    width: 18rem; /* w-72 from tailwind */
+    height: calc(100vh - 20px); /* Full height minus top/bottom padding */
+    transform: translateX(calc(100% + 20px)); /* Hide it off-screen, accounting for padding */
     transition: transform 0.3s ease-in-out;
     z-index: 30;
-    padding: 0.5rem 1.5rem 1.5rem 1.5rem; 
+    padding: 0.5rem 1.5rem 1.5rem 1.5rem; /* Reduced top padding */
     overflow-y: auto;
     background: var(--sidebar-bg);
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
-    max-height: calc(100vh - 20px); 
+    max-height: calc(100vh - 20px); /* Match the height we set */
 }
 
 #sidebar::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    padding: 2px; 
+    padding: 2px; /* This is the border width */
     background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
-    border-radius: inherit; 
+    border-radius: inherit; /* Use the same border-radius as the sidebar */
     z-index: -1;
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -517,8 +525,8 @@ body {
 }
 
 #sidebar h2 {
-    margin-top: 0.5rem; 
-    margin-bottom: 0.5rem; 
+    margin-top: 0.5rem; /* Adjust top margin */
+    margin-bottom: 0.5rem; /* Adjust bottom margin */
 }
 
 .sidebar-setting-group h3 {
@@ -527,16 +535,18 @@ body {
 }
 
 .space-y-4 {
-    margin-top: 0.25rem; 
+    margin-top: 0.25rem; /* Further reduced margin */
     overflow-y: auto;
     flex: 1;
+    /* Ensure no horizontal scrollbar */
     max-width: 100%;
+    /* Hide scrollbar but keep functionality */
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
 
 .space-y-4::-webkit-scrollbar {
-    display: none; 
+    display: none; /* Chrome, Safari and Opera */
 }
 
 .sidebar-setting {
@@ -556,29 +566,30 @@ body {
 
 .sidebar-setting span {
     position: relative;
-    z-index: 2; 
-    max-width: calc(100% - 40px); 
+    z-index: 2; /* Ensure text is above glow-overlay */
+    max-width: calc(100% - 40px); /* Account for delete button */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 .delete-convo-btn {
-    position: relative; 
-    z-index: 3; 
+    position: relative; /* Changed from absolute */
+    z-index: 3; /* Ensure button is above glow-overlay */
+    /* Other styles remain as they were in v010 */
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
     line-height: 1;
-    color: red; 
-    font-size: 1.2em; 
-    text-shadow: 0 0 5px red; 
+    color: red; /* Always red */
+    font-size: 1.2em; /* Adjust size as needed */
+    text-shadow: 0 0 5px red; /* Red glow */
     transition: transform 0.2s ease-in-out;
 }
 
 .delete-convo-btn:hover {
-    transform: scale(1.1); 
+    transform: scale(1.1); /* Zoom on hover */
 }
 
 #clear-all-conversations-btn {
@@ -587,13 +598,13 @@ body {
     text-align: center;
     background-color: transparent;
     border: 1px solid #555;
-    color: var(--sidebar-label-color); 
+    color: var(--sidebar-label-color); /* Ensure text color is visible */
     padding: 8px;
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;
-    -webkit-background-clip: initial; 
-    -webkit-text-fill-color: initial; 
+    -webkit-background-clip: initial; /* Override inherited background-clip */
+    -webkit-text-fill-color: initial; /* Override inherited text-fill-color */
     background-clip: initial;
 }
 #clear-all-conversations-btn:hover {
@@ -621,10 +632,11 @@ body {
     border-color: var(--input-focus-border);
 }
 
+/* New rule for Edit API button text */
 .edit-api-btn span {
     position: relative;
-    z-index: 2; 
-    color: var(--text-color); 
+    z-index: 2; /* Ensure text is above glow-overlay */
+    color: var(--text-color); /* Adapt to theme's text color */
 }
 
 .custom-dropdown-button {
@@ -643,13 +655,21 @@ body {
     z-index: 40;
     max-height: 200px;
     overflow-y: auto;
+    /* Prevent horizontal overflow */
     max-width: 100%;
-    scrollbar-width: none; 
-    -ms-overflow-style: none;  
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
 }
 
 .custom-dropdown-menu::-webkit-scrollbar {
-    display: none; 
+    display: none; /* Chrome, Safari and Opera */
+}
+
+.custom-dropdown-menu.above {
+    top: 100%;
+    bottom: auto;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
 }
 
 .custom-dropdown-menu a, .custom-dropdown-menu div {
@@ -678,25 +698,25 @@ body {
     padding: 0 10px;
     overflow-y: auto;
     flex: 1;
-    scrollbar-width: none; 
-    -ms-overflow-style: none;  
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
 }
 
 .chat-container::-webkit-scrollbar {
-    display: none; 
+    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
 }
 
-.message { 
+.message { /* Re-map from chat-message */
     display: flex;
     margin: 8px 0;
     max-width: 85%;
 }
 
-.bot-message { 
+.bot-message { /* Re-map from .agent */
     align-self: flex-start;
 }
 
-.user-message { 
+.user-message { /* Re-map from .user */
     align-self: flex-end;
     flex-direction: row-reverse;
 }
@@ -846,7 +866,7 @@ header.shifted {
         font-size: 14px;
     }
     .suggestion-buttons {
-        display: none; 
+        display: none; /* Hide on small screens to save space */
     }
 }
 
@@ -865,7 +885,7 @@ header.shifted {
 }
 
 #main-content.shifted {
-    width: calc(100% - 18rem); 
+    width: calc(100% - 18rem); /* 16rem width + 2rem gap */
     margin-right: 18rem;
 }
 
@@ -899,7 +919,7 @@ header.shifted {
         right: 10px;
     }
     #settings-btn.hidden-when-sidebar-open {
-        display: none; 
+        display: none; /* Ensure it's hidden on small screens too when sidebar is open */
     }
 }
 
@@ -952,7 +972,7 @@ header.shifted {
     color: red;
     cursor: pointer;
     font-size: 1.2rem;
-    text-shadow: 0 0 5px red; 
+    text-shadow: 0 0 5px red; /* Red glow */
 }
 
 .suggestion-buttons {
@@ -963,19 +983,275 @@ header.shifted {
     gap: 1rem;
 }
 
-.ad-container {
-    width: 100%;
-    max-width: 100%;
-    margin: 10px 0;
-    text-align: center;
-    padding: 10px;
-    background-color: var(--container-bg);
-    border-radius: 8px;
-    border: 1px solid var(--input-border);
+/* light theme variables */
+body.light-theme {
+    --bg-color: #f0f0f0;
+    --text-color: #000000;
+    --container-bg: #e0e0e0;
+    --placeholder-color: #555;
+    --icon-color: #444;
+    --icon-hover-color: #000;
+    --sidebar-bg: #fcfcfc;
+    --sidebar-label-color: #333;
+    --input-bg: #ddd;
+    --input-border: #bbb;
+    --dropdown-bg: #e0e0e0;
+    --dropdown-hover-bg: #ccc;
+    --message-agent-bg: #e0e0e0;
+    --message-user-bg: #e0e0e0;
+    --popup-bg: #f0f0f0;
 }
 
-.ad-container.hidden {
-    display: none !important;
+/* Community Persona Styles */
+#community-persona-list {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+.community-persona-item {
+    border: 1px solid var(--input-border);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+.community-persona-title {
+    font-weight: bold;
+}
+.community-persona-prompt {
+    font-size: 0.9em;
+    color: var(--placeholder-color);
+    margin-top: 5px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+.add-community-persona-btn {
+    margin-top: 8px;
+    padding: 5px 10px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.add-community-persona-btn:hover {
+    background-color: #555;
+    color: #fff;
+}
+
+#publish-persona-form .api-key-input {
+    margin-top: 4px;
+    width: 100%;
+}
+
+#publish-persona-form label {
+    font-size: 0.9em;
+    color: var(--sidebar-label-color);
+}
+
+#publish-persona-form .space-y-4 > div {
+     margin-bottom: 1rem;
+}
+
+/* Gemini Theme */
+body.gemini-theme .animated-container::before,
+body.gemini-theme .info-popup-container::before,
+body.gemini-theme .animated-container .glow-overlay {
+    background: linear-gradient(to right, #8A2BE2, #0000FF, #FF00FF, #FF0000, #000000);
+    background-size: 400% 400%;
+}
+
+body.gemini-theme .orion-logo {
+    background: linear-gradient(to right, #8A2BE2, #0000FF, #FF00FF, #FF0000, #000000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.gemini-theme #sidebar h2,
+body.gemini-theme .sidebar-setting-group h3,
+body.gemini-theme .info-popup-container h3 {
+    background: linear-gradient(to right, #8A2BE2, #0000FF, #FF00FF, #FF0000, #000000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body.gemini-theme .animated-container::before,
+body.gemini-theme .animated-container .glow-overlay {
+    animation: rainbow-move 10s linear infinite;
+    animation-play-state: paused;
+}
+
+body.gemini-theme .animated-container:hover .glow-overlay,
+body.gemini-theme .search-box:focus-within .glow-overlay,
+body.gemini-theme .animated-container.active .glow-overlay {
+    opacity: 1; /* Ensure full opacity on interaction */
+}
+
+body.gemini-theme .animated-container:hover::before,
+body.gemini-theme .search-box:focus-within::before,
+body.gemini-theme .animated-container:hover .glow-overlay,
+body.gemini-theme .search-box:focus-within .glow-overlay,
+body.gemini-theme .animated-container.active::before,
+body.gemini-theme .animated-container.active .glow-overlay {
+    animation-play-state: running;
+}
+
+body.gemini-theme #sidebar::before,
+body.gemini-theme .message-content::before {
+    background: linear-gradient(to right, #8A2BE2, #0000FF, #FF00FF, #FF0000, #000000);
+}
+
+/* Anthropic-Dawn Theme */
+body.anthropic-dawn-theme .animated-container::before,
+body.anthropic-dawn-theme .info-popup-container::before,
+body.anthropic-dawn-theme .animated-container .glow-overlay {
+    background: linear-gradient(135deg, #FF6F61, #FFB6A6, #DDA0DD, #000000);
+    background-size: 400% 400%;
+}
+
+body.anthropic-dawn-theme .orion-logo,
+body.anthropic-dawn-theme #sidebar h2,
+body.anthropic-dawn-theme .sidebar-setting-group h3,
+body.anthropic-dawn-theme .info-popup-container h3 {
+    background: linear-gradient(135deg, #FF6F61, #FFB6A6, #DDA0DD, #000000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.anthropic-dawn-theme .custom-dropdown-menu {
+    border-image-source: linear-gradient(135deg, #FF6F61, #FFB6A6, #DDA0DD, #000000);
+}
+
+body.anthropic-dawn-theme #sidebar::before,
+body.anthropic-dawn-theme .message-content::before {
+    background: linear-gradient(135deg, #FF6F61, #FFB6A6, #DDA0DD, #000000);
+}
+
+/* Copilot-Neon Theme */
+body.copilot-neon-theme .animated-container::before,
+body.copilot-neon-theme .info-popup-container::before,
+body.copilot-neon-theme .animated-container .glow-overlay {
+    background: linear-gradient(135deg, #0078D4, #6F42C1, #00CC6D, #000000);
+    background-size: 400% 400%;
+}
+
+body.copilot-neon-theme .orion-logo,
+body.copilot-neon-theme #sidebar h2,
+body.copilot-neon-theme .sidebar-setting-group h3,
+body.copilot-neon-theme .info-popup-container h3 {
+    background: linear-gradient(135deg, #0078D4, #6F42C1, #00CC6D, #000000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.copilot-neon-theme .custom-dropdown-menu {
+    border-image-source: linear-gradient(135deg, #0078D4, #6F42C1, #00CC6D, #000000);
+}
+
+body.copilot-neon-theme #sidebar::before,
+body.copilot-neon-theme .message-content::before {
+    background: linear-gradient(135deg, #0078D4, #6F42C1, #00CC6D, #000000);
+}
+
+/* Cyber-Forge Theme */
+body.cyber-forge-theme .animated-container::before,
+body.cyber-forge-theme .info-popup-container::before,
+body.cyber-forge-theme .animated-container .glow-overlay {
+    background: linear-gradient(135deg, #EF4444, #7C3AED, #F59E0B, #000000);
+    background-size: 400% 400%;
+}
+
+body.cyber-forge-theme .orion-logo,
+body.cyber-forge-theme #sidebar h2,
+body.cyber-forge-theme .sidebar-setting-group h3,
+body.cyber-forge-theme .info-popup-container h3 {
+    background: linear-gradient(135deg, #EF4444, #7C3AED, #F59E0B, #000000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.cyber-forge-theme .custom-dropdown-menu {
+    border-image-source: linear-gradient(135deg, #EF4444, #7C3AED, #F59E0B, #000000);
+}
+
+body.cyber-forge-theme #sidebar::before,
+body.cyber-forge-theme .message-content::before {
+    background: linear-gradient(135deg, #EF4444, #7C3AED, #F59E0B, #000000);
+}
+
+/* Quantum-Flux Theme */
+body.quantum-flux-theme .animated-container::before,
+body.quantum-flux-theme .info-popup-container::before,
+body.quantum-flux-theme .animated-container .glow-overlay {
+    background: linear-gradient(135deg, #A1A1AA, #3B82F6, #60A5FA, #000000);
+    background-size: 400% 400%;
+}
+
+body.quantum-flux-theme .orion-logo,
+body.quantum-flux-theme #sidebar h2,
+body.quantum-flux-theme .sidebar-setting-group h3,
+body.quantum-flux-theme .info-popup-container h3 {
+    background: linear-gradient(135deg, #A1A1AA, #3B82F6, #60A5FA, #000000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.quantum-flux-theme .custom-dropdown-menu {
+    border-image-source: linear-gradient(135deg, #A1A1AA, #3B82F6, #60A5FA, #000000);
+}
+
+body.quantum-flux-theme #sidebar::before,
+body.quantum-flux-theme .message-content::before {
+    background: linear-gradient(135deg, #A1A1AA, #3B82F6, #60A5FA, #000000);
+}
+
+/* Google-AI-Mode Theme */
+body.google-ai-mode-theme .animated-container::before,
+body.google-ai-mode-theme .info-popup-container::before,
+body.google-ai-mode-theme .animated-container .glow-overlay {
+    background: conic-gradient(from var(--angle), #4285F4 0% 12.5%, #DB4437 12.5% 25%, #F4B400 25% 37.5%, #0F9D58 37.5% 50%, #000000 50% 100%);
+    animation: color-rotate 4s linear infinite;
+    animation-play-state: paused;
+}
+
+body.google-ai-mode-theme .orion-logo,
+body.google-ai-mode-theme #sidebar h2,
+body.google-ai-mode-theme .sidebar-setting-group h3 {
+    background: linear-gradient(to right, #4285F4, #DB4437, #F4B400, #0F9D58);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.google-ai-mode-theme .info-popup-container h3 {
+    background: linear-gradient(to right, #4285F4, #DB4437, #F4B400, #0F9D58);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: none; /* No animation for this text */
+}
+
+body.google-ai-mode-theme .custom-dropdown-menu {
+    border-image-source: conic-gradient(from 0deg, #4285F4 0% 12.5%, #DB4437 12.5% 25%, #F4B400 25% 37.5%, #0F9D58 37.5% 50%, #000000 50% 100%);
+}
+
+body.google-ai-mode-theme .animated-container:hover .glow-overlay,
+body.google-ai-mode-theme .search-box:focus-within .glow-overlay,
+body.google-ai-mode-theme .animated-container.active .glow-overlay {
+    opacity: 1; /* Ensure full opacity on interaction */
+}
+
+body.google-ai-mode-theme .animated-container:hover::before,
+body.google-ai-mode-theme .search-box:focus-within::before,
+body.google-ai-mode-theme .animated-container:hover .glow-overlay,
+body.google-ai-mode-theme .search-box:focus-within .glow-overlay,
+body.google-ai-mode-theme .animated-container.active::before,
+body.google-ai-mode-theme .animated-container.active .glow-overlay {
+    animation-play-state: running;
+}
+
+body.google-ai-mode-theme #sidebar::before,
+body.google-ai-mode-theme .message-content::before {
+    background: conic-gradient(from 0deg, #4285F4 0% 12.5%, #DB4437 12.5% 25%, #F4B400 25% 37.5%, #0F9D58 37.5% 50%, #000000 50% 100%);
 }
 
 .message-usage-section {
