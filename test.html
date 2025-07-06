@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OpenRouter Free Model Dashboard</title>
+  <script src="https://js.puter.com/v2/"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      padding: 20px;
+    }
+    h1 { color: #58a6ff; }
+    #modelContainer { margin: 20px 0; }
+    .model {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .status.active { color: #3fb950; font-weight: bold; }
+    .status.inactive { color: #f85149; font-weight: bold; }
+    button {
+      padding: 10px 20px;
+      background-color: #238636;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 OpenRouter – Free Models Dashboard</h1>
+  <p>Live check: only <strong>free text-capable</strong> models, showing which ones are active.</p>
+  <button onclick="refreshModels()">🔄 Refresh Models</button>
+  <div id="modelContainer"></div>
+
+  <script>
+    async function fetchFreeTextModels() {
+      const res = await fetch("https://openrouter.ai/api/v1/models?input_modalities=text&max_price=0");
+      const json = await res.json();
+      return json.data.filter(m => m.pricing.prompt === "0" && m.architecture.input_modalities.includes("text"));
+    }
+
+    function getIcon(modalities) {
+      return modalities.includes("image") ? "🖼️" : "🔤";
+    }
+
+    async function checkModel(model) {
+      const mdl = `openrouter:${model.id}`;
+      try {
+        const response = await puter.ai.chat("ping", { model: mdl, stream: false });
+        return true;
+      } catch {
+        return false;
+      }
+    }
+
+    async function refreshModels() {
+      const container = document.getElementById("modelContainer");
+      container.innerHTML = "<p>Loading free text models…</p>";
+      const freeModels = await fetchFreeTextModels();
+
+      if (!freeModels.length) {
+        container.innerHTML = "<p>No free text models found.</p>";
+        return;
+      }
+
+      container.innerHTML = "<p>Testing availability…</p>";
+      const results = await Promise.all(freeModels.map(async m => {
+        const live = await checkModel(m);
+        return { model: m, live };
+      }));
+
+      container.innerHTML = "";
+      const active = results.filter(r => r.live);
+
+      if (!active.length) {
+        container.innerHTML = "<p>No active free models at the moment.</p>";
+        return;
+      }
+
+      active.forEach(r => {
+        const div = document.createElement("div");
+        div.className = "model";
+        div.innerHTML = `
+          <span>${getIcon(r.model.architecture.input_modalities)} <strong>${r.model.id}</strong></span>
+          <span class="status active">🟢 Active</span>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    window.onload = refreshModels;
+  </script>
+</body>
+</html>

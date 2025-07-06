@@ -1,0 +1,501 @@
+<html>
+<head>
+  <title>Red Rook</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #000;
+      color: #0ff;
+      font-family: 'Courier New', monospace;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-shadow: 0 0 5px #0ff;
+    }
+
+    #game-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      background: rgba(0, 30, 30, 0.3);
+      border: 2px solid #0ff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #0ff, inset 0 0 20px #0ff;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 20px #0ff, inset 0 0 20px #0ff; }
+      50% { box-shadow: 0 0 30px #0ff, inset 0 0 30px #0ff; }
+      100% { box-shadow: 0 0 20px #0ff, inset 0 0 20px #0ff; }
+    }
+
+    #board {
+      display: grid;
+      grid-template-columns: repeat(4, 80px);
+      grid-template-rows: repeat(5, 80px);
+      gap: 2px;
+      background: #0ff;
+      padding: 5px;
+      border-radius: 5px;
+      box-shadow: 0 0 15px #0ff;
+    }
+
+    .cell {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 40px;
+      cursor: pointer;
+      transition: all 0.3s;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cell::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 0%, rgba(0, 255, 255, 0.1) 50%, transparent 100%);
+      animation: sweep 2s infinite;
+      pointer-events: none;
+    }
+
+    @keyframes sweep {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .cell.white {
+      background: #001a1a;
+      color: #0ff;
+    }
+
+    .cell.black {
+      background: #003333;
+      color: #0ff;
+    }
+
+    .cell.selected {
+      background: #005555;
+      box-shadow: inset 0 0 10px #0ff;
+    }
+
+    .cell.valid-move {
+      background: #004444;
+      box-shadow: inset 0 0 15px #0f0;
+    }
+
+    .cell.blocked {
+      background: #000;
+      cursor: not-allowed;
+      box-shadow: inset 0 0 10px #f00;
+    }
+
+    .cell.target {
+      background: #330000 !important;
+      box-shadow: inset 0 0 20px #f00;
+    }
+
+    .cell.red-rook {
+      color: #f00 !important;
+      text-shadow: 0 0 10px #f00;
+    }
+
+    #status {
+      margin: 20px;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    #move-counter {
+      font-size: 20px;
+      margin: 10px 0;
+      color: #0ff;
+    }
+
+    #timer {
+      font-size: 20px;
+      margin: 10px 0;
+      color: #0ff;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      background: transparent;
+      color: #0ff;
+      border: 2px solid #0ff;
+      border-radius: 5px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.3s;
+      margin-top: 10px;
+      text-shadow: 0 0 5px #0ff;
+      box-shadow: 0 0 10px #0ff;
+    }
+
+    button:hover {
+      background: #0ff;
+      color: #000;
+      box-shadow: 0 0 20px #0ff;
+    }
+
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 30, 30, 0.95);
+      padding: 30px;
+      border: 2px solid #0ff;
+      border-radius: 10px;
+      box-shadow: 0 0 40px #0ff;
+      z-index: 100;
+      text-align: center;
+      animation: modalAppear 0.5s ease-out;
+    }
+
+    @keyframes modalAppear {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .modal h2 {
+      color: #0ff;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .modal button {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <h1 style="color: #0ff; text-align: center; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 3px;">Red Rook</h1>
+    <div id="board"></div>
+    <div id="move-counter">Moves: 0 | Target: Get red rook to bottom right!</div>
+    <div id="timer">Time: 00:00</div>
+    <div id="status">First move must be made with a knight!</div>
+    <button id="reset">Reset Game</button>
+  </div>
+
+  <script>
+    const BOARD_SIZE = 5;
+    class ChessGame {
+      constructor() {
+        this.board = [];
+        this.selectedCell = null;
+        this.gameOver = false;
+        this.moveCount = 0;
+        this.startTime = Date.now();
+        this.timerInterval = null;
+        this.firstMoveMade = false;  
+        this.initializeBoard();
+        this.setupEventListeners();
+        this.updateMoveCounter();
+        this.startTimer();
+      }
+      
+      startTimer() {
+        this.startTime = Date.now();
+        this.timerInterval = setInterval(() => this.updateTimer(), 1000);
+      }
+      updateTimer() {
+        const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
+        document.getElementById('timer').textContent = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      }
+      showWinModal() {
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
+        const timeStr = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        modal.innerHTML = `
+              <h2>Victory!</h2>
+              <p>You won in ${this.moveCount} moves!</p>
+              <p>Time taken: ${timeStr}</p>
+              <p style="color: #0ff; font-size: 0.9em;">(Minimum possible: 43 moves)</p>
+              <button onclick="location.reload()">Play Again</button>
+            `;
+        document.body.appendChild(modal);
+      }
+      initializeBoard() {
+        for (let i = 0; i < 5; i++) {
+          this.board[i] = new Array(4).fill(null);
+        }
+        // Place red rook in top left
+        this.board[0][0] = {
+          piece: 'rook',
+          color: 'red'
+        };
+        // Place rest of pieces
+        this.board[1] = ['bishop', 'bishop', 'bishop', 'bishop'].map(piece => ({
+          piece,
+          color: 'black'
+        }));
+        this.board[2] = ['knight', 'knight', 'knight', 'knight'].map(piece => ({
+          piece,
+          color: 'black'
+        }));
+        this.board[3] = ['pawn', 'pawn', 'pawn', 'pawn'].map(piece => ({
+          piece,
+          color: 'black'
+        }));
+        this.board[4] = [null, null, null, null];
+        this.renderBoard();
+      }
+
+      setupEventListeners() {
+        document.getElementById('board').addEventListener('click', e => {
+          const cell = e.target.closest('.cell');
+          if (!cell || this.gameOver) return;
+          const row = parseInt(cell.dataset.row);
+          const col = parseInt(cell.dataset.col);
+          this.handleCellClick(row, col);
+        });
+        document.getElementById('reset').addEventListener('click', () => {
+          this.reset();
+        });
+      }
+      handleCellClick(row, col) {
+        // Only block non-target cells in the bottom row
+        if (row === 4 && col !== 3) return;
+        if (row === 0 && col > 0) return;
+        
+        const clickedPiece = this.board[row][col];
+        
+        if (!this.selectedCell) {
+          // For the first move, only allow selecting knights
+          if (!this.firstMoveMade && (!clickedPiece || clickedPiece.piece !== 'knight')) {
+            document.getElementById('status').textContent = 'First move must be made with a knight!';
+            return;
+          }
+          if (!clickedPiece) return;
+          this.selectedCell = { row, col };
+          this.renderBoard();
+          return;
+        }
+
+        // If a cell is already selected
+        if (this.isValidMove(this.selectedCell.row, this.selectedCell.col, row, col)) {
+          this.movePiece(this.selectedCell.row, this.selectedCell.col, row, col);
+          this.moveCount++;
+          this.firstMoveMade = true;  
+          const status = document.getElementById('status');
+          status.innerHTML = 'Move any piece! Get the <span style="color: #f00; text-shadow: 0 0 10px #f00;">red</span> rook (<span style="color: #f00; text-shadow: 0 0 10px #f00;">♜</span>) to the target square!';
+          this.updateMoveCounter();
+          this.selectedCell = null;
+        } else {
+          // If clicking on another piece, select it instead
+          if (clickedPiece) {
+            // Check first move condition when selecting new piece
+            if (!this.firstMoveMade && clickedPiece.piece !== 'knight') {
+              document.getElementById('status').textContent = 'First move must be made with a knight!';
+              return;
+            }
+            this.selectedCell = { row, col };
+          } else {
+            this.selectedCell = null;
+          }
+        }
+        this.renderBoard();
+      }
+      isValidPosition(row, col) {
+        // Allow the bottom right cell, but block other bottom row cells
+        if (row === 4 && col !== 3) return false;
+        if (row === 0 && col > 0) return false;
+        return row >= 0 && row < 5 && col >= 0 && col < 4;
+      }
+      getValidMoves(row, col) {
+        // Allow movement to the target cell (bottom right)
+        const piece = this.board[row][col];
+        if (!piece) return [];
+
+        const moves = [];
+        switch (piece.piece) {
+          case 'rook':
+            const rookDirections = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+            for (const [dx, dy] of rookDirections) {
+              let newRow = row + dx;
+              let newCol = col + dy;
+              while (this.isValidPosition(newRow, newCol) && !this.board[newRow][newCol]) {
+                moves.push([newRow, newCol]);
+                newRow += dx;
+                newCol += dy;
+              }
+              // Stop at pieces, no capture
+            }
+            // Special case: always allow moving to target cell if it's reachable
+            if (piece.color === 'red' && this.canReachTarget(row, col)) {
+              moves.push([4, 3]);
+            }
+            break;
+          case 'knight':
+            const knightMoves = [[-2, -1], [-2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2], [2, -1], [2, 1]];
+            for (const [dx, dy] of knightMoves) {
+              const newRow = row + dx;
+              const newCol = col + dy;
+              if (this.isValidPosition(newRow, newCol) && !this.board[newRow][newCol]) {
+                moves.push([newRow, newCol]);
+              }
+              // No capture for knights
+            }
+            break;
+          case 'pawn':
+            // Pawns can ONLY move up (toward row 0), no diagonal or horizontal movement
+            const newRow = row - 1;  
+            if (this.isValidPosition(newRow, col) && !this.board[newRow][col]) {
+              moves.push([newRow, col]);
+            }
+            break;
+          case 'bishop':
+            const bishopMoves = [[1, 1], [1, -1], [-1, 1], [-1, -1]];
+            for (const [dx, dy] of bishopMoves) {
+              let newRow = row + dx;
+              let newCol = col + dy;
+              while (this.isValidPosition(newRow, newCol) && !this.board[newRow][newCol]) {
+                moves.push([newRow, newCol]);
+                newRow += dx;
+                newCol += dy;
+              }
+              // Stop at pieces, no capture
+            }
+            break;
+        }
+        return moves;
+      }
+      canReachTarget(row, col) {
+        // Check if the piece can reach the target cell in a straight line
+        if (col === 3) return true; // Same column as target
+        if (row === 4) return true; // Same row as target
+        return false;
+      }
+      isValidMove(fromRow, fromCol, toRow, toCol) {
+        if (toRow === 4 && toCol === 3) {
+          return true;
+        }
+        const validMoves = this.getValidMoves(fromRow, fromCol);
+        return validMoves.some(([row, col]) => row === toRow && col === toCol);
+      }
+      movePiece(fromRow, fromCol, toRow, toCol) {
+        const piece = this.board[fromRow][fromCol];
+        this.board[toRow][toCol] = piece;
+        this.board[fromRow][fromCol] = null;
+        if (piece.color === 'red' && toRow === 4 && toCol === 3) {
+          this.gameOver = true;
+          clearInterval(this.timerInterval);
+          this.showWinModal();
+        }
+      }
+      updateMoveCounter() {
+        const counter = document.getElementById('move-counter');
+        counter.innerHTML = `Moves: ${this.moveCount} | Target: Get <span style="color: #f00; text-shadow: 0 0 10px #f00;">red</span> rook (<span style="color: #f00; text-shadow: 0 0 10px #f00;">♜</span>) to bottom right! (Min: 43)`;
+      }
+      getPieceSymbol(piece) {
+        if (!piece) return '';
+        const symbols = {
+          'white': {
+            'pawn': '♟',
+            'knight': '♞',
+            'bishop': '♝',
+            'rook': '♜',
+            'queen': '♛'
+          },
+          'black': {
+            'pawn': '♟',
+            'knight': '♞',
+            'bishop': '♝',
+            'rook': '♜',
+            'queen': '♛'
+          },
+          'red': {
+            'knight': '♞',
+            'rook': '♜'
+          }
+        };
+        return symbols[piece.color][piece.piece];
+      }
+      renderBoard() {
+        const boardElement = document.getElementById('board');
+        boardElement.innerHTML = '';
+        for (let row = 0; row < 5; row++) {
+          for (let col = 0; col < 4; col++) {
+            const cell = document.createElement('div');
+            cell.className = `cell ${(row + col) % 2 === 0 ? 'white' : 'black'}`;
+            
+            if (row === 4 && col !== 3) {
+              cell.className += ' blocked';
+            }
+            if (row === 0 && col > 0) {
+              cell.className += ' blocked';
+            }
+            
+            if (row === 4 && col === 3) {
+              cell.className += ' target';
+            }
+
+            cell.dataset.row = row;
+            cell.dataset.col = col;
+            const piece = this.board[row][col];
+            cell.textContent = this.getPieceSymbol(piece);
+            
+            // Add red-rook class for the red rook
+            if (piece && piece.piece === 'rook' && piece.color === 'red') {
+              cell.className += ' red-rook';
+            }
+            
+            if (this.selectedCell && this.selectedCell.row === row && this.selectedCell.col === col) {
+              cell.className += ' selected';
+            } else if (this.selectedCell && this.isValidMove(this.selectedCell.row, this.selectedCell.col, row, col)) {
+              cell.className += ' valid-move';
+            }
+            
+            boardElement.appendChild(cell);
+          }
+        }
+      }
+      reset() {
+        clearInterval(this.timerInterval);
+        this.initializeBoard();
+        this.selectedCell = null;
+        this.gameOver = false;
+        this.moveCount = 0;
+        this.firstMoveMade = false;  
+        this.startTime = Date.now();
+        this.startTimer();
+        this.updateMoveCounter();
+        document.getElementById('status').innerHTML = 'First move must be made with a knight!';
+        const modal = document.querySelector('.modal');
+        if (modal) {
+          modal.remove();
+        }
+      }
+    }
+    new ChessGame();
+  </script>
+</body>
+</html>

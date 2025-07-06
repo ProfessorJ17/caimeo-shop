@@ -1,0 +1,242 @@
+<html><head>  <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839146786704737" crossorigin="anonymous"></script>
+    
+    <base href=""><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>hAck the MaiNframe P</title><style>
+    @font-face {
+      font-family: 'VT323';
+      font-style: normal;
+      font-weight: 400;
+      src: url(https://fonts.gstatic.com/s/vt323/v17/pxiKyp0ihIEF2hsY.woff2) format('woff2');
+    }
+    
+    body {
+      background: #0a0014;
+      color: #00ffff;
+      font-family: 'VT323', monospace;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .grid-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(rgba(33, 0, 77, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(33, 0, 77, 0.1) 1px, transparent 1px);
+      background-size: 20px 20px;
+      pointer-events: none;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      from { transform: translateY(0); }
+      to { transform: translateY(20px); }
+    }
+
+    .terminal-container {
+      background: rgba(10, 0, 20, 0.95);
+      padding: 2rem;
+      border: 1px solid #0ff;
+      width: 90%;
+      max-width: 900px;
+      position: relative;
+      box-shadow: 
+        0 0 20px rgba(0, 255, 255, 0.2),
+        0 0 40px rgba(255, 0, 255, 0.2),
+        inset 0 0 20px rgba(0, 255, 255, 0.1);
+    }
+
+    .header {
+      color: #ff00ff;
+      text-shadow: 0 0 10px #ff00ff;
+      font-size: 2em;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #0ff;
+      padding-bottom: 10px;
+    }
+
+    .console-line {
+      margin: 10px 0;
+      padding: 5px;
+      border-left: 3px solid #ff00ff;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #0ff, 0 0 10px #0ff; }
+      to { text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff; }
+    }
+
+    .input-area {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    input {
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid #0ff;
+      color: #0ff;
+      padding: 10px;
+      width: 70%;
+      font-family: 'VT323', monospace;
+      font-size: 1.2em;
+    }
+
+    button {
+      background: transparent;
+      color: #0ff;
+      border: 1px solid #0ff;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-family: 'VT323', monospace;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background: rgba(0, 255, 255, 0.1);
+      box-shadow: 0 0 15px #0ff;
+    }
+
+    .target-box {
+      border: 1px solid #ff00ff;
+      padding: 15px;
+      margin: 20px 0;
+      background: rgba(255, 0, 255, 0.05);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      margin: 10px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      position: absolute;
+      height: 100%;
+      background: linear-gradient(90deg, #0ff, #ff00ff);
+      width: 0%;
+      transition: width 0.3s;
+    }
+
+  </style>
+
+​   <script type="text/javascript">
+        // Disable right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            alert("Right-click is disabled on this page.");
+        });
+
+        // Disable 'View Source' through the F12 and Ctrl+U keys
+        document.onkeydown = function(e) {
+            if (e.keyCode == 123 || (e.ctrlKey && e.keyCode == 85)) {
+                e.preventDefault();
+                alert("Viewing source is disabled.");
+            }
+        }
+    </script>
+    
+</head><body>
+  <div class="grid-overlay"></div>
+  <div class="terminal-container">
+    <div class="header">p MAINFRaME ACCE[-s5] TERmInAL v6.0</div>
+    
+    <div class="console-line">[SYSTEM] Initializing penetration test environment...</div>
+    <div class="console-line">[ALERT] Target system identified: CyberCore Industries</div>
+    <div class="console-line">[TASK] Breach security protocols and access main database</div>
+    
+    <div class="target-box">
+      <div style="color: #ff00ff;">TARGET STATUS:</div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="hackProgress"></div>
+      </div>
+      <div>Security Level: MAXIMUM</div>
+      <div>Firewall Status: ACTIVE</div>
+      <div>Encryption: AES-256</div>
+      
+      <button onclick="window.location.href='https://caimeo.shop/puzzle/sys/admin/secret.html'" style="margin-top: 15px; width: 100%; background: rgba(255, 0, 255, 0.1); font-size: 1.2em;">
+        Access System Files
+      </button>
+    </div>
+
+    <div class="input-area">
+      <input type="text" id="commandInput" placeholder="Enter hack command...">
+      <button onclick="executeCommand()">EXECUTE</button>
+    </div>
+
+    <div id="terminalOutput" style="margin-top: 20px; color: #f00;"></div>
+  </div>
+
+  <script>
+    const commandSequence = [
+      'nmap -s5',
+      'ssh-keygen',
+      'hydra -l admin',
+      'sqlmap --dump',
+      'msfconsole'
+    ];
+
+    let executedCommands = new Set();
+    let progress = 0;
+
+    function executeCommand() {
+      const input = document.getElementById('commandInput').value.toLowerCase();
+      const output = document.getElementById('terminalOutput');
+      const progressBar = document.getElementById('hackProgress');
+      
+      const commandIndex = commandSequence.indexOf(input);
+      
+      if (commandIndex !== -1 && !executedCommands.has(input)) {
+        executedCommands.add(input);
+        progress += 20;
+        progressBar.style.width = `${progress}%`;
+        
+        output.innerHTML += `<div style="color: #f00;">[+] Command ${executedCommands.size}/5 executed successfully</div>`;
+        
+        if (executedCommands.size === 5) {
+          setTimeout(() => {
+            output.innerHTML += `<div style="color: #ff00ff;">[!] ACCESS GRANTED - Redirecting to secure shell...</div>`;
+            setTimeout(() => {
+              window.location.href = 'https://caimeo.shop/puzzle/6.html';
+            }, 2000);
+          }, 1000);
+        }
+      } else if (executedCommands.has(input)) {
+        output.innerHTML += `<div style="color: #f00;">[-] Command already executed</div>`;
+      } else {
+        output.innerHTML += `<div style="color: #f00;">[-] Invalid command or syntax error</div>`;
+      }
+      
+      document.getElementById('commandInput').value = '';
+    }
+
+    document.getElementById('commandInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        executeCommand();
+      }
+    });
+
+    setInterval(() => {
+      const consoleLines = document.querySelectorAll('.console-line');
+      consoleLines.forEach(line => {
+        if (Math.random() < 0.1) {
+          line.style.opacity = '0.7';
+          setTimeout(() => {
+            line.style.opacity = '1';
+          }, 100);
+        }
+      });
+    }, 1000);
+  </script>
+</body></html>
