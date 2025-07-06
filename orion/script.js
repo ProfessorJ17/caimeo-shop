@@ -1969,4 +1969,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedThemeMode === 'light') document.body.classList.add('light-theme');
     document.body.classList.add(savedColorTheme + '-theme');
     glowManager.updateTheme(savedColorTheme);
+
+    const initializeGoogleSignIn = () => {
+        if (window.google && window.google.accounts && window.handleGoogleCredentialResponse) {
+            window.google.accounts.id.initialize({
+                client_id: '85561924382-t8ua162b0jaufroelvmb314foagrr80s.apps.googleusercontent.com',
+                callback: window.handleGoogleCredentialResponse,
+            });
+            console.log("Google Sign-In initialized.");
+        } else {
+            console.warn("Google Sign-In library or callback not ready, retrying in 100ms...");
+            setTimeout(initializeGoogleSignIn, 100);
+        }
+    };
+    initializeGoogleSignIn();
 });
