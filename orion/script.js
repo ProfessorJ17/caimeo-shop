@@ -28,7 +28,7 @@ window.handleGoogleCredentialResponse = function(response) {
     if (response.credential) {
         try {
             const data = jwt_decode(response.credential);
-            console.log("Google Sign-In successful:", data);
+            console.log("Google Sign-In successful for:", data.email);
 
             // Create a credential for Firebase using the Google ID token.
             const credential = GoogleAuthProvider.credential(response.credential);
@@ -36,7 +36,17 @@ window.handleGoogleCredentialResponse = function(response) {
             // Sign in to Firebase with the credential.
             signInWithCredential(auth, credential).then((result) => {
                 console.log("Firebase authentication successful for:", result.user.email);
-                 // The onAuthStateChanged listener will handle the UI update.
+                 // The onAuthStateChanged listener will handle the full UI setup,
+                 // but we can trigger the initial UI switch here to be certain.
+                 if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', () => {
+                        loginOverlay.classList.add('hidden');
+                        appContainer.classList.remove('hidden');
+                    });
+                } else {
+                    loginOverlay.classList.add('hidden');
+                    appContainer.classList.remove('hidden');
+                }
             }).catch((error) => {
                 console.error("Firebase credential sign-in failed:", error);
                 const authErrorDiv = document.getElementById('auth-error');
