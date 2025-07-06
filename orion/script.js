@@ -26,7 +26,7 @@ const provider = new GoogleAuthProvider();
 
 // Add Google Sign-In handler
 window.handleGoogleCredentialResponse = function(response) {
-  console.log("Google Sign-In response:", response);
+  console.log("Google Sign-In response received.");
   if (response.credential) {
     try {
       if (typeof jwtDecode === 'undefined') {
@@ -37,22 +37,22 @@ window.handleGoogleCredentialResponse = function(response) {
 
       const credential = GoogleAuthProvider.credential(response.credential);
       signInWithCredential(auth, credential).then((result) => {
-        console.log("Firebase authentication successful:", result.user.email, result);
+        console.log("Firebase authentication successful:", result.user.email);
         // The onAuthStateChanged listener will handle the full UI setup
       }).catch((error) => {
-        console.error("Firebase sign-in error:", error.code, error.message, error);
+        console.error("Firebase sign-in error:", { code: error.code, message: error.message, credential: response.credential });
         const authErrorDiv = document.getElementById('auth-error');
         authErrorDiv.textContent = `Google sign-in failed: ${error.message} (${error.code})`;
         authErrorDiv.classList.remove('hidden');
       });
     } catch (error) {
-      console.error("Token decoding error:", error.message, error);
+       console.error("Token decoding error:", { message: error.message, stack: error.stack, credential: response.credential });
       const authErrorDiv = document.getElementById('auth-error');
       authErrorDiv.textContent = `Failed to process Google Sign-In token: ${error.message}`;
       authErrorDiv.classList.remove('hidden');
     }
   } else {
-    console.error("No credential received from Google Sign-In");
+    console.error("No credential received from Google Sign-In", response);
     const authErrorDiv = document.getElementById('auth-error');
     authErrorDiv.textContent = "Google Sign-in failed: No credential received.";
     authErrorDiv.classList.remove('hidden');
