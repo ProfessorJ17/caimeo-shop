@@ -6,7 +6,7 @@
 
   
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ORION UI</title>
     <meta name="google-signin-client_id" content="85561924382-t8ua162b0jaufroelvmb314foagrr80s.apps.googleusercontent.com">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -50,8 +50,7 @@
             
             <div id="g_id_onload"
                  data-client_id="85561924382-t8ua162b0jaufroelvmb314foagrr80s.apps.googleusercontent.com"
-                 data-callback="handleGoogleCredentialResponse"
-                 style="display: none;">
+                 data-callback="handleGoogleCredentialResponse">
             </div>
             <div class="g_id_signin" 
                  data-type="standard" 
@@ -165,7 +164,7 @@
                 
                 <!-- Conversations Section -->
                 <div class="sidebar-setting-group">
-                    <h3 style="cursor: pointer;" id="conversations-header">Conversations <span id="conversations-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <h3 style="cursor: pointer;" id="conversations-header" aria-expanded="true">Conversations <span id="conversations-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
                     <div id="conversations-content-container" class="space-y-2" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
                         <!-- Conversation items will be injected here -->
                     </div>
@@ -173,7 +172,7 @@
 
                 <!-- Keys Section -->
                 <div class="sidebar-setting-group">
-                    <h3 style="cursor: pointer;" id="keys-header">Keys <span id="keys-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <h3 style="cursor: pointer;" id="keys-header" aria-expanded="true">Keys <span id="keys-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
                     <div id="keys-content-container" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
                         <div>
                             <label for="api-key-input" class="text-sm" style="color: var(--sidebar-label-color);">OpenRouter API Key:</label>
@@ -191,7 +190,7 @@
 
                 <!-- Chat Model Section -->
                 <div class="sidebar-setting-group">
-                    <h3 style="cursor: pointer;" id="chat-model-header">Chat Model <span id="chat-model-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <h3 style="cursor: pointer;" id="chat-model-header" aria-expanded="true">Chat Model <span id="chat-model-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
                     <div id="chat-model-content-container" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
                         <div class="relative">
                             <button id="chat-model-btn" class="sidebar-setting animated-container custom-dropdown-button">
@@ -208,7 +207,7 @@
 
                 <!-- Persona Section -->
                 <div class="sidebar-setting-group">
-                    <h3 style="cursor: pointer;" id="persona-header">Persona <span id="persona-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <h3 style="cursor: pointer;" id="persona-header" aria-expanded="true">Persona <span id="persona-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
                     <div id="persona-content-container" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
                         <div class="relative">
                             <button id="persona-btn" class="sidebar-setting animated-container custom-dropdown-button">
@@ -225,7 +224,7 @@
 
                 <!-- Themes Section -->
                 <div class="sidebar-setting-group">
-                    <h3 style="cursor: pointer;" id="themes-header">Themes <span id="themes-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <h3 style="cursor: pointer;" id="themes-header" aria-expanded="true">Themes <span id="themes-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
                     <div id="themes-content-container" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
                         <div class="relative">
                             <button id="theme-btn" class="sidebar-setting animated-container custom-dropdown-button">
