@@ -2,6 +2,7 @@ import { marked } from 'marked';
 import katex from 'katex';
 import hljs from 'highlight.js';
 import DOMPurify from 'dompurify';
+import { jwtDecode } from 'jwt-decode';
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc, updateDoc, increment, serverTimestamp, collection, addDoc, query, where, orderBy, getDocs } from 'firebase/firestore';
@@ -27,26 +28,19 @@ const provider = new GoogleAuthProvider();
 window.handleGoogleCredentialResponse = function(response) {
     if (response.credential) {
         try {
-            const data = jwt_decode(response.credential);
+            if (typeof jwtDecode === 'undefined') {
+                throw new Error('jwt-decode library not loaded');
+            }
+            const data = jwtDecode(response.credential);
             console.log("Google Sign-In successful for:", data.email);
 
-            // Create a credential for Firebase using the Google ID token.
+            // Create a credential for Firebase using the Google ID token
             const credential = GoogleAuthProvider.credential(response.credential);
             
-            // Sign in to Firebase with the credential.
+            // Sign in to Firebase with the credential
             signInWithCredential(auth, credential).then((result) => {
                 console.log("Firebase authentication successful for:", result.user.email);
-                 // The onAuthStateChanged listener will handle the full UI setup,
-                 // but we can trigger the initial UI switch here to be certain.
-                 if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', () => {
-                        loginOverlay.classList.add('hidden');
-                        appContainer.classList.remove('hidden');
-                    });
-                } else {
-                    loginOverlay.classList.add('hidden');
-                    appContainer.classList.remove('hidden');
-                }
+                 // The onAuthStateChanged listener will handle the full UI setup
             }).catch((error) => {
                 console.error("Firebase credential sign-in failed:", error);
                 const authErrorDiv = document.getElementById('auth-error');
@@ -56,7 +50,7 @@ window.handleGoogleCredentialResponse = function(response) {
         } catch (error) {
             console.error("Error decoding Google credential:", error);
             const authErrorDiv = document.getElementById('auth-error');
-            authErrorDiv.textContent = "Failed to process Google Sign-In token.";
+            authErrorDiv.textContent = `Failed to process Google Sign-In token: ${error.message}`;
             authErrorDiv.classList.remove('hidden');
         }
     } else {
@@ -1345,47 +1339,46 @@ onAuthStateChanged(auth, async (user) => {
     if (window.creditRefreshInterval) {
         clearInterval(window.creditRefreshInterval);
     }
-    
+
     if (user) {
-        // User is signed in.
         console.log("User signed in:", user.uid, user.email);
 
-        // Fetch subscription status from Firestore
+        // Fetch subscription status
         try {
             const userDocRef = doc(db, config.USER_DATA_COLLECTION_NAME, user.uid);
             const userDocSnap = await getDoc(userDocRef);
 
             if (userDocSnap.exists()) {
                 const data = userDocSnap.data();
-                console.log("Subscription data found:", data);
-                
+                console.log("Subscription data:", data);
                 const now = new Date();
                 const startDate = data.startDay ? new Date(data.startDay) : null;
-                const endDate = data.endDay ? new Date(data.endDay) : null;
+                let endDate = data.endDay ? new Date(data.endDay) : null;
                 const isPurchased = data.purchased === true;
-                
                 let isActive = false;
                 if (isPurchased && startDate && endDate) {
+                    // Set endDate to the end of the day to include the entire last day
+                    endDate.setHours(23, 59, 59, 999);
                     isActive = now >= startDate && now <= endDate;
                 }
-
                 subscriptionDetails = {
                     purchased: isPurchased,
                     startDate: data.startDay || null,
                     endDate: data.endDay || null,
                     status: isActive ? 'Active' : 'Inactive'
                 };
-                 console.log("Processed subscription status:", subscriptionDetails.status);
             } else {
-                console.log(`No subscription document found for user UID: ${user.uid} in collection '${config.USER_DATA_COLLECTION_NAME}'.`);
-                 subscriptionDetails = { purchased: false, startDate: null, endDate: null, status: 'Inactive' };
+                console.log(`No subscription document found for user UID: ${user.uid}`);
+                subscriptionDetails = { purchased: false, startDate: null, endDate: null, status: 'Inactive' };
             }
+            updateSubscriptionDisplay(subscriptionDetails);
         } catch (error) {
             console.error("Error fetching subscription status:", error);
             subscriptionDetails = { purchased: false, startDate: null, endDate: null, status: 'Inactive' };
+            updateSubscriptionDisplay(subscriptionDetails);
         }
 
-        // Manage credits based on subscription status
+        // Manage credits
         if (subscriptionDetails.status === 'Active') {
             userCredits = { count: Infinity, lastReset: new Date() };
             updateCreditsDisplay();
@@ -1394,15 +1387,19 @@ onAuthStateChanged(auth, async (user) => {
             await fetchAndManageCredits(user);
         }
 
-        // Initialize the main app UI
-        // Use a flag to prevent multiple initializations
-        if (!window.appInitialized) {
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initializeAppUI);
-            } else {
-                initializeAppUI();
+        // Initialize UI
+        try {
+            if (!window.appInitialized) {
+                await initializeAppUI();
+                window.appInitialized = true;
             }
-            window.appInitialized = true;
+            // Ensure UI is visible after successful login and initialization
+            loginOverlay.classList.add('hidden');
+            appContainer.classList.remove('hidden');
+        } catch (error) {
+            console.error("UI initialization failed:", error);
+            authErrorDiv.textContent = `Failed to initialize app: ${error.message}`;
+            authErrorDiv.classList.remove('hidden');
         }
 
       } else {
@@ -1415,6 +1412,7 @@ onAuthStateChanged(auth, async (user) => {
         document.getElementById('credits-display').textContent = '';
         // Reset subscription details on logout
         subscriptionDetails = { purchased: false, startDate: null, endDate: null, status: 'Inactive' };
+        updateSubscriptionDisplay(subscriptionDetails);
         window.appInitialized = false; // Allow re-initialization on next login
       }
 });
