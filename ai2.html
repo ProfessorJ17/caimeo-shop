@@ -1,538 +1,358 @@
-<html>
+<html lang="en">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839146786704737"
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839146786704737"
      crossorigin="anonymous"></script>
 
-    <base href="">
+  
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Button Grid with Neon Effect</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        *,
-        ::before,
-        ::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --clr-bg: #efefef;
-            --clr-primary: #0f172a; /* Dark background */
-            --easing: cubic-bezier(0.47, 1.64, 0.41, 0.8);
-            /* Custom colors for each button */
-            --color-furniture: #9B4DFF; /* Bright Purple Neon */
-            --color-property: #00FFFF; /* Cyan Neon */
-            --color-job: #FF69B4; /* Hot Pink */
-            --color-travel: #00FF00; /* Lime Green Neon */
-            --color-boat: #FF4500; /* Neon Orange */
-            --color-economy: #FFFF00; /* Neon Yellow */
-            --neon-primary: #FF1493; /* Bright Pink */
-            --neon-secondary: #000000; /* Black for background/contrast */
-            --neon-accent: #00FFFF; /* Cyan */
-            --neon-light: #FF1493; /* Soft Pink */
-            --neon-dark: #000000;
-        }
-
-        /* Reset button */
-        input,
-        button {
-            appearance: none;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            outline: none;
-            padding: 0;
-            margin: 0;
-            font-family: inherit;
-            font-size: inherit;
-            color: inherit;
-            text-decoration: none;
-            text-transform: none;
-            line-height: normal;
-            overflow: visible;
-        }
-
-        body {
-            margin: 0;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            color: #7c4dff;
-            background: var(--clr-primary);
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .buttons {
-            max-width: 840px;
-            width: 100%;
-            border-radius: 20px;
-            background-color: #000000;
-            border: 1px solid #ffffff30;
-            padding: 1rem;
-            backdrop-filter: blur(12px);
-            display: grid;
-            grid-template-columns: repeat(8, minmax(90px, 1fr));
-            gap: 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .buttons::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-color: #00000020;
-            z-index: -1;
-            border-radius: inherit;
-            transition: inset 500ms ease-in-out;
-        }
-
-        .buttons:hover::before {
-            inset: -2rem;
-            transition-timing-function: cubic-bezier(0.47, 1.64, 0.41, 0.8);
-        }
-
-        .buttons button {
-            background-color: #000000;
-            border: 1px solid transparent;
-            padding: 1rem;
-            aspect-ratio: 1/1;
-            border-radius: 5px;
-            outline: none;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 300ms ease-in-out, box-shadow 300ms ease-in-out;
-            position: relative;
-            isolation: isolate;
-            color: inherit;
-        }
-
-        .buttons button.furniture {
-            color: var(--color-furniture);
-        }
-
-        .buttons button.property {
-            color: var(--color-property);
-        }
-
-        .buttons button.job {
-            color: var(--color-job);
-        }
-
-        .buttons button.travel {
-            color: var(--color-travel);
-        }
-
-        .buttons button.boat {
-            color: var(--color-boat);
-        }
-
-        .buttons button.economy {
-            color: var(--color-economy);
-        }
-
-        .buttons button.holiday {
-            color: var(--color-property);
-        }
-
-        .buttons button.mc {
-            color: var(--color-furniture);
-        }
-
-        .buttons button:hover {
-            transform: scale(1.1);
-        }
-
-        .buttons button.furniture:hover {
-            box-shadow: 0 0 20px var(--color-furniture), 0 0 30px var(--color-furniture);
-        }
-
-        .buttons button.property:hover {
-            box-shadow: 0 0 20px var(--color-property), 0 0 30px var(--color-property);
-        }
-
-        .buttons button.job:hover {
-            box-shadow: 0 0 20px var(--color-job), 0 0 30px var(--color-job);
-        }
-
-        .buttons button.travel:hover {
-            box-shadow: 0 0 20px var(--color-travel), 0 0 30px var(--color-travel);
-        }
-
-        .buttons button.boat:hover {
-            box-shadow: 0 0 20px var(--color-boat), 0 0 30px var(--color-boat);
-        }
-
-        .buttons button.economy:hover {
-            box-shadow: 0 0 20px var(--color-economy), 0 0 30px var(--color-economy);
-        }
-
-        .buttons button.holiday:hover {
-            box-shadow: 0 0 20px var(--color-property), 0 0 30px var(--color-property);
-        }
-
-        .buttons button.mc:hover {
-            box-shadow: 0 0 20px var(--color-furniture), 0 0 30px var(--color-furniture);
-        }
-
-        .buttons button svg {
-            width: 1.8rem;
-            transition: color 300ms ease-in-out;
-        }
-
-        .buttons button p {
-            position: absolute;
-            width: 100%;
-            font-size: 0.8rem;
-            opacity: 0;
-            left: 0;
-            bottom: -3.5px;
-            padding: 0.3rem;
-            text-align: center;
-            transition: all 150ms ease-in-out 0ms;
-            outline: none;
-            translate: 0 10px;
-        }
-
-        .buttons button:hover p {
-            opacity: 1;
-            translate: 0;
-            transition: all 300ms ease-in-out 150ms;
-        }
-
-        .buttons button:focus-visible,
-        .buttons button:hover {
-            z-index: 10;
-        }
-
-        .buttons:has(button:focus-visible) button:not(:focus-visible),
-        .buttons:has(button:hover) button:not(:hover) {
-            opacity: 50%;
-            scale: 85%;
-            z-index: -10;
-        }
-
-        @media (prefers-reduced-motion: no-preference) {
-            :root {
-                --d: 0;
-                --ani-speed: 300ms;
-            }
-            [scale-up] {
-                scale: 0;
-                animation: scale-up var(--ani-speed) forwards;
-                animation-delay: calc(var(--order, 0ms) * var(--ani-speed));
-            }
-        }
-
-        @keyframes scale-up {
-            0% {
-                scale: 0;
-            }
-            60% {
-                scale: 1.15;
-            }
-            100% {
-                scale: 1;
-            }
-        }
-
-        @media screen and (max-width: 768px) {
-            .buttons {
-                grid-template-columns: repeat(4, 1fr);
-                padding: 0.75rem;
-                gap: 0.75rem;
-            }
-            
-            .buttons button {
-                padding: 0.75rem;
-            }
-            
-            .buttons button svg {
-                width: 1.5rem;
-            }
-            
-            .buttons button p {
-                font-size: 0.7rem;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .buttons {
-                grid-template-columns: repeat(4, 1fr);
-                padding: 0.5rem;
-                gap: 0.75rem;
-            }
-            
-            .buttons button {
-                padding: 0.5rem;
-            }
-            
-            .buttons button svg {
-                width: 1.2rem;
-            }
-            
-            .buttons button p {
-                font-size: 0.65rem;
-                bottom: -5px;
-            }
-            
-            body {
-                padding: 1rem;
-            }
-        }
-
-        .centered-neon-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3rem;
-            padding: 2rem;
-            margin-top: 2rem;
-            color: var(--neon-light);
-            font-family: 'Poppins', sans-serif;
-            text-align: center;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .neon-section {
-            background: var(--neon-secondary);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 2px solid var(--neon-accent);
-            box-shadow: 0 0 15px var(--neon-accent), 0 0 30px rgba(0, 255, 255, 0.4);
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        }
-
-        .neon-section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 25px var(--neon-accent), 0 0 50px rgba(0, 255, 255, 0.6);
-        }
-
-        .neon-heading {
-            text-shadow: 0 0 10px var(--neon-primary), 0 0 20px var(--neon-primary), 0 0 30px rgba(255, 20, 147, 0.5);
-            font-size: 1.3rem;
-            font-weight: bold;
-            text-decoration: none;
-            transition: color 0.3s ease, text-shadow 0.3s ease;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .neon-heading.color1 {
-            color: var(--color-furniture);
-        }
-
-        .neon-heading.color2 {
-            color: var(--color-property);
-        }
-
-        .neon-heading.color3 {
-            color: var(--color-economy);
-        }
-
-        .neon-heading:hover {
-            color: var(--neon-accent);
-            text-shadow: 0 0 10px var(--neon-accent), 0 0 20px var(--neon-accent), 0 0 40px rgba(0, 255, 255, 0.7);
-        }
-
-        .neon-subtext {
-            color: var(--neon-light);
-            text-shadow: 0 0 5px var(--neon-light);
-            font-size: 1.1rem;
-            line-height: 1.5;
-        }
-
-        .neon-button {
-            background: var(--neon-primary);
-            color: var(--clr-primary);
-            padding: 1rem 2rem;
-            border: 2px solid var(--neon-accent);
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-shadow: 0 0 5px rgba(0,0,0,0.5);
-            box-shadow: 0 0 10px var(--neon-primary), 0 0 20px rgba(255, 20, 147, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .neon-button:hover {
-            background: var(--neon-accent);
-            color: var(--neon-secondary);
-            box-shadow: 0 0 15px var(--neon-accent), 0 0 30px rgba(0, 255, 255, 0.6);
-            transform: scale(1.05);
-        }
-
-        @media screen and (max-width: 768px) {
-            .centered-neon-content {
-                gap: 2rem;
-                padding: 1rem;
-            }
-            .neon-heading {
-                font-size: 1.2rem;
-            }
-            .neon-subtext {
-                font-size: 1rem;
-            }
-            .neon-button {
-                font-size: 1.2rem;
-                padding: 0.8rem 1.5rem;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .neon-section {
-                padding: 1.5rem;
-            }
-            .neon-heading {
-                font-size: 1.1rem;
-            }
-            .neon-subtext {
-                font-size: 0.9rem;
-            }
-            .neon-button {
-                font-size: 1rem;
-                padding: 0.7rem 1.2rem;
-            }
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ORION UI</title>
+    <meta name="google-signin-client_id" content="85561924382-t8ua162b0jaufroelvmb314foagrr80s.apps.googleusercontent.com">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://unpkg.com/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "marked": "https://cdn.jsdelivr.net/npm/marked@13.0.0/lib/marked.esm.js",
+        "katex": "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.mjs",
+        "highlight.js": "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/es/highlight.min.js",
+        "dompurify": "https://cdn.jsdelivr.net/npm/dompurify/dist/purify.es.min.js",
+        "firebase/app": "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js",
+        "firebase/auth": "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js",
+        "firebase/firestore": "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
+      }
+    }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSY3SV" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="buttons">
-        <div scale-up="" style="--order:1;">
-            <a href="https://www.caimeo.shop" class="button-link" target="_blank">
-                <button type="button" class="furniture">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M6 3h15l1.5 9H7L5.5 3H6z"></path>
-                        <path d="M6 7h15l1 8H7l1-8z"></path>
-                        <path d="M8 7v-2h4v2"></path>
-                        <path d="M8 7v8M12 7v8M16 7v8"></path>
-                        <circle cx="9" cy="20" r="2"></circle>
-                        <circle cx="17" cy="20" r="2"></circle>
-                    </svg>
-                    <p>Shop</p>
-                </button>
-            </a>
-        </div>
-        <div scale-up="" style="--order:2;">
-            <a href="https://www.caimeo.shop/games.html" class="button-link" target="_blank">
-                <button type="button" class="travel">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 17h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1z"></path>
-                        <path d="M8 17l1 -4h6l1 4"></path>
-                        <circle cx="12" cy="7" r="3"></circle>
-                        <line x1="12" y1="10" x2="12" y2="17"></line>
-                    </svg>
-                    <p>Games</p>
-                </button>
-            </a>
-        </div>
-        <div scale-up="" style="--order:3;">
-            <a href="https://www.711131719.xyz/puzzles.html" class="button-link" target="_blank">
-                <button type="button" class="boat">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M10 2h4v3a1 1 0 0 0 1 1h3v4a1 1 0 0 1 -1 1h-1v2h1a1 1 0 0 1 1 1v4h-4a1 1 0 0 0 -1 1v1a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-1a1 1 0 0 0 -1 -1h-2a1 1 0 0 1 -1 -1v-4h3a1 1 0 0 0 1 -1v-2a1 1 0 0 0 -1 -1h-3v-4h3a1 1 0 0 0 1 -1v-1a1 1 0 0 1 1 -1z"></path>
-                    </svg>
-                    <p>Puzzles</p>
-                </button>
-            </a>
-        </div>
-        <div scale-up="" style="--order:4;">
-            <a href="https://moddarkrevolt.wixsite.com/temple777/members" class="button-link" target="_blank">
-                <button type="button" class="economy">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M15 2 L2 28 L28 28 Z" stroke="currentColor" fill="none"/>
-                        <ellipse cx="15" cy="19" rx="6" ry="4" fill="none" stroke="currentColor" stroke-width="2"/>
-                        <circle cx="15" cy="19" r="2" fill="currentColor"/>
-                    </svg>
-                    <p>Network</p>
-                </button>
-            </a>
-        </div>
-        <div scale-up="" style="--order:5;">
-            <a href="https://www.caimeo.shop/studio.html" class="button-link" target="_blank">
-                <button type="button" class="job">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21.8 8s-.2-1.4-.8-2c-.7-.8-1.6-.8-2-.9C16 4.7 12 4.7 12 4.7s-4 0-7 .4c-.4 0-1.3 0-2 .9c-.6.6-.8 2-.8 2S2 10 2 12s.2 4 1 4.8c.7.8 1.6.8 2 .9C8 19.3 12 19.3 12 19.3s4 0 7-.4c.4 0 1.3 0 2-.9c.6-.6.8-2 .8-2s.2-1.6.2-3.6-.2-2.6-.2-2.6z"></path>
-                        <polygon points="9.5,15.5 16,12 9.5,8.5"></polygon>
-                    </svg>
-                    <p>Studio</p>
-                </button>
-            </a>
-        </div>
-        <div scale-up="" style="--order:6;">
-            <a href="https://www.caimeo.shop/ai.html" class="button-link" target="_blank">
-                <button type="button" class="holiday">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="4" y="4" width="16" height="16" rx="2"></rect>
-                        <path d="M9 9h6v6h-6z"></path>
-                        <path d="M3 10h1"></path>
-                        <path d="M3 14h1"></path>
-                        <path d="M20 10h1"></path>
-                        <path d="M20 14h1"></path>
-                        <path d="M10 3v1"></path>
-                        <path d="M14 3v1"></path>
-                        <path d="M10 20v1"></path>
-                        <path d="M14 20v1"></path>
-                    </svg>
-                    <p>A.I.</p>
-                </button>
-            </a>
-        </div>
-        <div scale-up="" style="--order:7;">
-            <a href="https://www.caimeo.shop/hive.html" class="button-link" target="_blank">
-                <button type="button" class="travel">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 7l8 -4l8 4v10l-8 4l-8 -4z"></path>
-                        <path d="M4 7l8 4l8 -4M4 17l8 -4l8 4" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <circle cx="12" cy="12" r="3" stroke="currentColor" fill="none" stroke-width="2"></circle>
-                    </svg>
-                    <p>Hive</p>
-                </button>
-            </a>
-        </div>
-        <div scale-up="" style="--order:8;">
-            <a href="https://www.caimeo.shop/about.html" class="button-link" target="_blank">
-                <button type="button" class="mc">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="16" cy="20" r="10" stroke="currentColor" fill="none"/>
-                        <circle cx="12" cy="18" r="1" fill="currentColor"/>
-                        <circle cx="20" cy="18" r="1" fill="currentColor"/>
-                        <path d="M12.5 24c1.75 2 5.25 2 7 0" stroke="currentColor" fill="none"/>
-                        <ellipse cx="16" cy="4" rx="10" ry="2" stroke="currentColor" fill="none"/>
-                    </svg>
-                    <p>About</p>
-                </button>
-            </a>
+    <div id="glow-container"></div>
+
+    <!-- Firebase Login Screen -->
+    <div id="login-overlay">
+        <div id="login-box">
+            <div class="orion-logo">Mainframe</div>
+            <div id="auth-error" class="auth-error-message hidden"></div>
+            
+            <form class="auth-form" id="auth-form">
+                 <input type="email" id="email-input" class="auth-input" placeholder="Email" required autocomplete="email">
+                 <input type="password" id="password-input" class="auth-input" placeholder="Password" required autocomplete="current-password">
+                 <button id="auth-action-btn" class="auth-button">Sign In</button>
+            </form>
+
+            <div class="auth-separator">
+                <span>or</span>
+            </div>
+            
+            <div id="g_id_onload"
+                 data-client_id="85561924382-t8ua162b0jaufroelvmb314foagrr80s.apps.googleusercontent.com"
+                 data-callback="handleGoogleCredentialResponse"
+                 style="display: none;">
+            </div>
+            <div class="g_id_signin" 
+                 data-type="standard" 
+                 data-size="large" 
+                 data-text="signin_with" 
+                 data-shape="rectangular" 
+                 data-logo_alignment="left">
+            </div>
+            
+            <p class="auth-toggle-text">
+                <span id="auth-toggle-message">Don't have an account?</span>
+                <a href="#" id="auth-toggle-link">Register</a>
+            </p>
         </div>
     </div>
 
-    <div class="centered-neon-content">
-        <div class="neon-section">
-            <a href="https://www.caimeo.shop/ai.html" class="neon-heading color1">Discover Caimeo-AI</a>
-            <p class="neon-subtext">Unleash the full potential of our advanced artificial intelligence with Caimeo-AI’s cutting-edge text models and diverse, customizable personas, designed to enhance your creative and professional projects with seamless integration.</p>
-            <button class="neon-button">Start Exploring Now</button>
-        </div>
-        <div class="neon-section">
-            <a href="https://www.caimeo.shop/ai.html" class="neon-heading color2">Join Premium Beta</a>
-            <p class="neon-subtext">Dive into the future of AI innovation by joining our exclusive Premium Beta, where you can experience our most advanced text and visual models, crafted to deliver unparalleled performance and creativity.</p>
-            <button class="neon-button">Join the Beta Today</button>
-        </div>
-        <div class="neon-section">
-            <a href="https://www.caimeo.shop/ai.html" class="neon-heading color3">Create AI Clone</a>
-            <p class="neon-subtext">Transform your ideas into reality with our state-of-the-art audio and video AI models, engineered to produce flawless, high-fidelity clones that capture every detail with stunning accuracy and realism.</p>
-            <button class="ne Lilllllp>Build Your Clone Now</button>
-        </div>
+    <!-- Ad containers for inactive users only -->
+    <div id="ad-container-top" class="ad-container hidden">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-3839146786704737"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
     </div>
+
+    <!-- Main App Container -->
+    <div id="app-container" class="hidden">
+        <header>
+            <div class="orion-logo">Mainframe<br><span style="font-size: 16px; margin-top: -9px; display: block;">Orion <span style="font-size: 16px;">Version 1.0.5</span> <span id="credits-display" style="font-size: 16px; color: var(--placeholder-color); margin-left: 8px;"></span></span></div>
+            <div class="header-buttons">
+                <button id="subscription-btn" class="animated-icon-button animated-container" aria-label="Subscription Status">
+                    <div class="glow-overlay"></div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="z-index: 11;">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#999"/>
+                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14px" fill="#999" dy=".1em">U</text>
+                    </svg>
+                </button>
+                <button id="q-btn" class="animated-icon-button animated-container" aria-label="Q Button">
+                    <div class="glow-overlay"></div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="z-index: 11;">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#999"/>
+                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14px" fill="#999" dy=".1em">Q</text>
+                    </svg>
+                </button>
+                <button id="info-btn" class="animated-icon-button animated-container" aria-label="Information">
+                    <div class="glow-overlay"></div>
+                    <i class="fas fa-info-circle"></i>
+                </button>
+                <button id="help-btn" class="animated-icon-button animated-container" aria-label="Help">
+                    <div class="glow-overlay"></div>
+                    <i class="fas fa-question-circle"></i>
+                </button>
+                <button id="theme-toggle-btn" class="animated-icon-button animated-container theme-toggle-button" aria-label="Toggle Theme">
+                    <div class="glow-overlay"></div>
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="settings-btn" class="animated-icon-button animated-container" aria-label="Settings">
+                    <div class="glow-overlay"></div>
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </header>
+
+        <div id="main-content">
+            <div id="chat-log" class="chat-container">
+                <!-- Messages will be injected here by JavaScript -->
+            </div>
+
+            <div id="suggestions-container" class="suggestion-buttons">
+                <!-- Suggestion chips will be added here -->
+            </div>
+
+            <div class="bottom-area">
+                <div class="main-container">
+                    <div class="search-box animated-container" style="position: relative;">
+                        <div id="image-preview-container" class="hidden">
+                            <img id="image-preview" src="" alt="Image preview"/>
+                            <button id="remove-image-btn" title="Remove image">&times;</button>
+                        </div>
+                        <div class="glow-overlay"></div>
+                        <input type="text" id="input-box" class="search-input" placeholder="Type your message here...">
+                        <input type="file" id="file-input" accept="image/*" class="hidden">
+                    </div>
+                    <button id="attach-button" class="animated-icon-button animated-container" aria-label="Attach file">
+                        <div class="glow-overlay"></div>
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                    <button id="send-button" class="animated-icon-button animated-container" aria-label="Send message">
+                        <div class="glow-overlay"></div>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div> <!-- end main-content -->
+
+        <!-- Ad container for inactive users -->
+        <div id="ad-container-bottom" class="ad-container hidden">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-3839146786704737"
+                 data-ad-slot="0987654321"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+
+        <aside id="sidebar">
+            <button id="close-sidebar"><i class="fas fa-times"></i></button>
+            <h2 class="text-2xl font-semibold mb-6">Settings</h2>
+            <div class="space-y-4">
+                
+                <!-- Conversations Section -->
+                <div class="sidebar-setting-group">
+                    <h3 style="cursor: pointer;" id="conversations-header">Conversations <span id="conversations-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <div id="conversations-content-container" class="space-y-2" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
+                        <!-- Conversation items will be injected here -->
+                    </div>
+                </div>
+
+                <!-- Keys Section -->
+                <div class="sidebar-setting-group">
+                    <h3 style="cursor: pointer;" id="keys-header">Keys <span id="keys-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <div id="keys-content-container" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
+                        <div>
+                            <label for="api-key-input" class="text-sm" style="color: var(--sidebar-label-color);">OpenRouter API Key:</label>
+                            <div id="api-key-display" style="display: none;">
+                                <span class="api-key-masked">••••••••••••••••</span>
+                                <button class="edit-api-btn animated-container" style="position: relative; z-index: 1;">
+                                    <div class="glow-overlay"></div>
+                                    <span>Edit API</span>
+                                </button>
+                            </div>
+                            <input type="password" id="api-key-input" class="api-key-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Model Section -->
+                <div class="sidebar-setting-group">
+                    <h3 style="cursor: pointer;" id="chat-model-header">Chat Model <span id="chat-model-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <div id="chat-model-content-container" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
+                        <div class="relative">
+                            <button id="chat-model-btn" class="sidebar-setting animated-container custom-dropdown-button">
+                                <div class="glow-overlay"></div>
+                                <span id="selected-chat-model">Select Model</span>
+                                <i class="fas fa-chevron-up"></i>
+                            </button>
+                            <div id="model-selector" class="custom-dropdown-menu hidden">
+                                <!-- Model options will be injected here by new JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Persona Section -->
+                <div class="sidebar-setting-group">
+                    <h3 style="cursor: pointer;" id="persona-header">Persona <span id="persona-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <div id="persona-content-container" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
+                        <div class="relative">
+                            <button id="persona-btn" class="sidebar-setting animated-container custom-dropdown-button">
+                                <div class="glow-overlay"></div>
+                                <span id="selected-persona">ORION</span>
+                                <i class="fas fa-chevron-up"></i>
+                            </button>
+                            <div id="personas-content-container" class="custom-dropdown-menu hidden">
+                               <!-- Persona options will be injected here by new JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Themes Section -->
+                <div class="sidebar-setting-group">
+                    <h3 style="cursor: pointer;" id="themes-header">Themes <span id="themes-toggle" style="color: #666; transition: transform 0.3s;">></span></h3>
+                    <div id="themes-content-container" style="transition: max-height 0.3s ease-out, opacity 0.3s ease-out;">
+                        <div class="relative">
+                            <button id="theme-btn" class="sidebar-setting animated-container custom-dropdown-button">
+                                <div class="glow-overlay"></div>
+                                <span id="selected-theme">ORION</span>
+                                <i class="fas fa-chevron-up"></i>
+                            </button>
+                            <div id="theme-dropdown" class="custom-dropdown-menu hidden">
+                               <a href="#" data-value="orion">ORION</a>
+                               <a href="#" data-value="gemini">GEMINI</a>
+                               <a href="#" data-value="anthropic-dawn">Anthropic-Dawn</a>
+                               <a href="#" data-value="copilot-neon">Copilot-Neon</a>
+                               <a href="#" data-value="cyber-forge">Cyber-Forge</a>
+                               <a href="#" data-value="quantum-flux">Quantum-Flux</a>
+                               <a href="#" data-value="google-ai-mode">Google-AI-Mode</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Section -->
+                <div class="sidebar-setting-group" style="margin-top: auto;">
+                    <button id="sign-out-btn">Sign Out</button>
+                </div>
+
+            </div>
+        </aside>
+
+        <!-- Info Popup -->
+        <div id="info-popup-overlay" class="hidden popup-overlay">
+            <div id="info-popup" class="info-popup-container">
+                <button id="close-info-popup" class="close-popup-btn"><i class="fas fa-times"></i></button>
+                <h3>Model Information</h3>
+                <ul id="model-info-list" class="list-disc list-inside space-y-2" style="color: var(--sidebar-label-color); max-height: 200px; overflow-y: auto;">
+                    <!-- Model info will be dynamically populated -->
+                </ul>
+                <p class="mt-4 text-sm text-center" style="color: var(--placeholder-color);">System Last Updated: <span id="last-update-date"></span></p>
+            </div>
+        </div>
+
+        <!-- Help Popup -->
+        <div id="help-popup-overlay" class="hidden popup-overlay">
+            <div id="help-popup" class="info-popup-container">
+                <button id="close-help-popup" class="close-popup-btn"><i class="fas fa-times"></i></button>
+                <h3>MAINFRAME : ORION Edition</h3>
+                <p class="text-center" style="color: var(--sidebar-label-color);">
+                    This is the ORION user interface, designed for seamless interaction with various AI models and tools.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Subscription Popup -->
+        <div id="subscription-popup-overlay" class="hidden popup-overlay">
+            <div id="subscription-popup" class="info-popup-container">
+                <button id="close-subscription-popup" class="close-popup-btn"><i class="fas fa-times"></i></button>
+                <h3>Subscription Status</h3>
+                <div id="subscription-info-content" style="color: var(--sidebar-label-color);">
+                    <!-- Content will be populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Persona Modal -->
+        <div id="create-persona-modal" class="hidden popup-overlay">
+          <div id="create-persona-content" class="info-popup-container">
+             <button id="close-create-persona-btn" class="close-popup-btn"><i class="fas fa-times"></i></button>
+             <h3>Create New Persona</h3>
+             <form id="create-persona-form">
+                <div class="space-y-4">
+                    <div>
+                        <label for="persona-name">Persona Name</label>
+                        <input type="text" id="persona-name" required class="api-key-input" maxlength="30">
+                    </div>
+                    <div>
+                        <label for="persona-description">System Prompt</label>
+                        <textarea id="persona-description" required class="api-key-input" rows="6" style="resize: vertical;"></textarea>
+                    </div>
+                </div>
+                <div style="text-align: right; margin-top: 1rem;">
+                    <button type="submit" class="add-community-persona-btn">Create</button>
+                </div>
+             </form>
+          </div>
+        </div>
+
+        <!-- Community Personas Modal -->
+        <div id="community-personas-modal" class="hidden popup-overlay">
+          <div id="community-personas-content" class="info-popup-container">
+             <button id="close-community-personas-btn" class="close-popup-btn"><i class="fas fa-times"></i></button>
+             <h3>Community Personas</h3>
+             <p style="text-align: center; margin-bottom: 1rem; color: var(--sidebar-label-color);">
+                Submit your personas to: moddarkrevolt@gmail.com
+             </p>
+             <div id="community-personas-list">
+               <!-- Populated by JS -->
+             </div>
+          </div>
+        </div>
+        
+        <!-- Publish Persona Modal -->
+        <div id="publish-persona-modal" class="hidden popup-overlay">
+          <form id="publish-persona-form" class="info-popup-container" autocomplete="off">
+             <button type="button" id="publish-persona-cancel-btn" class="close-popup-btn"><i class="fas fa-times"></i></button>
+            <h3 class="publish-persona-header">Share Persona</h3>
+            <div class="space-y-4">
+                <div>
+                  <label for="publish-persona-username">Creator Username <span style="color:#aaa">(optional)</span></label>
+                  <input type="text" id="publish-persona-username" maxlength="20" placeholder="anon" class="api-key-input">
+                </div>
+                <div>
+                  <label for="publish-persona-title">Persona Name</label>
+                  <input type="text" id="publish-persona-title" maxlength="34" required class="api-key-input">
+                </div>
+                <div>
+                  <label for="publish-persona-prompt">System Prompt:</label>
+                  <textarea id="publish-persona-prompt" rows="4" required class="api-key-input" style="resize: vertical;"></textarea>
+                </div>
+            </div>
+            <div style="text-align: right; margin-top: 1rem;">
+              <button type="submit" class="add-community-persona-btn">Publish</button>
+            </div>
+          </form>
+        </div>
+
+    </div>
+
+    <script type="module" src="script.js"></script>
+
 </body>
 </html>
