@@ -23,6 +23,30 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
+// Add Google Sign-In handler
+window.handleGoogleCredentialResponse = function(response) {
+    if (response.credential) {
+        const data = jwt_decode(response.credential);
+        console.log("Google Sign-In successful:", data);
+        
+        // Create a credential for Firebase using the Google token
+        const credential = GoogleAuthProvider.credential(response.credential);
+        
+        // Sign in to Firebase with the Google credential
+        signInWithPopup(auth, provider).then((result) => {
+            console.log("Firebase authentication successful");
+        }).catch((error) => {
+            console.error("Firebase authentication failed:", error);
+            authErrorDiv.textContent = error.message;
+            authErrorDiv.classList.remove('hidden');
+        });
+    } else {
+        console.error("Google Sign-in failed: No credential received");
+        authErrorDiv.textContent = "Google Sign-in failed";
+        authErrorDiv.classList.remove('hidden');
+    }
+};
+
 // --- Glow Effect Manager ---
 class GlowManager {
     constructor(containerId) {
@@ -302,10 +326,14 @@ function updateSubscriptionDisplay(details) {
         statusText = `Status: Active<br>Expires on: ${endDate ? endDate.toLocaleDateString() : 'N/A'}`;
         statusColor = 'green';
         userLetter = 'U';
+        // Hide ads for active users
+        hideAds();
     } else {
         statusText = 'Status: Inactive<br>Please purchase a subscription.';
         statusColor = 'red';
         userLetter = 'P';
+        // Show ads for inactive users
+        showAds();
     }
 
     subscriptionInfoContent.innerHTML = statusText;
@@ -326,6 +354,34 @@ function updateSubscriptionDisplay(details) {
     }
 }
 
+function showAds() {
+    const adContainers = document.querySelectorAll('.ad-container');
+    adContainers.forEach(container => {
+        container.classList.remove('hidden');
+    });
+    
+    // Initialize ads if they haven't been loaded yet
+    if (typeof adsbygoogle !== 'undefined') {
+        try {
+            const ads = document.querySelectorAll('.adsbygoogle');
+            ads.forEach(ad => {
+                if (!ad.getAttribute('data-adsbygoogle-status')) {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                }
+            });
+        } catch (e) {
+            console.log('Ad loading error:', e);
+        }
+    }
+}
+
+function hideAds() {
+    const adContainers = document.querySelectorAll('.ad-container');
+    adContainers.forEach(container => {
+        container.classList.add('hidden');
+    });
+}
+
 async function decrementCredits() {
     const user = auth.currentUser;
     if (!user) return;
@@ -333,7 +389,6 @@ async function decrementCredits() {
     try {
         // Add usage to local storage first
         const updatedUsage = addLocalCreditUsage(user.uid);
-        /* @tweakable Maximum daily message limit for inactive users */
         const maxCredits = config.DAILY_CREDIT_LIMIT;
         userCredits.count = maxCredits - updatedUsage.length;
 
@@ -354,7 +409,6 @@ async function decrementCredits() {
         // Update the credits display immediately
         const creditsDisplay = document.getElementById('credits-display');
         if (creditsDisplay && subscriptionDetails.status !== 'Active') {
-            /* @tweakable Format for displaying remaining credits */
             creditsDisplay.textContent = `Credits: ${userCredits.count}/${maxCredits}`;
         }
 
@@ -379,7 +433,6 @@ function getLocalCreditUsage(userId) {
         if (stored) {
             const usage = JSON.parse(stored);
             
-            /* @tweakable Credit reset time (hours and minutes in 24hr format) */
             const RESET_HOUR = 19;
             const RESET_MINUTE = 0;
 
@@ -402,7 +455,6 @@ function addLocalCreditUsage(userId) {
         const key = `credit_usage_${userId}`;
         let usage = getLocalCreditUsage(userId);
         
-        /* @tweakable Maximum number of stored credit usage entries */
         const MAX_STORED_ENTRIES = 100;
 
         // Add new usage entry
@@ -663,7 +715,6 @@ function typewriterEffect(sender, message) {
          const imgElement = document.createElement('img');
          imgElement.src = URL.createObjectURL(attachedFile);
          imgElement.style.maxWidth = '200px';
-         /* @tweakable Controls the max height of the attached image preview in the chat */
          imgElement.style.maxHeight = '200px';
          imgElement.style.borderRadius = '8px';
          imgElement.style.marginTop = '8px';
@@ -782,13 +833,10 @@ async function sendMessage() {
     try {
         let botResponse = '';
         if (userApiKey && selectedModelId) {
-            // Modify callOpenRouterAPI to handle complex content
             botResponse = await callOpenRouterAPI(userApiKey, selectedModelId, apiMessages);
         } else {
-            await ensurePuterReady();
-            // Puter.ai.chat needs to be checked if it supports complex content
-            const response = await websim.chat.completions.create({ messages: apiMessages, model: selectedModelId });
-            botResponse = response.content;
+            typewriterEffect('bot', 'Error: Please enter your OpenRouter API key in the settings to use the chat.');
+            return;
         }
 
         typewriterEffect('bot', botResponse);
@@ -1291,7 +1339,6 @@ onAuthStateChanged(auth, async (user) => {
                 const data = userDocSnap.data();
                 console.log("Subscription data found:", data);
                 
-                /* @tweakable This logic determines if a subscription is active. It checks if 'purchased' is true and if the current date is between the start and end dates. */
                 const now = new Date();
                 const startDate = data.startDay ? new Date(data.startDay) : null;
                 const endDate = data.endDay ? new Date(data.endDay) : null;
@@ -1370,10 +1417,8 @@ function updateCreditsDisplay() {
     if (user && subscriptionDetails.status !== 'Active') {
         // For inactive users, use local storage count
         const usage = getLocalCreditUsage(user.uid);
-        /* @tweakable How remaining credits are calculated */
         const remainingCredits = config.DAILY_CREDIT_LIMIT - usage.length;
         userCredits.count = Math.max(0, remainingCredits);
-        /* @tweakable Format for credits display */
         creditsDisplay.textContent = `Credits: ${userCredits.count}/${config.DAILY_CREDIT_LIMIT}`;
         checkCreditAndToggleInput();
     } else if (subscriptionDetails.status === 'Active') {
@@ -1465,7 +1510,7 @@ async function fetchAndManageCredits(user) {
                 updateCreditsDisplay();
                 checkCreditAndToggleInput();
             }
-        }, CREDIT_REFRESH_INTERVAL);
+        }, 30000);
 
     } catch (error) {
         console.error("Error fetching/managing credits:", error);
@@ -1519,7 +1564,6 @@ function generateDeviceFingerprint() {
         hardwareConcurrency: navigator.hardwareConcurrency || 0,
         cookieEnabled: navigator.cookieEnabled,
         doNotTrack: navigator.doNotTrack,
-        /* @tweakable Additional fingerprinting data points */
         touchPoints: navigator.maxTouchPoints,
         vendor: navigator.vendor,
         plugins: Array.from(navigator.plugins).map(p => p.name).join(','),
