@@ -1,0 +1,213 @@
+<html><head>
+    <script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839146786704737" crossorigin="anonymous"></script>
+  <base href=".">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prime Access</title>
+  <style>
+    @font-face {
+      font-family: 'VT323';
+      font-style: normal;
+      font-weight: 400;
+      src: url(https://fonts.gstatic.com/s/vt323/v17/pxiKyp0ihIEF2hsY.woff2) format('woff2');
+    }
+    body {
+      background: #000;
+      color: #0f0;
+      font-family: 'VT323', monospace;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    .terminal-container {
+      background: rgba(0, 10, 0, 0.95);
+      padding: 2rem;
+      border: 1px solid #0f0;
+      width: 80%;
+      max-width: 800px;
+      position: relative;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+    }
+    .glitch-text {
+      position: relative;
+      font-size: 1.5em;
+      margin: 10px 0;
+    }
+    .prime-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin: 20px 0;
+      align-items: center;
+    }
+    .prime-cell {
+      background: #001100;
+      border: 1px solid #0f0;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin: 5px;
+      min-width: 60px;
+    }
+    .prime-cell:hover {
+      background: #002200;
+      box-shadow: 0 0 10px #0f0;
+    }
+    input {
+      background: #001100;
+      border: 1px solid #0f0;
+      color: #0f0;
+      padding: 12px;
+      width: 250px;
+      margin-right: 10px;
+      font-family: 'VT323', monospace;
+    }
+    button {
+      background: #002200;
+      color: #0f0;
+      border: 1px solid #0f0;
+      padding: 12px 25px;
+      cursor: pointer;
+      font-family: 'VT323', monospace;
+    }
+    button:hover {
+      background: #003300;
+      box-shadow: 0 0 10px #0f0;
+    }
+    @keyframes glitch {
+      0% { transform: translate(0) }
+      20% { transform: translate(-2px, 2px) }
+      40% { transform: translate(-2px, -2px) }
+      60% { transform: translate(2px, 2px) }
+      80% { transform: translate(2px, -2px) }
+      100% { transform: translate(0) }
+    }
+    .glitch-effect { animation: glitch 0.3s infinite; }
+    .scanline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: rgba(0, 255, 0, 0.1);
+      animation: scanline 6s linear infinite;
+    }
+    @keyframes scanline { 0% { top: 0 } 100% { top: 100% } }
+  </style>
+   <script type="text/javascript">
+        // Disable right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            alert("Right-click is disabled on this page.");
+        });
+
+        // Disable 'View Source' through the F12 and Ctrl+U keys
+        document.onkeydown = function(e) {
+            if (e.keyCode == 123 || (e.ctrlKey && e.keyCode == 85)) {
+                e.preventDefault();
+                alert("Viewing source is disabled.");
+            }
+        }
+    </script>
+
+  
+</head>
+<body>
+  <div class="terminal-container">
+    <div class="scanline"></div>
+    <div class="glitch-text" style="background-color: #000000; color: #39FF14; text-shadow: 0 0 5px #32CD32, 0 0 10px #00FF00; padding: 10px; border-left: 4px solid #32CD32; font-family: 'VT323', monospace; letter-spacing: 1px;">
+      <span style="color: #32CD32;">root@system:</span><span style="color: #00FF00;">~$</span> SYSTEM ACCESS: Level 5
+    </div>
+    <div class="glitch-text" style="background-color: #000000; color: #39FF14; text-shadow: 0 0 5px #32CD32, 0 0 10px #00FF00; padding: 10px; border-left: 4px solid #32CD32; font-family: 'VT323', monospace; letter-spacing: 1px;">
+      PRIME DIRECTIVE: DECRYPT
+    </div>
+    <div class="glitch-text" style="background-color: #000000; color: #39FF14; text-shadow: 0 0 5px #32CD32, 0 0 10px #00FF00; padding: 10px; border-left: 4px solid #32CD32; font-family: 'VT323', monospace; letter-spacing: 1px;">
+      &gt;_ Analyzing security protocols...
+    </div>
+    <div class="glitch-text" style="background-color: #000000; color: #39FF14; text-shadow: 0 0 5px #32CD32, 0 0 10px #00FF00; padding: 10px; border-left: 4px solid #32CD32; font-family: 'VT323', monospace; letter-spacing: 1px;">
+  <span style="color: #000000; opacity: 1;">Room #101 </span>
+  <span id="flickeringNumbers"></span><br><br>
+  In the matrix of numbers below<br>
+  Hidden primes hold secrets to show<br>
+  Take the first three primes you see<br>
+  Multiply them and <span style="color: #ff0000;">delete</span> the <span style="color: #ff0000;">SSH</span> key<br>
+  The path to truth will then be free
+</div>
+
+    <!-- Prime Numbers and Input Section -->
+    <div class="prime-row">
+      <div class="prime-cell" id="prime1" onclick="highlightCell(this)">149</div>
+      <span style="color: #0f0; margin: 0 10px;">X</span>
+      <div class="prime-cell" id="prime2" onclick="highlightCell(this)">229</div>
+      <span style="color: #0f0; margin: 0 10px;">X</span>
+      <div class="prime-cell" id="prime3" onclick="highlightCell(this)">268</div>
+      <span style="color: #0f0; margin: 0 10px;">-</span>
+      <div class="prime-cell" id="prime4" onclick="highlightCell(this)" style="color: #ff0000; text-shadow: 0 0 10px #ff0000; border-color: #ff0000;">113</div>
+      <span style="color: #0f0; margin: 0 10px;"></span>
+    </div>
+
+    <!-- Input for User -->
+    <div class="input-area">
+      <input type="number" id="answer" placeholder="Enter access code">
+      <button onclick="checkAnswer()">EXECUTE</button>
+    </div>
+    <div id="message" style="color: #0f0; margin-top: 20px;"></div>
+  </div>
+
+  <script>
+    const fixedPrimes = [97, 101, 103];  // These are the primes that will be multiplied
+    const sshKey = 268;  // The SSH key value to subtract
+
+    // This function will calculate the correct answer
+    function calculateCorrectAnswer() {
+      const result = fixedPrimes.reduce((acc, prime) => acc * prime, 1) - sshKey;
+      return result;
+    }
+
+    // This function will check if the entered answer is correct
+    function checkAnswer() {
+      const userAnswer = parseInt(document.getElementById("answer").value);
+      const correctAnswer = 999203;  // This is the correct answer (999,203)
+      if (userAnswer === correctAnswer) {
+        document.getElementById("message").textContent = "Access granted!";
+        document.getElementById("message").style.color = "#0f0";
+        setTimeout(() => {
+          window.location.href = "https://caimeo.shop/puzzle/6.html";  // Redirect after success
+        }, 2000);
+      } else {
+        document.getElementById("message").textContent = "Incorrect code. Try again.";
+        document.getElementById("message").style.color = "#f00";
+      }
+    }
+
+    // Array of possible prime numbers to shuffle
+    const primes = [149, 229, 197, 113, 131, 173, 181, 239, 307, 353, 
+241, 227, 157, 163, 199, 233, 97, 167, 109, 223, 
+103, 179, 197, 149, 211, 239, 107, 268, 173, 131, 
+127, 101, 251, 101, 263, 191, 268, 97, 193, 139, 
+107, 179, 151, 227, 229, 263, 113, 239, 173, 223];
+
+    // Function to shuffle the primes in the boxes
+    function shufflePrimes() {
+      const primeElements = document.querySelectorAll('.prime-cell');
+      primeElements.forEach(element => {
+        const randomIndex = Math.floor(Math.random() * primes.length);
+        element.textContent = primes[randomIndex];
+      });
+    }
+
+    // Set an interval to shuffle primes every 1 to 3 seconds
+    setInterval(() => {
+      const randomDelay = Math.floor(Math.random() * 3) + 1; // Random delay between 1 to 3 seconds
+      shufflePrimes();
+    }, 1000); // Shuffles primes every second
+
+  </script>
+
+
+
+</body></html>
