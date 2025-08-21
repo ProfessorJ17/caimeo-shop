@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAIMEO Chat</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #111; color: #eee; padding: 20px; }
+    #chatbox { margin-bottom: 20px; max-height: 400px; overflow-y: auto; border: 1px solid #444; padding: 10px; }
+    input, button { font-size: 1em; padding: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Talk to CAIMEO</h1>
+  <div id="chatbox"></div>
+  <input id="userInput" placeholder="Say something..." />
+  <button onclick="sendMessage()">Send</button>
+
+  <script>
+    async function sendMessage() {
+      const input = document.getElementById("userInput").value;
+      if (!input) return;
+
+      const res = await fetch("https://frosty-recipe-78c2.moddarkrevolt.workers.dev", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: input })
+      });
+
+      const data = await res.json();
+      document.getElementById("chatbox").innerHTML += `<p><b>You:</b> ${input}</p>`;
+      document.getElementById("chatbox").innerHTML += `<p><b>CAIMEO:</b> ${data.choices[0].message.content}</p>`;
+    }
+  </script>
+</body>
+</html>

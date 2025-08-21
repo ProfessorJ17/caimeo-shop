@@ -1,0 +1,518 @@
+<html>
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <title>GoodVibes Tea Premium Jamaican Medicinal Herbal Tea Blend</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Premium Jamaican medicinal herbal tea blend with 7 tea bags, 2g each. Features handpicked herbs like Black Cordoncillo, Cerasee, and more. Free worldwide shipping.">
+  <meta name="keywords" content="Jamaican tea, herbal tea, medicinal tea, natural tea">
+
+  <!-- Social Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GoodVibes Tea Premium Jamaican Medicinal Herbal Tea Blend">
+  <meta property="og:description" content="Premium Jamaican medicinal herbal tea blend with 7 tea bags, 2g each. Features handpicked herbs like Black Cordoncillo, Cerasee, and more. Free worldwide shipping.">
+  <meta property="og:image" content>
+
+  <style>
+    :root {
+      --primary: #000000;
+      --secondary: #0ff;
+      --text: #fff;
+      --neon-green: #0f0;
+      --neon-pink: #ff69b4;
+      --neon-purple: #9370db;
+      --neon-cyan: #0ff;
+    }
+
+    @keyframes neonPulse {
+      0% { filter: brightness(1) drop-shadow(0 0 5px var(--neon-cyan)); }
+      50% { filter: brightness(1.2) drop-shadow(0 0 10px var(--neon-cyan)); }
+      100% { filter: brightness(1) drop-shadow(0 0 5px var(--neon-cyan)); }
+    }
+
+    @keyframes borderGlow {
+      0% { border-color: var(--neon-pink); }
+      33% { border-color: var(--neon-cyan); }
+      66% { border-color: var(--neon-green); }
+      100% { border-color: var(--neon-pink); }
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: var(--text);
+      background: #000000;
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(255, 105, 180, 0.1) 0%, transparent 40%);
+    }
+
+    .product-container {
+      max-width: 1200px;
+      margin: 2rem auto 2rem;
+      padding: 2rem;
+    }
+
+    .product-details {
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 0 20px var(--neon-cyan),
+                  inset 0 0 20px var(--neon-purple);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      border: 2px solid var(--neon-cyan);
+      animation: borderGlow 4s infinite;
+    }
+
+    .product-image-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 600px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 0 20px var(--neon-cyan);
+      animation: neonPulse 2s infinite;
+      border: 3px solid var(--neon-cyan);
+    }
+
+    .product-gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .gallery-image {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid var(--neon-cyan);
+    }
+
+    .gallery-image:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px var(--neon-cyan);
+    }
+
+    .product-info {
+      padding: 1rem;
+    }
+
+    .product-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    .product-description {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+      text-shadow: 0 0 5px var(--neon-cyan);
+    }
+
+    .product-features {
+      margin: 2rem 0;
+      padding: 1rem;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 8px;
+      border: 1px solid var(--neon-cyan);
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-list li {
+      margin-bottom: 0.5rem;
+      padding-left: 1.5rem;
+      position: relative;
+      color: var(--neon-green);
+      text-shadow: 0 0 5px var(--neon-green);
+    }
+
+    .feature-list li:before {
+      content: "►";
+      color: var(--neon-pink);
+      position: absolute;
+      left: 0;
+    }
+
+    .product-price {
+      font-size: 2.5rem;
+      color: var(--neon-pink);
+      font-weight: bold;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 10px var(--neon-pink);
+    }
+
+    .product-price span {
+      display: block;
+      margin: 5px 0;
+    }
+
+    #usa-price {
+      color: var(--neon-green);
+      text-shadow: 0 0 10px var(--neon-green);
+    }
+
+    #worldwide-price {
+      color: var(--neon-pink);
+      text-shadow: 0 0 10px var(--neon-pink);
+    }
+
+    .buy-button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: transparent;
+      color: var(--neon-cyan);
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      border: 2px solid var(--neon-cyan);
+      transition: all 0.3s ease;
+      text-shadow: 0 0 5px var(--neon-cyan);
+      box-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    .buy-button:hover {
+      background: var(--neon-cyan);
+      color: #000;
+      box-shadow: 0 0 20px var(--neon-cyan);
+    }
+
+    .variant-options {
+      margin-bottom: 2rem;
+      display: none;
+    }
+
+    .variant-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--neon-purple);
+      text-shadow: 0 0 5px var(--neon-purple);
+      display: none;
+    }
+
+    .variant-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .variant-option {
+      padding: 0.5rem;
+      border: 2px solid var(--neon-cyan);
+      border-radius: 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 5px var(--neon-cyan);
+      display: none;
+    }
+
+    .variant-option:hover {
+      background: rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    .variant-option.selected {
+      background: var(--neon-cyan);
+      color: #000;
+      box-shadow: 0 0 15px var(--neon-cyan);
+    }
+
+    .product-features h3 {
+      color: var(--neon-purple);
+      text-shadow: 0 0 5px var(--neon-purple);
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .product-specs {
+      margin: 2rem 0;
+      padding: 1rem;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 8px;
+      border: 1px solid var(--neon-cyan);
+      order: 2; /* Place after main image but before gallery */
+    }
+
+    .spec-title {
+      color: var(--neon-purple);
+      text-shadow: 0 0 5px var(--neon-purple);
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .spec-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .spec-list dt {
+      font-size: 1.1em;
+      margin-top: 1rem;
+      color: var(--neon-pink);
+      text-shadow: 0 0 5px var(--neon-pink);
+    }
+
+    .spec-list dd {
+      margin-left: 1.5rem;
+      line-height: 1.4;
+      color: var(--text);
+      text-shadow: 0 0 3px var(--neon-cyan);
+    }
+
+    .overview-section {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: rgba(147, 112, 219, 0.1);
+      border-radius: 8px;
+      border: 1px solid var(--neon-purple);
+    }
+
+    .overview-title {
+      color: var(--neon-green);
+      text-shadow: 0 0 5px var(--neon-green);
+      margin-bottom: 1rem;
+    }
+
+    .overview-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .overview-list li {
+      color: var(--text);
+      margin-bottom: 1rem;
+      text-shadow: 0 0 3px var(--neon-cyan);
+    }
+
+    .overview-list li strong {
+      color: var(--neon-green);
+      text-shadow: 0 0 5px var(--neon-green);
+    }
+
+    .gallery-image-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      background: #000;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--neon-cyan);
+      border-radius: 4px;
+      box-shadow: 0 0 5px var(--neon-cyan);
+    }
+
+    .shipping-info {
+      margin: 1rem 0;
+      padding: 1rem;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 8px;
+      border: 1px solid var(--neon-cyan);
+    }
+
+    .shipping-info p {
+      margin: 0.5rem 0;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 5px var(--neon-cyan);
+    }
+
+    .shipping-info strong {
+      color: var(--neon-pink);
+      text-shadow: 0 0 5px var(--neon-pink);
+    }
+
+    .product-care {
+      margin: 2rem 0;
+      padding: 1rem;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 8px;
+      border: 1px solid var(--neon-cyan);
+    }
+
+    .product-care h3 {
+      color: var(--neon-purple);
+      text-shadow: 0 0 5px var(--neon-purple);
+      margin-bottom: 1rem;
+    }
+
+    .care-instructions {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+
+    .care-instructions li {
+      color: var(--neon-cyan);
+      margin: 0.5rem 0;
+      text-shadow: 0 0 5px var(--neon-cyan);
+    }
+
+    #header-container {
+      width: 100%;
+      position: relative;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #header-container > * {
+      margin: 0 auto;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="header-container"></div>  
+<div class="product-container" id="productContainer">
+  <div class="product-details">
+    <div class="product-image-container">
+      <img src="https://github.com/ProfessorJ17/caimeo-shop/blob/main/images/34/image.png?raw=true" alt="Jamaican Herbal Tea" class="product-image">
+      
+      <div class="product-specs">
+        <h3 class="spec-title">Detailed Herbal Benefits</h3>
+        <dl class="spec-list">
+          <dt>Black Cordoncillo (Cordoncillo Negro)</dt>
+          <dd>Anti-inflammatory and antioxidant properties. Supports immune function, digestive health, and liver health. Natural remedy for fever and respiratory ailments.</dd>
+          
+          <dt>Cerasee</dt>
+          <dd>Powerful detoxifier and blood purifier. Supports liver health with antifungal and antibacterial properties. Helps with skin conditions and blood sugar management.</dd>
+          
+          <dt>Rice Bitters</dt>
+          <dd>Natural digestive aid for bloating and gas. Anti-inflammatory effects in stomach and gut. Promotes liver health and body cleansing.</dd>
+          
+          <dt>Bitterwood</dt>
+          <dd>Contains antimalarial, antibacterial properties. Boosts immune system, relieves fever. Aids digestion and treats intestinal issues.</dd>
+          
+          <dt>Jamaican Sarsaparilla Root</dt>
+          <dd>Natural detoxifier and blood purifier. Supports skin health and treats conditions like eczema. Promotes liver health and increases vitality.</dd>
+          
+          <dt>Jamaican Dandelion</dt>
+          <dd>Liver-detoxifying properties and digestive health support. Aids kidney function and reduces bloating. Rich in antioxidants.</dd>
+          
+          <dt>Jamaican Guaco Bush</dt>
+          <dd>Supports respiratory health, helping with coughs and asthma. Contains anti-inflammatory and antibacterial properties. Traditional remedy for fever and flu symptoms.</dd>
+          
+          <dt>Jamaican Kalawalla Fern</dt>
+          <dd>Supports immune function with anti-inflammatory properties. Provides skin protection and promotes healthy digestion. Natural antioxidant.</dd>
+          
+          <dt>Jamaican Guinea Hen Weed</dt>
+          <dd>Contains antimicrobial and pain-relieving properties. Natural fever reducer and immune booster. Helps with arthritis and joint pain.</dd>
+        </dl>
+      </div>
+
+      <div class="product-gallery">
+        <div class="gallery-image-wrapper">
+          <img src="https://github.com/ProfessorJ17/caimeo-shop/blob/main/images/34/image.png?raw=true" alt="Tea Package" class="gallery-image" onclick="updateMainImage(this.src)">
+        </div>
+      </div>
+    </div>
+    
+    <div class="product-info">
+      <h1 class="product-title">GoodVibes Tea Premium Jamaican Medicinal Herbal Tea Blend</h1>
+      <p class="product-description">
+        Experience the powerful healing properties of our premium Jamaican herbal tea blend. Each herb is carefully selected and equally proportioned for maximum benefit, combining nine traditional medicinal herbs that have been used for generations. All herbs are grown and handpicked in Jamaica, with the final herb mixture carefully assembled in the USA. Our unique blend offers comprehensive wellness support through detoxification, immune boosting, and natural healing properties.
+      </p>
+
+      <div class="product-features">
+        <h3>Key Features</h3>
+        <ul class="feature-list">
+          <li>9 Traditional Medicinal Herbs</li>
+          <li>Equal Proportions for Balanced Benefits</li>
+          <li>100% Natural &amp; Organic</li>
+          <li>7 Tea Bags (2g Each)</li>
+          <li>Free Worldwide Shipping</li>
+          <li>Jamaican-grown, USA-assembled</li>
+        </ul>
+      </div>
+
+      <div class="overview-section">
+        <h3 class="overview-title">Overall Benefits</h3>
+        <ul class="overview-list">
+          <li><strong>Detoxifying:</strong> Blood purification and liver cleansing through herbs like Cerasee and Sarsaparilla</li>
+          <li><strong>Anti-inflammatory:</strong> Immune and joint support from Black Cordoncillo, Guaco Bush, and Kalawalla Fern</li>
+          <li><strong>Digestive Health:</strong> Support from Rice Bitters, Bitterwood, and Dandelion</li>
+          <li><strong>Skin Health:</strong> Treatment for various skin conditions using Cerasee, Sarsaparilla, and Kalawalla Fern</li>
+          <li><strong>Immune Support:</strong> Boosted immunity and respiratory health from Guinea Hen Weed and Guaco Bush</li>
+        </ul>
+      </div>
+
+      <div class="product-care">
+        <h3>How to Prepare</h3>
+        <ul class="care-instructions">
+          <li>Boil water and pour over one tea bag (2g)</li>
+          <li>Steep for 5-7 minutes (longer for stronger infusion)</li>
+          <li>Drink 2-3 cups daily for best results</li>
+        </ul>
+      </div>
+
+      <div class="product-price">
+        <span id="usa-price">&#x24;17.99 (USA)</span><br>
+        <span id="worldwide-price">&#x24;29.99 (Worldwide)</span>
+      </div>
+
+      <div class="shipping-info">
+        <p><strong>USA Shipping:</strong> Calculated at checkout</p>
+        <p><strong>Worldwide Shipping:</strong> FREE</p>
+        <p>Small batch production for premium quality</p>
+        <p><strong>Sourcing:</strong> All herbs grown and handpicked in Jamaica. Final blend assembled in USA.</p>
+      </div>
+
+      <a href="https://www.paypal.com/ncp/payment/[YOUR-PAYMENT-ID]" class="buy-button" target="_blank" rel="noopener noreferrer">Buy Now</a>
+    </div>
+  </div>
+</div>
+<div id="footer-container"></div>  
+
+<script>document.addEventListener('DOMContentLoaded', function () {
+  fetch('https://caimeo.shop/header.html').then(response => response.text()).then(data => {
+    document.getElementById('header-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading header:', error);
+  });
+  fetch('https://caimeo.shop/footer.html').then(response => response.text()).then(data => {
+    document.getElementById('footer-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading footer:', error);
+  });
+});
+function updateMainImage(src) {
+  const mainImage = document.querySelector('.product-image');
+  mainImage.src = src;
+}</script>
+
+</body>
+</html>

@@ -1,0 +1,149 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: #000000;
+            overflow: hidden;
+        }
+
+        #scene-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        df-messenger {
+            z-index: 999;
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div id="scene-container"></div>
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <df-messenger
+        chat-icon="https://storage.googleapis.com/cloudprod-apiai/b81d0e93-6c60-434d-b7e6-9ff344e3533c_x.png"
+        intent="WELCOME"
+        chat-title="Caimeo"
+        agent-id="63992483-d526-45d0-ba8c-aa8678a95a59"
+        language-code="en">
+    </df-messenger>
+
+    <script>
+        // Three.js background setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('scene-container').appendChild(renderer.domElement);
+
+        // Create metallic cubes
+        const cubes = [];
+        const cubeCount = 50;
+        
+        for (let i = 0; i < cubeCount; i++) {
+            const geometry = new THREE.BoxGeometry(1, 1, 1);
+            const colors = [0xff00ff, 0x00ff00, 0x00ffff]; // Neon pink, green, cyan
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            const material = new THREE.MeshStandardMaterial({
+                color: randomColor,
+                metalness: 0.9,
+                roughness: 0.1,
+            });
+            const cube = new THREE.Mesh(geometry, material);
+            
+            // Random position
+            cube.position.x = Math.random() * 40 - 20;
+            cube.position.y = Math.random() * 40 - 20;
+            cube.position.z = Math.random() * 40 - 20;
+            
+            // Random rotation
+            cube.rotation.x = Math.random() * Math.PI;
+            cube.rotation.y = Math.random() * Math.PI;
+            
+            cubes.push({
+                mesh: cube,
+                rotationSpeed: {
+                    x: (Math.random() - 0.5) * 0.02,
+                    y: (Math.random() - 0.5) * 0.02,
+                    z: (Math.random() - 0.5) * 0.02 // Add z-axis rotation
+                }
+            });
+            
+            scene.add(cube);
+        }
+
+        // Add lights
+        const ambientLight = new THREE.AmbientLight(0x404040);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(5, 5, 5);
+        scene.add(directionalLight);
+
+        camera.position.z = 15;
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            cubes.forEach(cube => {
+                cube.mesh.rotation.x += cube.rotationSpeed.x;
+                cube.mesh.rotation.y += cube.rotationSpeed.y;
+                cube.mesh.rotation.z += cube.rotationSpeed.z; // Rotate around the z-axis
+            });
+            
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Custom styling for the chat widget
+        const dfMessenger = document.querySelector('df-messenger');
+        dfMessenger.addEventListener('df-messenger-loaded', function() {
+            const shadowRoot = dfMessenger.shadowRoot;
+            const style = document.createElement('style');
+            style.textContent = `
+                .chat-wrapper {
+                    width: 300px !important;
+                    height: 450px !important;
+                }
+                df-messenger-chat {
+                    width: 300px !important;
+                    height: 450px !important;
+                }
+                .chat-bubble {
+                    background: #0084ff !important;
+                    color: white !important;
+                }
+            `;
+            shadowRoot.appendChild(style);
+        });
+
+        // Handle any errors
+        dfMessenger.addEventListener('df-messenger-error', function(event) {
+            console.error('Error in Dialogflow Messenger:', event.detail.error);
+        });
+    </script>
+</body>
+</html>

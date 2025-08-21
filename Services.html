@@ -1,0 +1,491 @@
+<html><head><base href="https://www.caimeo.shop">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3839146786704737" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-3839146786704737">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Icons</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden; 
+            height: 100vh; 
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 1200px;
+            flex: 1;
+        }
+
+        .icon-card {
+            background-color: rgba(26, 26, 26, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .icon-card:hover {
+            border-color: #00ffff;
+            box-shadow: 0 0 20px #00ffff;
+        }
+
+        .icon-card img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .icon-card h3 {
+            font-size: 1.5em;
+            margin: 10px 0;
+            color: #00ffff;
+            text-shadow: 0 0 5px #00ffff;
+        }
+
+        .icon-card p {
+            font-size: 1em;
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+            word-wrap: break-word; 
+        }
+
+        .footer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer .button {
+            background-color: rgba(26, 26, 26, 0.7);
+            border-radius: 15px;
+            padding: 10px 20px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer .button:hover {
+            border-color: #00ff00; 
+            box-shadow: 0 0 20px #00ff00; 
+        }
+
+        .footer .button img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .footer .button span {
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+
+        .content-page {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .content-page img {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .content-page a {
+            color: #00ffff;
+            text-decoration: none;
+            font-size: 1em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .content-page p {
+            font-size: 1em;
+            margin-bottom: 20px;
+            word-wrap: break-word; 
+        }
+
+        .back-button {
+            background-color: rgba(26, 26, 26, 0.7);
+            border-radius: 15px;
+            padding: 10px 20px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            border-color: #ff00ff;
+            box-shadow: 0 0 20px #ff00ff;
+        }
+
+        /* Star Animation */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: #FF69B4; 
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle 0.5s infinite;
+        }
+
+        .star:nth-child(5n) { 
+            background-color: #FF69B4; 
+        }
+
+        .star:nth-child(5n+1) { 
+            background-color: #FF69B4; 
+        }
+
+        @keyframes twinkle {
+            0% {
+                transform: scale(0.5);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.5);
+                opacity: 0.5;
+            }
+        }
+
+@keyframes move {
+    0% { transform: translateY(0); }       
+    100% { transform: translateY(100vh); } 
+}
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .content-page iframe {
+                width: 100%;
+                height: auto;
+            }
+        }
+        
+        .submenu {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; 
+            gap: 1.5rem;
+            padding: 1rem;
+            background: rgba(0,0,0,0.8);
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .submenu-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            text-shadow: 
+                0 0 5px #ff00ff,
+                0 0 10px #00ffff,
+                0 0 15px #00ff00,
+                0 0 20px #9B4DFF;
+            white-space: nowrap;
+        }
+
+        /* Enhanced mobile responsiveness */
+        @media screen and (max-width: 768px) {
+            .submenu {
+                gap: 0.75rem;
+                padding: 0.5rem;
+            }
+            
+            .submenu-link {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .submenu {
+                gap: 0.5rem;
+                padding: 0.3rem;
+            }
+            
+            .submenu-link {
+                font-size: 0.8rem;
+                padding: 0.3rem 0.6rem;
+            }
+        }
+        iframe {
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            border: none;
+            display: block;
+            min-height: 200px;
+            overflow: hidden; 
+        }
+        
+        @media screen and (max-width: 768px) {
+            iframe {
+                min-height: 300px; 
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            iframe {
+                min-height: 400px; 
+            }
+        }
+    </style>
+    <script>function showContent(title, imgSrc, link1Text, link1Url, link2Text, link2Url, link3Text, link3Url, link4Text, link4Url, link5Text, link5Url, description, youtubeEmbed) {
+  document.querySelector('.container').style.display = 'none';
+  document.querySelector('.footer').style.display = 'none';
+  const contentPage = document.querySelector('.content-page');
+  contentPage.style.display = 'flex';
+  contentPage.querySelector('h1').innerText = title;
+  contentPage.querySelector('img').src = imgSrc;
+  contentPage.querySelector('.link1').href = link1Url;
+  contentPage.querySelector('.link1').innerText = link1Text;
+  contentPage.querySelector('.link2').href = link2Url;
+  contentPage.querySelector('.link2').innerText = link2Text;
+  contentPage.querySelector('.link3').href = link3Url;
+  contentPage.querySelector('.link3').innerText = link3Text;
+  contentPage.querySelector('.link4').href = link4Url;
+  contentPage.querySelector('.link4').innerText = link4Text;
+  contentPage.querySelector('.link5').href = link5Url;
+  contentPage.querySelector('.link5').innerText = link5Text;
+  contentPage.querySelector('p').innerText = description;
+  contentPage.querySelector('iframe').src = youtubeEmbed;
+}
+function goBack() {
+  document.querySelector('.container').style.display = 'grid';
+  document.querySelector('.footer').style.display = 'flex';
+  document.querySelector('.content-page').style.display = 'none';
+}
+function createStars() {
+  const starsContainer = document.querySelector('.stars');
+  const starCount = 33;
+  const sizes = [3, 23, 17, 33, 43];
+  for (let i = 0; i < starCount; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    const size = sizes[Math.floor(Math.random() * sizes.length)];
+    star.style.width = size + 'px';
+    star.style.height = size + 'px';
+    star.style.left = Math.random() * 100 + 'vw';
+    star.style.top = Math.random() * 100 + 'vh';
+    star.style.animationDuration = Math.random() * 6 + 2 + 's';
+    star.style.animationName = 'twinkle, move';
+    starsContainer.appendChild(star);
+  }
+}
+window.onload = createStars;</script>
+</head>
+<body>
+    <iframe 
+        src="https://www.caimeo.shop/header.html" 
+        style="
+            width: 100%;
+            border: none;
+            margin: 0;
+            padding: 0;
+            display: block;
+            min-height: 200px;
+            overflow: hidden;
+        "
+        scrolling="no">
+    </iframe>
+    <script>
+        const headerIframe = document.querySelector('iframe[src*="header.html"]');
+        window.addEventListener('message', function(e) {
+            if (e.data && typeof e.data === 'object' && 'frameHeight' in e.data) {
+                headerIframe.style.height = (e.data.frameHeight + 20) + 'px';
+                headerIframe.style.overflow = 'hidden';
+            }
+        });
+    </script>
+    <header>
+        <img src="https://i.imgur.com/UUf0e4p.png" alt="Header Image" style="width: 100%; height: auto; object-fit: cover;">
+        <div class="submenu">
+            <a href="https://www.caimeo.shop" class="submenu-link">Caimeo</a>
+            <a href="https://www.caimeo.shop/fashion" class="submenu-link">Fashion</a>
+            <a href="https://www.caimeo.shop/electronics" class="submenu-link">Electronics</a>
+            <a href="https://www.caimeo.shop/consumables" class="submenu-link">Consumables</a>
+            <a href="https://www.caimeo.shop/Services" class="submenu-link">Misc</a>
+            <a href="https://www.caimeo.shop/3301" class="submenu-link">3301</a>
+            <a href="https://www.caimeo.shop/Sirisys" class="submenu-link">Sirisys</a>
+        </div>
+    </header>
+    <div class="stars"></div>
+    <div class="container">
+        <div class="icon-card" onclick="window.location.href='https://caimeo.shop/QuantumTouchHealing.html'">
+            <img src="https://quantumtouch.com/images/blog/qtlogo2inch1501-resized-600.jpg" alt="Quantum Touch Healing">
+            <h3>Quantum Touch Healing</h3>
+            <p>Starting at $9.99</p>
+        </div>
+
+        <div class="icon-card" onclick="window.location.href='https://caimeo.shop/CustomOrder.html'">
+            <img src="https://www.scalliwagcustoms.com/cdn/shop/products/customize.png?v=1671413696" alt="Custom Order">
+            <h3>Custom Order</h3>
+            <p>Starting at $19.99</p>
+        </div>
+
+        <div class="icon-card" onclick="window.location.href='https://caimeo.shop/24.html'">
+            <img src="https://caimeo.shop/images/24/il_fullxfull.5661105237_94yi.webp" alt="Project Mayhem Hoodie">
+            <h3>Project Mayhem 2012 Game23 Anonymous Hive Fashion Athletic Hoodie December 12th 2012</h3>  
+            <p>Price: $69.99</p>
+        </div>
+
+        <div class="icon-card" onclick="window.location.href='https://caimeo.shop/25.html'">
+            <img src="https://caimeo.shop/images/25/il_fullxfull.5646280907_h7x4.webp" alt="CE5 Abductee Hoodie">
+            <h3>GAME23 Operation Intruder CE5 Abductee Fashion Hoodie Anon</h3>
+            <p>Price: $111.11</p>
+        </div>
+
+        <div class="icon-card" onclick="window.location.href='https://caimeo.shop/26.html'">
+            <img src="https://caimeo.shop/images/26/il_fullxfull.5646304457_g9ci.webp" alt="CE5 Abductee Jogger">
+            <h3>GAME23 Operation Intruder CE5 Abductee Fashion Jogger Anonymous</h3>
+            <p>Price: $77.77</p>
+        </div>
+
+        <div class="icon-card" onclick="window.location.href='https://caimeo.shop/12.html'">
+            <img src="https://caimeo.shop/images/12/il_fullxfull.5792223399_2dml.webp" alt="Cupcakes T-shirt">
+            <h3>I Love Cupcakes Emoji Premium T-shirt Unisex</h3>
+            <p>Price: $19.93</p>
+        </div>
+
+        <div class="icon-card" onclick="window.location.href='https://caimeo.shop/15.html'">
+            <img src="https://caimeo.shop/images/15/il_fullxfull.5776893262_k4mr.webp" alt="Ghana Mask T-shirt">
+            <h3>Ghana Mask by Shachia Akundo Heavyweight Crewneck T-shirt</h3>
+            <p>Price: $24.99</p>
+        </div>
+
+        <div class="icon-card" onclick="window.location.href='https://caimeo.shop/22.html'">
+            <img src="https://caimeo.shop/images/22/il_fullxfull.5637495689_khu3.webp" alt="Lion Baseball Jersey">
+            <h3>Lion 777 Hooded Baseball Jersey</h3>
+            <p>Price: $54.99</p>
+        </div>
+
+        <div class="icon-card" onclick="window.location.href='https://caimeo.shop/23.html'">
+            <img src="https://caimeo.shop/images/23/il_fullxfull.5634363777_so8h.webp" alt="Future AI T-shirt">
+            <h3>Future AI Matrix T-shirt</h3>
+            <p>Price: $39.99</p>
+        </div>
+
+        <div class="icon-card" onclick="window.location.href='https://caimeo.shop/27.html'">
+            <img src="https://caimeo.shop/images/27/il_fullxfull.5590582838_tang.webp" alt="Native American T-shirt">
+            <h3>Native American American Indian Original Founding Fathers Unisex Crewneck White T-shirt</h3>
+            <p>Price: $16.80</p>
+        </div>
+
+        <div class="icon-card" onclick="window.location.href='https://caimeo.shop/28.html'">
+            <img src="https://caimeo.shop/images/28/il_fullxfull.5637864667_ohi6.webp" alt="Homeland Security T-shirt">
+            <h3>Homeland Security Fighting Terrorism since 1492 DIGITALY REMASTERED Enhanced Color! Native American T-shirt HD</h3>
+            <p>Price: $18.37</p>
+        </div>
+
+        <div class="icon-card" onclick="window.location.href='https://caimeo.shop/32.html'">
+            <img src="https://caimeo.shop/images/33/il_fullxfull.6065523653_mdr8.jpg" alt="UFO T-shirt">
+            <h3>Do you Believe UFO ALIEN Heavyweight Unisex Crewneck T-shirt</h3>
+            <p>Price: $19.99</p>
+        </div>
+    </div>
+<div class="footer">
+    <a href="https://www.etsy.com/shop/LuxiousLabs/" target="_blank" class="button">
+        <img src="https://i.imgur.com/ALUepqd.png" alt="Etsy">
+        <span>Luxious Labs Etsy Shop</span>
+    </a>
+    <a href="https://x.com/J17dark" target="_blank" class="button">
+        <img src="https://i.imgur.com/cel0KtO.png" alt="Twitter">
+        <span>Professor J 17 Twitter</span>
+    </a>
+    <a href="https://discord.gg/zz7RUq75YN" target="_blank" class="button">
+        <img src="https://i.imgur.com/lBQ5t7i.png" alt="Discord">
+        <span>TEAM CAIMEO DISCORD</span>
+    </a>
+</div>
+
+    
+    <div class="content-page">
+        <h1></h1>
+        <img src alt="Content Image">
+        <p></p>
+        <a class="link1" href="#" target="_blank"></a>
+        <a class="link2" href="#" target="_blank"></a>
+        <a class="link3" href="#" target="_blank"></a>
+        <a class="link4" href="#" target="_blank"></a>
+        <a class="link5" href="#" target="_blank"></a>
+        <iframe width="560" height="315" src frameborder="0" allowfullscreen></iframe>
+        <div class="back-button" onclick="goBack()">Back to Home</div>
+    </div>
+    <iframe 
+        src="https://www.caimeo.shop/footer.html" 
+        style="
+            width: 100%;
+            border: none;
+            margin: 0;
+            padding: 0;
+            display: block;
+            min-height: 200px;
+            overflow: hidden;
+        "
+        scrolling="no">
+    </iframe>
+    <script>
+        window.addEventListener('message', function(e) {
+            if (e.data && typeof e.data === 'object' && 'frameHeight' in e.data) {
+                const iframe = document.querySelector('iframe[src*="footer.html"]');
+                iframe.style.height = (e.data.frameHeight + 20) + 'px'; 
+                iframe.style.overflow = 'hidden';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<html><head><base href="https://example.com">
+<style>
+:root {
+  --neon-pink: #ff2e88;
+  --neon-blue: #00fff9;
+  --neon-green: #39ff14;
+  --bg-dark: #0a0a0a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Share Tech Mono', monospace;
+  cursor: crosshair;
+}
+
+body {
+  background: var(--bg-dark);
+  color: var(--neon-green);
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.header-container,
+.footer-container {
+  width: 100%;
+  max-width: 1200px;
+  min-height: 50px;
+  color: var(--neon-green);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-container {
+  border-bottom: 1px solid var(--neon-blue);
+}
+
+.footer-container {
+  border-top: 1px solid var(--neon-blue);
+  margin-top: auto;
+}
+
+.glitch-container {
+  text-align: center;
+  margin: 2.125rem 1rem;
+  width: 100%;
+}
+
+.glitch {
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  color: var(--neon-pink);
+  text-shadow: 0 0 5px var(--neon-pink);
+  animation: glitch 1s infinite;
+  padding: 0 1rem;
+  word-wrap: break-word;
+}
+
+.tagline {
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  color: var(--neon-blue);
+  margin-top: 1rem;
+  padding: 0 1rem;
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.game-card {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--neon-blue);
+  padding: 1.5rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px var(--neon-blue);
+}
+
+.game-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
+}
+
+.game-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.game-title {
+  margin-bottom: 1rem;
+  color: var(--neon-pink);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+}
+
+.game-description {
+  color: var(--neon-green);
+  font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+  line-height: 1.4;
+}
+
+.promotional-section {
+  max-width: 1200px;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--neon-blue);
+  border-radius: 10px;
+  margin: 1.5rem;
+  width: calc(100% - 3rem);
+}
+
+.promo-title {
+  color: var(--neon-pink);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin-bottom: 1rem;
+}
+
+.promo-text {
+  color: var(--neon-green);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+}
+
+.promo-highlight {
+  color: var(--neon-blue);
+  font-weight: bold;
+}
+
+@media screen and (max-width: 600px) {
+  .games-grid {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+  
+  .promotional-section {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+    padding: 1rem;
+  }
+}
+
+@keyframes glitch {
+  0% {
+    text-shadow: 0.05em 0 0 var(--neon-blue), -0.05em -0.025em 0 var(--neon-green);
+  }
+  14% {
+    text-shadow: 0.05em 0 0 var(--neon-blue), -0.05em -0.025em 0 var(--neon-green);
+  }
+  15% {
+    text-shadow: -0.05em -0.025em 0 var(--neon-blue), 0.025em 0.025em 0 var(--neon-green);
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 var(--neon-blue), 0.025em 0.025em 0 var(--neon-green);
+  }
+  50% {
+    text-shadow: 0.025em 0.05em 0 var(--neon-blue), 0.05em 0 0 var(--neon-green);
+  }
+  99% {
+    text-shadow: 0.025em 0.05em 0 var(--neon-blue), 0.05em 0 0 var(--neon-green);
+  }
+  100% {
+    text-shadow: -0.025em 0 0 var(--neon-blue), -0.025em -0.025em 0 var(--neon-green);
+  }
+}
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<script>
+async function loadComponent(url, targetId) {
+  try {
+    const response = await fetch(url);
+    const html = await response.text();
+    document.getElementById(targetId).innerHTML = html;
+  } catch (error) {
+    console.error(`Error loading ${url}:`, error);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadComponent('https://caimeo.shop/header.html', 'header-container');
+  loadComponent('https://caimeo.shop/footer.html', 'footer-container');
+});
+</script>
+</head>
+<body>
+
+  <!-- Header container -->
+  <div id="header-container" class="header-container"></div>
+
+  <!-- Main content -->
+  <div class="glitch-container">
+    <h1 class="glitch">VALHALLA GAMES STUDIO</h1>
+    <div class="tagline">LEAVING YOU IN THE EXODUST</div>
+  </div>
+
+  <div class="games-grid">
+    <div class="game-card">
+      <a href="https://711131719.xyz/games/poly.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/poly.png')"></div>
+        <h3 class="game-title">Polybius</h3>
+        <p class="game-description">A mind-bending arcade experience inspired by urban legends, designed to push the boundaries of perception and control.</p>
+      </a>
+    </div>
+
+    <div class="game-card">
+      <a href="https://711131719.xyz/landlordsgame.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/monop.png')"></div>
+        <h3 class="game-title">Monopoly (1904 Stolen Version)</h3>
+        <p class="game-description">Play the controversial original version of Monopoly, "The Landlord's Game," which critiques capitalism while fueling ruthless land-grabbing competition.</p>
+      </a>
+    </div>
+
+    <div class="game-card">
+      <a href="https://711131719.xyz/games/tarotbj.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/tbj.png')"></div>
+        <h3 class="game-title">Tarot Blackjack</h3>
+        <p class="game-description">A mystical twist on Blackjack where Tarot cards determine your fate and strategy blends with divination.</p>
+      </a>
+    </div>
+
+    <div class="game-card">
+      <a href="https://711131719.xyz/games/tarotpoker.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/tth.png')"></div>
+        <h3 class="game-title">Tarot Poker</h3>
+        <p class="game-description">Combine poker's classic strategy with Tarot's arcane mysteries for a game where intuition is as important as your hand.</p>
+      </a>
+    </div>
+
+    <div class="game-card">
+      <a href="https://711131719.xyz/PegDrop.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/pd1.png')"></div>
+        <h3 class="game-title">Peg Drop</h3>
+        <p class="game-description">Test your skill and timing in this addictive peg-dropping puzzle game that challenges gravity and precision.</p>
+      </a>
+    </div>
+
+    <div class="game-card">
+      <a href="https://711131719.xyz/games/quantum.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/qg.png')"></div>
+        <h3 class="game-title">Quantum Game</h3>
+        <p class="game-description">Navigate quantum probabilities in this mind-twisting strategy game where every choice collapses infinite possibilities.</p>
+      </a>
+    </div>
+
+    <div class="game-card">
+      <a href="https://711131719.xyz/games/TelepathicPuzzle.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/telepathic.png')"></div>
+        <h3 class="game-title">Telepathic Puzzle</h3>
+        <p class="game-description">Solve cryptic puzzles using intuition and telepathic hints, challenging the limits of human connection and logic.</p>
+      </a>
+    </div>
+
+    <div class="game-card">
+      <a href="https://711131719.xyz/games/CyberFrogger.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/frog1.png')"></div>
+        <h3 class="game-title">Cyber Frogger</h3>
+        <p class="game-description">Leap through a neon dystopia in this high-tech evolution of the classic Frogger game with cybernetic obstacles.</p>
+      </a>
+    </div>
+
+    <div class="game-card">
+      <a href="https://711131719.xyz/games/HellavaderEscape.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/elevator.png')"></div>
+        <h3 class="game-title">Hellavader Escape</h3>
+        <p class="game-description">Survive a terrifying descent as you try to escape an elevator trapped in the infernal depths of Hell.</p>
+      </a>
+    </div>
+
+    <div class="game-card">
+      <a href="https://711131719.xyz/Hell-Invaders.html" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/hi1.png')"></div>
+        <h3 class="game-title">Hell-Invaders</h3>
+        <p class="game-description">Defend yourself against an onslaught of demonic forces in this hellish reimagining of the classic Space Invaders.</p>
+      </a>
+    </div>
+
+    <div class="game-card">
+      <a href="https://gx.games/games/n2qh4f/holy-order-early-access/" class="game-link">
+        <div class="game-image" style="background-image: url('https://caimeo.shop/games/ho1.png')"></div>
+        <h3 class="game-title">Holy Order</h3>
+        <p class="game-description">Hell-o amici. Welcome to the Void in Time and space. Holy Order is a Multi Platform fantasy adventure RPG!</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="promotional-section">
+    <div class="promo-content">
+      <h2 class="promo-title">Pioneers of Digital Reality</h2>
+      <p class="promo-text">Founded in 2016, Valhalla Games Studio has been pushing the boundaries of digital entertainment under the visionary leadership of <span class="promo-highlight">Professor J</span>, our Head Developer.</p>
+      <p class="promo-text">As the creative force behind <span class="promo-highlight">CAIMEO AI</span> and over 20 groundbreaking AI projects, we've consistently delivered experiences that challenge the conventional and explore the bleeding edge of technology.</p>
+      <p class="promo-text">Our portfolio includes 10 revolutionary games that have redefined their respective genres, alongside numerous innovative projects that merge the realms of artificial intelligence and interactive entertainment.</p>
+      <p class="promo-text">At Valhalla, we don't just create games - we craft digital realities that push the boundaries of what's possible.</p>
+    </div>
+  </div>
+
+  <!-- Footer container -->
+  <div id="footer-container" class="footer-container"></div>
+
+</body>
+</html>

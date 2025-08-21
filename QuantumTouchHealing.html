@@ -1,0 +1,511 @@
+<html>
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <title>Quantum Long Distance Healing: 10 Minutes for &#x24;9.99</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Experience powerful quantum healing from anywhere in the world. 10-minute sessions for &#x24;9.99 with free 5-minute demo available.">
+  <meta name="keywords" content="quantum healing, distance healing, energy healing, spiritual healing">
+
+  <!-- Social Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Quantum Long Distance Healing: 10 Minutes for &#x24;9.99">
+  <meta property="og:description" content="Experience powerful quantum healing from anywhere in the world. 10-minute sessions for &#x24;9.99 with free 5-minute demo available.">
+  <meta property="og:image" content>
+
+  <style>
+    :root {
+      --primary: #000000;
+      --secondary: #0ff;
+      --text: #fff;
+      --neon-green: #0f0;
+      --neon-pink: #ff69b4;
+      --neon-purple: #9370db;
+      --neon-cyan: #0ff;
+    }
+
+    @keyframes neonPulse {
+      0% { filter: brightness(1) drop-shadow(0 0 5px var(--neon-cyan)); }
+      50% { filter: brightness(1.2) drop-shadow(0 0 10px var(--neon-cyan)); }
+      100% { filter: brightness(1) drop-shadow(0 0 5px var(--neon-cyan)); }
+    }
+
+    @keyframes borderGlow {
+      0% { border-color: var(--neon-pink); }
+      33% { border-color: var(--neon-cyan); }
+      66% { border-color: var(--neon-green); }
+      100% { border-color: var(--neon-pink); }
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: var(--text);
+      background: #000000;
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(255, 105, 180, 0.1) 0%, transparent 40%);
+    }
+
+    .product-container {
+      max-width: 1200px;
+      margin: 2rem auto 2rem;
+      padding: 2rem;
+    }
+
+    .product-details {
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 0 20px var(--neon-cyan),
+                  inset 0 0 20px var(--neon-purple);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      border: 2px solid var(--neon-cyan);
+      animation: borderGlow 4s infinite;
+    }
+
+    .product-image-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .product-image {
+      max-width: 400px;
+      height: auto;
+      margin: 0 auto 2rem;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 0 20px var(--neon-cyan);
+      animation: neonPulse 2s infinite;
+      border: 3px solid var(--neon-cyan);
+    }
+
+    .product-gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .gallery-image {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid var(--neon-cyan);
+    }
+
+    .gallery-image:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px var(--neon-cyan);
+    }
+
+    .product-info {
+      padding: 1rem;
+    }
+
+    .product-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    .product-description {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+      text-shadow: 0 0 5px var(--neon-cyan);
+    }
+
+    .product-features {
+      margin: 2rem 0;
+      padding: 1rem;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 8px;
+      border: 1px solid var(--neon-cyan);
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-list li {
+      margin-bottom: 0.5rem;
+      padding-left: 1.5rem;
+      position: relative;
+      color: var(--neon-green);
+      text-shadow: 0 0 5px var(--neon-green);
+    }
+
+    .feature-list li:before {
+      content: "►";
+      color: var(--neon-pink);
+      position: absolute;
+      left: 0;
+    }
+
+    .product-price {
+      font-size: 2.5rem;
+      color: var(--neon-pink);
+      font-weight: bold;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 10px var(--neon-pink);
+    }
+
+    .product-price span {
+      display: block;
+      margin: 5px 0;
+    }
+
+    #usa-price {
+      color: var(--neon-green);
+      text-shadow: 0 0 10px var(--neon-green);
+    }
+
+    #worldwide-price {
+      color: var(--neon-pink);
+      text-shadow: 0 0 10px var(--neon-pink);
+    }
+
+    .buy-button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: transparent;
+      color: var(--neon-cyan);
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      border: 2px solid var(--neon-cyan);
+      transition: all 0.3s ease;
+      text-shadow: 0 0 5px var(--neon-cyan);
+      box-shadow: 0 0 10px var(--neon-cyan);
+      margin-right: 1rem;
+    }
+
+    .buy-button:hover {
+      background: var(--neon-cyan);
+      color: #000;
+      box-shadow: 0 0 20px var(--neon-cyan);
+    }
+
+    .variant-options {
+      margin-bottom: 2rem;
+      display: none;
+    }
+
+    .variant-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--neon-purple);
+      text-shadow: 0 0 5px var(--neon-purple);
+      display: none;
+    }
+
+    .variant-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .variant-option {
+      padding: 0.5rem;
+      border: 2px solid var(--neon-cyan);
+      border-radius: 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 5px var(--neon-cyan);
+      display: none;
+    }
+
+    .variant-option:hover {
+      background: rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    .variant-option.selected {
+      background: var(--neon-cyan);
+      color: #000;
+      box-shadow: 0 0 15px var(--neon-cyan);
+    }
+
+    .product-features h3 {
+      color: var(--neon-purple);
+      text-shadow: 0 0 5px var(--neon-purple);
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .product-specs {
+      margin: 2rem 0;
+      padding: 1rem;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 8px;
+      border: 1px solid var(--neon-cyan);
+      order: 2; /* Place after main image but before gallery */
+    }
+
+    .spec-title {
+      color: var(--neon-purple);
+      text-shadow: 0 0 5px var(--neon-purple);
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .spec-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .spec-list dt {
+      font-size: 1.1em;
+      margin-top: 1.5rem;
+      color: var(--neon-pink);
+      text-shadow: 0 0 5px var(--neon-pink);
+    }
+
+    .spec-list dd {
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      color: var(--text);
+      text-shadow: 0 0 3px var(--neon-cyan);
+    }
+
+    .overview-section {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: rgba(147, 112, 219, 0.1);
+      border-radius: 8px;
+      border: 1px solid var(--neon-purple);
+    }
+
+    .overview-title {
+      color: var(--neon-green);
+      text-shadow: 0 0 5px var(--neon-green);
+      margin-bottom: 1rem;
+    }
+
+    .overview-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .overview-list li {
+      color: var(--text);
+      margin-bottom: 1rem;
+      text-shadow: 0 0 3px var(--neon-cyan);
+    }
+
+    .overview-list li strong {
+      color: var(--neon-green);
+      text-shadow: 0 0 5px var(--neon-green);
+    }
+
+    .gallery-image-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      background: #000;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--neon-cyan);
+      border-radius: 4px;
+      box-shadow: 0 0 5px var(--neon-cyan);
+    }
+
+    .shipping-info {
+      margin: 1rem 0;
+      padding: 1rem;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 8px;
+      border: 1px solid var(--neon-cyan);
+    }
+
+    .shipping-info p {
+      margin: 0.5rem 0;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 5px var(--neon-cyan);
+    }
+
+    .shipping-info strong {
+      color: var(--neon-pink);
+      text-shadow: 0 0 5px var(--neon-pink);
+    }
+
+    .product-care {
+      margin: 2rem 0;
+      padding: 1rem;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 8px;
+      border: 1px solid var(--neon-cyan);
+    }
+
+    .product-care h3 {
+      color: var(--neon-purple);
+      text-shadow: 0 0 5px var(--neon-purple);
+      margin-bottom: 1rem;
+    }
+
+    .care-instructions {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+
+    .care-instructions li {
+      color: var(--neon-cyan);
+      margin: 0.5rem 0;
+      text-shadow: 0 0 5px var(--neon-cyan);
+    }
+
+    #header-container {
+      width: 100%;
+      position: relative;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #header-container > * {
+      margin: 0 auto;
+    }
+
+    .demo-button {
+      margin-left: 0;
+      border-color: var(--neon-pink);
+      color: var(--neon-pink);
+      margin-right: 1rem;
+    }
+
+    .demo-button:hover {
+      background: var(--neon-pink);
+      color: #000;
+      box-shadow: 0 0 20px var(--neon-pink);
+    }
+
+    #session-price {
+      font-size: 2.5rem;
+      color: var(--neon-green);
+      text-shadow: 0 0 10px var(--neon-green);
+      margin-bottom: 1rem;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="header-container"></div>  
+<div class="product-container" id="productContainer">
+  <div class="product-details">
+    <div class="product-image-container">
+      <img src="https://quantumtouch.com/images/blog/qtlogo2inch1501-resized-600.jpg" alt="Quantum Touch Healing Logo" class="product-image">
+      
+      <div class="product-specs">
+        <h3 class="spec-title">About Quantum Touch &amp; Distance Healing</h3>
+        <p>As a practitioner since 2006 through my family&apos;s Energy-in-Motion business, I&apos;ve mastered various quantum healing techniques, with a focus on Quantum Touch methodology.</p>
+        
+        <h4>How Quantum Touch Works:</h4>
+        <dl class="spec-list">
+          <dt>Energy Resonance &amp; Entrainment</dt>
+          <dd>Practitioners use breathing and body awareness exercises to raise their vibrational frequency. Through resonance, the client&apos;s energy naturally entrains to this higher vibration, promoting healing.</dd>
+          
+          <dt>Distance Healing Principles</dt>
+          <dd>Quantum physics shows us that energy isn&apos;t bound by physical distance. Through focused intention and quantum entanglement, healing energy can be transmitted across any distance.</dd>
+          
+          <dt>Different Approaches</dt>
+          <dd>While some practitioners use Reiki, pranic healing, or other modalities, Quantum Touch uniquely combines breathing techniques with energy focusing for powerful results.</dd>
+          
+          <dt>My Background</dt>
+          <dd>Since 2006, I&apos;ve practiced through Energy-in-Motion, my family&apos;s healing business, specializing in Quantum Touch techniques. This extensive experience allows me to facilitate deep healing connections with clients worldwide.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="product-info">
+      <h1 class="product-title">Quantum Long Distance Healing</h1>
+      <p class="product-description">
+        Experience powerful healing from anywhere in the world through Quantum Healing&#x2014;a transformative method that works with your body&apos;s energy field to restore balance and promote well-being.
+      </p>
+
+      <div class="product-features">
+        <h3>Quantum Touch Benefits</h3>
+        <ul class="feature-list">
+          <li>Scientifically-based energy healing methodology</li>
+          <li>Practiced professionally since 2006</li>
+          <li>Works through quantum entanglement principles</li>
+          <li>Combines breath work with focused healing</li>
+          <li>Free 5-minute demonstration available</li>
+        </ul>
+      </div>
+
+      <div class="overview-section">
+        <h3 class="overview-title">How It Works</h3>
+        <ul class="overview-list">
+          <li><strong>Book Your Session:</strong> Purchase your 30-minute session below</li>
+          <li><strong>Schedule:</strong> I&apos;ll contact you to arrange a convenient time</li>
+          <li><strong>Prepare:</strong> Find a quiet, comfortable space for your session</li>
+          <li><strong>Receive:</strong> Experience deep energetic healing remotely</li>
+        </ul>
+      </div>
+
+      <div class="product-price">
+        <span id="session-price">30-Minute Sessions Available</span>
+      </div>
+
+      <div class="shipping-info">
+        <p><strong>Location:</strong> Available Worldwide - Distance is No Barrier</p>
+        <p><strong>Scheduling:</strong> Flexible times to accommodate all time zones</p>
+        <p><strong>Try Before You Buy:</strong> Request a FREE 5-minute demo session</p>
+      </div>
+
+      <a href="https://example.com/request-demo" class="buy-button demo-button">Request Free Demo</a>
+      <a href="https://example.com/book-session" class="buy-button">Book Your Session</a>
+    </div>
+  </div>
+</div>
+<div id="footer-container"></div>  
+
+<script>document.addEventListener('DOMContentLoaded', function () {
+  fetch('https://caimeo.shop/header.html').then(response => response.text()).then(data => {
+    document.getElementById('header-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading header:', error);
+  });
+  fetch('https://caimeo.shop/footer.html').then(response => response.text()).then(data => {
+    document.getElementById('footer-container').innerHTML = data;
+  }).catch(error => {
+    console.error('Error loading footer:', error);
+  });
+});
+function updateMainImage(src) {
+  const mainImage = document.querySelector('.product-image');
+  mainImage.src = src;
+}</script>
+
+</body>
+</html>
