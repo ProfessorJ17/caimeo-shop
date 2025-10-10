@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QNet — Terms & Conditions</title>
+  <base href="/QNet/">
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <a href="index.html" class="qnet-logo" aria-label="QNet Home"><img src="FIREFOXONION0.png" alt="QNet Logo"></a>
+  <main class="center" style="display:flex;align-items:flex-start;justify-content:center;padding:24px;">
+    <div class="card" style="max-width:840px;height:auto;">
+      <div class="topbar" style="justify-content:space-between;margin-bottom:12px;">
+        <h1>QNet</h1>
+        <a href="index.html" class="btn outline icon" aria-label="Back" title="Back">←</a>
+      </div>
+      <article style="background:#0f0f0f;border:1px solid #222;border-radius:8px;padding:16px;color:#fff;">
+        <h2 style="margin-top:0;">Terms & Conditions</h2>
+        <p style="color:var(--muted);">Last updated: <span id="lastUpdated"></span></p>
+        <p>Welcome to QNet. By using our application, you agree to these Terms & Conditions and any rules governing usage, authentication, and content.</p>
+        <h3>Use of Service</h3>
+        <p>You agree not to misuse the service, attempt unauthorized access, or violate applicable laws.</p>
+        <h3>User Accounts</h3>
+        <p>You are responsible for maintaining the confidentiality of your account and for all activities under your account.</p>
+        <h3>Content</h3>
+        <p>You retain rights to your content. You grant QNet a limited license to host and display content as necessary to operate the service.</p>
+        <h3>Privacy</h3>
+        <p>Authentication is handled by Firebase. Your use is subject to Firebase policies and our rules.</p>
+        <h3>Termination</h3>
+        <p>We may suspend or terminate access for violations of these terms.</p>
+        <h3>Changes</h3>
+        <p>We may update these terms. Continued use constitutes acceptance of any changes.</p>
+        <p style="margin-top:16px;"><a href="index.html" class="btn outline">Back to Login</a></p>
+      </article>
+    </div>
+  </main>
+  <script>
+    document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString();
+  </script>
+</body>
+</html>
