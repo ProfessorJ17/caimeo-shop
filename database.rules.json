@@ -1,0 +1,129 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "users": {
+      ".read": true,
+      "$uid": {
+        ".read": true,
+        ".write": "auth != null && (auth.uid === $uid || root.child('users/' + auth.uid + '/admin').val() === true || auth.uid === '9j3BB8QE3sTwXN6M3EMshgpfj4X2' || auth.token.email === 'moddarkrevolt@gmail.com')"
+      }
+    },
+    "userFiles": {
+      "$uid": {
+        ".read": "auth != null && (auth.uid === $uid || root.child('users/' + auth.uid + '/admin').val() === true || auth.uid === '9j3BB8QE3sTwXN6M3EMshgpfj4X2' || auth.token.email === 'moddarkrevolt@gmail.com')",
+        ".write": "auth != null && (auth.uid === $uid || root.child('users/' + auth.uid + '/admin').val() === true || auth.uid === '9j3BB8QE3sTwXN6M3EMshgpfj4X2' || auth.token.email === 'moddarkrevolt@gmail.com')"
+      }
+    },
+    "projectSlugs": {
+      ".read": true,
+      "$slug": {
+        ".write": "auth != null"
+      }
+    },
+    "presence": {
+      ".read": "auth != null",
+      "$uid": {
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+    "socialFeed": {
+      ".read": true,
+      "$postId": {
+        ".read": true,
+        ".write": "auth != null && (data.exists() ? data.child('uid').val() === auth.uid || root.child('users/' + auth.uid + '/admin').val() === true || auth.uid === '9j3BB8QE3sTwXN6M3EMshgpfj4X2' || auth.token.email === 'moddarkrevolt@gmail.com' : newData.child('uid').val() === auth.uid)",
+        "votes": {
+          "$uid": {
+            ".write": "auth != null && auth.uid === $uid"
+          }
+        },
+        "replies": {
+          "$replyId": {
+            ".read": true,
+            ".write": "auth != null && (data.exists() ? data.child('uid').val() === auth.uid || root.child('users/' + auth.uid + '/admin').val() === true || auth.uid === '9j3BB8QE3sTwXN6M3EMshgpfj4X2' || auth.token.email === 'moddarkrevolt@gmail.com' : newData.child('uid').val() === auth.uid)",
+            "votes": {
+              "$uid": {
+                ".write": "auth != null && auth.uid === $uid"
+              }
+            }
+          }
+        }
+      }
+    },
+    "socialFeedSeq": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+    "postCountByDay": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+    "chats": {
+      ".read": "auth != null",
+      "$chatId": {
+        ".read": "auth != null",
+        // allow authenticated clients to write messages under chat nodes,
+        // but require that each message record's 'from' field matches the authenticated user
+        ".write": "auth != null",
+        "$messageId": {
+          ".write": "auth != null && newData.child('from').val() === auth.uid"
+        }
+      }
+    },
+    "chatReads": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+    "friends": {
+      "$uid": {
+        ".read": "auth != null",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+    "friendRequests": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null"
+      }
+    },
+    "friendRequestsOutgoing": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+    "userRewards": {
+      ".read": "auth != null && (root.child('users/' + auth.uid + '/admin').val() === true || auth.uid === '9j3BB8QE3sTwXN6M3EMshgpfj4X2' || auth.token.email === 'moddarkrevolt@gmail.com')",
+      "$uid": {
+        ".read": "auth != null && (auth.uid === $uid || root.child('users/' + auth.uid + '/admin').val() === true || auth.uid === '9j3BB8QE3sTwXN6M3EMshgpfj4X2' || auth.token.email === 'moddarkrevolt@gmail.com')",
+        ".write": "auth != null && (auth.uid === $uid || root.child('users/' + auth.uid + '/admin').val() === true || auth.uid === '9j3BB8QE3sTwXN6M3EMshgpfj4X2' || auth.token.email === 'moddarkrevolt@gmail.com')"
+      }
+    },
+    "projectVotes": {
+      ".read": true,
+      "$projectId": {
+        ".read": true,
+        "votes": {
+          ".read": true,
+          "$uid": {
+            ".write": "auth != null && auth.uid === $uid"
+          }
+        }
+      }
+    },
+    "notifications": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null",
+        "$nid": {
+          ".write": "auth != null && (auth.uid === $uid || (!data.exists() && newData.child('from').val() === auth.uid))"
+        }
+      }
+    }
+  }
+}
+
